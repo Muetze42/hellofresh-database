@@ -1,0 +1,26 @@
+{
+    "name": "norman-huth/hellofresh-database",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "NormanHuth\\HelloFreshDatabase\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Norman Huth",
+            "homepage": "https://huth.it"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^9.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NormanHuth\\HelloFreshDatabase\\ServiceProvider"
+            ]
+        }
+    }
+}
