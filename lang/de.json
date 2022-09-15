@@ -57,12 +57,13 @@
     "Save recipe as favorite": "Rezept als Favorit speichern",
     "Search": "Suchen",
     "Show filters": "Filter anzeigen",
-    "Show only recipes with PDF": "Zeige nur Rezepte mit PDF",
     "Show only recipes with one of these ingredient": "Zeige nur Rezepte mit eines dieser Zutaten",
     "Show only recipes with one of these labels": "Zeige nur Rezepte mit einen dieser Labels",
     "Show only recipes with one of these tags": "Nur Rezepte mit einen dieser Tags anzeigen",
+    "Show only recipes with PDF": "Zeige nur Rezepte mit PDF",
     "Show only recipes without this allergens": "Zeige nur Rezepte ohne diesen Allergenen",
     "Show only recipes without this ingredient": "Zeige nur Rezepte ohne diesen Zutaten",
+    "Support developer": "Entwickler unterstützen",
     "Tag": "Tag",
     "Tags": "Tags",
     "The function only available for logged in users": "Die Funktion ist nur für eingeloggte Benutzer verfügbar",
@@ -71,7 +72,7 @@
     "Total Time": "Gesamtzeit",
     "User": "Benutzer",
     "Users": "Benutzer",
-    "View recipe PDF": "Rezept PDF anzeigen",
     "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen",
+    "View recipe PDF": "Rezept PDF anzeigen",
     "Week from - to": "Woche von - bis"
 }
