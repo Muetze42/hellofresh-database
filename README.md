@@ -29,8 +29,9 @@ Website: [hf.huth.it](https://hf.huth.it)
 
 Everyone can make a pull request to translate.
 
-## Support developer 
+## Support developer
 
-Even free developments cost lifetime and electricity. Even the server on which this free website is provided is not free. Who would like to thank for this effort will find several possibilities under the following link.
+Even free developments cost lifetime and electricity. Even the server on which this free website is provided is not free. Who would like to thank for this effort will find several possibilities under
+the following link.
 
-(coffee.huth.it)[https://coffee.huth.it]
+[coffee.huth.it](https://coffee.huth.it)
