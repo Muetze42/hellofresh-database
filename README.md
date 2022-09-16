@@ -1,6 +1,6 @@
 # HelloFresh Database
 
-Website: [hf.huth.it](https://hf.huth.it)
+Website: [hellofresh.huth.it](https://hellofresh.huth.it) / [hf.huth.it](https://hf.huth.it)
 
 | Country        | Direct link                            |
 |----------------|----------------------------------------|
