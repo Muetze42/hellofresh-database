@@ -14,6 +14,7 @@ class ServiceProvider extends Provider
     public function boot(): void
     {
         $this->loadJSONTranslationsFrom(__DIR__.'/../lang');
+        $this->loadJSONTranslationsFrom(__DIR__.'/../lang/system');
     }
 
     /**
