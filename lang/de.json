@@ -21,6 +21,7 @@
     "Don’t show recipes with one of these labels": "Rezepte mit einen dieser Labels nicht anzeigen",
     "Don’t show recipes with one of these tags": "Rezepte mit einen dieser Tags nicht anzeigen",
     "Easy": "Einfach",
+    "Edit note": "Notiz Bearbeiten",
     "Email Address": "E-Mail-Adresse",
     "Enter to search": "Eingaben zum Suchen",
     "Favorite": "Favorite",
@@ -67,6 +68,7 @@
     "Show only recipes without this allergens": "Zeige nur Rezepte ohne diesen Allergenen",
     "Show only recipes without this ingredient": "Zeige nur Rezepte ohne diesen Zutaten",
     "Support developer": "Entwickler unterstützen",
+    "Switch between Dark & Light Mode": "Zwischen Dark- & Light-Mode wechseln",
     "Tag": "Tag",
     "Tags": "Tags",
     "The function only available for logged in users": "Die Funktion ist nur für eingeloggte Benutzer verfügbar",
@@ -77,6 +79,5 @@
     "Users": "Benutzer",
     "View recipe PDF": "Rezept PDF anzeigen",
     "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen",
-    "Week from - to": "Woche von - bis",
-    "Edit note": "Notiz Bearbeiten"
+    "Week from - to": "Woche von - bis"
 }
