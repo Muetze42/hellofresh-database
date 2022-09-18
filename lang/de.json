@@ -1,4 +1,5 @@
 {
+    "Accept :privacy": "Datenschutzbestimmungen :privacy",
     "Active": "Aktiv",
     "Adjust filters": "Filter einstellen",
     "Advertising": "Werbung",
@@ -52,6 +53,7 @@
     "Ooops. No recipes were found using these criteria.": "Ooops. Es wurden mit diesen Kriterien keine Rezepte gefunden.",
     "Password": "Passwort",
     "Prep Time": "Arbeitszeit",
+    "privacy policy": "Datenschutzbestimmungen",
     "Questions, Issues & Bugs": "Fragen, Probleme & Fehler",
     "Recipes": "Rezepte",
     "Register": "Registrieren",
@@ -61,10 +63,10 @@
     "Save recipe as favorite": "Rezept als Favorit speichern",
     "Search": "Suchen",
     "Show filters": "Filter anzeigen",
-    "Show only recipes with PDF": "Zeige nur Rezepte mit PDF",
     "Show only recipes with one of these ingredient": "Zeige nur Rezepte mit eines dieser Zutaten",
     "Show only recipes with one of these labels": "Zeige nur Rezepte mit einen dieser Labels",
     "Show only recipes with one of these tags": "Nur Rezepte mit einen dieser Tags anzeigen",
+    "Show only recipes with PDF": "Zeige nur Rezepte mit PDF",
     "Show only recipes without this allergens": "Zeige nur Rezepte ohne diesen Allergenen",
     "Show only recipes without this ingredient": "Zeige nur Rezepte ohne diesen Zutaten",
     "Support developer": "Entwickler unterstützen",
@@ -77,7 +79,7 @@
     "Total Time": "Gesamtzeit",
     "User": "Benutzer",
     "Users": "Benutzer",
-    "View recipe PDF": "Rezept PDF anzeigen",
     "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen",
+    "View recipe PDF": "Rezept PDF anzeigen",
     "Week from - to": "Woche von - bis"
 }
