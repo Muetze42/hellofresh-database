@@ -7,6 +7,7 @@ Website: [hellofresh.huth.it](https://hellofresh.huth.it) / [hf.huth.it](https:/
 | Australia      | [au.hf.huth.it](https://au.hf.huth.it) |
 | Austria        | [at.hf.huth.it](https://at.hf.huth.it) |
 | Belgium        | [be.hf.huth.it](https://be.hf.huth.it) |
+| Canada         | [ca.hf.huth.it](https://ca.hf.huth.it) |
 | Denmark        | [dk.hf.huth.it](https://dk.hf.huth.it) |
 | France         | [fr.hf.huth.it](https://fr.hf.huth.it) |
 | Germany        | [de.hf.huth.it](https://de.hf.huth.it) |
