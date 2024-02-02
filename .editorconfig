@@ -1,0 +1,26 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{yml,yaml,js,vue,css,scss,cjs}]
+indent_size = 2
+
+[{*.ctp,*.hphp,*.inc,*.module,*.php,*.php4,*.php5,*.phtml}]
+ij_php_phpdoc_use_fqcn = true
+ij_php_line_comment_at_first_column = false
+
+[resources/views/emails/**.php]
+trim_trailing_whitespace = false
+indent_size = 0
+
+[*.md]
+trim_trailing_whitespace = false
+
+[{docker-compose.yml,composer.json,composer.lock,package.json,package-lock.json,pnpm-lock.yaml}]
+indent_size = 4
