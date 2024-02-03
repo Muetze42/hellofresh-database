@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Label;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,7 @@ return new class () extends Migration
     {
         Schema::create($prefix . 'recipes', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Label::class)->nullable();
             $table->uuid('external_id')->unique();
             $table->uuid()->unique();
             $table->string('name')->nullable();
@@ -24,6 +26,7 @@ return new class () extends Migration
             $table->string('image_link')->nullable();
             $table->string('image_path')->nullable();
             $table->string('total_time')->nullable();
+            $table->string('prep_time')->nullable();
             $table->char('country', 2)->nullable();
             $table->text('comment')->nullable();
             $table->text('description')->nullable();
@@ -35,6 +38,9 @@ return new class () extends Migration
             $table->boolean('difficulty');
             $table->boolean('active');
             $table->boolean('is_addon');
+            $table->json('nutrition');
+            $table->json('steps');
+            $table->json('yields');
             $table->timestamp('external_created_at')->nullable();
             $table->timestamp('external_updated_at')->nullable();
             $table->timestamps();

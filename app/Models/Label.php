@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Label extends Model
 {
@@ -29,4 +30,12 @@ class Label extends Model
     protected $casts = [
         'display_label' => 'bool',
     ];
+
+    /**
+     * Get the recipes for the label.
+     */
+    public function recipes(): HasMany
+    {
+        return $this->hasMany(Recipe::class);
+    }
 }

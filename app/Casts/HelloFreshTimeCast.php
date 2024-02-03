@@ -6,7 +6,7 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use NormanHuth\HellofreshScraper\Models\HelloFreshTime;
 
-class PrepTimeCast implements CastsAttributes
+class HelloFreshTimeCast implements CastsAttributes
 {
     /**
      * Cast the given value.

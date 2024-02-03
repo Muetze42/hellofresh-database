@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Allergen extends Model
 {
@@ -27,4 +28,12 @@ class Allergen extends Model
     protected $casts = [
         'triggers_traces_of' => 'bool',
     ];
+
+    /**
+     * The recipes that belong to the allergen.
+     */
+    public function recipes(): BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class);
+    }
 }

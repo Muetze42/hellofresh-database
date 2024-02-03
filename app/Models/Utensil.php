@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Utensil extends Model
 {
@@ -18,4 +19,12 @@ class Utensil extends Model
         'type',
         'name',
     ];
+
+    /**
+     * The recipes that belong to the utensil.
+     */
+    public function recipes(): BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class);
+    }
 }
