@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\CountryMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', HomeController::class);
+Route::get('/', HomeController::class)->withoutMiddleware(CountryMiddleware::class)->name('home');
+
+Route::prefix('{country_lang}')->group(function () {
+    Route::get('debug', fn () => 'test');
+});
