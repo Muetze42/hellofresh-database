@@ -22,6 +22,8 @@ return new class () extends Migration
             $table->unsignedInteger('ingredients')->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();
+
+            $table->index(['country', 'locale']);
         });
     }
 

@@ -31,6 +31,6 @@ class Application extends App
      */
     public function getCountryPrefix(): string
     {
-        return Str::lower($this->getCountry()) . '__' . $this->getLocale() . '__';
+        return Str::lower($this->getCountry()) . '__' . $this->getLocale() . '_';
     }
 }

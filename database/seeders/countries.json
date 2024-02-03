@@ -18,8 +18,20 @@
         "take": 40
     },
     {
+        "country": "BE",
+        "locale": "fr",
+        "domain": "https://www.hellofresh.be",
+        "take": 40
+    },
+    {
         "country": "CA",
         "locale": "en",
+        "domain": "https://www.hellofresh.ca",
+        "take": 50
+    },
+    {
+        "country": "CA",
+        "locale": "fr",
         "domain": "https://www.hellofresh.ca",
         "take": 50
     },

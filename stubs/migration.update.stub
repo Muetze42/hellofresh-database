@@ -11,7 +11,7 @@ return new class () extends Migration
      */
     public function up(string $prefix = ''): void
     {
-        Schema::table('$prefix . {{ table }}', function (Blueprint $table) {
+        Schema::table($prefix . '{{ table }}', function (Blueprint $table) {
             //$table->string('new_column')->after('name');
             //$table->boolean('new_bool')->default(false)->after('');
         });
@@ -22,7 +22,7 @@ return new class () extends Migration
      */
     public function down(string $prefix = ''): void
     {
-        Schema::table('$prefix . {{ table }}', function (Blueprint $table) {
+        Schema::table($prefix . '{{ table }}', function (Blueprint $table) {
             //$table->dropColumn([
             //    'new_column',
             //    'new_bool',
