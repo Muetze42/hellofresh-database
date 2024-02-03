@@ -15,14 +15,28 @@ namespace App\Models{
  * App\Models\Allergen
  *
  * @property int $id
+ * @property string $uuid
+ * @property string $name
+ * @property string $type
+ * @property string $slug
+ * @property string $icon_path
+ * @property string|null $description
+ * @property bool $triggers_traces_of
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen query()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereTriggersTracesOf($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereUuid($value)
  */
 	class Allergen extends \Eloquent {}
 }
@@ -59,6 +73,17 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereUpdatedAt($value)
  */
 	class Country extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Ingredient
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ingredient query()
+ */
+	class Ingredient extends \Eloquent {}
 }
 
 namespace App\Models{
