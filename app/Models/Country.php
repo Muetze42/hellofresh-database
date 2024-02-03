@@ -4,17 +4,17 @@ namespace App\Models;
 
 use App\Casts\LowerStringCast;
 use App\Casts\UpperStringCast;
+use App\Models\Traits\CanActivateTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
 class Country extends Model
 {
     //use \Illuminate\Database\Eloquent\Factories\HasFactory; // Todo
+    use CanActivateTrait;
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = [
         'country',
@@ -24,13 +24,17 @@ class Country extends Model
         'take',
         'recipes',
         'ingredients',
-        'active',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     */
+    protected $hidden = [
+        'take',
     ];
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array<string, string>
      */
     protected $casts = [
         'country' => UpperStringCast::class,
@@ -39,7 +43,6 @@ class Country extends Model
         'take' => 'int',
         'recipes' => 'int',
         'ingredients' => 'int',
-        'active' => 'bool',
     ];
 
     /**

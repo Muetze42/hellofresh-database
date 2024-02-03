@@ -12,6 +12,23 @@
 
 namespace App\Models{
 /**
+ * App\Models\Allergen
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereUpdatedAt($value)
+ */
+	class Allergen extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Country
  *
  * @property int $id
@@ -25,6 +42,7 @@ namespace App\Models{
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Country active()
  * @method static \Illuminate\Database\Eloquent\Builder|Country newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country query()
@@ -47,9 +65,25 @@ namespace App\Models{
 /**
  * App\Models\Label
  *
+ * @property int $id
+ * @property string $text
+ * @property string $handle
+ * @property string $foreground_color
+ * @property string $background_color
+ * @property bool $display_label
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Label newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Label newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Label query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereBackgroundColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereDisplayLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereForegroundColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereHandle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Label whereUpdatedAt($value)
  */
 	class Label extends \Eloquent {}
 }
