@@ -12,6 +12,8 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
+        \App\Models\Country::createFromHfApi();
+
         return Inertia::render('Home/Index', [
             'ip' => $request->ip(),
         ]);
