@@ -23,8 +23,11 @@ namespace App\Models{
  * @property bool $triggers_traces_of
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
+ * @property-read int|null $ingredients_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Database\Factories\AllergenFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen query()
@@ -51,6 +54,9 @@ namespace App\Models{
  * @property string $type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
+ * @property-read int|null $recipes_count
+ * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
@@ -80,6 +86,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Country active()
+ * @method static \Database\Factories\CountryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Country newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country query()
@@ -113,6 +120,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Database\Factories\CuisineFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine query()
@@ -147,6 +155,9 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $external_updated_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
+ * @property-read int|null $recipes_count
+ * @method static \Database\Factories\FamilyFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Family newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family query()
@@ -188,8 +199,11 @@ namespace App\Models{
  * @property int $usage
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
+ * @property-read int|null $allergens_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Database\Factories\IngredientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient query()
@@ -227,6 +241,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Database\Factories\LabelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Label newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Label newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Label query()
@@ -248,6 +263,8 @@ namespace App\Models{
  *
  * @property int $id
  * @property int|null $label_id
+ * @property int|null $category_id
+ * @property int|null $family_id
  * @property string $external_id
  * @property string $uuid
  * @property string|null $name
@@ -280,8 +297,10 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
+ * @property-read \App\Models\Category|null $category
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cuisine> $cuisines
  * @property-read int|null $cuisines_count
+ * @property-read \App\Models\Family|null $family
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cuisine> $ingredients
  * @property-read int|null $ingredients_count
  * @property-read \App\Models\Label|null $label
@@ -298,6 +317,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCanonical($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCanonicalLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCardLink($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereClonedFrom($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCountry($value)
@@ -308,6 +328,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereFamilyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereFavoritesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereHeadline($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereId($value)
@@ -344,6 +365,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag query()
@@ -404,6 +426,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Database\Factories\UtensilFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil query()

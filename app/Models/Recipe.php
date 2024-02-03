@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Casts\HelloFreshTimeCast;
 use App\Models\Traits\CanActivateTrait;
 use App\Models\Traits\CountryTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Recipe extends Model
 {
-    use \Illuminate\Database\Eloquent\Factories\HasFactory;
+    use HasFactory;
     use CountryTrait;
     use CanActivateTrait;
 
