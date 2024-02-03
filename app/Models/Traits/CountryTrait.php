@@ -35,7 +35,7 @@ trait CountryTrait
         /* @var \NormanHuth\HellofreshScraper\Models\AbstractModel $hfModel */
         $columns = (new static())->getFillable();
         if (!$primaryKey) {
-            $primaryKey = in_array('uuid', $columns) ? 'uuid' : 'id';
+            $primaryKey = in_array('external_id', $columns) ? 'external_id' : 'id';
         }
         $data = $hfModel->data();
         $columns = Arr::mapWithKeys($columns, fn (string $column) => [$column => data_get($data, Str::camel($column))]);
