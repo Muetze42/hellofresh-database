@@ -7,14 +7,6 @@ use Illuminate\Database\Eloquent\Builder;
 trait CanActivateTrait
 {
     /**
-     * Bootstrap the model and its traits.
-     */
-    public static function bootCanActivateTrait(): void
-    {
-        //static::creating(function ($model) {});
-    }
-
-    /**
      * Initialize the trait.
      */
     protected function initializeCanActivateTrait(): void

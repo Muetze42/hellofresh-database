@@ -309,6 +309,7 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Utensil> $utensils
  * @property-read int|null $utensils_count
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe active()
+ * @method static \Database\Factories\RecipeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe query()
