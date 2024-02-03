@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\HelloFresh;
 
-use App\Console\Contracts\AbstractUpdateCommand;
+use App\Contracts\Commands\AbstractUpdateCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'app:hello-fresh:update-recipes')]

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Contracts;
+namespace App\Contracts\Commands;
 
 class AbstractUpdateCommand extends AbstractCountryCommand
 {

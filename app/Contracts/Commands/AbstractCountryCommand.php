@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Contracts;
+namespace App\Contracts\Commands;
 
 use App\Models\Country;
 use Illuminate\Console\Command;
