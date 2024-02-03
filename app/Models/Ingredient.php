@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Models\Traits\CountryTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Ingredient extends Model
 {
-    use \Illuminate\Database\Eloquent\Factories\HasFactory;
+    use HasFactory;
     use CountryTrait;
 
     /**
@@ -44,5 +45,13 @@ class Ingredient extends Model
     public function recipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class);
+    }
+
+    /**
+     * The allergens that belong to ingredient.
+     */
+    public function allergens(): BelongsToMany
+    {
+        return $this->belongsToMany(Allergen::class);
     }
 }

@@ -37,4 +37,12 @@ class Allergen extends Model
     {
         return $this->belongsToMany(Recipe::class);
     }
+
+    /**
+     * The ingredients that belong to allergen.
+     */
+    public function ingredients(): BelongsToMany
+    {
+        return $this->belongsToMany(Ingredient::class);
+    }
 }
