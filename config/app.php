@@ -78,12 +78,12 @@ return [
     |--------------------------------------------------------------------------
     |
     | The application locale determines the default locale that will be used
-    | by the translation service provider. You are free to set this value
-    | to any of the locales which will be supported by the application.
+    | by the translation service provider. This value automatic change by
+    | application route to switch between languages.
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'de',
 
     /*
     |--------------------------------------------------------------------------
@@ -97,6 +97,19 @@ return [
     */
 
     'fallback_locale' => 'en',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Country Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application locale determines the default country that will be used
+    | for the Models and recipes source. This value automatic change by
+    | application route to switch between languages.
+    |
+    */
+
+    'country' => 'DE',
 
     /*
     |--------------------------------------------------------------------------

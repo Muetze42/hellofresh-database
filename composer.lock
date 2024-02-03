@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8bd065221517518a6335e5f5267154f1",
+    "content-hash": "fa66976b20e8d8e98131a3fb6d8da7dc",
     "packages": [
         {
             "name": "brick/math",
@@ -2383,10 +2383,9 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/hellofresh-scraper",
-                "reference": "ad00c06e56568730eb82dbbaf116a852b3463618"
+                "reference": "c6db6da4ebba781b348982c7295058cb8d5b1f0b"
             },
             "require": {
-                "illuminate/config": "^10.43",
                 "illuminate/support": "^10.43",
                 "php": "^8.2"
             },
@@ -2414,6 +2413,13 @@
                     "name": "Norman Huth",
                     "homepage": "https://huth.it"
                 }
+            ],
+            "description": "Web Scraper for HelloFresh data.",
+            "keywords": [
+                "hellofresh",
+                "laravel-package",
+                "recipes",
+                "scraper"
             ],
             "transport-options": {
                 "relative": true

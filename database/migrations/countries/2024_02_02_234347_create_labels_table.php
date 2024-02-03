@@ -11,10 +11,14 @@ return new class () extends Migration
      */
     public function up(string $prefix = ''): void
     {
-        Schema::create('$prefix . {{ table }}', function (Blueprint $table) {
+        Schema::create($prefix . 'labels', function (Blueprint $table) {
             $table->id();
+            $table->string('text');
+            $table->string('handle');
+            $table->string('foreground_color', 7);
+            $table->string('background_color', 7);
+            $table->boolean('display_label');
             $table->timestamps();
-            //$table->softDeletes();
         });
     }
 
@@ -23,6 +27,6 @@ return new class () extends Migration
      */
     public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('$prefix . {{ table }}');
+        Schema::dropIfExists($prefix . 'labels');
     }
 };

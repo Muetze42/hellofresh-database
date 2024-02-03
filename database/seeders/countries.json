@@ -1,0 +1,98 @@
+[
+    {
+        "country": "AT",
+        "locale": "de",
+        "domain": "https://www.hellofresh.at",
+        "take": 40
+    },
+    {
+        "country": "AU",
+        "locale": "en",
+        "domain": "https://www.hellofresh.com.au",
+        "take": 40
+    },
+    {
+        "country": "BE",
+        "locale": "nl",
+        "domain": "https://www.hellofresh.be",
+        "take": 40
+    },
+    {
+        "country": "CA",
+        "locale": "en",
+        "domain": "https://www.hellofresh.ca",
+        "take": 50
+    },
+    {
+        "country": "CH",
+        "locale": "de",
+        "domain": "https://www.hellofresh.ch",
+        "take": 50
+    },
+    {
+        "country": "DE",
+        "locale": "de",
+        "domain": "https://www.hellofresh.de",
+        "take": 100
+    },
+    {
+        "country": "DK",
+        "locale": "da",
+        "domain": "https://www.hellofresh.dk",
+        "take": 100
+    },
+    {
+        "country": "FR",
+        "locale": "fr",
+        "domain": "https://www.hellofresh.fr",
+        "take": 100
+    },
+    {
+        "country": "GB",
+        "locale": "en",
+        "domain": "https://www.hellofresh.co.uk",
+        "take": 25
+    },
+    {
+        "country": "IT",
+        "locale": "it",
+        "domain": "https://www.hellofresh.it",
+        "take": 100
+    },
+    {
+        "country": "LU",
+        "locale": "fr",
+        "domain": "https://www.hellofresh.lu",
+        "take": 100
+    },
+    {
+        "country": "NL",
+        "locale": "nl",
+        "domain": "https://www.hellofresh.nl",
+        "take": 100
+    },
+    {
+        "country": "NO",
+        "locale": "nb",
+        "domain": "https://www.hellofresh.no",
+        "take": 100
+    },
+    {
+        "country": "NZ",
+        "locale": "en",
+        "domain": "https://www.hellofresh.co.nz",
+        "take": 100
+    },
+    {
+        "country": "SE",
+        "locale": "sv",
+        "domain": "https://www.hellofresh.se",
+        "take": 100
+    },
+    {
+        "country": "US",
+        "locale": "en",
+        "domain": "https://www.hellofresh.com",
+        "take": 50
+    }
+]
