@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Models\Traits\CountryTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Family extends Model
 {
-    //use \Illuminate\Database\Eloquent\Factories\HasFactory; // Todo
+    use HasFactory;
     use CountryTrait;
 
     /**
@@ -36,4 +38,12 @@ class Family extends Model
         'external_created_at' => 'datetime',
         'external_updated_at' => 'datetime',
     ];
+
+    /**
+     * Get the recipes for the family.
+     */
+    public function recipes(): HasMany
+    {
+        return $this->hasMany(Recipe::class);
+    }
 }

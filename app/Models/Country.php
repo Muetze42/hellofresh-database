@@ -5,12 +5,13 @@ namespace App\Models;
 use App\Casts\LowerStringCast;
 use App\Casts\UpperStringCast;
 use App\Models\Traits\CanActivateTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
 class Country extends Model
 {
-    //use \Illuminate\Database\Eloquent\Factories\HasFactory; // Todo
+    use HasFactory;
     use CanActivateTrait;
 
     /**

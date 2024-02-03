@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Family;
 use App\Models\Label;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,9 +14,14 @@ return new class () extends Migration
      */
     public function up(string $prefix = ''): void
     {
-        Schema::create($prefix . 'recipes', function (Blueprint $table) {
+        Schema::create($prefix . 'recipes', function (Blueprint $table) use ($prefix) {
             $table->id();
-            $table->foreignIdFor(Label::class)->nullable();
+            $table->foreignIdFor(Label::class)
+                ->nullable()->constrained((new Label())->getCountryTable($prefix));
+            $table->foreignIdFor(Category::class)
+                ->nullable()->constrained((new Category())->getCountryTable($prefix));
+            $table->foreignIdFor(Family::class)
+                ->nullable()->constrained((new Family())->getCountryTable($prefix));
             $table->uuid('external_id')->unique();
             $table->uuid()->unique();
             $table->string('name')->nullable();

@@ -20,6 +20,14 @@ trait CountryTrait
     }
 
     /**
+     * Get the table associated with the model and specific prefix.
+     */
+    public function getCountryTable(string $prefix): string
+    {
+        return $prefix . Str::snake(Str::pluralStudly(class_basename($this)));
+    }
+
+    /**
      * Get the joining table name for a many-to-many relation.
      */
     public function joiningTable($related, $instance = null): string

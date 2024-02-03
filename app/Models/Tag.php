@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
-    //use \Illuminate\Database\Eloquent\Factories\HasFactory; // Todo
+    use \Illuminate\Database\Eloquent\Factories\HasFactory;
     use CountryTrait;
 
     /**

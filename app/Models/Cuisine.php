@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Models\Traits\CountryTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Cuisine extends Model
 {
-    //use \Illuminate\Database\Eloquent\Factories\HasFactory; // Todo
+    use HasFactory;
     use CountryTrait;
 
     /**

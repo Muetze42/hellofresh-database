@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Recipe extends Model
 {
-    //use \Illuminate\Database\Eloquent\Factories\HasFactory; // Todo
+    use \Illuminate\Database\Eloquent\Factories\HasFactory;
     use CountryTrait;
     use CanActivateTrait;
 
@@ -114,5 +114,21 @@ class Recipe extends Model
     public function label(): BelongsTo
     {
         return $this->belongsTo(Label::class);
+    }
+
+    /**
+     * Get the category that owns the recipe.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get the family that owns the recipe.
+     */
+    public function family(): BelongsTo
+    {
+        return $this->belongsTo(Family::class);
     }
 }
