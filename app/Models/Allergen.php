@@ -16,7 +16,6 @@ class Allergen extends Model
     protected $fillable = [
         'external_id',
         'name',
-        'slug',
         'description',
         'icon_path',
         'triggers_traces_of',

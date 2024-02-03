@@ -17,6 +17,5 @@ class Category extends Model
         'external_id',
         'name',
         'type',
-        'slug',
     ];
 }

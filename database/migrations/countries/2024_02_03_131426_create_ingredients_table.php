@@ -22,12 +22,11 @@ return new class () extends Migration
             $table->string('image_path');
             $table->string('name');
             $table->string('internal_name');
-            $table->boolean('shipped');
             $table->text('description')->nullable();
-            $table->unsignedInteger('usage');
             $table->string('has_duplicated_name')->nullable();
+            $table->boolean('shipped');
+            $table->unsignedInteger('usage');
             $table->timestamps();
-            //$table->softDeletes();
         });
     }
 

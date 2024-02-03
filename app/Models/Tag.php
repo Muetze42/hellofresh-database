@@ -15,7 +15,6 @@ class Tag extends Model
     protected $fillable = [
         'external_id',
         'type',
-        'slug',
         'color_handle',
         'preferences',
         'display_label',

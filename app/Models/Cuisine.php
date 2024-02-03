@@ -17,7 +17,6 @@ class Cuisine extends Model
         'external_id',
         'type',
         'name',
-        'slug',
         'icon_link',
         'icon_path',
         'usage',

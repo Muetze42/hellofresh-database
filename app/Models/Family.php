@@ -17,7 +17,6 @@ class Family extends Model
         'external_id',
         'uuid',
         'name',
-        'slug',
         'type',
         'description',
         'priority',

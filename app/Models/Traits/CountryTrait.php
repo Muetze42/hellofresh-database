@@ -30,18 +30,16 @@ trait CountryTrait
     /**
      *  Get the first record matching the attributes. If the record is not found, create it.
      */
-    public static function freshUpdateOrCreate(mixed $hfModel, string $primaryKey = null): Model
+    public static function freshUpdateOrCreate(mixed $hfModel, string $primaryKey = 'id'): Model
     {
         /* @var \NormanHuth\HellofreshScraper\Models\AbstractModel $hfModel */
         $columns = (new static())->getFillable();
-        if (!$primaryKey) {
-            $primaryKey = in_array('external_id', $columns) ? 'external_id' : 'id';
-        }
         $data = $hfModel->data();
         $columns = Arr::mapWithKeys($columns, fn (string $column) => [$column => data_get($data, Str::camel($column))]);
 
+        // Todo: external_created_at, external_updated_at
         return static::firstOrCreate(
-            [$primaryKey => $columns[$primaryKey]],
+            ['external_id' => $columns[$primaryKey]],
             Arr::except($columns, $primaryKey)
         );
     }

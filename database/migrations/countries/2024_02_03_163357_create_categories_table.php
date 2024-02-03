@@ -16,7 +16,6 @@ return new class () extends Migration
             $table->uuid('external_id')->unique();
             $table->string('name');
             $table->string('type');
-            $table->string('slug');
             $table->timestamps();
         });
     }

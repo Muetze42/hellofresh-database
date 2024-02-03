@@ -16,7 +16,6 @@ return new class () extends Migration
             $table->uuid('external_id')->unique();
             $table->string('type');
             $table->string('name');
-            $table->string('slug');
             $table->string('color_handle');
             $table->json('preferences');
             $table->boolean('display_label');

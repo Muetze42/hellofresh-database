@@ -16,7 +16,6 @@ return new class () extends Migration
             $table->uuid('external_id')->unique();
             $table->uuid();
             $table->string('name');
-            $table->string('slug');
             $table->string('type');
             $table->string('icon_link');
             $table->string('icon_path');
