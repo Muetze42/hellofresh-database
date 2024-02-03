@@ -11,7 +11,7 @@ return [
      | tests files.
      |--------------------------------------------------------------------------
      */
-    'overwriteFiles'           => false,
+    'overwriteFiles' => false,
 
     /*
      |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return [
      | overwritten (useful when "overwriteFile" is enabled).
      |--------------------------------------------------------------------------
      */
-    'backupFiles'              => true,
+    'backupFiles' => true,
 
     /*
      |--------------------------------------------------------------------------
@@ -29,10 +29,13 @@ return [
      |
      | Files matching this regex will not have tests generation. This must
      | be an array of RegExp compatible with "preg_match", but without the
-     | opening and closing "/", as they will be added automatically.
+     | opening and closing "/", as they will be added automatically.
      |--------------------------------------------------------------------------
      */
-    'excludedFiles'            => [],
+    'excludedFiles' => [
+        '_ide_help.*',
+        'Models/Traits.*',
+    ],
 
     /*
      |--------------------------------------------------------------------------
@@ -40,10 +43,10 @@ return [
      |
      | Only files matching this regex will have tests generation. This must
      | be an array of RegExp compatible with "preg_match", but without the
-     | opening and closing "/", as they will be added automatically.
+     | opening and closing "/", as they will be added automatically.
      |--------------------------------------------------------------------------
      */
-    'includedFiles'            => [
+    'includedFiles' => [
         '\.php$',
     ],
 
@@ -55,7 +58,7 @@ return [
      | generate the associated tests. Only works with Laravel for the moment.
      |--------------------------------------------------------------------------
      */
-    'generateOnMake'           => true,
+    'generateOnMake' => true,
 
     /*
      |--------------------------------------------------------------------------
@@ -65,7 +68,7 @@ return [
      | complex tests skeleton (getter/setter tests...).
      |--------------------------------------------------------------------------
      */
-    'automaticGeneration'      => true,
+    'automaticGeneration' => true,
 
     /*
      |--------------------------------------------------------------------------
@@ -76,7 +79,7 @@ return [
      | https://phpunitgen.io/docs#/en/configuration?id=implementations-to-use
      |--------------------------------------------------------------------------
      */
-    'implementations'          => DelegateTestGenerator::implementations(),
+    'implementations' => DelegateTestGenerator::implementations(),
 
     /*
      |--------------------------------------------------------------------------
@@ -85,7 +88,7 @@ return [
      | This string will be removed from the test class namespace.
      |--------------------------------------------------------------------------
      */
-    'baseNamespace'            => 'App',
+    'baseNamespace' => 'App',
 
     /*
      |--------------------------------------------------------------------------
@@ -94,7 +97,7 @@ return [
      | This string will be prepend to the test class namespace.
      |--------------------------------------------------------------------------
      */
-    'baseTestNamespace'        => 'Tests',
+    'baseTestNamespace' => 'Tests',
 
     /*
      |--------------------------------------------------------------------------
@@ -103,7 +106,7 @@ return [
      | The absolute class name to TestCase.
      |--------------------------------------------------------------------------
      */
-    'testCase'                 => 'Tests\\TestCase',
+    'testCase' => 'Tests\\TestCase',
 
     /*
      |--------------------------------------------------------------------------
@@ -112,7 +115,7 @@ return [
      | Tells if the test class should be final.
      |--------------------------------------------------------------------------
      */
-    'testClassFinal'           => true,
+    'testClassFinal' => true,
 
     /*
      |--------------------------------------------------------------------------
@@ -121,7 +124,7 @@ return [
      | Tells if the test class should declare strict types.
      |--------------------------------------------------------------------------
      */
-    'testClassStrictTypes'     => false,
+    'testClassStrictTypes' => false,
 
     /*
      |--------------------------------------------------------------------------
@@ -141,7 +144,7 @@ return [
      | closing "/", as they will be added automatically.
      |--------------------------------------------------------------------------
      */
-    'excludedMethods'          => [
+    'excludedMethods' => [
         '__construct',
         '__destruct',
     ],
@@ -154,7 +157,7 @@ return [
      | to the test class documentation.
      |--------------------------------------------------------------------------
      */
-    'mergedPhpDoc'             => [
+    'mergedPhpDoc' => [
         'author',
         'copyright',
         'license',
@@ -169,7 +172,7 @@ return [
      | added to the test class documentation.
      |--------------------------------------------------------------------------
      */
-    'phpDoc'                   => [],
+    'phpDoc' => [],
 
     /*
      |--------------------------------------------------------------------------
@@ -180,7 +183,7 @@ return [
      | etc.) or an empty string to disable printing a documentation header.
      |--------------------------------------------------------------------------
      */
-    'phpHeaderDoc'             => '',
+    'phpHeaderDoc' => '',
 
     /*
      |--------------------------------------------------------------------------
@@ -190,7 +193,7 @@ return [
      | contains any other useful information for test generation.
      |--------------------------------------------------------------------------
      */
-    'options'                  => [
+    'options' => [
         /*
          |----------------------------------------------------------------------
          | Context.
