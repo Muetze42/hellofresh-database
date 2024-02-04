@@ -22,18 +22,11 @@ abstract class AbstractCountryJob implements ShouldQueue
     public Country $country;
 
     /**
-     * The name of the queue the job should be sent to.
-     *
-     * @var string|null
-     */
-    public $queue = 'hello-fresh-api';
-
-    /**
      * Create a new job instance.
      */
     public function __construct()
     {
-        //
+        $this->onQueue('hello-fresh-api');
     }
 
     /**

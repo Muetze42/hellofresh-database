@@ -52,10 +52,8 @@ class Country extends Model
      */
     public function switch(): void
     {
+        App::setCountry($this);
         App::setLocale($this->locale);
-        App::setCountry($this->country);
-        App::setHelloFreshBaseUrl($this->domain);
-        App::setHelloFreshApiTake($this->take);
     }
 
     /**

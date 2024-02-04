@@ -2,31 +2,33 @@
 
 namespace App\Http\Clients;
 
-use Illuminate\Support\Facades\App;
 use NormanHuth\HellofreshScraper\Http\Client;
 
 class HelloFresh extends Client
 {
+    /**
+     * Create a new HelleFresh API client instance.
+     */
     public function __construct(
-        int $take = null,
-        string $baseUrl = null,
         string $isoCountryCode = null,
-        string $isoLocale = null
+        string $isoLocale = null,
+        int $take = null,
+        string $baseUrl = null
     ) {
         if (!$take) {
-            $take = App::getHelloFreshBaseUrl();
+            $take = country()?->take;
         }
 
         if (!$baseUrl) {
-            $baseUrl = App::getHelloFreshBaseUrl();
+            $baseUrl = country()?->domain;
         }
 
         if (!$isoCountryCode) {
-            $isoCountryCode = App::getCountry();
+            $isoCountryCode = country()?->country;
         }
 
         if (!$isoLocale) {
-            $isoLocale = App::getLocale();
+            $isoLocale = country()?->locale;
         }
 
         parent::__construct($isoCountryCode, $isoLocale, $take, $baseUrl);

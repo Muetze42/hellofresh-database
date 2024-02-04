@@ -20,7 +20,7 @@
      */ 
         class App {
                     /**
-         * Set the current application country.
+         * Register Country instance with the container.
          *
          * @static 
          */ 
@@ -30,64 +30,15 @@
                         return $instance->setCountry($country);
         }
                     /**
-         * Get the current application country.
+         * Get the available Country instance.
          *
+         * @noinspection PhpUnhandledExceptionInspection
          * @static 
          */ 
-        public static function getCountry()
+        public static function country()
         {
                         /** @var \App\Application $instance */
-                        return $instance->getCountry();
-        }
-                    /**
-         * Set the current HelloFresh base URL.
-         *
-         * @static 
-         */ 
-        public static function setHelloFreshBaseUrl($country)
-        {
-                        /** @var \App\Application $instance */
-                        return $instance->setHelloFreshBaseUrl($country);
-        }
-                    /**
-         * Get the current HelloFresh base URL.
-         *
-         * @static 
-         */ 
-        public static function getHelloFreshBaseUrl()
-        {
-                        /** @var \App\Application $instance */
-                        return $instance->getHelloFreshBaseUrl();
-        }
-                    /**
-         * Set the current HelloFresh API take value.
-         *
-         * @static 
-         */ 
-        public static function setHelloFreshApiTake($take)
-        {
-                        /** @var \App\Application $instance */
-                        return $instance->setHelloFreshApiTake($take);
-        }
-                    /**
-         * Get the current HelloFresh API take value.
-         *
-         * @static 
-         */ 
-        public static function getHelloFreshApiTake($default = 50)
-        {
-                        /** @var \App\Application $instance */
-                        return $instance->getHelloFreshApiTake($default);
-        }
-                    /**
-         * Get table prefix for country tables.
-         *
-         * @static 
-         */ 
-        public static function getCountryPrefix()
-        {
-                        /** @var \App\Application $instance */
-                        return $instance->getCountryPrefix();
+                        return $instance->country();
         }
                     /**
          * Get the version number of the application.
@@ -19383,6 +19334,113 @@
         {
                         return \Illuminate\Testing\TestResponse::inertiaPage();
         }
+         
+    }
+     
+}
+
+    namespace Illuminate\Database\Eloquent\Factories { 
+            /**
+     * 
+     *
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @method $this trashed()
+     */ 
+        class Factory {
+                    /**
+         * 
+         *
+         * @see \Spatie\Translatable\TranslatableServiceProvider::packageRegistered()
+         * @param array|string $locales
+         * @param mixed|null $value
+         * @static 
+         */ 
+        public static function translations($locales, $value)
+        {
+                        return \Illuminate\Database\Eloquent\Factories\Factory::translations($locales, $value);
+        }
+         
+    }
+     
+}
+
+    namespace Database\Factories { 
+            /**
+     * 
+     *
+     */ 
+        class AllergenFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class CategoryFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class CountryFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class CuisineFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class FamilyFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class IngredientFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class LabelFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class RecipeFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class TagFactory {
+         
+    }
+            /**
+     * 
+     *
+     * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+     */ 
+        class UserFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class UtensilFactory {
          
     }
      
