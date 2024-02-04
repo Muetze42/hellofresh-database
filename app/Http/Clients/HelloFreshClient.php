@@ -28,7 +28,7 @@ class HelloFreshClient extends Client
         }
 
         if (!$isoLocale) {
-            $isoLocale = country()?->locale;
+            $isoLocale = app()->getLocale();
         }
 
         parent::__construct($isoCountryCode, $isoLocale, $take, $baseUrl);

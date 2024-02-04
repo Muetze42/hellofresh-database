@@ -20,10 +20,12 @@ class CountryMiddleware
         if ($name && substr_count($name, '-') === 1) {
             [$country, $locale] = explode('-', $name);
 
-            if ($country = Country::whereCountry(Str::upper($country))->whereLocale(Str::lower($locale))->first()) {
-                $country->switch();
+            if ($country = Country::whereCountry(Str::upper($country))->first()) {
+                if (in_array($locale, $country->locales)) {
+                    $country->switch($locale);
 
-                return $next($request);
+                    return $next($request);
+                }
             }
         }
 
