@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->withoutMiddleware(CountryMiddleware::class)->name('home');
 
 Route::prefix('{country_lang}')->group(function () {
-    Route::get('debug', fn () => dd((new \App\Http\Clients\HelloFreshClient())->token()));
+    Route::get('debug', fn () => dd((new \App\Http\Clients\HelloFreshClient())->cuisines()->items()));
 });

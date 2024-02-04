@@ -3,9 +3,9 @@
 namespace App\Jobs\HelloFresh;
 
 use App\Contracts\Jobs\AbstractCountryUpdateJob;
-use App\Models\Allergen;
+use App\Models\Cuisine;
 
-class UpdateAllergensJob extends AbstractCountryUpdateJob
+class UpdateCuisinesJob extends AbstractCountryUpdateJob
 {
     /**
      * Execute the job.
@@ -14,12 +14,14 @@ class UpdateAllergensJob extends AbstractCountryUpdateJob
      */
     public function handleCountry(): void
     {
-        $response = $this->client->allergens($this->skip);
-
+        $response = $this->client->cuisines($this->skip);
         foreach ($response->items() as $item) {
-            Allergen::updateOrCreate(
+            appLog($item->data());
+            appLog(Cuisine::freshAttributes($item));
+
+            Cuisine::updateOrCreate(
                 ['external_id' => $item->getKey()],
-                Allergen::freshAttributes($item)
+                Cuisine::freshAttributes($item)
             );
         }
 

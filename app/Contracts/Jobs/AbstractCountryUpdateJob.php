@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Jobs;
 
-use App\Http\Clients\HelloFreshClient;
+use NormanHuth\HellofreshScraper\Http\Responses\AbstractIndexResponse;
 
 /**
  * @method static countryDispatch(?int $limit = null, int $skip = 0)
@@ -20,5 +20,19 @@ abstract class AbstractCountryUpdateJob extends AbstractCountryJob
     {
         $this->limit = $limit;
         $this->skip = $skip;
+    }
+
+    /**
+     * Dispatch optional a new job.
+     */
+    protected function afterCountryHandle(AbstractIndexResponse $response): void
+    {
+        if ($this->limit && ($response->skip() + $response->take()) >= $this->limit) {
+            return;
+        }
+
+        if ($next = $response->getNextPaginate()) {
+            static::countryDispatch($this->limit, $next);
+        }
     }
 }

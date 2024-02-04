@@ -9,10 +9,10 @@ class {{ class }} extends \App\Contracts\Jobs\AbstractCountryJob
     /**
      * Create a new job instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    //public function __construct()
+    //{
+    //    //
+    //}
 
     /**
      * Execute the job.
