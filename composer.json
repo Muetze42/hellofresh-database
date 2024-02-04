@@ -9,6 +9,12 @@
         "laravel",
         "recipes"
     ],
+    "homepage": "https://hfresh.info",
+    "support": {
+        "source": "https://github.com/Muetze42/hellofresh-database",
+        "issues": "https://github.com/Muetze42/hellofresh-database/issues",
+        "docs": "https://github.com/Muetze42/hellofresh-database/discussions"
+    },
     "license": "MIT",
     "repositories": [
         {

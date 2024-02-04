@@ -2,7 +2,6 @@
 
 use App\Models\Category;
 use App\Models\Country;
-use App\Models\Family;
 use App\Models\Label;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

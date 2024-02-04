@@ -5,18 +5,18 @@ namespace App\Models;
 use App\Casts\HelloFreshTimeCast;
 use App\Models\Traits\CanActivateTrait;
 use App\Models\Traits\CountryTrait;
+use App\Models\Traits\HasTranslationsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Translatable\HasTranslations;
 
 class Recipe extends Model
 {
     use HasFactory;
     use CountryTrait;
     use CanActivateTrait;
-    use HasTranslations;
+    use HasTranslationsTrait;
 
     /**
      * The attributes that are translatable.

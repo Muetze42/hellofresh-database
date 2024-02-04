@@ -29,6 +29,7 @@ abstract class AbstractCountryUpdateJob extends AbstractCountryJob
     {
         if ($this->limit && ($response->skip() + $response->take()) >= $this->limit) {
             appLog('Abort');
+
             return;
         }
 
