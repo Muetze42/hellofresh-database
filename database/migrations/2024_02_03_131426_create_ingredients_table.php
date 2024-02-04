@@ -16,13 +16,13 @@ return new class () extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Country::class)->constrained();
-            $table->foreignIdFor(Family::class)->constrained();
+            $table->foreignIdFor(Family::class)->nullable()->constrained();
             $table->uuid('external_id')->unique();
             $table->uuid();
             $table->json('name');
             $table->string('type');
-            $table->string('image_link');
-            $table->string('image_path');
+            $table->string('image_link')->nullable();
+            $table->string('image_path')->nullable();
             $table->json('description')->nullable();
             $table->boolean('shipped');
             $table->timestamps();

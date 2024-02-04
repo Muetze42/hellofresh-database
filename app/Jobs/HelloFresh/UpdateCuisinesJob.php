@@ -15,10 +15,8 @@ class UpdateCuisinesJob extends AbstractCountryUpdateJob
     public function handleCountry(): void
     {
         $response = $this->client->cuisines($this->skip);
-        foreach ($response->items() as $item) {
-            appLog($item->data());
-            appLog(Cuisine::freshAttributes($item));
 
+        foreach ($response->items() as $item) {
             Cuisine::updateOrCreate(
                 ['external_id' => $item->getKey()],
                 Cuisine::freshAttributes($item)

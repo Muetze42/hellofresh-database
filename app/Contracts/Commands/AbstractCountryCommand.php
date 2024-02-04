@@ -57,10 +57,12 @@ abstract class AbstractCountryCommand extends Command
         }
 
         foreach ($countries->get() as $country) {
-            $this->country = $country;
-            $this->country->switch();
+            foreach ($country->locales as $locale) {
+                $this->country = $country;
+                $this->country->switch($locale);
 
-            $exitCode = parent::execute($input, $output);
+                $exitCode = parent::execute($input, $output);
+            }
         }
 
         return $exitCode;

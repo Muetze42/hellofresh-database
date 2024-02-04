@@ -24,6 +24,11 @@ abstract class AbstractCountryJob implements ShouldQueue
     public Country $country;
 
     /**
+     * The country locale.
+     */
+    public string $locale;
+
+    /**
      * The HelloFreshClient instance.
      */
     public HelloFreshClient $client;
@@ -35,13 +40,14 @@ abstract class AbstractCountryJob implements ShouldQueue
     {
         $instance = new static(...$arguments);
         $instance->withCountry(country());
+        $instance->withLocale(app()->getLocale());
         $instance->onQueue('hellofresh');
 
         return new PendingDispatch($instance);
     }
 
     /**
-     * Set the Country the job.
+     * Set the Country for the job.
      */
     public function withCountry(Country $country): static
     {
@@ -51,16 +57,24 @@ abstract class AbstractCountryJob implements ShouldQueue
     }
 
     /**
+     * Set the country locale the job.
+     */
+    public function withLocale(string $locale): static
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    /**
      * Execute the job.
-     *
-     * @noinspection PhpUnhandledExceptionInspection
      */
     public function handle(): void
     {
-        $this->country->switch();
+        $this->country->switch($this->locale);
         $this->client = new HelloFreshClient(
             isoCountryCode: $this->country->country,
-            isoLocale: $this->country->locale,
+            isoLocale: $this->locale,
             take: $this->country->take,
             baseUrl:$this->country->domain
         );

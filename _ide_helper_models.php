@@ -18,7 +18,7 @@ namespace App\Models{
  * @property string $external_id
  * @property array $name
  * @property string $type
- * @property string $icon_path
+ * @property string|null $icon_path
  * @property array|null $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -78,16 +78,15 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $country
- * @property string $locale
+ * @property mixed|null $locales
  * @property string $domain
- * @property array|null $data
  * @property int $take
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Country active()
  * @method static \Database\Factories\CountryFactory factory($count = null, $state = [])
@@ -97,12 +96,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Country whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereDomain($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Country whereIngredients($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Country whereLocale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Country whereRecipes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Country whereLocales($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereTake($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereUpdatedAt($value)
  */
@@ -117,8 +113,8 @@ namespace App\Models{
  * @property string $external_id
  * @property string $type
  * @property array $name
- * @property string $icon_link
- * @property string $icon_path
+ * @property string|null $icon_link
+ * @property string|null $icon_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
@@ -150,8 +146,8 @@ namespace App\Models{
  * @property string $uuid
  * @property array $name
  * @property string $type
- * @property string $icon_link
- * @property string $icon_path
+ * @property string|null $icon_link
+ * @property string|null $icon_path
  * @property array|null $description
  * @property int $priority
  * @property \Illuminate\Support\Carbon|null $external_created_at
@@ -191,20 +187,21 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $country_id
- * @property int $family_id
+ * @property int|null $family_id
  * @property string $external_id
  * @property string $uuid
  * @property array $name
  * @property string $type
- * @property string $image_link
- * @property string $image_path
+ * @property string|null $image_link
+ * @property string|null $image_path
  * @property array|null $description
  * @property bool $shipped
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
- * @property-read \App\Models\Family $family
+ * @property-read \App\Models\Country $country
+ * @property-read \App\Models\Family|null $family
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @method static \Database\Factories\IngredientFactory factory($count = null, $state = [])

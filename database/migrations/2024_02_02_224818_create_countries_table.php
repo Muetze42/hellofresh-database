@@ -13,17 +13,12 @@ return new class () extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->char('country', 2);
-            $table->char('locale', 2);
+            $table->char('country', 2)->unique();
+            $table->json('locales');
             $table->string('domain');
-            $table->json('data')->nullable();
             $table->unsignedTinyInteger('take');
-            $table->unsignedInteger('recipes')->nullable();
-            $table->unsignedInteger('ingredients')->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();
-
-            $table->index(['country', 'locale']);
         });
     }
 

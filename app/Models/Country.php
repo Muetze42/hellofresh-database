@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Casts\LowerStringCast;
+use App\Casts\LowerArrayCast;
 use App\Casts\UpperStringCast;
 use App\Models\Traits\CanActivateTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,10 +22,7 @@ class Country extends Model
         'country',
         'locale',
         'domain',
-        'data',
         'take',
-        'recipes',
-        'ingredients',
     ];
 
     /**
@@ -40,20 +37,17 @@ class Country extends Model
      */
     protected $casts = [
         'country' => UpperStringCast::class,
-        'locale' => LowerStringCast::class,
-        'data' => 'array',
+        'locales' => LowerArrayCast::class,
         'take' => 'int',
-        'recipes' => 'int',
-        'ingredients' => 'int',
     ];
 
     /**
      * Switch to this country.
      */
-    public function switch(): void
+    public function switch(string $locale): void
     {
         App::setCountry($this);
-        App::setLocale($this->locale);
+        App::setLocale($locale);
     }
 
     /**

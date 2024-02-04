@@ -1,109 +1,97 @@
 [
     {
         "country": "AT",
-        "locale": "de",
+        "locales": ["de"],
         "domain": "https://www.hellofresh.at",
         "take": 40
     },
     {
         "country": "AU",
-        "locale": "en",
+        "locales": ["en"],
         "domain": "https://www.hellofresh.com.au",
         "take": 40
     },
     {
         "country": "BE",
-        "locale": "nl",
-        "domain": "https://www.hellofresh.be",
-        "take": 40
-    },
-    {
-        "country": "BE",
-        "locale": "fr",
+        "locales": ["nl", "fr"],
         "domain": "https://www.hellofresh.be",
         "take": 40
     },
     {
         "country": "CA",
-        "locale": "en",
-        "domain": "https://www.hellofresh.ca",
-        "take": 50
-    },
-    {
-        "country": "CA",
-        "locale": "fr",
+        "locales": ["en", "fr"],
         "domain": "https://www.hellofresh.ca",
         "take": 50
     },
     {
         "country": "CH",
-        "locale": "de",
+        "locales": ["de"],
         "domain": "https://www.hellofresh.ch",
         "take": 50
     },
     {
         "country": "DE",
-        "locale": "de",
+        "locales": ["de"],
         "domain": "https://www.hellofresh.de",
         "take": 100
     },
     {
         "country": "DK",
-        "locale": "da",
+        "locales": ["da"],
         "domain": "https://www.hellofresh.dk",
         "take": 100
     },
     {
         "country": "FR",
-        "locale": "fr",
+        "locales": ["fr"],
         "domain": "https://www.hellofresh.fr",
         "take": 100
     },
     {
         "country": "GB",
-        "locale": "en",
+        "locales": ["en"],
         "domain": "https://www.hellofresh.co.uk",
         "take": 25
     },
     {
         "country": "IT",
-        "locale": "it",
+        "locales": ["it"],
         "domain": "https://www.hellofresh.it",
         "take": 100
     },
     {
         "country": "LU",
-        "locale": "fr",
+        "locales": ["fr"],
         "domain": "https://www.hellofresh.lu",
         "take": 100
     },
     {
         "country": "NL",
-        "locale": "nl",
+        "locales": ["nl"],
         "domain": "https://www.hellofresh.nl",
         "take": 100
     },
     {
         "country": "NO",
-        "locale": "nb",
+        "locales": ["nb"],
         "domain": "https://www.hellofresh.no",
         "take": 100
     },
     {
         "country": "NZ",
-        "locale": "en",
+        "locales": ["en"],
         "domain": "https://www.hellofresh.co.nz",
         "take": 100
     },
     {
         "country": "SE",
-        "locale": "sv",
+        "locales": ["sv"],
         "domain": "https://www.hellofresh.se",
         "take": 100
     },
     {
         "country": "US",
-        "locale": "en",
+        "locales": ["en"],
         "domain": "https://www.hellofresh.com",
         "take": 50
     }
