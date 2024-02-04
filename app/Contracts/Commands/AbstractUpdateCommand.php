@@ -2,7 +2,7 @@
 
 namespace App\Contracts\Commands;
 
-class AbstractUpdateCommand extends AbstractCountryCommand
+abstract class AbstractUpdateCommand extends AbstractCountryCommand
 {
     /**
      * The console command description.
@@ -15,7 +15,7 @@ class AbstractUpdateCommand extends AbstractCountryCommand
         parent::__construct();
         $this->addAdditionalOption(
             'limit',
-            'Determine how many items should be updated. Value is calculated using the Country `take` column'
+            'Determine how many items should be updated. Value is calculated using the Country `take` column',
         );
     }
 }

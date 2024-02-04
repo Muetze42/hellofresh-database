@@ -4,7 +4,7 @@ namespace App\Http\Clients;
 
 use NormanHuth\HellofreshScraper\Http\Client;
 
-class HelloFresh extends Client
+class HelloFreshClient extends Client
 {
     /**
      * Create a new HelleFresh API client instance.

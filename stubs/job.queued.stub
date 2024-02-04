@@ -1,0 +1,35 @@
+<?php
+
+namespace {{ namespace }};
+
+//class A implements \Illuminate\Contracts\Queue\ShouldQueue
+class {{ class }} extends \App\Contracts\Jobs\AbstractCountryJob
+{
+    //use \Illuminate\Queue\InteractsWithQueue;
+    //use \Illuminate\Bus\Queueable;
+    //use \Illuminate\Queue\SerializesModels;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Execute the job.
+     */
+    //public function handle(): void
+    //{
+    //    // Execute a job without current country
+    //}
+
+    /**
+     * Execute the job.
+     */
+    //public function handleCountry(): void
+    //{
+    //    // Execute the job for a country
+    //}
+}

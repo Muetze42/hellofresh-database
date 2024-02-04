@@ -3,6 +3,7 @@
 namespace App\Console\Commands\HelloFresh;
 
 use App\Contracts\Commands\AbstractUpdateCommand;
+use App\Jobs\HelloFresh\UpdateAllergensJob;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'app:hello-fresh:update-allergens')]
@@ -18,7 +19,6 @@ class UpdateAllergensCommand extends AbstractUpdateCommand
      */
     public function handle(): void
     {
-        // Debug
-        $this->components->info($this->country->domain);
+        UpdateAllergensJob::countryDispatch($this->option('limit'));
     }
 }
