@@ -60,6 +60,26 @@
                         return $instance->getHelloFreshBaseUrl();
         }
                     /**
+         * Set the current HelloFresh API take value.
+         *
+         * @static 
+         */ 
+        public static function setHelloFreshApiTake($take)
+        {
+                        /** @var \App\Application $instance */
+                        return $instance->setHelloFreshApiTake($take);
+        }
+                    /**
+         * Get the current HelloFresh API take value.
+         *
+         * @static 
+         */ 
+        public static function getHelloFreshApiTake($default = 50)
+        {
+                        /** @var \App\Application $instance */
+                        return $instance->getHelloFreshApiTake($default);
+        }
+                    /**
          * Get table prefix for country tables.
          *
          * @static 

@@ -8,11 +8,15 @@ use NormanHuth\HellofreshScraper\Http\Client;
 class HelloFresh extends Client
 {
     public function __construct(
-        int $take = 10,
+        int $take = null,
         string $baseUrl = null,
         string $isoCountryCode = null,
         string $isoLocale = null
     ) {
+        if (!$take) {
+            $take = App::getHelloFreshBaseUrl();
+        }
+
         if (!$baseUrl) {
             $baseUrl = App::getHelloFreshBaseUrl();
         }

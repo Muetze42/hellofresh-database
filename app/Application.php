@@ -43,6 +43,22 @@ class Application extends App
     }
 
     /**
+     * Set the current HelloFresh API take value.
+     */
+    public function setHelloFreshApiTake(int $take): void
+    {
+        $this['config']->set('app.hf_api_take', $take);
+    }
+
+    /**
+     * Get the current HelloFresh API take value.
+     */
+    public function getHelloFreshApiTake(int $default = 50): int
+    {
+        return $this['config']->get('app.hf_api_take', $default);
+    }
+
+    /**
      * Get table prefix for country tables.
      */
     public function getCountryPrefix(): string
