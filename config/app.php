@@ -100,16 +100,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Country Configuration
+    | Application Country And HF URL Configuration
     |--------------------------------------------------------------------------
     |
-    | The application locale determines the default country that will be used
-    | for the Models and recipes source. This value automatic change by
-    | application route to switch between languages.
+    | This values determines the default country and HelloFresh-URL that will
+    | be used for the Models and recipes source and API requests. This value
+    | automatic change by application route to switch between languages.
     |
     */
 
     'country' => 'DE',
+    'hf_base_url' => 'https://www.hellofresh.de',
 
     /*
     |--------------------------------------------------------------------------

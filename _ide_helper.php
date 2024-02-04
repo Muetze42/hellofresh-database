@@ -40,6 +40,26 @@
                         return $instance->getCountry();
         }
                     /**
+         * Set the current HelloFresh base URL.
+         *
+         * @static 
+         */ 
+        public static function setHelloFreshBaseUrl($country)
+        {
+                        /** @var \App\Application $instance */
+                        return $instance->setHelloFreshBaseUrl($country);
+        }
+                    /**
+         * Get the current HelloFresh base URL.
+         *
+         * @static 
+         */ 
+        public static function getHelloFreshBaseUrl()
+        {
+                        /** @var \App\Application $instance */
+                        return $instance->getHelloFreshBaseUrl();
+        }
+                    /**
          * Get table prefix for country tables.
          *
          * @static 

@@ -27,6 +27,22 @@ class Application extends App
     }
 
     /**
+     * Set the current HelloFresh base URL.
+     */
+    public function setHelloFreshBaseUrl(string $country): void
+    {
+        $this['config']->set('app.hf_base_url', $country);
+    }
+
+    /**
+     * Get the current HelloFresh base URL.
+     */
+    public function getHelloFreshBaseUrl(): string
+    {
+        return $this['config']->get('app.hf_base_url');
+    }
+
+    /**
      * Get table prefix for country tables.
      */
     public function getCountryPrefix(): string
