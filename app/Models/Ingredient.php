@@ -64,4 +64,12 @@ class Ingredient extends Model
     {
         return $this->belongsTo(Family::class);
     }
+
+    /**
+     * Get the country that owns the recipe.
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

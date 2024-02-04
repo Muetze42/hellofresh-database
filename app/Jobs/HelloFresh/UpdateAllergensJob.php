@@ -17,7 +17,11 @@ class UpdateAllergensJob extends AbstractCountryUpdateJob
         $response = $this->client->allergens($this->skip);
 
         foreach ($response->items() as $item) {
-            Allergen::freshUpdateOrCreate($item);
+            appLog($item->getKey());
+            Allergen::updateOrCreate(
+                ['external_id' => $item->getKey()],
+                Allergen::freshAttributes($item)
+            );
         }
 
         if ($this->limit && ($response->skip() + $response->take()) >= $this->limit) {
