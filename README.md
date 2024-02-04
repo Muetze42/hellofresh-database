@@ -4,7 +4,8 @@ New version under development
 
 ## A small progress report:
 
-* The first scrappers are ready. The only thing missing now is the most extensive one, the recipe scraper
+* ~~The first scrappers are ready. The only thing missing now is the most extensive one, the recipe scraper~~
+* The database scrapper is finished
 * HelloFresh support 2 languages for Belgium and Canada
 * In the old version, only the main language was available. Now all languages are available for multilingual countries
 * The complete front end still needs to be developed
@@ -14,7 +15,7 @@ New version under development
 * The option to register and favorite recipes is no longer available as this was not used
 * There will be several pages
     * Recipes Index
-    * Recipes Show
+    * Recipe Show
     * Ingredients Index
     * Weekly Cook Boxes
     * Stats

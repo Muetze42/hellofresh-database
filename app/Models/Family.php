@@ -45,14 +45,6 @@ class Family extends Model
     ];
 
     /**
-     * Get the recipes for the family.
-     */
-    public function recipes(): HasMany
-    {
-        return $this->hasMany(Recipe::class);
-    }
-
-    /**
      * Get the ingredients for the family.
      */
     public function ingredients(): HasMany

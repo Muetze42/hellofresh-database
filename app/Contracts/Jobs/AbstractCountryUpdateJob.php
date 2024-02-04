@@ -28,6 +28,7 @@ abstract class AbstractCountryUpdateJob extends AbstractCountryJob
     protected function afterCountryHandle(AbstractIndexResponse $response): void
     {
         if ($this->limit && ($response->skip() + $response->take()) >= $this->limit) {
+            appLog('Abort');
             return;
         }
 

@@ -20,9 +20,8 @@ return new class () extends Migration
             $table->foreignIdFor(Country::class)->constrained();
             $table->foreignIdFor(Label::class)->nullable()->constrained();
             $table->foreignIdFor(Category::class)->nullable()->constrained();
-            $table->foreignIdFor(Family::class)->nullable()->constrained();
             $table->uuid('external_id')->unique();
-            $table->uuid()->unique();
+            $table->uuid()->nullable();
             $table->json('name')->nullable();
             $table->string('card_link')->nullable();
             $table->string('cloned_from')->nullable();
@@ -39,9 +38,9 @@ return new class () extends Migration
             $table->boolean('difficulty');
             $table->boolean('active');
             $table->boolean('is_addon');
-            $table->json('nutrition');
-            $table->json('steps');
-            $table->json('yields');
+            $table->json('nutrition')->nullable();
+            $table->json('steps')->nullable();
+            $table->json('yields')->nullable();
             $table->timestamp('external_created_at')->nullable();
             $table->timestamp('external_updated_at')->nullable();
             $table->timestamps();

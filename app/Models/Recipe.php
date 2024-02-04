@@ -66,8 +66,8 @@ class Recipe extends Model
         'ratings_count' => 'int',
         'serving_size' => 'int',
         'is_addon' => 'bool',
-        'external_created_at' => 'timestamp',
-        'external_updated_at' => 'timestamp',
+        'external_created_at' => 'datetime',
+        'external_updated_at' => 'datetime',
         'nutrition' => 'array',
         'steps' => 'array',
         'yields' => 'array',
@@ -96,7 +96,7 @@ class Recipe extends Model
      */
     public function ingredients(): BelongsToMany
     {
-        return $this->belongsToMany(Cuisine::class);
+        return $this->belongsToMany(Ingredient::class);
     }
 
     /**
@@ -129,14 +129,6 @@ class Recipe extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Get the family that owns the recipe.
-     */
-    public function family(): BelongsTo
-    {
-        return $this->belongsTo(Family::class);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Console\Commands\HelloFresh;
 
 use App\Contracts\Commands\AbstractUpdateCommand;
+use App\Jobs\HelloFresh\UpdateRecipesJob;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'app:hello-fresh:update-recipes')]
@@ -18,6 +19,6 @@ class UpdateRecipesCommand extends AbstractUpdateCommand
      */
     public function handle(): void
     {
-        // Todo
+        UpdateRecipesJob::countryDispatch($this->option('limit'));
     }
 }

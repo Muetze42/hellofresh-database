@@ -16,9 +16,9 @@ return new class () extends Migration
             $table->uuid('external_id')->unique();
             $table->string('type');
             $table->json('name');
-            $table->string('color_handle');
-            $table->json('preferences');
-            $table->boolean('display_label');
+            $table->string('color_handle')->nullable();
+            $table->json('preferences')->nullable();
+            $table->boolean('display_label')->default(false);
             $table->timestamps();
         });
     }
