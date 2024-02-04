@@ -442,3 +442,29 @@ namespace App\Models{
 	class Utensil extends \Eloquent {}
 }
 
+namespace App\Models{
+/**
+ * App\Models\Weekly
+ *
+ * @property int $id
+ * @property int $country_id
+ * @property string $year_week
+ * @property string $start
+ * @property string $end
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property mixed $
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereYearWeek($value)
+ */
+	class Weekly extends \Eloquent {}
+}
+
