@@ -4,13 +4,14 @@ namespace App\Contracts\Jobs;
 
 use App\Http\Clients\HelloFreshClient;
 
+/**
+ * @method static countryDispatch(?int $limit = null, int $skip = 0)
+ */
 abstract class AbstractCountryUpdateJob extends AbstractCountryJob
 {
     public ?int $limit;
 
     public int $skip;
-
-    public HelloFreshClient $client;
 
     /**
      * Create a new job instance.
@@ -19,6 +20,5 @@ abstract class AbstractCountryUpdateJob extends AbstractCountryJob
     {
         $this->limit = $limit;
         $this->skip = $skip;
-        $this->client = new HelloFreshClient();
     }
 }

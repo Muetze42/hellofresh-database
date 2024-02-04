@@ -12,9 +12,10 @@ trait CountryTrait
     /**
      *  Get the first record matching the attributes. If the record is not found, create it.
      */
-    public static function freshUpdateOrCreate(mixed $hfModel, string $primaryKey = 'id'): Model
+    public static function freshUpdateOrCreate(mixed $hfModel, string $primaryKey = 'external_id'): Model
     {
         $replace = [
+            'external_id' => 'id',
             'external_created_at' => 'created_at',
             'external_updated_at' => 'updated_at',
         ];
@@ -26,6 +27,7 @@ trait CountryTrait
         /* @var \NormanHuth\HellofreshScraper\Models\AbstractModel $hfModel */
         $columns = (new static())->getFillable();
         $data = $hfModel->data();
+
         $columns = Arr::mapWithKeys(
             $columns,
             fn (string $column) => [$column => data_get(
@@ -34,7 +36,6 @@ trait CountryTrait
             )]
         );
 
-        // Todo: external_created_at, external_updated_at, description_markdown
         return static::firstOrCreate(
             ['external_id' => $columns[$primaryKey]],
             Arr::except($columns, $primaryKey)

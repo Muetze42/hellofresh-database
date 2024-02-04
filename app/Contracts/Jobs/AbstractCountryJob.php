@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Jobs;
 
+use App\Http\Clients\HelloFreshClient;
 use App\Models\Country;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,6 +22,11 @@ abstract class AbstractCountryJob implements ShouldQueue
      * The Country instance.
      */
     public Country $country;
+
+    /**
+     * The HelloFreshClient instance.
+     */
+    public HelloFreshClient $client;
 
     /**
      * Dispatch the job with the given arguments.
@@ -52,6 +58,12 @@ abstract class AbstractCountryJob implements ShouldQueue
     public function handle(): void
     {
         $this->country->switch();
+        $this->client = new HelloFreshClient(
+            isoCountryCode: $this->country->country,
+            isoLocale: $this->country->locale,
+            take: $this->country->take,
+            baseUrl:$this->country->domain
+        );
         $this->handleCountry();
     }
 }
