@@ -12,6 +12,9 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
+        dd((new \App\Http\Clients\HelloFresh())
+            ->weeklyMenu(2));
+
         return Inertia::render('Home/Index', [
             'ip' => $request->ip(),
         ]);

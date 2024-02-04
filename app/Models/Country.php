@@ -53,5 +53,6 @@ class Country extends Model
     {
         App::setLocale($this->locale);
         App::setCountry($this->country);
+        App::setHelloFreshBaseUrl($this->domain);
     }
 }
