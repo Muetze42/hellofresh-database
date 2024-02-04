@@ -5,12 +5,20 @@ namespace App\Models;
 use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Translatable\HasTranslations;
 
 class Ingredient extends Model
 {
     use HasFactory;
     use CountryTrait;
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['name', 'description'];
 
     /**
      * The attributes that are mass assignable.
@@ -18,17 +26,12 @@ class Ingredient extends Model
     protected $fillable = [
         'external_id',
         'uuid',
-        'slug',
         'type',
-        'country',
         'image_link',
         'image_path',
         'name',
-        'internal_name',
         'shipped',
         'description',
-        'usage',
-        'has_duplicated_name',
     ];
 
     /**
@@ -36,7 +39,6 @@ class Ingredient extends Model
      */
     protected $casts = [
         'shipped' => 'bool',
-        'usage' => 'int',
     ];
 
     /**
@@ -53,5 +55,13 @@ class Ingredient extends Model
     public function allergens(): BelongsToMany
     {
         return $this->belongsToMany(Allergen::class);
+    }
+
+    /**
+     * Get the family that owns the ingredient.
+     */
+    public function family(): BelongsTo
+    {
+        return $this->belongsTo(Family::class);
     }
 }

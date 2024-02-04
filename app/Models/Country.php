@@ -7,6 +7,7 @@ use App\Casts\UpperStringCast;
 use App\Models\Traits\CanActivateTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\App;
 
 class Country extends Model
@@ -55,5 +56,21 @@ class Country extends Model
         App::setCountry($this->country);
         App::setHelloFreshBaseUrl($this->domain);
         App::setHelloFreshApiTake($this->take);
+    }
+
+    /**
+     * Get the recipes for the country.
+     */
+    public function recipes(): HasMany
+    {
+        return $this->hasMany(Recipe::class);
+    }
+
+    /**
+     * Get the ingredients for the country.
+     */
+    public function ingredients(): HasMany
+    {
+        return $this->hasMany(Ingredient::class);
     }
 }

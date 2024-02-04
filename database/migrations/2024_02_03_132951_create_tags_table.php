@@ -9,13 +9,16 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(string $prefix = ''): void
+    public function up(): void
     {
-        Schema::create($prefix . 'utensils', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->uuid('external_id')->unique();
-            $table->string('type')->nullable();
-            $table->string('name');
+            $table->string('type');
+            $table->json('name');
+            $table->string('color_handle');
+            $table->json('preferences');
+            $table->boolean('display_label');
             $table->timestamps();
         });
     }
@@ -23,8 +26,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(string $prefix = ''): void
+    public function down(): void
     {
-        Schema::dropIfExists($prefix . 'utensils');
+        Schema::dropIfExists('tags');
     }
 };

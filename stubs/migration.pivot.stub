@@ -9,11 +9,11 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(string $prefix = ''): void
+    public function up(): void
     {
         Schema::create($prefix . '{{table}}', function (Blueprint $table) use ($prefix) {
-            $table->foreignId('{{snake0}}_{{id1column}}')->constrained($prefix . '{{table0}}')->cascadeOnDelete();
-            $table->foreignId('{{snake1}}_{{id1column}}')->constrained($prefix . '{{table1}}')->cascadeOnDelete();
+            $table->foreignId('{{snake0}}_{{id1column}}')->constrained()->cascadeOnDelete();
+            $table->foreignId('{{snake1}}_{{id1column}}')->constrained()->cascadeOnDelete();
             $table->primary(['{{snake0}}_{{id1column}}', '{{snake1}}_{{id1column}}']);
         });
     }
@@ -21,7 +21,7 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(string $prefix = ''): void
+    public function down(): void
     {
         Schema::dropIfExists($prefix . '{{table}}');
     }

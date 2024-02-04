@@ -11,10 +11,10 @@ return new class () extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('external_id')->unique();
-            $table->timestamps();
+        Schema::create('cuisine_recipe', function (Blueprint $table) {
+            $table->foreignId('cuisine_id')->constrained('cuisines')->cascadeOnDelete();
+            $table->foreignId('recipe_id')->constrained('recipes')->cascadeOnDelete();
+            $table->primary(['cuisine_id', 'recipe_id']);
         });
     }
 
@@ -23,6 +23,6 @@ return new class () extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::dropIfExists('cuisine_recipe');
     }
 };

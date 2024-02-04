@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Family;
 use App\Models\Label;
 use Illuminate\Database\Migrations\Migration;
@@ -12,32 +13,25 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(string $prefix = ''): void
+    public function up(): void
     {
-        Schema::create($prefix . 'recipes', function (Blueprint $table) use ($prefix) {
+        Schema::create('recipes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Label::class)
-                ->nullable()->constrained((new Label())->getCountryTable($prefix));
-            $table->foreignIdFor(Category::class)
-                ->nullable()->constrained((new Category())->getCountryTable($prefix));
-            $table->foreignIdFor(Family::class)
-                ->nullable()->constrained((new Family())->getCountryTable($prefix));
+            $table->foreignIdFor(Country::class)->constrained();
+            $table->foreignIdFor(Label::class)->nullable()->constrained();
+            $table->foreignIdFor(Category::class)->nullable()->constrained();
+            $table->foreignIdFor(Family::class)->nullable()->constrained();
             $table->uuid('external_id')->unique();
             $table->uuid()->unique();
-            $table->string('name')->nullable();
-            $table->string('canonical')->nullable();
-            $table->string('canonical_link')->nullable();
+            $table->json('name')->nullable();
             $table->string('card_link')->nullable();
             $table->string('cloned_from')->nullable();
-            $table->string('headline');
+            $table->json('headline');
             $table->string('image_link')->nullable();
             $table->string('image_path')->nullable();
             $table->string('total_time')->nullable();
             $table->string('prep_time')->nullable();
-            $table->char('country', 2)->nullable();
-            $table->text('comment')->nullable();
-            $table->text('description')->nullable();
-            $table->text('description_markdown')->nullable();
+            $table->json('description')->nullable();
             $table->unsignedInteger('average_rating');
             $table->unsignedInteger('favorites_count');
             $table->unsignedInteger('ratings_count');
@@ -57,8 +51,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(string $prefix = ''): void
+    public function down(): void
     {
-        Schema::dropIfExists($prefix . 'recipes');
+        Schema::dropIfExists('recipes');
     }
 };

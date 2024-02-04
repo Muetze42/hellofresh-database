@@ -9,19 +9,18 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(string $prefix = ''): void
+    public function up(): void
     {
-        Schema::create($prefix . 'families', function (Blueprint $table) {
+        Schema::create('families', function (Blueprint $table) {
             $table->id();
             $table->uuid('external_id')->unique();
             $table->uuid();
-            $table->string('name');
+            $table->json('name');
             $table->string('type');
             $table->string('icon_link');
             $table->string('icon_path');
-            $table->text('description')->nullable();
-            $table->json('usage_by_country')->nullable();
-            $table->unsignedInteger('priority');
+            $table->json('description')->nullable();
+            $table->json('priority');
             $table->timestamp('external_created_at')->nullable();
             $table->timestamp('external_updated_at')->nullable();
             $table->timestamps();
@@ -31,8 +30,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(string $prefix = ''): void
+    public function down(): void
     {
-        Schema::dropIfExists($prefix . 'families');
+        Schema::dropIfExists('families');
     }
 };

@@ -6,11 +6,18 @@ use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Translatable\HasTranslations;
 
 class Cuisine extends Model
 {
     use HasFactory;
     use CountryTrait;
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['name'];
 
     /**
      * The attributes that are mass assignable.
@@ -21,14 +28,6 @@ class Cuisine extends Model
         'name',
         'icon_link',
         'icon_path',
-        'usage',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     */
-    protected $casts = [
-        'usage' => 'int',
     ];
 
     /**

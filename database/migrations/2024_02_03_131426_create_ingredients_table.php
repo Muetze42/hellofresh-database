@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Country;
+use App\Models\Family;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,23 +11,20 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(string $prefix = ''): void
+    public function up(): void
     {
-        Schema::create($prefix . 'ingredients', function (Blueprint $table) {
+        Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Country::class)->constrained();
+            $table->foreignIdFor(Family::class)->constrained();
             $table->uuid('external_id')->unique();
             $table->uuid();
-            $table->string('slug');
+            $table->json('name');
             $table->string('type');
-            $table->char('country', 2);
             $table->string('image_link');
             $table->string('image_path');
-            $table->string('name');
-            $table->string('internal_name');
-            $table->text('description')->nullable();
-            $table->string('has_duplicated_name')->nullable();
+            $table->json('description')->nullable();
             $table->boolean('shipped');
-            $table->unsignedInteger('usage');
             $table->timestamps();
         });
     }
@@ -33,8 +32,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(string $prefix = ''): void
+    public function down(): void
     {
-        Schema::dropIfExists($prefix . 'ingredients');
+        Schema::dropIfExists('ingredients');
     }
 };

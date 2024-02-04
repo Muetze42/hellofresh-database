@@ -6,11 +6,18 @@ use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class Label extends Model
 {
     use HasFactory;
     use CountryTrait;
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = ['text'];
 
     /**
      * The attributes that are mass assignable.

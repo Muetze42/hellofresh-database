@@ -9,11 +9,11 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(string $prefix = ''): void
+    public function up(): void
     {
-        Schema::create($prefix . 'labels', function (Blueprint $table) {
+        Schema::create('labels', function (Blueprint $table) {
             $table->id();
-            $table->string('text');
+            $table->json('text');
             $table->string('handle');
             $table->string('foreground_color', 7);
             $table->string('background_color', 7);
@@ -25,8 +25,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(string $prefix = ''): void
+    public function down(): void
     {
-        Schema::dropIfExists($prefix . 'labels');
+        Schema::dropIfExists('labels');
     }
 };

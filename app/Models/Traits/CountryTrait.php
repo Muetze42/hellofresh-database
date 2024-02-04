@@ -2,53 +2,51 @@
 
 namespace App\Models\Traits;
 
+use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 trait CountryTrait
 {
     /**
-     * Get the table associated with the model.
-     */
-    public function getTable(): string
-    {
-        $this->table = App::getCountryPrefix() . Str::snake(Str::pluralStudly(class_basename($this)));
-
-        return $this->table;
-    }
-
-    /**
-     * Get the table associated with the model and specific prefix.
-     */
-    public function getCountryTable(string $prefix): string
-    {
-        return $prefix . Str::snake(Str::pluralStudly(class_basename($this)));
-    }
-
-    /**
-     * Get the joining table name for a many-to-many relation.
-     */
-    public function joiningTable($related, $instance = null): string
-    {
-        return $this->getTable();
-    }
-
-    /**
      *  Get the first record matching the attributes. If the record is not found, create it.
      */
     public static function freshUpdateOrCreate(mixed $hfModel, string $primaryKey = 'id'): Model
     {
+        $replace = [
+            'external_created_at' => 'created_at',
+            'external_updated_at' => 'updated_at',
+        ];
+
+        if (static::class == Recipe::class) {
+            $replace['description'] = 'description_markdown';
+        }
+
         /* @var \NormanHuth\HellofreshScraper\Models\AbstractModel $hfModel */
         $columns = (new static())->getFillable();
         $data = $hfModel->data();
-        $columns = Arr::mapWithKeys($columns, fn (string $column) => [$column => data_get($data, Str::camel($column))]);
+        $columns = Arr::mapWithKeys(
+            $columns,
+            fn (string $column) => [$column => data_get(
+                $data,
+                Str::camel(str_replace(array_keys($replace), array_values($replace), $column))
+            )]
+        );
 
-        // Todo: external_created_at, external_updated_at
+        // Todo: external_created_at, external_updated_at, description_markdown
         return static::firstOrCreate(
             ['external_id' => $columns[$primaryKey]],
             Arr::except($columns, $primaryKey)
+        );
+    }
+
+    protected function freshKey(string $column): string
+    {
+        return str_replace(
+            ['external_created_at', 'external_updated_at'],
+            ['created_at', 'updated_at'],
+            $column
         );
     }
 }

@@ -9,12 +9,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Translatable\HasTranslations;
 
 class Recipe extends Model
 {
     use HasFactory;
     use CountryTrait;
     use CanActivateTrait;
+    use HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     */
+    public array $translatable = [
+        'name',
+        'description',
+        'headline',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -22,15 +33,10 @@ class Recipe extends Model
     protected $fillable = [
         'external_id',
         'average_rating',
-        'canonical',
-        'canonical_link',
         'card_link',
         'cloned_from',
-        'comment',
-        'country',
         'external_created_at',
         'description',
-        'description_markdown',
         'difficulty',
         'favorites_count',
         'headline',
@@ -131,5 +137,13 @@ class Recipe extends Model
     public function family(): BelongsTo
     {
         return $this->belongsTo(Family::class);
+    }
+
+    /**
+     * Get the country that owns the recipe.
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
     }
 }

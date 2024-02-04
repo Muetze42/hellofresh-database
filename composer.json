@@ -23,7 +23,8 @@
         "laravel/framework": "^10.43",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "norman-huth/hellofresh-scraper": "@dev"
+        "norman-huth/hellofresh-scraper": "@dev",
+        "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
