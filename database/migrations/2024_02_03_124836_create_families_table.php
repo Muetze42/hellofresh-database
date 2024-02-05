@@ -17,7 +17,6 @@ return new class () extends Migration
             $table->uuid();
             $table->json('name');
             $table->string('type');
-            $table->string('icon_link')->nullable();
             $table->string('icon_path')->nullable();
             $table->json('description')->nullable();
             $table->json('priority');

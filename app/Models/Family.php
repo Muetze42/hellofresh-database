@@ -29,7 +29,6 @@ class Family extends Model
         'type',
         'description',
         'priority',
-        'icon_link',
         'icon_path',
         'external_created_at',
         'external_updated_at',

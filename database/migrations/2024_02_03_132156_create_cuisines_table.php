@@ -16,7 +16,6 @@ return new class () extends Migration
             $table->uuid('external_id')->unique();
             $table->string('type');
             $table->json('name');
-            $table->string('icon_link')->nullable();
             $table->string('icon_path')->nullable();
             $table->timestamps();
         });

@@ -40,7 +40,6 @@ class Recipe extends Model
         'difficulty',
         'favorites_count',
         'headline',
-        'image_link',
         'image_path',
         'is_addon',
         'name',

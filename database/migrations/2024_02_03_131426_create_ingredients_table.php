@@ -21,7 +21,6 @@ return new class () extends Migration
             $table->uuid();
             $table->json('name');
             $table->string('type');
-            $table->string('image_link')->nullable();
             $table->string('image_path')->nullable();
             $table->json('description')->nullable();
             $table->boolean('shipped');

@@ -51,12 +51,18 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
                 Tag::class,
                 Utensil::class,
             ];
-
             foreach ($relations as $relation) {
                 /* @var \App\Models\Allergen|\App\Models\Cuisine|\App\Models\Ingredient $relation */
                 $ids = [];
                 $method = Str::lower(Str::plural(class_basename($relation)));
                 foreach ($item->{$method}() as $child) {
+                    if ($relation == Ingredient::class) {
+                        $ids[] = $this->country->ingredients()->updateOrCreate(
+                            ['external_id' => $child->getKey()],
+                            Ingredient::freshAttributes($child)
+                        )->getKey();
+                        continue;
+                    }
                     $ids[] = $relation::updateOrCreate(
                         ['external_id' => $child->getKey()],
                         Ingredient::freshAttributes($child)

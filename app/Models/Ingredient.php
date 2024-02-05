@@ -27,7 +27,6 @@ class Ingredient extends Model
         'external_id',
         'uuid',
         'type',
-        'image_link',
         'image_path',
         'name',
         'shipped',

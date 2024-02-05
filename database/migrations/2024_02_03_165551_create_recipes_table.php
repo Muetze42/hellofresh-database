@@ -25,7 +25,6 @@ return new class () extends Migration
             $table->string('card_link')->nullable();
             $table->string('cloned_from')->nullable();
             $table->json('headline');
-            $table->string('image_link')->nullable();
             $table->string('image_path')->nullable();
             $table->string('total_time')->nullable();
             $table->string('prep_time')->nullable();
