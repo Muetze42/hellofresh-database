@@ -14,7 +14,7 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-    protected $rootView = 'app';
+    protected $rootView = 'app.page';
 
     /**
      * Determines the current asset version.
@@ -34,7 +34,17 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            //
+            'translations' => $this->getJsonTranslations(),
         ]);
+    }
+
+    /**
+     * Load the messages for the current locale.
+     */
+    protected function getJsonTranslations(): array
+    {
+        return app('translator')
+            ->getLoader()
+            ->load(app()->getLocale(), '*', '*');
     }
 }

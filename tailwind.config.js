@@ -1,13 +1,13 @@
-// const defaultTheme = require('tailwindcss/defaultTheme.js')
+const defaultTheme = require('tailwindcss/defaultTheme.js')
+// const colors = require('tailwindcss/colors.js')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./resources/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue'],
+  content: ['./resources/views/app/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue'],
   theme: {
     extend: {
       fontFamily: {
-        // sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-        // mono: ['Fira Code VF', ...defaultTheme.fontFamily.mono]
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       }
     }
   },
