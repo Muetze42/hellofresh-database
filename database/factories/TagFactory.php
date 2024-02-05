@@ -13,7 +13,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => $this->faker->unique()->uuid(),
+            'id' => $this->faker->unique()->uuid(),
             'type' => $this->faker->word(),
             'name' => $this->faker->name(),
             'color_handle' => $this->faker->word(),

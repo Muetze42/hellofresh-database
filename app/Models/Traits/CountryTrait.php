@@ -14,7 +14,6 @@ trait CountryTrait
     public static function freshAttributes(mixed $hfModel): array
     {
         $replace = [
-            'external_id' => 'id',
             'external_created_at' => 'created_at',
             'external_updated_at' => 'updated_at',
         ];

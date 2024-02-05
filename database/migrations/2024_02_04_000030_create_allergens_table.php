@@ -12,8 +12,7 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('allergens', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('external_id')->unique();
+            $table->uuid('id')->primary();
             $table->json('name');
             $table->string('type');
             $table->string('icon_path')->nullable();

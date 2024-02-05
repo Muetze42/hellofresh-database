@@ -13,7 +13,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => $this->faker->unique()->uuid(),
+            'id' => $this->faker->unique()->uuid(),
             'name' => $this->faker->name(),
             'type' => $this->faker->word(),
             'created_at' => Carbon::now(),

@@ -13,7 +13,7 @@ class IngredientFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => $this->faker->unique()->uuid(),
+            'id' => $this->faker->unique()->uuid(),
             'uuid' => $this->faker->uuid(),
             'slug' => $this->faker->slug(),
             'type' => $this->faker->word(),

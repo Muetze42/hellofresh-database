@@ -26,7 +26,7 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
         foreach ($response->items() as $item) {
             /* @var \App\Models\Recipe $recipe */
             $recipe = $this->country->recipes()->updateOrCreate(
-                ['external_id' => $item->getKey()],
+                ['id' => $item->getKey()],
                 Recipe::freshAttributes($item)
             );
 
@@ -35,7 +35,7 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
                 /* @var \App\Models\Label|\App\Models\Category $relation */
                 $method = Str::lower(class_basename($relation));
                 if ($item->{$method}()) {
-                    $key = $relation == Label::class ? 'handle' : 'external_id';
+                    $key = $relation == Label::class ? 'handle' : 'id';
                     $label = $relation::updateOrCreate(
                         [$key => $item->{$method}()->getKey()],
                         $relation::freshAttributes($item->{$method}())
@@ -58,14 +58,14 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
                 foreach ($item->{$method}() as $child) {
                     if ($relation == Ingredient::class) {
                         $ids[] = $this->country->ingredients()->updateOrCreate(
-                            ['external_id' => $child->getKey()],
+                            ['id' => $child->getKey()],
                             Ingredient::freshAttributes($child)
                         )->getKey();
 
                         continue;
                     }
                     $ids[] = $relation::updateOrCreate(
-                        ['external_id' => $child->getKey()],
+                        ['id' => $child->getKey()],
                         Ingredient::freshAttributes($child)
                     )->getKey();
                 }

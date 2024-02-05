@@ -12,9 +12,7 @@ class {{ class }} extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [
-        'external_id',
-    ];
+    protected $fillable = [];
 
     /**
      * The attributes that should be cast.

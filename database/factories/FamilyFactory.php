@@ -13,7 +13,7 @@ class FamilyFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => $this->faker->unique()->uuid(),
+            'id' => $this->faker->unique()->uuid(),
             'uuid' => $this->faker->uuid(),
             'name' => $this->faker->name(),
             'type' => $this->faker->word(),

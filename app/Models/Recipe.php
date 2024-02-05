@@ -6,6 +6,7 @@ use App\Casts\HelloFreshTimeCast;
 use App\Models\Traits\CanActivateTrait;
 use App\Models\Traits\CountryTrait;
 use App\Models\Traits\HasTranslationsTrait;
+use App\Models\Traits\UseHelloFreshIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,7 @@ class Recipe extends Model
     use CountryTrait;
     use CanActivateTrait;
     use HasTranslationsTrait;
+    use UseHelloFreshIdTrait;
 
     /**
      * The attributes that are translatable.
@@ -31,7 +33,6 @@ class Recipe extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'external_id',
         'average_rating',
         'card_link',
         'cloned_from',

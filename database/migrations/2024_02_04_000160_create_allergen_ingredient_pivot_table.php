@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Allergen;
+use App\Models\Ingredient;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,9 +14,9 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('allergen_ingredient', function (Blueprint $table) {
-            $table->foreignId('allergen_id')->constrained('allergens')->cascadeOnDelete();
-            $table->foreignId('ingredient_id')->constrained('ingredients')->cascadeOnDelete();
-            $table->primary(['allergen_id', 'ingredient_id']);
+            $table->foreignIdFor(Allergen::class)->constrained((new Allergen())->getTable())->cascadeOnDelete();
+            $table->foreignIdFor(Ingredient::class)->constrained((new Ingredient())->getTable())->cascadeOnDelete();
+            $table->primary([(new Allergen())->getForeignKey(), (new Ingredient())->getForeignKey()]);
         });
     }
 

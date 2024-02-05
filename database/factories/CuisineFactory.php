@@ -13,7 +13,7 @@ class CuisineFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => $this->faker->unique()->uuid(),
+            'id' => $this->faker->unique()->uuid(),
             'type' => $this->faker->word(),
             'name' => $this->faker->name(),
             'icon_link' => $this->faker->word(),

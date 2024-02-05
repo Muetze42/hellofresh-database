@@ -16,7 +16,7 @@ class RecipeFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => $this->faker->word(),
+            'id' => $this->faker->word(),
             'uuid' => $this->faker->uuid(),
             'name' => $this->faker->name(),
             'canonical' => $this->faker->word(),

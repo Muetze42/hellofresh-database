@@ -40,7 +40,7 @@ class UpdateMenuJob extends AbstractCountryJob
         );
 
         $menu->recipes()->sync(
-            Recipe::whereIn('external_id', $response['ids'])->pluck('id')->toArray()
+            Recipe::whereIn('id', $response['ids'])->pluck('id')->toArray()
         );
     }
 }

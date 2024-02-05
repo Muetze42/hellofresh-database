@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\CountryTrait;
 use App\Models\Traits\HasTranslationsTrait;
+use App\Models\Traits\UseHelloFreshIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,7 @@ class Ingredient extends Model
     use HasFactory;
     use CountryTrait;
     use HasTranslationsTrait;
+    use UseHelloFreshIdTrait;
 
     /**
      * The attributes that are translatable.
@@ -24,7 +26,6 @@ class Ingredient extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'external_id',
         'uuid',
         'type',
         'image_path',

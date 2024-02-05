@@ -12,8 +12,7 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('utensils', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('external_id')->unique();
+            $table->uuid('id')->primary();
             $table->string('type')->nullable();
             $table->json('name');
             $table->timestamps();

@@ -19,7 +19,7 @@ class UpdateIngredientsJob extends AbstractCountryUpdateJob
         foreach ($response->items() as $item) {
             /* @var \App\Models\Ingredient $ingredient */
             $ingredient = $this->country->ingredients()->updateOrCreate(
-                ['external_id' => $item->getKey()],
+                ['id' => $item->getKey()],
                 Ingredient::freshAttributes($item)
             );
 
@@ -30,7 +30,7 @@ class UpdateIngredientsJob extends AbstractCountryUpdateJob
             }
 
             $family = Family::updateOrCreate(
-                ['external_id' => $ingredientFamily->getKey()],
+                ['id' => $ingredientFamily->getKey()],
                 Family::freshAttributes($ingredientFamily)
             );
 

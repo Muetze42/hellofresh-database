@@ -14,10 +14,9 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('ingredients', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(Country::class)->constrained();
             $table->foreignIdFor(Family::class)->nullable()->constrained();
-            $table->uuid('external_id')->unique();
             $table->uuid();
             $table->json('name');
             $table->string('type');

@@ -14,8 +14,7 @@ namespace App\Models{
 /**
  * App\Models\Allergen
  *
- * @property int $id
- * @property string $external_id
+ * @property string $id
  * @property array $name
  * @property string $type
  * @property string|null $icon_path
@@ -32,7 +31,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen query()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereLocale(string $column, string $locale)
@@ -48,8 +46,7 @@ namespace App\Models{
 /**
  * App\Models\Category
  *
- * @property int $id
- * @property string $external_id
+ * @property string $id
  * @property array $name
  * @property string $type
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -61,7 +58,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereLocale(string $column, string $locale)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereLocales(string $column, array $locales)
@@ -111,8 +107,7 @@ namespace App\Models{
 /**
  * App\Models\Cuisine
  *
- * @property int $id
- * @property string $external_id
+ * @property string $id
  * @property string $type
  * @property array $name
  * @property string|null $icon_path
@@ -125,7 +120,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine query()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereLocale(string $column, string $locale)
@@ -141,8 +135,7 @@ namespace App\Models{
 /**
  * App\Models\Family
  *
- * @property int $id
- * @property string $external_id
+ * @property string $id
  * @property string $uuid
  * @property array $name
  * @property string $type
@@ -162,7 +155,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereExternalCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Family whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereExternalUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereId($value)
@@ -181,10 +173,9 @@ namespace App\Models{
 /**
  * App\Models\Ingredient
  *
- * @property int $id
+ * @property string $id
  * @property int $country_id
- * @property int|null $family_id
- * @property string $external_id
+ * @property string|null $family_id
  * @property string $uuid
  * @property array $name
  * @property string $type
@@ -206,7 +197,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereFamilyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereImagePath($value)
@@ -283,11 +273,10 @@ namespace App\Models{
 /**
  * App\Models\Recipe
  *
- * @property int $id
+ * @property string $id
  * @property int $country_id
  * @property int|null $label_id
- * @property int|null $category_id
- * @property string $external_id
+ * @property string|null $category_id
  * @property string|null $uuid
  * @property array|null $name
  * @property string|null $card_link
@@ -341,7 +330,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDifficulty($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereFavoritesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereHeadline($value)
@@ -369,8 +357,7 @@ namespace App\Models{
 /**
  * App\Models\Tag
  *
- * @property int $id
- * @property string $external_id
+ * @property string $id
  * @property string $type
  * @property array $name
  * @property string|null $color_handle
@@ -387,7 +374,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereColorHandle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereDisplayLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereLocale(string $column, string $locale)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereLocales(string $column, array $locales)
@@ -435,8 +421,7 @@ namespace App\Models{
 /**
  * App\Models\Utensil
  *
- * @property int $id
- * @property string $external_id
+ * @property string $id
  * @property string|null $type
  * @property array $name
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -448,7 +433,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil query()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereLocale(string $column, string $locale)
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereLocales(string $column, array $locales)

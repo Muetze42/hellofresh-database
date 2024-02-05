@@ -18,7 +18,7 @@ class UpdateAllergensJob extends AbstractCountryUpdateJob
 
         foreach ($response->items() as $item) {
             Allergen::updateOrCreate(
-                ['external_id' => $item->getKey()],
+                ['id' => $item->getKey()],
                 Allergen::freshAttributes($item)
             );
         }

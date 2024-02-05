@@ -18,7 +18,7 @@ class UpdateCuisinesJob extends AbstractCountryUpdateJob
 
         foreach ($response->items() as $item) {
             Cuisine::updateOrCreate(
-                ['external_id' => $item->getKey()],
+                ['id' => $item->getKey()],
                 Cuisine::freshAttributes($item)
             );
         }

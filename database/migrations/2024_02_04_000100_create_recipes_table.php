@@ -15,11 +15,10 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('recipes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(Country::class)->constrained();
             $table->foreignIdFor(Label::class)->nullable()->constrained();
             $table->foreignIdFor(Category::class)->nullable()->constrained();
-            $table->uuid('external_id')->unique();
             $table->uuid()->nullable();
             $table->json('name')->nullable();
             $table->string('card_link')->nullable();

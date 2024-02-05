@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Recipe;
+use App\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,9 +14,9 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('recipe_tag', function (Blueprint $table) {
-            $table->foreignId('recipe_id')->constrained('recipes')->cascadeOnDelete();
-            $table->foreignId('tag_id')->constrained('tags')->cascadeOnDelete();
-            $table->primary(['recipe_id', 'tag_id']);
+            $table->foreignIdFor(Recipe::class)->constrained((new Recipe())->getTable())->cascadeOnDelete();
+            $table->foreignIdFor(Tag::class)->constrained((new Tag())->getTable())->cascadeOnDelete();
+            $table->primary([(new Recipe())->getForeignKey(), (new Tag())->getForeignKey()]);
         });
     }
 

@@ -12,8 +12,7 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('cuisines', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('external_id')->unique();
+            $table->uuid('id')->primary();
             $table->string('type');
             $table->json('name');
             $table->string('icon_path')->nullable();

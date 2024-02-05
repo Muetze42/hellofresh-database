@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Ingredient;
+use App\Models\Recipe;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,9 +14,9 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('ingredient_recipe', function (Blueprint $table) {
-            $table->foreignId('ingredient_id')->constrained('ingredients')->cascadeOnDelete();
-            $table->foreignId('recipe_id')->constrained('recipes')->cascadeOnDelete();
-            $table->primary(['ingredient_id', 'recipe_id']);
+            $table->foreignIdFor(Ingredient::class)->constrained((new Ingredient())->getTable())->cascadeOnDelete();
+            $table->foreignIdFor(Recipe::class)->constrained((new Recipe())->getTable())->cascadeOnDelete();
+            $table->primary([(new Ingredient())->getForeignKey(), (new Recipe())->getForeignKey()]);
         });
     }
 

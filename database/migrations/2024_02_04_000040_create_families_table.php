@@ -12,8 +12,7 @@ return new class () extends Migration
     public function up(): void
     {
         Schema::create('families', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('external_id')->unique();
+            $table->uuid('id')->primary();
             $table->uuid();
             $table->json('name');
             $table->string('type');

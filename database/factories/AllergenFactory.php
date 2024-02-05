@@ -13,7 +13,7 @@ class AllergenFactory extends Factory
     public function definition(): array
     {
         return [
-            'external_id' => $this->faker->unique()->uuid(),
+            'id' => $this->faker->unique()->uuid(),
             'name' => $this->faker->name(),
             'type' => $this->faker->word(),
             'icon_path' => $this->faker->word(),
