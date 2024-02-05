@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Menu extends Model
 {
@@ -17,7 +18,6 @@ class Menu extends Model
     protected $fillable = [
         'year_week',
         'start',
-        'end',
     ];
 
     /**
@@ -25,7 +25,6 @@ class Menu extends Model
      */
     protected $casts = [
         'start' => 'date',
-        'end' => 'date',
     ];
 
     /**
@@ -34,5 +33,13 @@ class Menu extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * The recipes that belong to the menu.
+     */
+    public function recipes(): BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class);
     }
 }
