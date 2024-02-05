@@ -115,7 +115,6 @@ namespace App\Models{
  * @property string $external_id
  * @property string $type
  * @property array $name
- * @property string|null $icon_link
  * @property string|null $icon_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -127,7 +126,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine query()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereExternalId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereIconLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereLocale(string $column, string $locale)
@@ -148,7 +146,6 @@ namespace App\Models{
  * @property string $uuid
  * @property array $name
  * @property string $type
- * @property string|null $icon_link
  * @property string|null $icon_path
  * @property array|null $description
  * @property int $priority
@@ -167,7 +164,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereExternalCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereExternalUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Family whereIconLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereLocale(string $column, string $locale)
@@ -192,7 +188,6 @@ namespace App\Models{
  * @property string $uuid
  * @property array $name
  * @property string $type
- * @property string|null $image_link
  * @property string|null $image_path
  * @property array|null $description
  * @property bool $shipped
@@ -214,7 +209,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereFamilyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereImageLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereImagePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereLocale(string $column, string $locale)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereLocales(string $column, array $locales)
@@ -232,8 +226,8 @@ namespace App\Models{
  * App\Models\Label
  *
  * @property int $id
- * @property array|null $text
- * @property string $handle
+ * @property string|null $handle
+ * @property array $text
  * @property string|null $foreground_color
  * @property string|null $background_color
  * @property bool $display_label
@@ -265,18 +259,18 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $country_id
- * @property string $year_week
+ * @property int $year_week
  * @property \Illuminate\Support\Carbon $start
- * @property \Illuminate\Support\Carbon $end
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
+ * @property-read int|null $recipes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Menu newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Menu newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Menu query()
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Menu whereEnd($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereStart($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereUpdatedAt($value)
@@ -293,14 +287,12 @@ namespace App\Models{
  * @property int $country_id
  * @property int|null $label_id
  * @property int|null $category_id
- * @property int|null $family_id
  * @property string $external_id
  * @property string|null $uuid
  * @property array|null $name
  * @property string|null $card_link
  * @property string|null $cloned_from
  * @property array $headline
- * @property string|null $image_link
  * @property string|null $image_path
  * @property mixed|null|null $total_time
  * @property mixed|null|null $prep_time
@@ -328,6 +320,8 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
  * @property-read \App\Models\Label|null $label
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
+ * @property-read int|null $menus_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Utensil> $utensils
@@ -349,11 +343,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereExternalUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereFamilyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereFavoritesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereHeadline($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereImageLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereImagePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereIsAddon($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereLabelId($value)

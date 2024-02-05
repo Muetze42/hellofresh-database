@@ -2,7 +2,8 @@
 
 namespace {{ namespace }};
 
-//class A implements \Illuminate\Contracts\Queue\ShouldQueue
+//class {{ class }} implements \Illuminate\Contracts\Queue\ShouldQueue
+//class {{ class }} extends \App\Contracts\Commands\AbstractUpdateCommand
 class {{ class }} extends \App\Contracts\Jobs\AbstractCountryJob
 {
     //use \Illuminate\Queue\InteractsWithQueue;
@@ -31,5 +32,6 @@ class {{ class }} extends \App\Contracts\Jobs\AbstractCountryJob
     //public function handleCountry(): void
     //{
     //    // Execute the job for a country
+    //    // $this->afterCountryHandle($response);
     //}
 }

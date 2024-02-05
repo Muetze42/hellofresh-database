@@ -12,10 +12,7 @@ abstract class AbstractCountryCommand extends Command
 {
     protected Country $country;
 
-    /**
-     * The console command description.
-     */
-    protected $description = 'Command description';
+    protected bool $considerLanguages = true;
 
     public function __construct()
     {
@@ -57,7 +54,11 @@ abstract class AbstractCountryCommand extends Command
         }
 
         foreach ($countries->get() as $country) {
-            foreach ($country->locales as $locale) {
+            $locales = $country->locales;
+            if (!$this->considerLanguages) {
+                $locales = [$locales[0]];
+            }
+            foreach ($locales as $locale) {
                 $this->country = $country;
                 $this->country->switch($locale);
 

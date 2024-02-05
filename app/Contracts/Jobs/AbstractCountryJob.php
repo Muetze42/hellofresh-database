@@ -80,4 +80,6 @@ abstract class AbstractCountryJob implements ShouldQueue
         );
         $this->handleCountry();
     }
+
+    abstract public function handleCountry(): void;
 }

@@ -61,6 +61,7 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
                             ['external_id' => $child->getKey()],
                             Ingredient::freshAttributes($child)
                         )->getKey();
+
                         continue;
                     }
                     $ids[] = $relation::updateOrCreate(

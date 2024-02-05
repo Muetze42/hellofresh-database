@@ -137,4 +137,12 @@ class Recipe extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+    /**
+     * The menus that belong to the recipe.
+     */
+    public function menus(): BelongsToMany
+    {
+        return $this->belongsToMany(Menu::class);
+    }
 }
