@@ -86,6 +86,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
+ * @property-read int|null $menus_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Country active()
@@ -156,8 +158,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
- * @property-read int|null $recipes_count
  * @method static \Database\Factories\FamilyFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Family newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family newQuery()
@@ -232,10 +232,10 @@ namespace App\Models{
  * App\Models\Label
  *
  * @property int $id
- * @property array $text
+ * @property array|null $text
  * @property string $handle
- * @property string $foreground_color
- * @property string $background_color
+ * @property string|null $foreground_color
+ * @property string|null $background_color
  * @property bool $display_label
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -261,6 +261,32 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\Menu
+ *
+ * @property int $id
+ * @property int $country_id
+ * @property string $year_week
+ * @property \Illuminate\Support\Carbon $start
+ * @property \Illuminate\Support\Carbon $end
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Country $country
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu whereEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu whereStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu whereYearWeek($value)
+ */
+	class Menu extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Recipe
  *
  * @property int $id
@@ -269,7 +295,7 @@ namespace App\Models{
  * @property int|null $category_id
  * @property int|null $family_id
  * @property string $external_id
- * @property string $uuid
+ * @property string|null $uuid
  * @property array|null $name
  * @property string|null $card_link
  * @property string|null $cloned_from
@@ -286,11 +312,11 @@ namespace App\Models{
  * @property int $difficulty
  * @property bool $active
  * @property bool $is_addon
- * @property array $nutrition
- * @property array $steps
- * @property array $yields
- * @property int|null $external_created_at
- * @property int|null $external_updated_at
+ * @property array|null $nutrition
+ * @property array|null $steps
+ * @property array|null $yields
+ * @property \Illuminate\Support\Carbon|null $external_created_at
+ * @property \Illuminate\Support\Carbon|null $external_updated_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
@@ -299,8 +325,7 @@ namespace App\Models{
  * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cuisine> $cuisines
  * @property-read int|null $cuisines_count
- * @property-read \App\Models\Family|null $family
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cuisine> $ingredients
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
  * @property-read \App\Models\Label|null $label
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
@@ -356,8 +381,8 @@ namespace App\Models{
  * @property string $external_id
  * @property string $type
  * @property array $name
- * @property string $color_handle
- * @property array $preferences
+ * @property string|null $color_handle
+ * @property array|null $preferences
  * @property bool $display_label
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -440,31 +465,5 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereUpdatedAt($value)
  */
 	class Utensil extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\Weekly
- *
- * @property int $id
- * @property int $country_id
- * @property string $year_week
- * @property string $start
- * @property string $end
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property mixed $
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly query()
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereCountryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereEnd($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereStart($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Weekly whereYearWeek($value)
- */
-	class Weekly extends \Eloquent {}
 }
 

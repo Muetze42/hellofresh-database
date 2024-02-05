@@ -6,7 +6,7 @@ use App\Models\Traits\CountryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Weekly extends Model
+class Menu extends Model
 {
     //use \Illuminate\Database\Eloquent\Factories\HasFactory; // Todo
     use CountryTrait;
@@ -29,7 +29,7 @@ class Weekly extends Model
     ];
 
     /**
-     * Get the country that owns the weekly menu.
+     * Get the country that owns the menu.
      */
     public function country(): BelongsTo
     {

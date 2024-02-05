@@ -67,10 +67,10 @@ class Country extends Model
     }
 
     /**
-     * Get the weekly menus for the country.
+     * Get the menus for the country.
      */
-    public function weeklies(): HasMany
+    public function menus(): HasMany
     {
-        return $this->hasMany(Weekly::class);
+        return $this->hasMany(Menu::class);
     }
 }

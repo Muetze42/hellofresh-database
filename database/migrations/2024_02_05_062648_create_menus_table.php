@@ -12,7 +12,7 @@ return new class () extends Migration
      */
     public function up(): void
     {
-        Schema::create('weeklies', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Country::class)->constrained();
             $table->char('year_week', 7);
@@ -27,6 +27,6 @@ return new class () extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weeklies');
+        Schema::dropIfExists('menus');
     }
 };
