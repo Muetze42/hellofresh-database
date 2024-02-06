@@ -16,7 +16,7 @@ class HomeController extends Controller
 
         /* @var \App\Models\Recipe $recipe */
 
-        return $recipe->steps->toArray();
+        return $recipe->nutrition->toArray();
 
         return Inertia::render('Home/Index', [
             'ip' => $request->ip(),

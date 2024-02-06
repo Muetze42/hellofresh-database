@@ -3,24 +3,13 @@
 namespace App\ValueObjects;
 
 use App\Support\HelloFresh\HelloFreshAsset;
-use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Support\Arr;
 
-class RecipeStepsObject
+class RecipeStepsObject extends AbstractObject
 {
-    use HasAttributes;
-
-    public array $data;
-
-    public function __construct(?string $value)
+    protected function castData(): array
     {
-        $this->data = $this->fromJson($value);
-
-        if (!$this->data) {
-            return;
-        }
-
-        $this->data = Arr::mapWithKeys($this->data, function (array $item) {
+        return Arr::mapWithKeys($this->data, function (array $item) {
             return [$item['index'] => [
                 'instructions' => data_get($item, 'instructions'),
                 //'ingredients' => data_get($item, 'ingredients'),
@@ -43,10 +32,5 @@ class RecipeStepsObject
                 HelloFreshAsset::get(config('hellofresh.assets.steps.image'), $image['path']) => $image['caption']
             ]
         );
-    }
-
-    public function toArray(): array
-    {
-        return $this->data;
     }
 }

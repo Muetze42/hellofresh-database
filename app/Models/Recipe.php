@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\HelloFreshTimeCast;
+use App\Casts\RecipeNutritionCast;
 use App\Casts\RecipeStepsCast;
 use App\Models\Traits\CanActivateTrait;
 use App\Models\Traits\CountryTrait;
@@ -70,7 +71,7 @@ class Recipe extends Model
         'is_addon' => 'bool',
         'external_created_at' => 'datetime',
         'external_updated_at' => 'datetime',
-        'nutrition' => 'array', // Todo: nutrition cast
+        'nutrition' => RecipeNutritionCast::class,
         'steps' => RecipeStepsCast::class,
         'yields' => 'array', // Todo: yields cast
         'total_time' => HelloFreshTimeCast::class,

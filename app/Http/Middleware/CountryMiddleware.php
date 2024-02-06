@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Country;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Number;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +24,7 @@ class CountryMiddleware
             if ($country = Country::whereCountry(Str::upper($country))->first()) {
                 if (in_array($locale, $country->locales)) {
                     $country->switch($locale);
+                    Number::useLocale($locale);
 
                     return $next($request);
                 }
