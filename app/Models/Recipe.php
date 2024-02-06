@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Casts\HelloFreshTimeCast;
+use App\Casts\RecipeStepsCast;
 use App\Models\Traits\CanActivateTrait;
 use App\Models\Traits\CountryTrait;
 use App\Models\Traits\HasTranslationsTrait;
 use App\Models\Traits\UseHelloFreshIdTrait;
+use App\Support\HelloFresh\RecipeAsset;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -68,9 +70,9 @@ class Recipe extends Model
         'is_addon' => 'bool',
         'external_created_at' => 'datetime',
         'external_updated_at' => 'datetime',
-        'nutrition' => 'array',
-        'steps' => 'array',
-        'yields' => 'array',
+        'nutrition' => 'array', // Todo: nutrition cast
+        'steps' => RecipeStepsCast::class,
+        'yields' => 'array', // Todo: yields cast
         'total_time' => HelloFreshTimeCast::class,
         'prep_time' => HelloFreshTimeCast::class,
     ];
@@ -145,5 +147,13 @@ class Recipe extends Model
     public function menus(): BelongsToMany
     {
         return $this->belongsToMany(Menu::class);
+    }
+
+    /**
+     * Get a recipe asset.
+     */
+    public function asset(): RecipeAsset
+    {
+        return new RecipeAsset($this->image_path, $this->card_link);
     }
 }

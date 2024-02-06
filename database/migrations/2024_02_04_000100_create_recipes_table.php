@@ -21,7 +21,7 @@ return new class () extends Migration
             $table->foreignIdFor(Category::class)->nullable()->constrained();
             $table->uuid()->nullable();
             $table->json('name')->nullable();
-            $table->string('card_link')->nullable();
+            $table->text('card_link')->nullable();
             $table->string('cloned_from')->nullable();
             $table->json('headline');
             $table->string('image_path')->nullable();

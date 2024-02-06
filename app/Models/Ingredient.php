@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\CountryTrait;
 use App\Models\Traits\HasTranslationsTrait;
 use App\Models\Traits\UseHelloFreshIdTrait;
+use App\Support\HelloFresh\IngredientAsset;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -71,5 +72,13 @@ class Ingredient extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get a ingredient asset.
+     */
+    public function asset(): IngredientAsset
+    {
+        return new IngredientAsset($this->image_path);
     }
 }
