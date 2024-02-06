@@ -19495,6 +19495,13 @@
      * 
      *
      */ 
+        class MenuFactory {
+         
+    }
+            /**
+     * 
+     *
+     */ 
         class RecipeFactory {
          
     }
