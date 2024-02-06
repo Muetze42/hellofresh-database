@@ -23,11 +23,14 @@ class FilterRequest extends Model
      */
     protected $fillable = ['data'];
 
-    public static function requestGet(array $data): FilterRequest|null
+    public static function requestGet(string $id)
     {
-        $data = serialize(Arr::sortRecursive($data));
+        if ($request = self::find($id)) {
+            /* @var \App\Models\FilterRequest $request */
+            return unserialize($request->data);
+        }
 
-        return self::where('data', $data)->first();
+        return null;
     }
 
     public static function requestSet(array $data): FilterRequest|null
