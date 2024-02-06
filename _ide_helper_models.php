@@ -293,9 +293,9 @@ namespace App\Models{
  * @property int $difficulty
  * @property bool $active
  * @property bool $is_addon
- * @property array|null $nutrition
- * @property array|null $steps
- * @property array|null $yields
+ * @property \App\ValueObjects\RecipeNutritionObject|null $nutrition
+ * @property \App\ValueObjects\RecipeStepsObject|null $steps
+ * @property \App\ValueObjects\RecipeYieldsObject|null $yields
  * @property \Illuminate\Support\Carbon|null $external_created_at
  * @property \Illuminate\Support\Carbon|null $external_updated_at
  * @property \Illuminate\Support\Carbon|null $created_at

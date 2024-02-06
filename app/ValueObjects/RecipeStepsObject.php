@@ -28,8 +28,8 @@ class RecipeStepsObject extends AbstractObject
     {
         return Arr::mapWithKeys(
             $images,
-            fn(array $image) => [
-                HelloFreshAsset::get(config('hellofresh.assets.steps.image'), $image['path']) => $image['caption']
+            fn (array $image) => [
+                HelloFreshAsset::get(config('hellofresh.assets.steps.image'), $image['path']) => $image['caption'],
             ]
         );
     }

@@ -12,11 +12,13 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $recipe = \App\Models\Recipe::find('6571a15002bcfeab6556727f');
+        app()->setLocale('de');
+
+        $recipe = \App\Models\Recipe::find('65801b0f16590f43e9698d65');
 
         /* @var \App\Models\Recipe $recipe */
 
-        return $recipe->nutrition->toArray();
+        return $recipe->yields->toArray();
 
         return Inertia::render('Home/Index', [
             'ip' => $request->ip(),

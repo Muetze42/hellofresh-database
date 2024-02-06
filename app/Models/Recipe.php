@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\HelloFreshTimeCast;
 use App\Casts\RecipeNutritionCast;
 use App\Casts\RecipeStepsCast;
+use App\Casts\RecipeYieldsCast;
 use App\Models\Traits\CanActivateTrait;
 use App\Models\Traits\CountryTrait;
 use App\Models\Traits\HasTranslationsTrait;
@@ -73,7 +74,7 @@ class Recipe extends Model
         'external_updated_at' => 'datetime',
         'nutrition' => RecipeNutritionCast::class,
         'steps' => RecipeStepsCast::class,
-        'yields' => 'array', // Todo: yields cast
+        'yields' => RecipeYieldsCast::class,
         'total_time' => HelloFreshTimeCast::class,
         'prep_time' => HelloFreshTimeCast::class,
     ];

@@ -14,7 +14,7 @@ class RecipeNutritionObject extends AbstractObject
 
     protected function castData(): array
     {
-        return Arr::map($this->data, fn(array $item) => [
+        return Arr::map($this->data, fn (array $item) => [
             'name' => $item['name'],
             'amount' => Number::format($item['amount']),
             'unit' => $item['unit'],
