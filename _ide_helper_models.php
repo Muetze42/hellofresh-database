@@ -171,6 +171,21 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\FilterRequest
+ *
+ * @property string $id
+ * @property string $data
+ * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest query()
+ * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest whereId($value)
+ */
+	class FilterRequest extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Ingredient
  *
  * @property string $id
