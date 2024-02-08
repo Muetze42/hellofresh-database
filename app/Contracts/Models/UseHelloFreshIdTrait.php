@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Contracts\Models;
 
 trait UseHelloFreshIdTrait
 {

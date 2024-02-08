@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Traits\CountryTrait;
-use App\Models\Traits\HasTranslationsTrait;
-use App\Models\Traits\UseHelloFreshIdTrait;
+use App\Contracts\Models\CountryTrait;
+use App\Contracts\Models\HasTranslationsTrait;
+use App\Contracts\Models\UseHelloFreshIdTrait;
 use App\Support\HelloFresh\IngredientAsset;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

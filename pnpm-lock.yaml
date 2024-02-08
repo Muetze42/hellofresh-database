@@ -26,6 +26,9 @@ dependencies:
   sass-loader:
     specifier: 14.1.0
     version: 14.1.0(sass@1.70.0)(webpack@5.90.1)
+  vue-country-flag-next:
+    specifier: ^2.3.2
+    version: 2.3.2(vue@3.4.15)
 
 devDependencies:
   '@babel/plugin-syntax-dynamic-import':
@@ -2828,6 +2831,15 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
+
+  /vue-country-flag-next@2.3.2(vue@3.4.15):
+    resolution: {integrity: sha512-Lv12L1VTwlBgizpZ3xPEPO3zuIETaJmeSiPuLOWLLgu2EakwU/o72iKYiKcdZ6BXiSkfss+Ski5fDzjuxZ1DcA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.4.15
+    dev: false
 
   /vue-eslint-parser@9.4.2(eslint@8.56.0):
     resolution: {integrity: sha512-Ry9oiGmCAK91HrKMtCrKFWmSFWvYkpGglCeFAIqDdr9zdXmMMpJOmUJS7WWsW7fX81h6mwHmUZCQQ1E0PkSwYQ==}

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Casts\LowerArrayCast;
 use App\Casts\UpperStringCast;
-use App\Models\Traits\CanActivateTrait;
+use App\Contracts\Models\CanActivateTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

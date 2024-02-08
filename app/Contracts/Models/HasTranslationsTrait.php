@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Contracts\Models;
 
 use Illuminate\Support\Arr;
 use Spatie\Translatable\HasTranslations;

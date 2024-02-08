@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\CountryTrait;
+use App\Contracts\Models\CountryTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Contracts\Models;
 
 use App\Models\Recipe;
-use Illuminate\Support\Arr;
+use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 trait CountryTrait
@@ -24,15 +25,31 @@ trait CountryTrait
 
         /* @var \NormanHuth\HellofreshScraper\Models\AbstractModel $hfModel */
         $columns = (new static())->getFillable();
+        $casts = (new static())->getCasts();
         $data = $hfModel->data();
 
-        return Arr::mapWithKeys(
-            $columns,
-            fn (string $column) => [$column => data_get(
-                $data,
-                Str::camel(str_replace(array_keys($replace), array_values($replace), $column))
-            )]
-        );
+        foreach ($columns as $column) {
+            $value = data_get($data, Str::camel(str_replace(array_keys($replace), array_values($replace), $column)));
+
+            if (data_get($casts, $column) == 'datetime') {
+                try {
+                    $value = Carbon::parse($value);
+                } catch (Exception) {
+                    // silent
+                }
+            }
+
+            $columns[$column] = $value;
+        }
+
+        return $columns;
+        //return Arr::mapWithKeys(
+        //    $columns,
+        //    fn (string $column) => [$column => data_get(
+        //        $data,
+        //        Str::camel(str_replace(array_keys($replace), array_values($replace), $column))
+        //    )]
+        //);
     }
 
     protected function freshKey(string $column): string

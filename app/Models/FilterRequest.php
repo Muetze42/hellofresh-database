@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class FilterRequest extends Model
@@ -33,7 +33,7 @@ class FilterRequest extends Model
         return null;
     }
 
-    public static function requestSet(array $data): FilterRequest|null
+    public static function requestSet(array $data): ?FilterRequest
     {
         $data = serialize(Arr::sortRecursive($data));
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -12,8 +14,22 @@ class HomeController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $locales = require storage_path('languages.php');
+
         return Inertia::render('Home/Index', [
-            'ip' => $request->ip(),
+            'countries' => Country::active()->orderBy('Country')
+                ->get(['country', 'locales'])
+                ->map(fn (Country $country) => [
+                    'country' => __('country.' . $country->country),
+                    'code' => $country->country,
+                    'locales' => array_map(
+                        fn ($locale) => [
+                            'locale' => $locale,
+                            'lang' => Str::ucfirst(data_get($locales, $locale, $locale)),
+                        ],
+                        $country->locales
+                    ),
+                ]),
         ]);
     }
 }

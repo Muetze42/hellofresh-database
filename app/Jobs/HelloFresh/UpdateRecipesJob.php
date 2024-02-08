@@ -24,6 +24,9 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
     {
         $response = $this->client->recipes($this->skip);
         foreach ($response->items() as $item) {
+            if (!$item->active()) {
+                continue;
+            }
             /* @var \App\Models\Recipe $recipe */
             $recipe = $this->country->recipes()->updateOrCreate(
                 ['id' => $item->getKey()],

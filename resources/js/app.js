@@ -3,7 +3,7 @@ import './bootstrap'
 import { createApp, h } from 'vue'
 import { createInertiaApp, Link } from '@inertiajs/vue3'
 
-import Layout from './Components/Layout.vue'
+import Layout from '@/Layouts/FullPage.vue'
 
 createInertiaApp({
   resolve: (name) => {
@@ -18,7 +18,7 @@ createInertiaApp({
       .component('Link', Link)
       .mixin({
         methods: {
-          __(key, replace= {}) {
+          __(key, replace = {}) {
             let translations = this.$page.props.translations
             if (translations && translations[key]) {
               key = translations[key]
@@ -32,4 +32,4 @@ createInertiaApp({
       })
       .mount(el)
   }
-}).then()
+})

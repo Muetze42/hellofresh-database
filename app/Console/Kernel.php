@@ -12,12 +12,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        //$schedule->command('queue:work', [
-        //    '--queue' => 'api',
-        //    '--timeout' => 0,
-        //    '--sleep' => 1,
-        //    '--stop-when-empty',
-        //])->everyMinute()->withoutOverlapping()->when(function () {
+        $schedule->command('queue:work', [
+            '--queue' => 'hellofresh',
+            '--timeout' => 0,
+            '--sleep' => 1,
+            '--stop-when-empty',
+        ])->everyMinute()->withoutOverlapping();
+        //    ->when(function () {
         //    return $this->app['config']->get('queue.default') == 'database';
         //});
     }
