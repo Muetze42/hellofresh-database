@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
 class IngredientController extends Controller
@@ -11,14 +12,14 @@ class IngredientController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        dd(__CLASS__);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Ingredient $ingredient)
     {
-        //
+        dd($ingredient);
     }
 }

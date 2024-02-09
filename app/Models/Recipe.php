@@ -72,11 +72,11 @@ class Recipe extends Model
         'is_addon' => 'bool',
         'external_created_at' => 'datetime',
         'external_updated_at' => 'datetime',
-        'nutrition' => RecipeNutritionCast::class,
-        'steps' => RecipeStepsCast::class,
-        'yields' => RecipeYieldsCast::class,
-        'total_time' => HelloFreshTimeCast::class,
-        'prep_time' => HelloFreshTimeCast::class,
+        //'nutrition' => RecipeNutritionCast::class,
+        //'steps' => RecipeStepsCast::class,
+        //'yields' => RecipeYieldsCast::class,
+        //'total_time' => HelloFreshTimeCast::class,
+        //'prep_time' => HelloFreshTimeCast::class,
     ];
 
     /**

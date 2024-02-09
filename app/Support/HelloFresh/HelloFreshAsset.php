@@ -23,7 +23,7 @@ class HelloFreshAsset
         return 'https://img.hellofresh.com/' . $path . '/hellofresh_s3' . $this->image;
     }
 
-    public static function get(string $path, string $image): ?string
+    public static function get(string $path, ?string $image): ?string
     {
         return (new static($image))->asset($path);
     }

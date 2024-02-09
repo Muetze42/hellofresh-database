@@ -13,6 +13,7 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
+        dd(__CLASS__);
         /* @var \Illuminate\Database\Eloquent\Builder|\App\Models\Recipe $recipes */
         $recipes = country()->recipes();
 
@@ -26,6 +27,6 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        dd($recipe);
     }
 }

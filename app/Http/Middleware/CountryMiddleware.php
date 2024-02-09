@@ -25,6 +25,7 @@ class CountryMiddleware
                 if (in_array($locale, $country->locales)) {
                     $country->switch($locale);
                     Number::useLocale($locale);
+                    $request->route()->forgetParameter('country_lang');
 
                     return $next($request);
                 }

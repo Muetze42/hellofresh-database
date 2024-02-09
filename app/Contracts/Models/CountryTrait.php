@@ -4,11 +4,24 @@ namespace App\Contracts\Models;
 
 use App\Models\Recipe;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 trait CountryTrait
 {
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this->where('id', explode('-', $value)[0])->firstOrFail();
+    }
+
     /**
      *  Get the first record matching the attributes. If the record is not found, create it.
      */

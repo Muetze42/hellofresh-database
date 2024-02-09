@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('debug', fn () => dd(Illuminate\Support\Number::format(23004.23)));
-Route::get('/', [RecipeController::class, 'index'])->name('routes.index');
+Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
+Route::get('{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
