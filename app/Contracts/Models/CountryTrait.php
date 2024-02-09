@@ -28,7 +28,7 @@ trait CountryTrait
         $casts = (new static())->getCasts();
         $data = $hfModel->data();
 
-        foreach ($columns as $column) {
+        foreach ($columns as $key => $column) {
             $value = data_get($data, Str::camel(str_replace(array_keys($replace), array_values($replace), $column)));
 
             if (data_get($casts, $column) == 'datetime') {
@@ -38,7 +38,8 @@ trait CountryTrait
                     // silent
                 }
             }
-
+            // Todo: Make it better!^^
+            unset($columns[$key]);
             $columns[$column] = $value;
         }
 
