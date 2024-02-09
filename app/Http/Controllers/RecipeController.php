@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PageIndices\RecipeResource;
+use App\Http\Resources\Indices\RecipeIndexResource as RecipeIndexResource;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +15,7 @@ class RecipeController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Recipes/Index', [
-            'recipes' => RecipeResource::collection(
+            'recipes' => RecipeIndexResource::collection(
                 country()->recipes()->paginate(12, ['*'], 'p')
             ),
         ]);

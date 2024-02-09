@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Http\Resources\PageIndices;
 
-use App\Http\Resources\PageIndices\TagResource;
+use App\Http\Resources\Indices\TagIndexResource;
 use Illuminate\Http\Request;
 use Mockery;
 use Tests\TestCase;
@@ -10,11 +10,11 @@ use Tests\TestCase;
 /**
  * Class TagResourceTest.
  *
- * @covers \App\Http\Resources\PageIndices\TagResource
+ * @covers \App\Http\Resources\Indices\TagIndexResource
  */
 final class TagResourceTest extends TestCase
 {
-    private TagResource $tagResource;
+    private TagIndexResource $tagResource;
 
     /**
      * {@inheritdoc}
@@ -24,7 +24,7 @@ final class TagResourceTest extends TestCase
         parent::setUp();
 
         /** @todo Correctly instantiate tested object to use it. */
-        $this->tagResource = new TagResource();
+        $this->tagResource = new TagIndexResource();
     }
 
     /**

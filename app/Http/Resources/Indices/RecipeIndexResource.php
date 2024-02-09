@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\PageIndices;
+namespace App\Http\Resources\Indices;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RecipeResource extends JsonResource
+class RecipeIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,11 +19,12 @@ class RecipeResource extends JsonResource
         return [
             'id' => $this->getKey(),
             'name' => $this->name,
+            'slug' => strSlug($this->name),
             'pdf' => $this->card_link,
             'headline' => $this->headline,
             'image' => $this->asset()->preview(),
-            'label' => $this->label?->active() ? new LabelResource($this->label) : null,
-            'tags' => TagResource::collection($tags->active()->get()),
+            'label' => $this->label?->active() ? new LabelIndexResource($this->label) : null,
+            'tags' => TagIndexResource::collection($tags->active()->get()),
         ];
     }
 }

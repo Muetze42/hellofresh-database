@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Http\Resources\PageIndices;
 
-use App\Http\Resources\PageIndices\RecipeResource;
+use App\Http\Resources\Indices\RecipeIndexResource;
 use Illuminate\Http\Request;
 use Mockery;
 use Tests\TestCase;
@@ -10,11 +10,11 @@ use Tests\TestCase;
 /**
  * Class RecipeResourceTest.
  *
- * @covers \App\Http\Resources\PageIndices\RecipeResource
+ * @covers \App\Http\Resources\Indices\RecipeIndexResource
  */
 final class RecipeResourceTest extends TestCase
 {
-    private RecipeResource $recipeResource;
+    private RecipeIndexResource $recipeResource;
 
     /**
      * {@inheritdoc}
@@ -24,7 +24,7 @@ final class RecipeResourceTest extends TestCase
         parent::setUp();
 
         /** @todo Correctly instantiate tested object to use it. */
-        $this->recipeResource = new RecipeResource();
+        $this->recipeResource = new RecipeIndexResource();
     }
 
     /**

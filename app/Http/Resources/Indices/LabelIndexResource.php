@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\PageIndices;
+namespace App\Http\Resources\Indices;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LabelResource extends JsonResource
+class LabelIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
