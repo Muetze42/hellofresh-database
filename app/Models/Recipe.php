@@ -79,6 +79,11 @@ class Recipe extends Model
         //'yields' => RecipeYieldsCast::class,
         //'total_time' => HelloFreshTimeCast::class,
         //'prep_time' => HelloFreshTimeCast::class,
+        'nutrition' => 'array',
+        'steps' => 'array',
+        'yields' => 'array',
+        'total_time' => 'array',
+        'prep_time' => 'array',
     ];
 
     /**
