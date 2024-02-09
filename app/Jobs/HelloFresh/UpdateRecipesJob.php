@@ -43,7 +43,7 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
                         [$key => $item->{$method}()->getKey()],
                         $relation::freshAttributes($item->{$method}())
                     );
-                    $recipe->{$method}()->associate($label);
+                    $recipe->{$method}()->associate($label)->save();
                 }
             }
 

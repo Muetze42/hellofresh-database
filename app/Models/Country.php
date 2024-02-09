@@ -20,7 +20,7 @@ class Country extends Model
      */
     protected $fillable = [
         'country',
-        'locale',
+        'locales',
         'domain',
         'take',
     ];
