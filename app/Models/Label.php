@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\Models\CountryTrait;
+use App\Contracts\Models\HasActiveDisplayTrait;
 use App\Contracts\Models\HasTranslationsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ class Label extends Model
     use HasFactory;
     use CountryTrait;
     use HasTranslationsTrait;
+    use HasActiveDisplayTrait;
 
     /**
      * The attributes that are translatable.

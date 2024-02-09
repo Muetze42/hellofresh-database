@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\Models\CountryTrait;
+use App\Contracts\Models\HasActiveDisplayTrait;
 use App\Contracts\Models\HasTranslationsTrait;
 use App\Contracts\Models\UseHelloFreshIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ class Tag extends Model
     use CountryTrait;
     use HasTranslationsTrait;
     use UseHelloFreshIdTrait;
+    use HasActiveDisplayTrait;
 
     /**
      * The attributes that are translatable.

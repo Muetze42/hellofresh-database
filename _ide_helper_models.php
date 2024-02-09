@@ -1,6 +1,7 @@
 <?php
 
 // @formatter:off
+// phpcs:ignoreFile
 /**
  * A helper file for your Eloquent Models
  * Copy the phpDocs from this file to the correct Model,
@@ -74,7 +75,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $country
- * @property mixed|null $locales
+ * @property mixed $locales
  * @property string $domain
  * @property int $take
  * @property bool $active
@@ -240,6 +241,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Label active()
  * @method static \Database\Factories\LabelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Label newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Label newQuery()
@@ -299,8 +301,8 @@ namespace App\Models{
  * @property string|null $cloned_from
  * @property array $headline
  * @property string|null $image_path
- * @property mixed|null|null $total_time
- * @property mixed|null|null $prep_time
+ * @property array|null $total_time
+ * @property array|null $prep_time
  * @property array|null $description
  * @property int $average_rating
  * @property int $favorites_count
@@ -309,9 +311,9 @@ namespace App\Models{
  * @property int $difficulty
  * @property bool $active
  * @property bool $is_addon
- * @property \App\ValueObjects\RecipeNutritionObject|null $nutrition
- * @property \App\ValueObjects\RecipeStepsObject|null $steps
- * @property \App\ValueObjects\RecipeYieldsObject|null $yields
+ * @property array|null $nutrition
+ * @property array|null $steps
+ * @property array|null $yields
  * @property \Illuminate\Support\Carbon|null $external_created_at
  * @property \Illuminate\Support\Carbon|null $external_updated_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -383,6 +385,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag active()
  * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()

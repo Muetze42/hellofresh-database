@@ -17,7 +17,7 @@ return new class () extends Migration
             $table->json('name');
             $table->string('color_handle')->nullable();
             $table->json('preferences')->nullable();
-            $table->boolean('display_label')->default(false);
+            $table->boolean('display_label');
             $table->timestamps();
         });
     }
