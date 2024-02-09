@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\CountryMiddleware;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\CountryMiddleware;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -36,8 +36,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
+                ->withoutMiddleware(CountryMiddleware::class)
                 ->group(base_path('routes/web.php'));
-            Route::middleware(['web', CountryMiddleware::class])
+            Route::middleware('web')
                 ->prefix('{country_lang}')
                 ->group(base_path('routes/localized-web.php'));
         });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\CountrySluggableRouteTrait;
 use App\Contracts\Models\CountryTrait;
 use App\Contracts\Models\HasTranslationsTrait;
 use App\Contracts\Models\UseHelloFreshIdTrait;
@@ -17,6 +18,7 @@ class Ingredient extends Model
     use CountryTrait;
     use HasTranslationsTrait;
     use UseHelloFreshIdTrait;
+    use CountrySluggableRouteTrait;
 
     /**
      * The attributes that are translatable.

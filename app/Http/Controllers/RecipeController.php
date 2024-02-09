@@ -18,7 +18,7 @@ class RecipeController extends Controller
         $recipes = country()->recipes();
 
         return Inertia::render('Recipes/Index', [
-            'recipes' => $recipes->paginate(12, ['*'], 'p')
+            'recipes' => $recipes->paginate(12, ['*'], 'p'),
         ]);
     }
 

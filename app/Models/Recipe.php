@@ -7,6 +7,7 @@ use App\Casts\RecipeNutritionCast;
 use App\Casts\RecipeStepsCast;
 use App\Casts\RecipeYieldsCast;
 use App\Contracts\Models\CanActivateTrait;
+use App\Contracts\Models\CountrySluggableRouteTrait;
 use App\Contracts\Models\CountryTrait;
 use App\Contracts\Models\HasTranslationsTrait;
 use App\Contracts\Models\UseHelloFreshIdTrait;
@@ -23,6 +24,7 @@ class Recipe extends Model
     use CanActivateTrait;
     use HasTranslationsTrait;
     use UseHelloFreshIdTrait;
+    use CountrySluggableRouteTrait;
 
     /**
      * The attributes that are translatable.
