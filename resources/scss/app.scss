@@ -1,5 +1,5 @@
 @tailwind base;
-
+@import "fonts/inter-var";
 @tailwind components;
 
 @layer components {
@@ -15,17 +15,24 @@
   .card {
     @apply h-full flex flex-col bg-gray-800 rounded shadow;
   }
+  /* For Semantic Elements */
+  .nav-element {
+    @apply w-full z-30 transition duration-300 ease-in-out bg-gray-800;
+  }
 }
 
 @layer utilities {
-  .centered-page {
+  .centered {
     @apply flex justify-center items-center h-screen;
   }
 }
 
 @tailwind utilities;
 
-@import "fonts/inter-var";
-//@import "fonts/fira-code";
+#app {
+  @apply flex flex-col min-h-screen overflow-hidden;
+}
 
-
+main {
+  @apply grow pt-12 pb-4 sm:pb-8 container;
+}

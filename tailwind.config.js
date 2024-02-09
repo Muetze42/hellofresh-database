@@ -7,6 +7,7 @@ module.exports = {
   content: ['./resources/views/app/**/*.blade.php', './resources/**/*.js', './resources/**/*.vue'],
   theme: {
     container: {
+      center: true,
       padding: {
         DEFAULT: '2rem',
         sm: '1.5rem'

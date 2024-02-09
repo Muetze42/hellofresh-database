@@ -1,8 +1,23 @@
 <script setup>
 import Flag from 'vue-country-flag-next'
+/**
+ * @property countries
+ * @property countries.countries
+ * @property countries.countries.country
+ * @property countries.countries.code
+ * @property countries.countries.locales
+ * @property countries.countries.locales.locale
+ * @property countries.countries.locales.lang
+ */
+defineProps({
+  countries: {
+    type: Object,
+    required: true
+  }
+})
 </script>
 <template>
-  <div class="flex flex-wrap justify-center gap-4 pt-4 container text-center mx-auto">
+  <div class="flex flex-wrap justify-center gap-4 pt-4 container text-center">
     <h1 class="sr-only">Countries</h1>
     <h2 class="w-full text-lg">Choose a country and a language</h2>
     <div v-for="country in countries" :key="country.code" class="p-2 card w-72">
@@ -17,6 +32,7 @@ import Flag from 'vue-country-flag-next'
           v-for="locale in country.locales"
           :key="country.code + locale.locale"
           :href="'/' + country.code.toLowerCase() + '-' + locale.locale"
+          :hreflang="locale.locale + '-' + country.code"
           class="btn"
         >
           {{ locale.lang }}
@@ -25,25 +41,3 @@ import Flag from 'vue-country-flag-next'
     </div>
   </div>
 </template>
-<script>
-/**
- * @property countries
- * @property countries.countries
- * @property countries.countries.country
- * @property countries.countries.code
- * @property countries.countries.locales
- * @property countries.countries.locales.locale
- * @property countries.countries.locales.lang
- */
-import Layout from '@/Layouts/WithoutHeader.vue'
-
-export default {
-  layout: Layout,
-  props: {
-    countries: {
-      type: Object,
-      required: true
-    }
-  }
-}
-</script>

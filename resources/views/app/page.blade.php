@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+@if(country())
+<html lang="{{ config('app.locale', 'en') }}-{{ country()->country }}">
+@else
 <html lang="{{ config('app.locale', 'en') }}">
+@endif
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">

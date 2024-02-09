@@ -1,10 +1,12 @@
-<script setup></script>
+<script setup>
+import Header from '@/Components/Header.vue'
+import Footer from '@/Components/Footer.vue'
+</script>
 
 <template>
-  Full Page
-  <slot />
+  <Header />
+  <main>
+    <slot />
+  </main>
+  <Footer />
 </template>
-
-<script>
-export default {}
-</script>
