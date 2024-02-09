@@ -69,7 +69,7 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
                     }
                     $ids[] = $relation::updateOrCreate(
                         ['id' => $child->getKey()],
-                        Ingredient::freshAttributes($child)
+                        $relation::freshAttributes($child)
                     )->getKey();
                 }
                 $recipe->{$method}()->sync($ids);
