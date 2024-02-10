@@ -35,6 +35,11 @@ trait CountryTrait
             if (data_get($casts, $column) == 'datetime') {
                 try {
                     $value = Carbon::parse($value);
+                    $supported = Carbon::parse('1970-01-01 00:00:01');
+
+                    if ($value < $supported) {
+                        $value = $supported;
+                    }
                 } catch (Exception) {
                     // silent
                     $value = null;

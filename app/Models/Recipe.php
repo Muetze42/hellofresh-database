@@ -38,7 +38,6 @@ class Recipe extends Model
         'average_rating',
         'card_link',
         'cloned_from',
-        'external_created_at',
         'description',
         'difficulty',
         'favorites_count',
