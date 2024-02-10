@@ -18,7 +18,7 @@ class Country extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'country',
+        'code',
         'locales',
         'domain',
         'take',
@@ -35,7 +35,7 @@ class Country extends Model
      * The attributes that should be cast.
      */
     protected $casts = [
-        'country' => UpperStringCast::class,
+        'code' => UpperStringCast::class,
         'locales' => LowerArrayCast::class,
         'take' => 'int',
     ];

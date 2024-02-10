@@ -21,7 +21,7 @@ class RecipeResource
         }
 
         return array_merge($array, [
-            '' // Todo
+            '', // Todo
         ]);
     }
 
