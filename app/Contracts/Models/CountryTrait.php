@@ -36,9 +36,9 @@ trait CountryTrait
                     $value = Carbon::parse($value);
                 } catch (Exception) {
                     // silent
+                    $value = null;
                 }
             }
-            // Todo: Make it better!^^
             unset($columns[$key]);
             $columns[$column] = $value;
         }
