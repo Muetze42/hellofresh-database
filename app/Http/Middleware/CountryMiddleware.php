@@ -21,7 +21,7 @@ class CountryMiddleware
         if ($name && substr_count($name, '-') === 1) {
             [$country, $locale] = explode('-', $name);
 
-            if ($country = Country::whereCountry(Str::upper($country))->first()) {
+            if ($country = Country::whereCode(Str::upper($country))->first()) {
                 if (in_array($locale, $country->locales)) {
                     $country->switch($locale);
                     Number::useLocale($locale);
