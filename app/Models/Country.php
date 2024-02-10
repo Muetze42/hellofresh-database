@@ -7,7 +7,6 @@ use App\Casts\UpperStringCast;
 use App\Contracts\Models\CanActivateTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\App;
 
 class Country extends Model
@@ -48,29 +47,5 @@ class Country extends Model
     {
         App::setCountry($this);
         App::setLocale($locale);
-    }
-
-    /**
-     * Get the recipes for the country.
-     */
-    public function recipes(): HasMany
-    {
-        return $this->hasMany(Recipe::class);
-    }
-
-    /**
-     * Get the ingredients for the country.
-     */
-    public function ingredients(): HasMany
-    {
-        return $this->hasMany(Ingredient::class);
-    }
-
-    /**
-     * Get the menus for the country.
-     */
-    public function menus(): HasMany
-    {
-        return $this->hasMany(Menu::class);
     }
 }

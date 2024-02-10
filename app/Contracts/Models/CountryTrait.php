@@ -74,9 +74,11 @@ trait CountryTrait
 
     /**
      * Get the joining table name for a many-to-many relation.
+     *
+     * @noinspection PhpMultipleClassDeclarationsInspection
      */
     public function joiningTable($related, $instance = null): string
     {
-        return $this->getTable();
+        return Str::lower(country()->country) . '__' . parent::joiningTable($related, $instance);
     }
 }

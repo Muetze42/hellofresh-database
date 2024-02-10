@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Contracts\Models\CountryTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Menu extends Model
@@ -27,14 +26,6 @@ class Menu extends Model
     protected $casts = [
         'start' => 'date',
     ];
-
-    /**
-     * Get the country that owns the menu.
-     */
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
 
     /**
      * The recipes that belong to the menu.

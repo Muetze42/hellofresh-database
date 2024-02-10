@@ -2,10 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\HelloFreshTimeCast;
-use App\Casts\RecipeNutritionCast;
-use App\Casts\RecipeStepsCast;
-use App\Casts\RecipeYieldsCast;
 use App\Contracts\Models\CanActivateTrait;
 use App\Contracts\Models\CountrySluggableRouteTrait;
 use App\Contracts\Models\CountryTrait;
@@ -74,11 +70,6 @@ class Recipe extends Model
         'is_addon' => 'bool',
         'external_created_at' => 'datetime',
         'external_updated_at' => 'datetime',
-        //'nutrition' => RecipeNutritionCast::class,
-        //'steps' => RecipeStepsCast::class,
-        //'yields' => RecipeYieldsCast::class,
-        //'total_time' => HelloFreshTimeCast::class,
-        //'prep_time' => HelloFreshTimeCast::class,
         'nutrition' => 'array',
         'steps' => 'array',
         'yields' => 'array',
@@ -140,14 +131,6 @@ class Recipe extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Get the country that owns the recipe.
-     */
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
     }
 
     /**
