@@ -2,18 +2,26 @@
 
 namespace App\Http\Resources;
 
-use App\Contracts\Http\Resources\AbstractResource;
+use App\Contracts\Http\Resources\HasIndexCollectionTrait;
 use Illuminate\Http\Request;
 
-class RecipeResource extends AbstractResource
+class RecipeResource
 {
+    use HasIndexCollectionTrait;
+
     /**
      * Transform the resource into an array.
      */
-    public function toShowArray(Request $request): array
+    public function toArray(Request $request): array
     {
-        return array_merge($this->toIndexArray($request), [
-            '', // Todo
+        $array = $this->toIndexArray($request);
+
+        if (static::$isIndex) {
+            return $array;
+        }
+
+        return array_merge($array, [
+            '' // Todo
         ]);
     }
 

@@ -20,6 +20,8 @@ trait CommandTrait
 
     /**
      * Execute the console command.
+     *
+     * @noinspection PhpMultipleClassDeclarationsInspection
      */
     public function handle(): void
     {
@@ -39,6 +41,8 @@ trait CommandTrait
 
     /**
      * Get the path to the migration directory.
+     *
+     * @noinspection PhpMultipleClassDeclarationsInspection
      */
     protected function getMigrationPath(): string
     {
