@@ -59,14 +59,6 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
                 $ids = [];
                 $method = Str::lower(Str::plural(class_basename($relation)));
                 foreach ($item->{$method}() as $child) {
-                    if ($relation == Ingredient::class) {
-                        $ids[] = $this->country->ingredients()->updateOrCreate(
-                            ['id' => $child->getKey()],
-                            Ingredient::freshAttributes($child)
-                        )->getKey();
-
-                        continue;
-                    }
                     $ids[] = $relation::updateOrCreate(
                         ['id' => $child->getKey()],
                         $relation::freshAttributes($child)
