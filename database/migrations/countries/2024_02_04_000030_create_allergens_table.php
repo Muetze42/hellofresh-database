@@ -9,13 +9,14 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(string $prefix = ''): void
     {
-        Schema::create('cuisines', function (Blueprint $table) {
+        Schema::create($prefix . 'allergens', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('type');
             $table->json('name');
+            $table->string('type');
             $table->string('icon_path')->nullable();
+            $table->json('description')->nullable();
             $table->timestamps();
         });
     }
@@ -23,8 +24,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('cuisines');
+        Schema::dropIfExists($prefix . 'allergens');
     }
 };

@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Category;
-use App\Models\Country;
 use App\Models\Label;
+use App\Models\Recipe;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +14,12 @@ return new class () extends Migration
      */
     public function up(): void
     {
-        Schema::create('recipes', function (Blueprint $table) {
+        Schema::create((new Recipe())->getTable(), function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(Country::class)->constrained();
-            $table->foreignIdFor(Label::class)->nullable()->constrained();
-            $table->foreignIdFor(Category::class)->nullable()->constrained();
+            $table->foreignIdFor(Label::class)->nullable()
+                ->constrained((new Label())->getTable());
+            $table->foreignIdFor(Category::class)->nullable()
+                ->constrained((new Category())->getTable());
             $table->uuid()->nullable();
             $table->json('name')->nullable();
             $table->text('card_link')->nullable();
@@ -49,6 +50,6 @@ return new class () extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recipes');
+        Schema::dropIfExists((new Recipe())->getTable());
     }
 };

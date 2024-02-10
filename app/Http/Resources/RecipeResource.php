@@ -13,7 +13,7 @@ class RecipeResource extends AbstractResource
     public function toShowArray(Request $request): array
     {
         return array_merge($this->toIndexArray($request), [
-            '' // Todo
+            '', // Todo
         ]);
     }
 
@@ -25,6 +25,7 @@ class RecipeResource extends AbstractResource
         /* @var \App\Models\Recipe $this */
         /* @var \Illuminate\Database\Eloquent\Relations\BelongsToMany|\App\Models\Tag $tags */
         $tags = $this->tags();
+
         return [
             'id' => $this->getKey(),
             'name' => $this->name,

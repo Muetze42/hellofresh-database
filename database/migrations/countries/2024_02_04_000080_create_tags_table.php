@@ -9,14 +9,15 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(string $prefix = ''): void
     {
-        Schema::create('allergens', function (Blueprint $table) {
+        Schema::create($prefix . 'tags', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->json('name');
             $table->string('type');
-            $table->string('icon_path')->nullable();
-            $table->json('description')->nullable();
+            $table->json('name');
+            $table->string('color_handle')->nullable();
+            $table->json('preferences')->nullable();
+            $table->boolean('display_label');
             $table->timestamps();
         });
     }
@@ -24,8 +25,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('allergens');
+        Schema::dropIfExists($prefix . 'tags');
     }
 };

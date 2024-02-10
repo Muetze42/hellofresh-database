@@ -9,9 +9,9 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(string $prefix = ''): void
     {
-        Schema::create('utensils', function (Blueprint $table) {
+        Schema::create($prefix . 'utensils', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type')->nullable();
             $table->json('name');
@@ -22,8 +22,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('utensils');
+        Schema::dropIfExists($prefix . 'utensils');
     }
 };

@@ -61,4 +61,22 @@ trait CountryTrait
             $column
         );
     }
+
+    /**
+     * Get the table associated with the model.
+     */
+    public function getTable(): string
+    {
+        $this->table = Str::lower(country()->country) . '__' . Str::snake(Str::pluralStudly(class_basename($this)));
+
+        return $this->table;
+    }
+
+    /**
+     * Get the joining table name for a many-to-many relation.
+     */
+    public function joiningTable($related, $instance = null): string
+    {
+        return $this->getTable();
+    }
 }

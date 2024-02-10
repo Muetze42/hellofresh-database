@@ -17,8 +17,7 @@ class UpdateIngredientsJob extends AbstractCountryUpdateJob
     {
         $response = $this->client->ingredients($this->skip);
         foreach ($response->items() as $item) {
-            /* @var \App\Models\Ingredient $ingredient */
-            $ingredient = $this->country->ingredients()->updateOrCreate(
+            $ingredient = Ingredient::updateOrCreate(
                 ['id' => $item->getKey()],
                 Ingredient::freshAttributes($item)
             );

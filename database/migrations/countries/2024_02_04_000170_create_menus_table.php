@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Country;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,11 +9,10 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(string $prefix = ''): void
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create($prefix . 'menus', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Country::class)->constrained();
             $table->unsignedInteger('year_week');
             $table->date('start');
             $table->timestamps();
@@ -24,8 +22,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists($prefix . 'menus');
     }
 };

@@ -11,9 +11,9 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(string $prefix = ''): void
     {
-        Schema::create('recipe_utensil', function (Blueprint $table) {
+        Schema::create($prefix . 'recipe_utensil', function (Blueprint $table) {
             $table->foreignIdFor(Recipe::class)->constrained((new Recipe())->getTable())->cascadeOnDelete();
             $table->foreignIdFor(Utensil::class)->constrained((new Utensil())->getTable())->cascadeOnDelete();
             $table->primary([(new Recipe())->getForeignKey(), (new Utensil())->getForeignKey()]);
@@ -23,8 +23,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('recipe_utensil');
+        Schema::dropIfExists($prefix . 'recipe_utensil');
     }
 };

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Country;
-use App\Models\Family;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,18 +9,18 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(string $prefix = ''): void
     {
-        Schema::create('ingredients', function (Blueprint $table) {
+        Schema::create($prefix . 'families', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(Country::class)->constrained();
-            $table->foreignIdFor(Family::class)->nullable()->constrained();
             $table->uuid();
             $table->json('name');
             $table->string('type');
-            $table->string('image_path')->nullable();
+            $table->string('icon_path')->nullable();
             $table->json('description')->nullable();
-            $table->boolean('shipped');
+            $table->json('priority');
+            $table->timestamp('external_created_at')->nullable();
+            $table->timestamp('external_updated_at')->nullable();
             $table->timestamps();
         });
     }
@@ -30,8 +28,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('ingredients');
+        Schema::dropIfExists($prefix . 'families');
     }
 };

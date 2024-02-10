@@ -3,6 +3,7 @@
 namespace App\Jobs\HelloFresh;
 
 use App\Contracts\Jobs\AbstractCountryJob;
+use App\Models\Menu;
 use App\Models\Recipe;
 
 /**
@@ -33,8 +34,7 @@ class UpdateMenuJob extends AbstractCountryJob
             return;
         }
 
-        /* @var \App\Models\Menu $menu */
-        $menu = $this->country->menus()->updateOrCreate(
+        $menu = Menu::updateOrCreate(
             ['year_week' => $response['year'] . $response['weak']],
             ['start' => $response['current']]
         );

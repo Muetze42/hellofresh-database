@@ -9,18 +9,13 @@ return new class () extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(string $prefix = ''): void
     {
-        Schema::create('families', function (Blueprint $table) {
+        Schema::create($prefix . 'cuisines', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid();
-            $table->json('name');
             $table->string('type');
+            $table->json('name');
             $table->string('icon_path')->nullable();
-            $table->json('description')->nullable();
-            $table->json('priority');
-            $table->timestamp('external_created_at')->nullable();
-            $table->timestamp('external_updated_at')->nullable();
             $table->timestamps();
         });
     }
@@ -28,8 +23,8 @@ return new class () extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down(string $prefix = ''): void
     {
-        Schema::dropIfExists('families');
+        Schema::dropIfExists($prefix . 'cuisines');
     }
 };

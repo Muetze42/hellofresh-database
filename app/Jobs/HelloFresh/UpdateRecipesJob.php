@@ -27,8 +27,8 @@ class UpdateRecipesJob extends AbstractCountryUpdateJob
             if (!$item->active()) {
                 continue;
             }
-            /* @var \App\Models\Recipe $recipe */
-            $recipe = $this->country->recipes()->updateOrCreate(
+
+            $recipe = Recipe::updateOrCreate(
                 ['id' => $item->getKey()],
                 Recipe::freshAttributes($item)
             );
