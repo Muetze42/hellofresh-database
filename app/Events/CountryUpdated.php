@@ -16,6 +16,6 @@ class CountryUpdated
      */
     public function __construct(Country $country)
     {
-        $this->country = $country;
+        $this->code = $country;
     }
 }

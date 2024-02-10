@@ -51,7 +51,7 @@ abstract class AbstractCountryJob implements ShouldQueue
      */
     public function withCountry(Country $country): static
     {
-        $this->country = $country;
+        $this->code = $country;
 
         return $this;
     }
@@ -71,12 +71,12 @@ abstract class AbstractCountryJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->country->switch($this->locale);
+        $this->code->switch($this->locale);
         $this->client = new HelloFreshClient(
-            isoCountryCode: $this->country->country,
+            isoCountryCode: $this->code->code,
             isoLocale: $this->locale,
-            take: $this->country->take,
-            baseUrl:$this->country->domain
+            take: $this->code->take,
+            baseUrl:$this->code->domain
         );
         $this->handleCountry();
     }

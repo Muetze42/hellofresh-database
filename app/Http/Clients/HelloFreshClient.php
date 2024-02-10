@@ -24,7 +24,7 @@ class HelloFreshClient extends Client
         }
 
         if (!$isoCountryCode) {
-            $isoCountryCode = country()?->country;
+            $isoCountryCode = country()?->code;
         }
 
         if (!$isoLocale) {

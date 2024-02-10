@@ -20,8 +20,8 @@ class HomeController extends Controller
             'countries' => Country::active()->orderBy('Country')
                 ->get(['country', 'locales'])
                 ->map(fn (Country $country) => [
-                    'country' => __('country.' . $country->country),
-                    'code' => $country->country,
+                    'country' => __('country.' . $country->code),
+                    'code' => $country->code,
                     'locales' => array_map(
                         fn ($locale) => [
                             'locale' => $locale,

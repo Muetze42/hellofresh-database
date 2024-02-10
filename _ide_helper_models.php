@@ -74,26 +74,21 @@ namespace App\Models{
  * App\Models\Country
  *
  * @property int $id
- * @property string $country
+ * @property string $code
  * @property mixed $locales
  * @property string $domain
  * @property int $take
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
- * @property-read int|null $ingredients_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
- * @property-read int|null $menus_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
- * @property-read int|null $recipes_count
+ * @property mixed $country
  * @method static \Illuminate\Database\Eloquent\Builder|Country active()
  * @method static \Database\Factories\CountryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Country newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country query()
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Country whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Country whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereDomain($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereId($value)
@@ -190,7 +185,6 @@ namespace App\Models{
  * App\Models\Ingredient
  *
  * @property string $id
- * @property int $country_id
  * @property string|null $family_id
  * @property string $uuid
  * @property array $name
@@ -202,7 +196,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
- * @property-read \App\Models\Country $country
  * @property-read \App\Models\Family|null $family
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
@@ -210,7 +203,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient query()
- * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereFamilyId($value)
@@ -265,19 +257,16 @@ namespace App\Models{
  * App\Models\Menu
  *
  * @property int $id
- * @property int $country_id
  * @property int $year_week
  * @property \Illuminate\Support\Carbon $start
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @method static \Database\Factories\MenuFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Menu newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Menu newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Menu query()
- * @method static \Illuminate\Database\Eloquent\Builder|Menu whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Menu whereStart($value)
@@ -292,7 +281,6 @@ namespace App\Models{
  * App\Models\Recipe
  *
  * @property string $id
- * @property int $country_id
  * @property int|null $label_id
  * @property string|null $category_id
  * @property string|null $uuid
@@ -321,7 +309,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
  * @property-read \App\Models\Category|null $category
- * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cuisine> $cuisines
  * @property-read int|null $cuisines_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
@@ -343,7 +330,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCardLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereClonedFrom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDifficulty($value)

@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Models;
 
+use App\Models\Country;
 use App\Models\Recipe;
 use Exception;
 use Illuminate\Support\Carbon;
@@ -64,21 +65,47 @@ trait CountryTrait
 
     /**
      * Get the table associated with the model.
+     *
+     * @noinspection PhpUnhandledExceptionInspection
      */
     public function getTable(): string
     {
-        $this->table = Str::lower(country()->country) . '__' . Str::snake(Str::pluralStudly(class_basename($this)));
+        $this->table = $this->getCountryPrefix() . Str::snake(Str::pluralStudly(class_basename($this)));
 
         return $this->table;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function getCountryPrefix(): string
+    {
+        $country = country();
+
+        /* Fallback for IDE Helper */
+        if (!$country) {
+            if (!app()->runningConsoleCommand('helper')) {
+                throw new Exception('No Country activated');
+            }
+
+            /* @var \App\Models\Country $country */
+            $country = Country::inRandomOrder()->first();
+
+            return Str::lower($country->code) . '__';
+        }
+
+
+        return Str::lower(country()->code) . '__';
     }
 
     /**
      * Get the joining table name for a many-to-many relation.
      *
      * @noinspection PhpMultipleClassDeclarationsInspection
+     * @noinspection PhpUnhandledExceptionInspection
      */
     public function joiningTable($related, $instance = null): string
     {
-        return Str::lower(country()->country) . '__' . parent::joiningTable($related, $instance);
+        return $this->getCountryPrefix() . parent::joiningTable($related, $instance);
     }
 }

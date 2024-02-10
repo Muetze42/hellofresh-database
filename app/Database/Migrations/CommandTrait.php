@@ -27,8 +27,8 @@ trait CommandTrait
 
         Country::each(function (Country $country) {
             $country->switch($country->locales[0]);
-            $this->country = $country;
-            $this->prefix = Str::lower($country->country) . '__';
+            $this->code = $country;
+            $this->prefix = Str::lower($country->code) . '__';
 
             $repository = new DatabaseMigrationRepository(app('db'), $this->prefix . $this->migrationTable);
             $this->migrator = new Migrator($repository, app('db'), app('files'), app('events'), $this->prefix);
