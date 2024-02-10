@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Http\Resources\PageIndices;
 
-use App\Http\Resources\Indices\LabelIndexResource;
+use App\Http\Resources\LabelResource;
 use Illuminate\Http\Request;
 use Mockery;
 use Tests\TestCase;
@@ -10,11 +10,11 @@ use Tests\TestCase;
 /**
  * Class LabelResourceTest.
  *
- * @covers \App\Http\Resources\Indices\LabelIndexResource
+ * @covers \App\Http\Resources\LabelResource
  */
 final class LabelResourceTest extends TestCase
 {
-    private LabelIndexResource $labelResource;
+    private LabelResource $labelResource;
 
     /**
      * {@inheritdoc}
@@ -24,7 +24,7 @@ final class LabelResourceTest extends TestCase
         parent::setUp();
 
         /** @todo Correctly instantiate tested object to use it. */
-        $this->labelResource = new LabelIndexResource();
+        $this->labelResource = new LabelResource();
     }
 
     /**

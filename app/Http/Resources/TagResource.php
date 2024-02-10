@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Indices;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TagIndexResource extends JsonResource
+class TagResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

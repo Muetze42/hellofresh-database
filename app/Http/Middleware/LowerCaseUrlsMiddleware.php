@@ -14,6 +14,10 @@ class LowerCaseUrlsMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->method() != 'GET') {
+            return $next($request);
+        }
+
         $path = $request->path();
 
         if ($path && $path !== Str::lower($path)) {
