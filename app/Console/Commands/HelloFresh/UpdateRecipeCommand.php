@@ -4,7 +4,6 @@ namespace App\Console\Commands\HelloFresh;
 
 use App\Http\Clients\HelloFreshClient;
 use App\Models\Country;
-use App\Models\Recipe;
 use App\Services\HelloFreshService;
 use Exception;
 use Illuminate\Console\Command;

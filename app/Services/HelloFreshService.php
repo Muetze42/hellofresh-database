@@ -15,7 +15,7 @@ use NormanHuth\HellofreshScraper\Models\HelloFreshRecipe;
 
 class HelloFreshService
 {
-    public static function syncRecipe(HelloFreshRecipe $item): Recipe|null
+    public static function syncRecipe(HelloFreshRecipe $item): ?Recipe
     {
         if (!$item->active()) {
             return null;
@@ -59,6 +59,8 @@ class HelloFreshService
             }
             $recipe->{$method}()->sync($ids);
         }
+
+        $recipe->touch();
 
         return $recipe;
     }
