@@ -4,8 +4,9 @@ namespace App\Http\Resources;
 
 use App\Contracts\Http\Resources\HasIndexCollectionTrait;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class RecipeResource
+class RecipeResource extends JsonResource
 {
     use HasIndexCollectionTrait;
 
@@ -42,7 +43,8 @@ class RecipeResource
             'headline' => $this->headline,
             'image' => $this->asset()->preview(),
             'label' => $this->label?->active() ? new LabelResource($this->label) : null,
-            'tags' => TagResource::collection($tags->active()->get()),
+            //'tags' => TagResource::collection($tags->active()->get()),
+            'tags' => $tags->active()->get()->pluck('name')->toArray(),
         ];
     }
 }

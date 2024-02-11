@@ -5,10 +5,10 @@ namespace App\Models;
 use App\Casts\LowerArrayCast;
 use App\Casts\UpperStringCast;
 use App\Contracts\Models\CanActivateTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
 
 class Country extends Model

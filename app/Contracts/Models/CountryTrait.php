@@ -4,8 +4,8 @@ namespace App\Contracts\Models;
 
 use App\Models\Country;
 use App\Models\Recipe;
-use Arr;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 trait CountryTrait

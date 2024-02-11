@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Contracts\Models\CanActivateTrait;
-use App\Contracts\Models\CountrySluggableRouteTrait;
 use App\Contracts\Models\CountryTrait;
 use App\Contracts\Models\HasTranslationsTrait;
 use App\Contracts\Models\UseHelloFreshIdTrait;
@@ -20,7 +19,14 @@ class Recipe extends Model
     use CanActivateTrait;
     use HasTranslationsTrait;
     use UseHelloFreshIdTrait;
-    use CountrySluggableRouteTrait;
+
+    /**
+     * Retrieve the model for a bound value.
+     */
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this->where('id', explode('-', $value)[0])->firstOrFail();
+    }
 
     /**
      * The attributes that are translatable.

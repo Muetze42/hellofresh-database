@@ -7,17 +7,35 @@
     @apply inline-flex items-center justify-center select-none;
     @apply font-medium rounded leading-normal transition duration-150 ease-in-out;
     @apply px-2.5 py-0.5;
-    @apply text-white bg-gradient-to-t from-emerald-600 to-emerald-400 hover:to-emerald-500 shadow-lg;
+    @apply text-white bg-gradient-to-t from-green-700 to-green-400 shadow-lg;
+
+    &:is(a, button, input) {
+      @apply hover:to-green-500;
+    }
   }
-  .btn-dark {
-    @apply text-gray-300 from-gray-800 to-gray-700 hover:to-gray-800;
+  .btn-disabled {
+    @apply font-normal text-gray-300/80 from-gray-800 to-gray-700;
+    &:is(a, button, input) {
+      @apply hover:to-gray-800;
+    }
+  }
+  .btn-sm {
+    @apply px-1.5 text-sm;
   }
   .card {
-    @apply flex flex-col bg-gray-800 rounded shadow;
+    @apply flex flex-col bg-gray-800 rounded shadow border border-gray-600;
+  }
+  .dotted-list {
+    li {
+      @apply after:content-['•'] after:px-1.5;
+      &:last-child {
+        @apply after:content-none after:px-0;
+      }
+    }
   }
   /* For Semantic Elements */
   .nav-element {
-    @apply w-full z-30 transition duration-300 ease-in-out bg-gray-800;
+    @apply w-full z-30 transition duration-300 ease-in-out bg-gray-800 border-gray-600/50;
   }
 }
 

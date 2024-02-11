@@ -16,7 +16,7 @@ class RecipeController extends Controller
     {
         return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection(
-                Recipe::paginate(12, ['*'], 'p')
+                Recipe::has('tags', '>=', 3)->paginate(12, ['*'], 'p')
             ),
         ]);
     }
