@@ -5,6 +5,7 @@ namespace App\Console\Commands\HelloFresh;
 use App\Http\Clients\HelloFreshClient;
 use App\Models\Country;
 use App\Models\Recipe;
+use App\Services\HelloFreshService;
 use Exception;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -56,10 +57,7 @@ class UpdateRecipeCommand extends Command
                 return;
             }
 
-            $recipe = Recipe::updateOrCreate(
-                ['id' => $item->getKey()],
-                Recipe::freshAttributes($item)
-            );
+            $recipe = HelloFreshService::syncRecipe($item);
 
             $this->components->info(
                 sprintf('Recipe `%s` updated for %s (%s)', $recipe->getKey(), $country->code, $locale)
