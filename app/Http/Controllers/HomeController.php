@@ -17,8 +17,8 @@ class HomeController extends Controller
         $locales = require storage_path('languages.php');
 
         return Inertia::render('Home/Index', [
-            'countries' => Country::active()->orderBy('Country')
-                ->get(['country', 'locales'])
+            'countries' => Country::active()->orderBy('code')
+                ->get(['code', 'locales'])
                 ->map(fn (Country $country) => [
                     'country' => __('country.' . $country->code),
                     'code' => $country->code,
