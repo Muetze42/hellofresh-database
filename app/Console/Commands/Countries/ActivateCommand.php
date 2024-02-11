@@ -37,6 +37,7 @@ class ActivateCommand extends Command
 
         if (!$this->countries->count()) {
             $this->components->error('No Countries selected');
+
             return;
         }
 
@@ -64,6 +65,7 @@ class ActivateCommand extends Command
             'rows' => $this->countries->map(function (Country $country) {
                 $locales = $country->locales;
                 sort($locales);
+
                 return [
                     'id' => $country->getKey(),
                     'code' => $country->code,
@@ -71,12 +73,12 @@ class ActivateCommand extends Command
                     'locales' => implode(',', $locales),
                     'active' => $this->centeredTableCell($country->active ? '✅' : '❌'),
                 ];
-            })->toArray()
+            })->toArray(),
         ];
     }
 
     protected function handleCommand(): void
     {
-        $this->countries->each(fn(Country $country) => $country->update(['active' => true]));
+        $this->countries->each(fn (Country $country) => $country->update(['active' => true]));
     }
 }

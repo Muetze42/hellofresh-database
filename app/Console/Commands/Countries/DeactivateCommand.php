@@ -22,6 +22,6 @@ class DeactivateCommand extends ActivateCommand
 
     protected function handleCommand(): void
     {
-        $this->countries->each(fn(Country $country) => $country->update(['active' => false]));
+        $this->countries->each(fn (Country $country) => $country->update(['active' => false]));
     }
 }
