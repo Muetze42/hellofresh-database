@@ -36,7 +36,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'translations' => $this->getJsonTranslations(),
             'locale' => app()->getLocale(),
-            'country' => country()?->only(['country', 'domain']),
+            'country' => country()?->append('route')->only(['code', 'domain', 'route']),
         ]);
     }
 

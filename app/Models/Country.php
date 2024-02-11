@@ -8,6 +8,8 @@ use App\Contracts\Models\CanActivateTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Str;
 
 class Country extends Model
 {
@@ -47,5 +49,15 @@ class Country extends Model
     {
         App::setCountry($this);
         App::setLocale($locale);
+    }
+
+    /**
+     * Determine if the user is an administrator.
+     */
+    protected function route(): Attribute
+    {
+        return new Attribute(
+            get: fn () => '/' . Str::lower($this->code) . '-' . app()->getLocale() . '/',
+        );
     }
 }
