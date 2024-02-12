@@ -9,6 +9,11 @@ use Illuminate\Support\Collection;
 class LengthAwarePaginator extends Paginator
 {
     /**
+     * The number of links to display on each side of current page link.
+     */
+    public $onEachSide = 1;
+
+    /**
      * Get the paginator links as a collection (for JSON responses).
      * @noinspection DuplicatedCode
      */

@@ -55,8 +55,8 @@
           </div>
         </div>
       </div>
-      <Pagination :links="recipes.meta.links" />
     </div>
+    <Pagination :links="recipes.meta.links" class="mt-8" />
   </FullPage>
 </template>
 

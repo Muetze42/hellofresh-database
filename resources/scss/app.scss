@@ -56,7 +56,8 @@ main {
 }
 
 .pagination {
+  @apply divide-x divide-gray-300/25 container flex gap-y-1.5 flex-wrap justify-center items-center;
   .btn {
-    @apply rounded-none first:rounded-l last:rounded-r;
+    @apply rounded-none first:sm:rounded-l last:sm:rounded-r;
   }
 }
