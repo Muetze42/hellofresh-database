@@ -10,6 +10,7 @@ library.add(faScroll, faFileLines, faLemon)
 
 import FullPage from '@/Layouts/FullPage.vue'
 import Pagination from '@/Components/Pagination.vue'
+import * as Sentry from '@sentry/vue'
 
 createInertiaApp({
   resolve: (name) => {
@@ -17,7 +18,13 @@ createInertiaApp({
     return pages[`./Pages/${name}.vue`]
   },
   setup({ el, App, props, plugin }) {
-    createApp({ render: () => h(App, props) })
+    const app = createApp({ render: () => h(App, props) })
+    Sentry.init({
+      app,
+      dsn: import.meta.env.VITE_SENTRY_DSN_PUBLIC
+    })
+
+    app
       .use(plugin)
       .mixin({
         computed: {
@@ -45,4 +52,3 @@ createInertiaApp({
       .mount(el)
   }
 })
-

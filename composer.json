@@ -33,6 +33,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "norman-huth/hellofresh-scraper": "@dev",
+        "sentry/sentry-laravel": "^4.2",
         "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {

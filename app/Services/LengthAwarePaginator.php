@@ -15,12 +15,13 @@ class LengthAwarePaginator extends Paginator
 
     /**
      * Get the paginator links as a collection (for JSON responses).
+     *
      * @noinspection DuplicatedCode
      */
     public function linkCollection(): Collection
     {
         return collect($this->elements())->flatMap(function ($item) {
-            if (! is_array($item)) {
+            if (!is_array($item)) {
                 return [['url' => null, 'label' => '...', 'active' => false]];
             }
 
