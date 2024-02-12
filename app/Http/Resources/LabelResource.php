@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class LabelResource extends JsonResource
 {
@@ -16,7 +17,7 @@ class LabelResource extends JsonResource
     {
         /* @var \App\Models\Label $this */
         return [
-            'text' => $this->text,
+            'text' => Str::ucfirst($this->text),
             'color' => $this->foreground_color,
             'bg' => $this->background_color,
         ];

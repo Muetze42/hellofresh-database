@@ -2,7 +2,7 @@
   <FullPage :filterable="true">
     <h1 class="sr-only">{{ __('Recipes') }}</h1>
     <div class="flex flex-wrap justify-center xl:justify-between items-stretch gap-8">
-      <div v-for="recipe in recipes.data" :key="recipe.id" class="card w-96 2xl:w-[29.3rem]">
+      <div v-for="recipe in recipes.data" :key="recipe.id" class="card w-full sm:w-96 2xl:w-[29.3rem]">
         <Link v-if="recipe.image" :href="country.route + recipe.id + '-' + recipe.slug">
           <div
             v-if="recipe.label"

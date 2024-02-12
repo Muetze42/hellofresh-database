@@ -43,7 +43,6 @@ class RecipeResource extends JsonResource
             'headline' => $this->headline,
             'image' => $this->asset()->preview(),
             'label' => $this->label?->active() ? new LabelResource($this->label) : null,
-            //'tags' => TagResource::collection($tags->active()->get()),
             'tags' => $tags->active()->get()->pluck('name')->toArray(),
         ];
     }
