@@ -14,7 +14,7 @@ return [
     'assets' => [
         'recipes' => [
             'header' => 'c_fit,f_auto,fl_lossy,h_1100,q_auto,w_2600',
-            'preview' => 'c_fill,f_auto,fl_lossy,h_202,q_auto,w_360',
+            'preview' => 'w_470,q_auto,f_auto,c_limit,fl_lossy',
         ],
         'ingredient' => [
             'image' => 'w_96,q_auto,f_auto,c_limit,fl_lossy',

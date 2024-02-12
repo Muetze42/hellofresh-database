@@ -7,16 +7,24 @@
     @apply inline-flex items-center justify-center select-none;
     @apply font-medium rounded leading-normal transition duration-150 ease-in-out;
     @apply px-2.5 py-0.5;
-    @apply text-white bg-gradient-to-t from-green-700 to-green-400 shadow-lg;
+    @apply bg-gradient-to-t shadow-lg;
+    @apply text-white from-green-700 to-green-400;
 
     &:is(a, button, input) {
       @apply hover:to-green-500;
     }
   }
   .btn-disabled {
-    @apply font-normal text-gray-300/80 from-gray-800 to-gray-700;
+    @apply font-normal;
+    @apply text-gray-300/80 from-gray-800 to-gray-700;
     &:is(a, button, input) {
       @apply hover:to-gray-800;
+    }
+  }
+  .btn-danger {
+    @apply from-red-800 to-red-700;
+    &:is(a, button, input) {
+      @apply hover:to-red-500;
     }
   }
   .btn-sm {
@@ -52,7 +60,7 @@
 }
 
 main {
-  @apply grow pt-12 pb-4 sm:pb-8 container;
+  @apply grow pt-20 pb-4 sm:pb-8 container;
 }
 
 .pagination {
@@ -60,4 +68,8 @@ main {
   .btn {
     @apply rounded-none first:sm:rounded-l last:sm:rounded-r;
   }
+}
+
+.scrollbar, .scrollbar-thin {
+  @apply scrollbar-thumb-emerald-500 scrollbar-track-green-900 scrollbar-track-rounded-full;
 }

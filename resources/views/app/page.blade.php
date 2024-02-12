@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 @if(country())
-<html lang="{{ config('app.locale', 'en') }}-{{ country()->country }}">
+<html lang="{{ config('app.locale', 'en') }}-{{ country()->code }}" class="scrollbar">
 @else
 <html lang="{{ config('app.locale', 'en') }}">
 @endif

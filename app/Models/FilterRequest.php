@@ -35,6 +35,7 @@ class FilterRequest extends Model
 
     public static function requestSet(array $data): ?FilterRequest
     {
+        $data = array_filter($data);
         $data = serialize(Arr::sortRecursive($data));
 
         return self::firstOrCreate(['data' => $data]);
