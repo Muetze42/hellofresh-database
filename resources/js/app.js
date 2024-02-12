@@ -9,6 +9,7 @@ import { faScroll, faFileLines, faLemon } from '@fortawesome/free-solid-svg-icon
 library.add(faScroll, faFileLines, faLemon)
 
 import FullPage from '@/Layouts/FullPage.vue'
+import Pagination from '@/Components/Pagination.vue'
 
 createInertiaApp({
   resolve: (name) => {
@@ -39,6 +40,7 @@ createInertiaApp({
       })
       .component('Link', Link)
       .component('FullPage', FullPage)
+      .component('Pagination', Pagination)
       .component('FontAwesomeIcon', FontAwesomeIcon)
       .mount(el)
   }

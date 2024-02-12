@@ -6,9 +6,11 @@ use App\Console\Commands\Development\Illuminate\InstallCommand;
 use App\Console\Commands\Development\MigrateCommand;
 use App\Console\Commands\Development\RollbackCommand;
 use App\Database\Migrations\Migrator;
+use App\Services\LengthAwarePaginator as CustomLengthAwarePaginator;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,7 +28,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->binds();
+    }
+
+    protected function binds(): void
+    {
+        $this->app->bind(
+            LengthAwarePaginator::class,
+            CustomLengthAwarePaginator::class
+        );
     }
 
     protected function registerCountryMigrators(): void

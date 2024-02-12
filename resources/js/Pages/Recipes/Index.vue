@@ -1,5 +1,5 @@
 <template>
-  <FullPage>
+  <FullPage :filterable="true">
     <h1 class="sr-only">{{ __('Recipes') }}</h1>
     <div class="flex flex-wrap justify-center items-stretch gap-6">
       <div v-for="recipe in recipes.data" :key="recipe.id" class="card w-96">
@@ -55,6 +55,7 @@
           </div>
         </div>
       </div>
+      <Pagination :links="recipes.meta.links" />
     </div>
   </FullPage>
 </template>
@@ -80,9 +81,10 @@
  * @property recipes.data.tags.color
  */
 import FullPage from '@/Layouts/FullPage.vue'
+import Pagination from '@/Components/Pagination.vue'
 
 export default {
-  components: { FullPage },
+  components: { Pagination, FullPage },
   props: {
     recipes: {
       type: Object,

@@ -4,5 +4,13 @@
 </header>
 </template>
 <script>
-export default {}
+export default {
+  props: {
+    filterable: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  }
+}
 </script>

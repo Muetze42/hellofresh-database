@@ -54,3 +54,9 @@
 main {
   @apply grow pt-12 pb-4 sm:pb-8 container;
 }
+
+.pagination {
+  .btn {
+    @apply rounded-none first:rounded-l last:rounded-r;
+  }
+}

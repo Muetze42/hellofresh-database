@@ -25,7 +25,7 @@ class Recipe extends Model
      */
     public function resolveRouteBinding($value, $field = null): ?Model
     {
-        return $this->where('id', explode('-', $value)[0])->firstOrFail();
+        return $this->active()->where('id', explode('-', $value)[0])->firstOrFail();
     }
 
     /**
