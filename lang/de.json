@@ -29,9 +29,11 @@
     "Menu": "Menu",
     "Menus": "Menüs",
     "Minutes": "Minuten",
+    "Next": "Weiter",
     "No results found": "Es wurden keine Ergebnisse gefunden",
     "Oops. No recipes were found using these criteria.": "Oops. Es wurden mit diesen Kriterien keine Rezepte gefunden.",
     "Prep Time": "Arbeitszeit",
+    "Previous": "Zurück",
     "Recipe": "Rezept",
     "Recipes": "Rezepte",
     "Reset filters": "Filter zurücksetzen",
@@ -46,7 +48,5 @@
     "View PDF": "PDF anzeigen",
     "View on HelloFresh": "Auf HelloFresh anzeigen",
     "View recipe PDF": "Rezept PDF anzeigen",
-    "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen",
-    "next": "weiter",
-    "previous": "zurück"
+    "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen"
 }
