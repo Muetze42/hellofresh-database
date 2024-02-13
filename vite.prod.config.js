@@ -20,7 +20,11 @@ export default defineConfig({
     }),
     sentryVitePlugin({
       org: 'norman-huth-e4772120a',
-      project: 'hellofresh-database'
+      project: 'hellofresh-database',
+      release: {
+        name: new Date().getTime()
+      },
+      authToken: process.env.SENTRY_AUTH_TOKEN
     })
   ],
 
