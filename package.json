@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "prod.build": "vite --config vite.prod.config.js"
+        "prod.build": "vite build --config vite.prod.config.js"
     },
     "devDependencies": {
         "@babel/plugin-syntax-dynamic-import": "7.8.3",
