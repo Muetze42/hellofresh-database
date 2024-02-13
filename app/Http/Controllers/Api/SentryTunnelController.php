@@ -31,7 +31,7 @@ class SentryTunnelController extends Controller
         $url = sprintf(
             'https://%s.ingest.sentry.io/api/%d/envelope/',
             explode('.', $parsed['host'])[0],
-            last(explode('/', $parsed['path']))
+            last(explode('/', rtrim($parsed['path'], '/')))
         );
 
         $response = Http::withBody($envelope, 'application/x-sentry-envelope')->post($url);
