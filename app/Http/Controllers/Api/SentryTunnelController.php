@@ -36,6 +36,6 @@ class SentryTunnelController extends Controller
 
         $response = Http::withBody($envelope, 'application/x-sentry-envelope')->post($url);
 
-        return response()->json($response->body(), $response->status());
+        return response()->json($response->json(), $response->status());
     }
 }
