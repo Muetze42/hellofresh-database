@@ -21,7 +21,10 @@ createInertiaApp({
     const app = createApp({ render: () => h(App, props) })
     Sentry.init({
       app,
-      dsn: import.meta.env.VITE_SENTRY_DSN_PUBLIC
+      dsn: import.meta.env.VITE_SENTRY_DSN_PUBLIC,
+      tunnel: '/api/sentry-tunnel',
+      trackComponents: true,
+      logErrors: true
     })
 
     app
