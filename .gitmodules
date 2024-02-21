@@ -1,3 +1,0 @@
-[submodule "packages/hellofresh-scraper"]
-	path = packages/hellofresh-scraper
-	url = https://github.com/Muetze42/hellofresh-scraper.git
