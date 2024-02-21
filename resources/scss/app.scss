@@ -1,7 +1,16 @@
+/**
+ * Tailwind Base
+ */
 @tailwind base;
 @import "fonts/inter-var";
-@tailwind components;
+@layer base {
+  @import "base/forms";
+}
 
+/**
+ * Tailwind Components
+ */
+@tailwind components;
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center select-none;
@@ -49,15 +58,19 @@
     @apply w-full z-30 transition duration-300 ease-in-out bg-gray-800 border-gray-600/50;
   }
 }
-
 @layer utilities {
   .centered {
     @apply flex justify-center items-center h-screen;
   }
 }
-
+/**
+ * Tailwind Utilities
+ */
 @tailwind utilities;
 
+/**
+ * Theme
+ */
 #app {
   @apply flex flex-col min-h-screen overflow-hidden;
 }
@@ -75,6 +88,15 @@ main {
 
 .scrollbar, .scrollbar-thin {
   @apply scrollbar-thumb-emerald-500 scrollbar-track-green-900 scrollbar-track-rounded-full;
+}
+
+#filter {
+  @apply flex flex-col gap-2 divide-y border;
+  @apply divide-neutral-600/90 border-gray-600/90;
+
+  .row {
+    @apply px-2 pt-2;
+  }
 }
 
 $flag-icons-use-square: false;

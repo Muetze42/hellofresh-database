@@ -1,0 +1,15 @@
+input[type='checkbox'] {
+ @apply form-checkbox rounded-sm text-green-600 mb-0.5 mr-0.5 cursor-pointer;
+}
+input[type='text'] {
+ @apply form-input;
+}
+textarea {
+ @apply form-textarea;
+}
+select {
+ @apply form-select;
+}
+input[type='text'], select, textarea {
+ @apply text-neutral-900;
+}

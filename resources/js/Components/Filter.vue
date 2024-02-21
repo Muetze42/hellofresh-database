@@ -1,6 +1,19 @@
 <script setup>
+import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+
+const page = usePage()
+const filter = page.props.filter
+
+// noinspection JSCheckFunctionSignatures
+const form = useForm(filter)
+
 defineEmits(['close'])
+
+/**
+ * @property {Object} form
+ * @property {Boolean} form.pdf
+ */
 </script>
 
 <template>
@@ -34,16 +47,26 @@ defineEmits(['close'])
                   <DialogTitle class="text-base font-medium p-2">
                     {{ __('Filters') }}
                   </DialogTitle>
-                  <div
-                    class="flex-1 overflow-y-auto m-1 p-1 border border-gray-600/90 rounded scrollbar-thin scrollbar-thumb-rounded-full"
+                  <form
+                    id="filter"
+                    class="flex-1 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
-                    Text
-                  </div>
+                    <div class="row">
+                      <label class="cursor-pointer">
+                        <input v-model="form.pdf" type="checkbox" class="" />
+                        {{ __('Show only recipes with PDF') }}
+                      </label>
+                    </div>
+                  </form>
                   <div class="flex gap-2 items-center justify-end p-2">
-                    <button type="button" class="btn btn-danger" @click="$emit('close')">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click="[form.reset(), $emit('close')]"
+                    >
                       {{ __('Cancel') }}
                     </button>
-                    <button type="button" class="btn" @click="closeFilter">
+                    <button type="button" class="btn">
                       {{ __('Apply filters') }}
                     </button>
                   </div>
