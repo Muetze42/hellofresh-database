@@ -14,10 +14,6 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
-        Inertia::share('filter', [
-            'pdf' => false,
-        ]);
-
         return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection(
                 Recipe::active()->orderBy('external_updated_at')->paginate(12)

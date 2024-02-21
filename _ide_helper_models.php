@@ -26,6 +26,7 @@ namespace App\Models{
  * @property-read int|null $ingredients_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read mixed $translations
  * @method static \Database\Factories\AllergenFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newQuery()
@@ -54,6 +55,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read mixed $translations
  * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
@@ -81,6 +83,7 @@ namespace App\Models{
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $route
  * @method static \Illuminate\Database\Eloquent\Builder|Country active()
  * @method static \Database\Factories\CountryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Country newModelQuery()
@@ -110,6 +113,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read mixed $translations
  * @method static \Database\Factories\CuisineFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newQuery()
@@ -143,6 +147,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
+ * @property-read mixed $translations
  * @method static \Database\Factories\FamilyFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Family newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family newQuery()
@@ -166,17 +171,17 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\FilterRequest
+ * App\Models\Filter
  *
  * @property string $id
  * @property string $data
- * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest query()
- * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest whereData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|FilterRequest whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Filter newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Filter newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Filter query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Filter whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Filter whereId($value)
  */
-	class FilterRequest extends \Eloquent {}
+	class Filter extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -198,6 +203,7 @@ namespace App\Models{
  * @property-read \App\Models\Family|null $family
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read mixed $translations
  * @method static \Database\Factories\IngredientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newQuery()
@@ -232,6 +238,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read mixed $translations
  * @method static \Illuminate\Database\Eloquent\Builder|Label active()
  * @method static \Database\Factories\LabelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Label newModelQuery()
@@ -317,6 +324,7 @@ namespace App\Models{
  * @property-read int|null $menus_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
+ * @property-read mixed $translations
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Utensil> $utensils
  * @property-read int|null $utensils_count
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe active()
@@ -370,6 +378,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read mixed $translations
  * @method static \Illuminate\Database\Eloquent\Builder|Tag active()
  * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
@@ -432,6 +441,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read mixed $translations
  * @method static \Database\Factories\UtensilFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil newQuery()

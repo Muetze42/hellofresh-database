@@ -10,6 +10,6 @@ textarea {
 select {
  @apply form-select;
 }
-input[type='text'], select, textarea {
+input[type='text'], input[type='password'], input[type='search'], input[type='email'], select, textarea {
  @apply text-neutral-900;
 }

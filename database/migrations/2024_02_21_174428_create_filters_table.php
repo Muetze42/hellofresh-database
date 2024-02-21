@@ -11,7 +11,7 @@ return new class () extends Migration
      */
     public function up(): void
     {
-        Schema::create('filter_requests', function (Blueprint $table) {
+        Schema::create('filters', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->longText('data');
         });
@@ -22,6 +22,6 @@ return new class () extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filter_requests');
+        Schema::dropIfExists('filters');
     }
 };

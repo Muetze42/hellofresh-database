@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\Requests\FilterRequest;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,6 +37,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'translations' => $this->getJsonTranslations(),
             'locale' => app()->getLocale(),
+            'filter' => FilterRequest::parse($request),
             'country' => country()?->append('route')->only(['code', 'domain', 'route']),
         ]);
     }
