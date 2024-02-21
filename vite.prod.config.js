@@ -19,7 +19,7 @@ export default defineConfig({
       }
     }),
     sentryVitePlugin({
-      org: 'norman-huth-e4772120a',
+      org: 'norman-huth',
       project: 'hellofresh-database',
       release: {
         name: new Date().getTime()
@@ -33,7 +33,6 @@ export default defineConfig({
       '@': resolve('./resources/js')
     }
   },
-
   build: {
     sourcemap: true
   }
