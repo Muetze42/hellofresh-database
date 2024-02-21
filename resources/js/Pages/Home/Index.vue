@@ -1,5 +1,4 @@
 <script setup>
-import Flag from 'vue-country-flag-next'
 /**
  * @property countries
  * @property countries.countries
@@ -22,9 +21,7 @@ defineProps({
     <h2 class="w-full text-lg">Choose a country and a language</h2>
     <div v-for="country in countries" :key="country.code" class="p-2 card w-72">
       <h3 class="font-medium mb-2 text-lg flex flex-wrap justify-center gap-2 items-center">
-        <span>
-          <Flag :country="country.code" />
-        </span>
+        <span class="fi" :class="'fi-' + country.code.toLowerCase()" />
         <span> HelloFresh {{ country.country }} </span>
       </h3>
       <div class="flex flex-wrap gap-2 justify-center pb-1">

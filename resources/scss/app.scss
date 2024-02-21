@@ -41,6 +41,9 @@
       }
     }
   }
+  .overlay {
+    @apply bg-neutral-900 bg-opacity-90;
+  }
   /* For Semantic Elements */
   .nav-element {
     @apply w-full z-30 transition duration-300 ease-in-out bg-gray-800 border-gray-600/50;
@@ -73,3 +76,9 @@ main {
 .scrollbar, .scrollbar-thin {
   @apply scrollbar-thumb-emerald-500 scrollbar-track-green-900 scrollbar-track-rounded-full;
 }
+
+$flag-icons-use-square: false;
+$flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", "gb", "it", "lu", "nl", "no", "nz", "se", "us";
+@import "flag-icons/sass/variables";
+@import "flag-icons/sass/flag-icons-base";
+@import "flag-icons/sass/flag-icons-list";

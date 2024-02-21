@@ -34,8 +34,8 @@
         "@fortawesome/vue-fontawesome": "3.0.6",
         "@sentry/vite-plugin": "^2.14.1",
         "@sentry/vue": "^7.102.0",
+        "flag-icons": "^7.1.0",
         "sass": "1.71.1",
-        "sass-loader": "14.1.1",
-        "vue-country-flag-next": "^2.3.2"
+        "sass-loader": "14.1.1"
     }
 }
