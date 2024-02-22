@@ -39,6 +39,11 @@
     "Reset filters": "Reset filters",
     "Search": "Search",
     "Show filters": "Show filters",
+    "Show only recipes with PDF": "Show only recipes with PDF",
+    "Show only recipes with all these ingredient": "Show only recipes with all these ingredient",
+    "Show only recipes with one of these ingredient": "Show only recipes with one of these ingredient",
+    "Show only recipes without this allergens": "Show only recipes without this allergens",
+    "Show only recipes without this ingredient": "Show only recipes without this ingredient",
     "Source code": "Source code",
     "Support developer": "Support developer",
     "Tag": "Tag",
@@ -48,5 +53,6 @@
     "View PDF": "View PDF",
     "View on HelloFresh": "View on HelloFresh",
     "View recipe PDF": "View recipe PDF",
-    "View recipe on the „HelloFresh“ website": "View recipe on the „HelloFresh“ website"
+    "View recipe on the „HelloFresh“ website": "View recipe on the „HelloFresh“ website",
+    "max :number": "max :number"
 }
