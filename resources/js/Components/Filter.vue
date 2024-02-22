@@ -60,6 +60,7 @@ defineEmits(['close'])
                     </div>
                     <label>
                       {{ __('Show only recipes with one of these ingredient') }}
+                      ({{ __('max :number', { number: 20 }) }})
                       <Multiselect v-model="form.ingredients" route="ingredients" />
                     </label>
                   </form>

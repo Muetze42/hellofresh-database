@@ -53,7 +53,7 @@ async function getItems(query) {
     :filter-results="false"
     :delay="200"
     :min-chars="2"
-    :limit="10"
+    :max="20"
     :object="true"
     :resolve-on-load="false"
     :no-options-text="!searchValue || searchValue.length < 2 ? __('Enter to search') : __('No results found')"
