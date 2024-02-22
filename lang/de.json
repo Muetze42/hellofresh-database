@@ -42,6 +42,7 @@
     "Show filters": "Filter anzeigen",
     "Source code": "Quellcode",
     "Support developer": "Entwickler unterstützen",
+    "Show only recipes with all these ingredient": "Nur Rezepte mit all diesen Zutaten anzeigen",
     "Tag": "Tag",
     "Tags": "Tags",
     "Utensil": "Utensil",
@@ -51,5 +52,6 @@
     "View PDF": "PDF anzeigen",
     "View on HelloFresh": "Auf HelloFresh anzeigen",
     "View recipe PDF": "Rezept PDF anzeigen",
+    "Show only recipes without this ingredient": "Nur Rezepte ohne diese Zutat anzeigen",
     "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen"
 }

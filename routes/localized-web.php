@@ -19,8 +19,6 @@ Route::get('debug', fn () => dd(Illuminate\Support\Number::format(23004.23)));
 Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
 Route::get('{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
 
-Route::prefix('filters')->group(function () {
-    Route::post('ingredients', [FilterController::class, 'ingredients'])
-        ->name('filter.ingredients');
-});
 
+Route::post('filters/{model}', [FilterController::class, 'index'])
+    ->name('filter.index');

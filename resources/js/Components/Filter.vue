@@ -14,7 +14,10 @@ defineEmits(['close'])
 /**
  * @property {Object} form
  * @property {Boolean} form.pdf
+ * @property {Boolean} form.iMode
  * @property {array} form.ingredients
+ * @property {array} form.ingredients_not
+ * @property {array} form.allergens
  */
 </script>
 
@@ -50,7 +53,7 @@ defineEmits(['close'])
                     {{ __('Filters') }}
                   </DialogTitle>
                   <form
-                    class="flex-1 flex flex-col gap-2 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
+                    class="flex-1 flex flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
                     <div>
                       <label class="cursor-pointer">
@@ -59,9 +62,29 @@ defineEmits(['close'])
                       </label>
                     </div>
                     <label>
-                      {{ __('Show only recipes with one of these ingredient') }}
-                      ({{ __('max :number', { number: 20 }) }})
+                      <div class="flex flex-col">
+                        <label class="cursor-pointer">
+                          <input v-model="form.iMode" type="radio" value="0" />
+                          {{ __('Show only recipes with one of these ingredient') }}
+                          ({{ __('max :number', { number: 20 }) }})
+                        </label>
+                        <label class="cursor-pointer">
+                          <input v-model="form.iMode" type="radio" value="1" />
+                          {{ __('Show only recipes with all these ingredient') }}
+                          ({{ __('max :number', { number: 20 }) }})
+                        </label>
+                      </div>
                       <Multiselect v-model="form.ingredients" route="ingredients" />
+                    </label>
+                    <label>
+                      {{ __('Show only recipes without this ingredient') }}
+                      ({{ __('max :number', { number: 20 }) }})
+                      <Multiselect v-model="form.ingredients_not" route="ingredients" />
+                    </label>
+                    <label>
+                      {{ __('Show only recipes without this allergens') }}
+                      ({{ __('max :number', { number: 20 }) }})
+                      <Multiselect v-model="form.allergens" route="allergens" />
                     </label>
                   </form>
                   <div class="flex gap-2 items-center justify-end p-2">
