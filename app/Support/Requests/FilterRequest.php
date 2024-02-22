@@ -17,7 +17,7 @@ class FilterRequest
      */
     protected array $defaults = [
         'pdf' => false,
-        'iMode' => false,
+        'iMode' => 0,
         'ingredients' => [],
         'ingredients_not' => [],
         'allergens' => [],

@@ -1,5 +1,9 @@
 input[type='checkbox'] {
-  @apply form-checkbox rounded-sm text-green-600 mb-0.5 mr-0.5 cursor-pointer;
+  @apply rounded-sm;
+}
+
+input[type='radio'], input[type='checkbox'] {
+  @apply form-radio text-green-600 mb-0.5 mr-0.5 cursor-pointer;
 }
 
 input[type='text'] {
