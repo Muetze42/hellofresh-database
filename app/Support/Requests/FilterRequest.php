@@ -17,6 +17,7 @@ class FilterRequest
      */
     protected array $defaults = [
         'pdf' => false,
+        'ingredients' => [],
     ];
 
     /**

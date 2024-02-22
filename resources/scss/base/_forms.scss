@@ -1,15 +1,22 @@
 input[type='checkbox'] {
- @apply form-checkbox rounded-sm text-green-600 mb-0.5 mr-0.5 cursor-pointer;
+  @apply form-checkbox rounded-sm text-green-600 mb-0.5 mr-0.5 cursor-pointer;
 }
+
 input[type='text'] {
- @apply form-input;
+  @apply form-input;
 }
+
 textarea {
- @apply form-textarea;
+  @apply form-textarea;
 }
+
 select {
- @apply form-select;
+  @apply form-select;
 }
+
 input[type='text'], input[type='password'], input[type='search'], input[type='email'], select, textarea {
- @apply text-neutral-900;
+  @apply rounded-sm;
+  @apply text-neutral-900;
+  @apply placeholder-neutral-400;
 }
+

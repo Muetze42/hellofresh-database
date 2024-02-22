@@ -1,6 +1,7 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import Multiselect from '@/Components/Forms/Multiselect.vue'
 
 const page = usePage()
 const filter = page.props.filter
@@ -13,6 +14,7 @@ defineEmits(['close'])
 /**
  * @property {Object} form
  * @property {Boolean} form.pdf
+ * @property {array} form.ingredients
  */
 </script>
 
@@ -48,15 +50,18 @@ defineEmits(['close'])
                     {{ __('Filters') }}
                   </DialogTitle>
                   <form
-                    id="filter"
-                    class="flex-1 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
+                    class="flex-1 flex flex-col gap-2 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
-                    <div class="row">
+                    <div>
                       <label class="cursor-pointer">
                         <input v-model="form.pdf" type="checkbox" class="" />
                         {{ __('Show only recipes with PDF') }}
                       </label>
                     </div>
+                    <label>
+                      {{ __('Show only recipes with one of these ingredient') }}
+                      <Multiselect v-model="form.ingredients" route="ingredients" />
+                    </label>
                   </form>
                   <div class="flex gap-2 items-center justify-end p-2">
                     <button

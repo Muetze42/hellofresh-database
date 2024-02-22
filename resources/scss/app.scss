@@ -90,17 +90,17 @@ main {
   @apply scrollbar-thumb-emerald-500 scrollbar-track-green-900 scrollbar-track-rounded-full;
 }
 
-#filter {
-  @apply flex flex-col gap-2 divide-y border;
-  @apply divide-neutral-600/90 border-gray-600/90;
-
-  .row {
-    @apply px-2 pt-2;
-  }
-}
-
 $flag-icons-use-square: false;
 $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", "gb", "it", "lu", "nl", "no", "nz", "se", "us";
 @import "flag-icons/sass/variables";
 @import "flag-icons/sass/flag-icons-base";
 @import "flag-icons/sass/flag-icons-list";
+
+@import "/node_modules/@vueform/multiselect/themes/default";
+
+.multiselect-option {
+  @apply text-neutral-700;
+}
+.multiselect-dropdown {
+  @apply scrollbar-thin scrollbar-thumb-rounded-full;
+}

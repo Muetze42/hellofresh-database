@@ -22,7 +22,7 @@ const closeFilter = () => {
       </div>
     </div>
   </header>
-  <Filter v-if="open" @close='closeFilter' />
+  <Filter v-if="open" @close="closeFilter" />
 </template>
 <script>
 export default {

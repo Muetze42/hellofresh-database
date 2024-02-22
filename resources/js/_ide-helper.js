@@ -13,7 +13,7 @@ Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.mixin({
   methods: {
     __(key, replace = {}) {
-      return __(key, replace)
+      return 'ass'
     }
   },
   data() {

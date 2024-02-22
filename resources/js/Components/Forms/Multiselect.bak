@@ -1,0 +1,82 @@
+<script setup>
+import { ref } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+import debounce from 'lodash.debounce'
+
+const emit = defineEmits(['update:modelValue'])
+
+const props = defineProps({
+  route: {
+    type: String,
+    required: true
+  },
+  modelValue: {
+    type: Object,
+    required: true
+  }
+})
+
+const items = ref(props.modelValue)
+const modelItems = ref(props.modelValue)
+const loading = ref(false)
+const isFocused = ref(false)
+const query = ref('')
+
+const page = usePage()
+const baseUrl = page.props.country.route
+
+const getItems = debounce((query) => {
+  if (query.length < 2) {
+    return {}
+  }
+  loading.value = true
+
+  return axios.post(baseUrl + 'filters/' + props.route, { query: query }).then((response) => {
+    items.value = response.data
+    loading.value = false
+  })
+}, 500)
+
+function addItem(item) {
+  console.log(item)
+  modelItems.value.push(item)
+}
+function setFocus(state) {
+  isFocused.value = state
+}
+</script>
+<template>
+  <div @focusout="setFocus(false)">
+    <div class="flex flex-wrap gap-x-2 gap-y-1">
+      <span v-for="item in modelItems" :key="item.id">{{ item.name }}</span>
+    </div>
+    <input
+      v-model="query"
+      @click.prevent
+      type="text"
+      class="w-full"
+      placeholder="Search..."
+      @input="getItems(query)"
+      @focus="setFocus(true)"
+    />
+    <div
+      v-if="isFocused && query.length > 2"
+      class="absolute border border-gray-600 bg-gray-700 z-40"
+    >
+      <div v-if="loading" class="text-center p-2">
+        <Loading />
+      </div>
+      <div v-if="!loading && items.length" class="flex flex-col">
+        <div
+          v-for="item in items"
+          :key="item.id"
+          class="bg-white hover:bg-gray-100 text-neutral-900 p-2 pr-4 cursor-pointer"
+          @click.prevent="addItem(item)"
+        >
+          <font-awesome-icon :icon="['fas', 'circle-check']" class="text-green-600" />
+          {{ item.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

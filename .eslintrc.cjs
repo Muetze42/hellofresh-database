@@ -7,7 +7,9 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     '@vue/eslint-config-prettier'
   ],
-  globals: {},
+  globals: {
+    axios: true
+  },
   env: {
     browser: true,
     es6: true,
