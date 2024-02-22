@@ -62,7 +62,7 @@ defineEmits(['close'])
                       </label>
                     </div>
                     <label>
-                      <div class="flex flex-col">
+                      <div class="flex flex-col pb-2">
                         <label class="cursor-pointer">
                           <input v-model="form.iMode" type="radio" value="0" />
                           {{ __('Show only recipes with one of these ingredient') }}
