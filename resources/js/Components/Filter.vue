@@ -64,12 +64,12 @@ defineEmits(['close'])
                     <label>
                       <div class="flex flex-col pb-2">
                         <label class="cursor-pointer">
-                          <input v-model="form.iMode" type="radio" value="0" />
+                          <input v-model="form.iMode" type="radio" :value="false" />
                           {{ __('Show only recipes with one of these ingredient') }}
                           ({{ __('max :number', { number: 20 }) }})
                         </label>
                         <label class="cursor-pointer">
-                          <input v-model="form.iMode" type="radio" value="1" />
+                          <input v-model="form.iMode" type="radio" :value="true" />
                           {{ __('Show only recipes with all these ingredient') }}
                           ({{ __('max :number', { number: 20 }) }})
                         </label>

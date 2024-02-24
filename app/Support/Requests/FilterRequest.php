@@ -6,6 +6,8 @@ use App\Models\Filter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
+use function Symfony\Component\Translation\t;
+
 /**
  * @method static make(\Illuminate\Http\Request $request)
  * @method static parse(\Illuminate\Http\Request $request)
@@ -17,28 +19,70 @@ class FilterRequest
      */
     protected array $defaults = [
         'pdf' => false,
-        'iMode' => 0,
+        'iMode' => false,
         'ingredients' => [],
         'ingredients_not' => [],
         'allergens' => [],
     ];
 
     /**
-     * Get the record matching the filter request if filter request exists.
+     * The request instance.
      */
-    protected function firstOrCreate(Request $request): ?string
-    {
-        $filter = serialize(Arr::sortRecursive(Arr::whereNotNull($request->only(array_keys($this->defaults)))));
+    protected Request $request;
 
-        return !empty($filter) ? Filter::firstOrCreate(['data' => $filter])->getKey() : null;
+    protected function __construct(Request $request)
+    {
+        $this->request = $request;
     }
 
     /**
      * Get the record matching the filter request if filter request exists.
      */
-    public function get(Request $request): array
+    protected function firstOrCreate(): ?string
     {
-        if (!$filter = $request->input('filter')) {
+        $filtered = $this->filtered();
+
+        $filter = serialize($filtered);
+
+        return !empty($filter) ? Filter::firstOrCreate(['data' => $filter])->getKey() : null;
+    }
+
+    /**
+     * Get validated and filtered request data.
+     */
+    protected function filtered(): array
+    {
+        $validated = $this->request->validate([
+            'pdf' => 'bool',
+            'iMode' => 'bool',
+            'ingredients' => 'array',
+            'ingredients_not' => 'array',
+            'allergens' => 'array',
+        ]);
+
+        $except = [];
+
+        foreach ($validated as $key => $value) {
+            if (is_array($value)) {
+                $validated[$key] = array_keys($value);
+            }
+        }
+
+        if (empty($validated['ingredients']) && empty($validated['ingredients_not'])) {
+            $except[] = 'iMode';
+        }
+
+        $validated = array_filter($validated);
+
+        return Arr::except(Arr::sortRecursive(Arr::whereNotNull($validated)), $except);
+    }
+
+    /**
+     * Get the record matching the filter request if filter request exists.
+     */
+    public function get(): array
+    {
+        if (!$filter = $this->request->input('filter')) {
             return $this->defaults;
         }
 
@@ -79,6 +123,6 @@ class FilterRequest
 
         $method = $methods[$method];
 
-        return (new self())->$method(...$args);
+        return (new self($args[0]))->$method();
     }
 }
