@@ -36,7 +36,7 @@ class Controller extends BaseController
             }, count: $filter['iMode'] ? count($filter['ingredients']) : 1);
 
             $filter['ingredients'] = Ingredient::whereIn('id', $filter['ingredients'])
-                ->pluck('name', 'id');
+                ->get(['name', 'id']);
         }
 
         if (!empty($filter['ingredients_not'])) {
@@ -45,7 +45,7 @@ class Controller extends BaseController
             });
 
             $filter['ingredients_not'] = Ingredient::whereIn('id', $filter['ingredients_not'])
-                ->pluck('name', 'id');
+                ->get(['name', 'id']);
         }
 
         if (!empty($filter['allergens'])) {
@@ -54,7 +54,7 @@ class Controller extends BaseController
             });
 
             $filter['allergens'] = Allergen::whereIn('id', $filter['allergens'])
-                ->pluck('name', 'id');
+                ->get(['name', 'id']);
         }
 
         Inertia::share('filter', $filter);
