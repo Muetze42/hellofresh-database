@@ -3,13 +3,35 @@ import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import Multiselect from '@/Components/Forms/Multiselect.vue'
 import { ref } from 'vue'
+import { router } from '@inertiajs/vue3'
 
 const open = ref(false)
 const page = usePage()
 const filter = page.props.filter
+const baseUrl = page.props.country.route
 
 // noinspection JSCheckFunctionSignatures
 const form = useForm(filter)
+
+async function submit() {
+  form.processing = true
+  await axios
+    .post(baseUrl + 'filter', form.data())
+    .then((response) => {
+      form.processing = false
+      let data = {}
+      if (response.data) {
+        data.filter = response.data
+      }
+      router.get(page.url.split('?')[0], data)
+    })
+    .catch(function (error) {
+      alert(error.response.data) // Todo Error Handler
+      form.processing = false
+    })
+  form.processing = false
+}
+
 /**
  * @property {Object} form
  * @property {Boolean} form.pdf
@@ -52,7 +74,7 @@ const form = useForm(filter)
                   <DialogTitle class="text-base font-medium p-2 select-none">
                     {{ __('Filters') }}
                   </DialogTitle>
-                  <form
+                  <div
                     class="flex-1 flex flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
                     <div class="filter-row">
@@ -94,7 +116,7 @@ const form = useForm(filter)
                       </span>
                       <Multiselect v-model="form.allergens" route="allergens" />
                     </label>
-                  </form>
+                  </div>
                   <div class="flex gap-2 items-center justify-end p-2">
                     <button
                       type="button"
@@ -108,6 +130,7 @@ const form = useForm(filter)
                       class="btn"
                       :disabled="form.processing || !form.isDirty"
                       :class="{ 'btn-disabled': form.processing || !form.isDirty }"
+                      @click="submit"
                     >
                       {{ __('Apply filters') }}
                     </button>

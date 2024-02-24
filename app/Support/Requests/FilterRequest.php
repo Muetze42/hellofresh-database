@@ -42,9 +42,13 @@ class FilterRequest
     {
         $filtered = $this->filtered();
 
+        if (empty($filtered)) {
+            return null;
+        }
+
         $filter = serialize($filtered);
 
-        return !empty($filter) ? Filter::firstOrCreate(['data' => $filter])->getKey() : null;
+        return Filter::firstOrCreate(['data' => $filter])->getKey();
     }
 
     /**

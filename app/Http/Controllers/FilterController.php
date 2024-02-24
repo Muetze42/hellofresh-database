@@ -17,7 +17,7 @@ class FilterController extends Controller
         $model = app('App\Models\\' . Str::ucfirst(Str::singular($model)));
 
         return $model::where('name', 'LIKE', '%' . $query . '%')
-            //->limit(10)
+            ->limit(100)
             ->get(['id', 'name'])->toArray();
     }
 }
