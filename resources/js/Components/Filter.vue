@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 const open = ref(false)
+const processing = ref(false)
 const page = usePage()
 const filter = page.props.filter
 const baseUrl = page.props.country.route
@@ -14,11 +15,12 @@ const baseUrl = page.props.country.route
 const form = useForm(filter)
 
 async function submit() {
-  form.processing = true
+  // form.processing = true
+  processing.value = true
   await axios
     .post(baseUrl + 'filter', form.data())
     .then((response) => {
-      form.processing = false
+      // form.processing = false
       let data = {}
       if (response.data) {
         data.filter = response.data
@@ -27,9 +29,7 @@ async function submit() {
     })
     .catch(function (error) {
       alert(error.response.data) // Todo Error Handler
-      form.processing = false
     })
-  form.processing = false
 }
 
 /**
@@ -127,12 +127,15 @@ async function submit() {
                     </button>
                     <button
                       type="button"
-                      class="btn"
-                      :disabled="form.processing || !form.isDirty"
-                      :class="{ 'btn-disabled': form.processing || !form.isDirty }"
+                      class="btn w-44"
+                      :disabled="processing || !form.isDirty"
+                      :class="{ 'btn-disabled': processing || !form.isDirty }"
                       @click="submit"
                     >
-                      {{ __('Apply filters') }}
+                      <Loading v-if="processing" class="w-6 h-6" />
+                      <span v-else>
+                        {{ __('Apply filters') }}
+                      </span>
                     </button>
                   </div>
                 </div>
