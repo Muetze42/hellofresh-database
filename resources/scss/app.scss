@@ -100,9 +100,26 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
 
 @import "/node_modules/@vueform/multiselect/themes/default";
 
+.multiselect {
+  @apply bg-neutral-700/10 border-gray-600 py-0.5;
+}
 .multiselect-option {
   @apply text-neutral-700;
 }
 .multiselect-dropdown {
-  @apply scrollbar-thin scrollbar-thumb-rounded-full;
+  @apply scrollbar-thin scrollbar-thumb-rounded-full h-48;
+}
+.multiselect-tags-search-wrapper {
+  @apply mr-2;
+}
+.multiselect-tags-search {
+  @apply bg-neutral-100 #{!important};
+  @apply focus:bg-white #{!important};
+}
+.filter-row {
+  @apply border border-gray-600 bg-slate-600/20 rounded;
+
+  .pad {
+    @apply px-3;
+  }
 }

@@ -49,43 +49,49 @@ const form = useForm(filter)
             >
               <DialogPanel class="pointer-events-auto w-screen max-w-2xl">
                 <div class="flex h-full flex-col bg-gray-700 shadow-xl">
-                  <DialogTitle class="text-base font-medium p-2">
+                  <DialogTitle class="text-base font-medium p-2 select-none">
                     {{ __('Filters') }}
                   </DialogTitle>
                   <form
                     class="flex-1 flex flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
-                    <div>
-                      <label class="clickable-label">
+                    <div class="filter-row">
+                      <label class="clickable-label pad">
                         <input v-model="form.pdf" type="checkbox" class="" />
                         {{ __('Show only recipes with PDF') }}
                       </label>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col filter-row">
                       <div>
-                        <label class="clickable-label">
+                        <label class="clickable-label pad">
                           <input v-model="form.iMode" type="radio" :value="false" />
                           {{ __('Show only recipes with one of these ingredient') }}
                           ({{ __('max :number', { number: 20 }) }})
                         </label>
                       </div>
-                      <div class="mb-2">
-                        <label class="clickable-label">
+                      <div>
+                        <label class="clickable-label pad">
                           <input v-model="form.iMode" type="radio" :value="true" />
-                          {{ __('Show only recipes with all these ingredient') }}
+                          {{ __('Show only recipes with each of these ingredients') }}
                           ({{ __('max :number', { number: 20 }) }})
                         </label>
                       </div>
-                      <Multiselect v-model="form.ingredients" route="ingredients" />
+                      <div class="mt-1">
+                        <Multiselect v-model="form.ingredients" route="ingredients" />
+                      </div>
                     </div>
-                    <label>
-                      {{ __('Show only recipes without this ingredient') }}
-                      ({{ __('max :number', { number: 20 }) }})
+                    <label class="flex flex-col gap-1 filter-row">
+                      <span class="pad">
+                        {{ __('Show only recipes without this ingredient') }}
+                        ({{ __('max :number', { number: 20 }) }})
+                      </span>
                       <Multiselect v-model="form.ingredients_not" route="ingredients" />
                     </label>
-                    <label>
-                      {{ __('Show only recipes without this allergens') }}
-                      ({{ __('max :number', { number: 20 }) }})
+                    <label class="flex flex-col gap-1 filter-row">
+                      <span class="pad">
+                        {{ __('Show only recipes without this allergens') }}
+                        ({{ __('max :number', { number: 20 }) }})
+                      </span>
                       <Multiselect v-model="form.allergens" route="allergens" />
                     </label>
                   </form>

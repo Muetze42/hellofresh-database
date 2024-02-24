@@ -56,7 +56,7 @@ async function getItems(query) {
     :max="20"
     :object="true"
     :resolve-on-load="false"
-    :no-options-text="!searchValue || searchValue.length < 2 ? __('Enter to search') : __('No results found')"
+    :no-options-text=" searchValue.length > 2 ? __('No results found') : null"
     :placeholder="__('Enter to search')"
     value="id"
     value-prop="id"
