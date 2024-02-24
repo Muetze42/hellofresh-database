@@ -2,14 +2,14 @@
 import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import Multiselect from '@/Components/Forms/Multiselect.vue'
+import { ref } from 'vue'
 
+const open = ref(false)
 const page = usePage()
 const filter = page.props.filter
 
 // noinspection JSCheckFunctionSignatures
 const form = useForm(filter)
-
-defineEmits(['close'])
 
 /**
  * @property {Object} form
@@ -22,7 +22,8 @@ defineEmits(['close'])
 </script>
 
 <template>
-  <TransitionRoot as="template" :show="true">
+  <button type="button" class="btn" @click="open = true">{{ __('Filter') }}</button>
+  <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="relative z-40">
       <TransitionChild
         as="template"
@@ -91,7 +92,7 @@ defineEmits(['close'])
                     <button
                       type="button"
                       class="btn btn-danger"
-                      @click="[form.reset(), $emit('close')]"
+                      @click="[form.reset(), (open = false)]"
                     >
                       {{ __('Cancel') }}
                     </button>

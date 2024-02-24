@@ -18,11 +18,10 @@ const closeFilter = () => {
         <li>nav</li>
       </ul>
       <div>
-        <button type="button" class="btn" @click="openFilter">{{ __('Filter') }}</button>
+        <Filter v-if="filterable" />
       </div>
     </div>
   </header>
-  <Filter v-if="open" @close="closeFilter" />
 </template>
 <script>
 export default {
