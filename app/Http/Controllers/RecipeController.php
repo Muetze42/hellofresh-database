@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
-use App\Support\Requests\FilterRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,11 +14,11 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
-        Inertia::share('filter', fn (Request $request) => FilterRequest::parse($request));
+        $recipes = $this->recipesFilterQuery(Recipe::query(), $request);
 
         return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection(
-                Recipe::active()->orderBy('external_updated_at')->paginate(12)
+                $recipes->orderBy('external_updated_at')->paginate(12)
             ),
         ]);
     }

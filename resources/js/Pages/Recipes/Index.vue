@@ -1,7 +1,7 @@
 <template>
   <FullPage :filterable="true">
     <h1 class="sr-only">{{ __('Recipes') }}</h1>
-    <div class="flex flex-wrap justify-center xl:justify-between items-stretch gap-8">
+    <div class="flex flex-wrap justify-center items-stretch gap-8">
       <div
         v-for="recipe in recipes.data"
         :key="recipe.id"

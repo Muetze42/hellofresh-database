@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.45.0.
+ * Generated for Laravel 10.45.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -17979,7 +17979,7 @@ namespace Illuminate\Console\Scheduling {
                     /**
          * 
          *
-         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBoot()
+         * @see \Sentry\Laravel\Features\ConsoleIntegration::onBootInactive()
          * @param string|null $monitorSlug
          * @param int|null $checkInMargin
          * @param int|null $maxRuntime

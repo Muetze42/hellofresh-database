@@ -6,11 +6,11 @@ use App\Models\Filter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
-use function Symfony\Component\Translation\t;
-
 /**
- * @method static make(\Illuminate\Http\Request $request)
- * @method static parse(\Illuminate\Http\Request $request)
+ * @method static make(\Illuminate\Http\Request $request): ?string
+ * phpcs:disable
+ * @method static parse(\Illuminate\Http\Request $request): array{pdf: bool, iMode: bool, ingredients: array, ingredients_not: array}
+ * phpcs:enable
  */
 class FilterRequest
 {
@@ -68,7 +68,7 @@ class FilterRequest
 
         foreach ($validated as $key => $value) {
             if (is_array($value)) {
-                $validated[$key] = array_keys($value);
+                $validated[$key] = Arr::pluck($value, 'id');
             }
         }
 
@@ -83,6 +83,14 @@ class FilterRequest
 
     /**
      * Get the record matching the filter request if filter request exists.
+     *
+     * @return array{
+     *     pdf: bool,
+     *     iMode: bool,
+     *     ingredients: array,
+     *     ingredients_not: array,
+     *     allergens: array
+     * }
      */
     public function get(): array
     {
@@ -116,7 +124,7 @@ class FilterRequest
 
         $methods = [
             'make' => 'firstOrCreate',
-            'parse' => 'get'
+            'parse' => 'get',
         ];
 
         if (!isset($methods[$method])) {

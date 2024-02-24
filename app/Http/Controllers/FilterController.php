@@ -16,7 +16,7 @@ class FilterController extends Controller
         /* @var \App\Models\Ingredient|\App\Models\Allergen $model */
         $model = app('App\Models\\' . Str::ucfirst(Str::singular($model)));
 
-        return $model::where('name', 'LIKE', '%' . $query . '%')
+        return $model::whereRaw('LOWER(name) like ?', ['%' . Str::lower($query) . '%'])
             ->limit(100)
             ->get(['id', 'name'])->toArray();
     }

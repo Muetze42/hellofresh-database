@@ -32,6 +32,7 @@ class FlagsCommand extends Command
         foreach ($lines as $line) {
             if (!Str::startsWith($line, '$flag-icons-included-countries')) {
                 $contents[] = $line;
+
                 continue;
             }
             $contents[] = '$flag-icons-included-countries: ' . implode(', ', $codes) . ';';
