@@ -1,15 +1,5 @@
 <script setup>
-import { ref } from 'vue'
 import Filter from '@/Components/Filter.vue'
-
-const open = ref(false)
-
-const openFilter = () => {
-  open.value = true
-}
-const closeFilter = () => {
-  open.value = false
-}
 </script>
 <template>
   <header class="nav-element border-b fixed py-2">
