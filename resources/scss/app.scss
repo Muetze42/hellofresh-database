@@ -19,20 +19,17 @@
     @apply bg-gradient-to-t shadow-lg;
     @apply text-white from-green-700 to-green-400;
 
-    &:is(a, button, input) {
+    &:enabled, a {
       @apply hover:to-green-500;
     }
   }
   .btn-disabled {
     @apply font-normal;
     @apply text-gray-300/80 from-gray-800 to-gray-700;
-    &:is(a, button, input) {
-      @apply hover:to-gray-800;
-    }
   }
   .btn-danger {
     @apply from-red-800 to-red-700;
-    &:is(a, button, input) {
+    &:enabled, a {
       @apply hover:to-red-500;
     }
   }
@@ -56,6 +53,11 @@
   /* For Semantic Elements */
   .nav-element {
     @apply w-full z-30 transition duration-300 ease-in-out bg-gray-800 border-gray-600/50;
+  }
+  .clickable-label {
+    @apply inline-flex items-center gap-1.5 cursor-pointer select-none;
+    @apply rounded;
+    @apply hover:bg-neutral-800/40 pl-1 pr-1.5 py-0.5;
   }
 }
 @layer utilities {

@@ -10,7 +10,6 @@ const filter = page.props.filter
 
 // noinspection JSCheckFunctionSignatures
 const form = useForm(filter)
-
 /**
  * @property {Object} form
  * @property {Boolean} form.pdf
@@ -57,26 +56,28 @@ const form = useForm(filter)
                     class="flex-1 flex flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
                     <div>
-                      <label class="cursor-pointer">
+                      <label class="clickable-label">
                         <input v-model="form.pdf" type="checkbox" class="" />
                         {{ __('Show only recipes with PDF') }}
                       </label>
                     </div>
-                    <label>
-                      <div class="flex flex-col pb-2">
-                        <label class="cursor-pointer">
+                    <div class="flex flex-col">
+                      <div>
+                        <label class="clickable-label">
                           <input v-model="form.iMode" type="radio" :value="false" />
                           {{ __('Show only recipes with one of these ingredient') }}
                           ({{ __('max :number', { number: 20 }) }})
                         </label>
-                        <label class="cursor-pointer">
+                      </div>
+                      <div class="mb-2">
+                        <label class="clickable-label">
                           <input v-model="form.iMode" type="radio" :value="true" />
                           {{ __('Show only recipes with all these ingredient') }}
                           ({{ __('max :number', { number: 20 }) }})
                         </label>
                       </div>
                       <Multiselect v-model="form.ingredients" route="ingredients" />
-                    </label>
+                    </div>
                     <label>
                       {{ __('Show only recipes without this ingredient') }}
                       ({{ __('max :number', { number: 20 }) }})
@@ -96,7 +97,12 @@ const form = useForm(filter)
                     >
                       {{ __('Cancel') }}
                     </button>
-                    <button type="button" class="btn">
+                    <button
+                      type="button"
+                      class="btn"
+                      :disabled="form.processing || !form.isDirty"
+                      :class="{ 'btn-disabled': form.processing || !form.isDirty }"
+                    >
                       {{ __('Apply filters') }}
                     </button>
                   </div>
