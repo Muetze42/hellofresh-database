@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 /**
  * @method static make(\Illuminate\Http\Request $request): ?string
  * phpcs:disable
- * @method static parse(\Illuminate\Http\Request $request): array{pdf: bool, iMode: bool, ingredients: array, ingredients_not: array, tags: array, allergens: array}
+ * @method static parse(\Illuminate\Http\Request $request): array{pdf: bool, iMode: bool, ingredients: array, ingredients_except: array, tags: array, allergens: array}
  * phpcs:enable
  */
 class FilterRequest
@@ -20,10 +20,11 @@ class FilterRequest
     protected array $defaults = [
         'pdf' => false,
         'iMode' => false,
-        'ingredients' => [],
-        'ingredients_not' => [],
         'allergens' => [],
+        'ingredients' => [],
+        'ingredients_except' => [],
         'tags' => [],
+        'tags_except' => [],
     ];
 
     /**
@@ -63,9 +64,10 @@ class FilterRequest
             'pdf' => 'bool',
             'iMode' => 'bool',
             'ingredients' => $filterableItemsRules,
-            'ingredients_not' => $filterableItemsRules,
+            'ingredients_except' => $filterableItemsRules,
             'allergens' => $filterableItemsRules,
             'tags' => $filterableItemsRules,
+            'tags_except' => $filterableItemsRules,
         ]);
 
         $except = [];
@@ -76,7 +78,7 @@ class FilterRequest
             }
         }
 
-        if (empty($validated['ingredients']) && empty($validated['ingredients_not'])) {
+        if (empty($validated['ingredients']) && empty($validated['ingredients_except'])) {
             $except[] = 'iMode';
         }
 
@@ -92,7 +94,7 @@ class FilterRequest
      *     pdf: bool,
      *     iMode: bool,
      *     ingredients: array,
-     *     ingredients_not: array,
+     *     ingredients_except: array,
      *     allergens: array
      * }
      */

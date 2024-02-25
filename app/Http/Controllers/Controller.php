@@ -40,12 +40,12 @@ class Controller extends BaseController
                 ->get(['name', 'id']);
         }
 
-        if (!empty($filter['ingredients_not'])) {
+        if (!empty($filter['ingredients_except'])) {
             $recipes->whereDoesntHave('ingredients', function ($query) use ($filter) {
-                $query->whereNotIn('id', $filter['ingredients_not']);
+                $query->whereNotIn('id', $filter['ingredients_except']);
             });
 
-            $filter['ingredients_not'] = Ingredient::whereIn('id', $filter['ingredients_not'])
+            $filter['ingredients_except'] = Ingredient::whereIn('id', $filter['ingredients_except'])
                 ->get(['name', 'id']);
         }
 
@@ -64,6 +64,15 @@ class Controller extends BaseController
             });
 
             $filter['tags'] = Tag::whereIn('id', $filter['tags'])
+                ->get(['name', 'id']);
+        }
+
+        if (!empty($filter['tags_except'])) {
+            $recipes->whereDoesntHave('tags', function ($query) use ($filter) {
+                $query->whereIn('id', $filter['tags_except']);
+            });
+
+            $filter['tags_except'] = Tag::whereIn('id', $filter['tags_except'])
                 ->get(['name', 'id']);
         }
 

@@ -37,10 +37,11 @@ async function submit() {
  * @property {Object} form
  * @property {Boolean} form.pdf
  * @property {Boolean} form.iMode
- * @property {array} form.ingredients
- * @property {array} form.ingredients_not
  * @property {array} form.allergens
+ * @property {array} form.ingredients
+ * @property {array} form.ingredients_except
  * @property {array} form.tags
+ * @property {array} form.tags_except
  */
 </script>
 
@@ -80,21 +81,21 @@ async function submit() {
                     class="flex-1 flex flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
                     <div class="filter-row">
-                      <label class="clickable-label pad">
+                      <label class="clickable-label child">
                         <input v-model="form.pdf" type="checkbox" class="" />
                         {{ __('Show only recipes with PDF') }}
                       </label>
                     </div>
                     <div class="flex flex-col filter-row">
                       <div>
-                        <label class="clickable-label pad">
+                        <label class="clickable-label child">
                           <input v-model="form.iMode" type="radio" :value="false" />
                           {{ __('Show only recipes with one of these ingredient') }}
                           ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                         </label>
                       </div>
                       <div>
-                        <label class="clickable-label pad">
+                        <label class="clickable-label child">
                           <input v-model="form.iMode" type="radio" :value="true" />
                           {{ __('Show only recipes with each of these ingredients') }}
                           ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
@@ -105,25 +106,32 @@ async function submit() {
                       </div>
                     </div>
                     <label class="flex flex-col gap-1 filter-row">
-                      <span class="pad">
+                      <span class="child">
                         {{ __('Show only recipes without this ingredient') }}
                         ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>
-                      <Multiselect v-model="form.ingredients_not" route="ingredients" />
+                      <Multiselect v-model="form.ingredients_except" route="ingredients" />
                     </label>
                     <label class="flex flex-col gap-1 filter-row">
-                      <span class="pad">
+                      <span class="child">
                         {{ __('Show only recipes without this allergens') }}
                         ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>
                       <Multiselect v-model="form.allergens" route="allergens" />
                     </label>
                     <label class="flex flex-col gap-1 filter-row">
-                      <span class="pad">
+                      <span class="child">
                         {{ __('Show only recipes with one of these tags') }}
                         ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>
                       <Multiselect v-model="form.tags" route="tags" />
+                    </label>
+                    <label class="flex flex-col gap-1 filter-row">
+                      <span class="child">
+                        {{ __('Show only recipes with one of these tags') }}
+                        ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+                      </span>
+                      <Multiselect v-model="form.tags_except" route="tags" />
                     </label>
                   </div>
                   <div class="flex gap-2 items-center justify-end p-2">
