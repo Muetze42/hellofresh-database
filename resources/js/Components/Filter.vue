@@ -43,9 +43,6 @@ async function submit() {
  * @property {Boolean} form.iMode
  * @property {array} form.allergens
  * @property {array} form.ingredients
- * @property {array} form.ingredients_except
- * @property {array} form.tags
- * @property {array} form.tags_except
  */
 </script>
 
@@ -111,33 +108,23 @@ async function submit() {
                         <Multiselect v-model="form.ingredients" route="ingredients" />
                       </div>
                     </div>
-                    <label class="flex flex-col gap-1 filter-row">
+                    <label v-for="filterable in $page.props.filterable" :key="filterable">
                       <span class="child">
-                        {{ __('Show only recipes without this ingredient') }}
+                        {{
+                          filterable.endsWith('_except')
+                            ? __('Show only recipes without this :item', {
+                                item: __(filterable.split('_')[0])
+                              })
+                            : __('Show only recipes with one of these :item', {
+                              item: __(filterable.split('_')[0])
+                            })
+                        }}
                         ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>
-                      <Multiselect v-model="form.ingredients_except" route="ingredients" />
-                    </label>
-                    <label class="flex flex-col gap-1 filter-row">
-                      <span class="child">
-                        {{ __('Show only recipes without this allergens') }}
-                        ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
-                      </span>
-                      <Multiselect v-model="form.allergens" route="allergens" />
-                    </label>
-                    <label class="flex flex-col gap-1 filter-row">
-                      <span class="child">
-                        {{ __('Show only recipes with one of these tags') }}
-                        ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
-                      </span>
-                      <Multiselect v-model="form.tags" route="tags" />
-                    </label>
-                    <label class="flex flex-col gap-1 filter-row">
-                      <span class="child">
-                        {{ __('Show only recipes with one of these tags') }}
-                        ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
-                      </span>
-                      <Multiselect v-model="form.tags_except" route="tags" />
+                      <Multiselect
+                        v-model="form[filterable.toLowerCase()]"
+                        :route="filterable.split('_')[0].toLowerCase()"
+                      />
                     </label>
                   </div>
                   <div

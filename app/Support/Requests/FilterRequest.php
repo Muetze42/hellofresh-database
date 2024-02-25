@@ -3,6 +3,7 @@
 namespace App\Support\Requests;
 
 use App\Models\Filter;
+use ArgumentCountError;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -17,24 +18,34 @@ class FilterRequest
     /**
      * The default filter values.
      */
-    protected array $defaults = [
+    public array $defaults = [
         'pdf' => false,
         'iMode' => false,
-        'allergens' => [],
         'ingredients' => [],
         'ingredients_except' => [],
+        'allergens_except' => [],
         'tags' => [],
         'tags_except' => [],
+        'labels' => [],
+        'labels_except' => [],
     ];
 
     /**
      * The request instance.
      */
-    protected Request $request;
+    protected ?Request $request;
 
-    protected function __construct(Request $request)
+    protected function __construct(Request $request = null)
     {
         $this->request = $request;
+    }
+
+    /**
+     * Get the default filter values.
+     */
+    public static function defaults(): array
+    {
+        return (new static())->defaults;
     }
 
     /**
@@ -76,32 +87,23 @@ class FilterRequest
 
         foreach ($validated as $key => $value) {
             if (str_ends_with($key, '_except')) {
-                $parentKey = substr($key, 0, -7);
-                $validated[$key] = array_diff($value, $validated[$parentKey]);
-                $validated[$parentKey] = array_diff($validated[$parentKey], $value);
+                $nonExceptKey = substr($key, 0, -7);
+                $validated[$key] = array_diff($value, $validated[$nonExceptKey]);
+                $validated[$nonExceptKey] = array_diff($validated[$nonExceptKey], $value);
             }
         }
 
-        if (empty($validated['ingredients']) && empty($validated['ingredients_except'])) {
+        if (empty($validated['ingredients'])) {
             $except[] = 'iMode';
         }
 
-
         $validated = array_filter($validated);
 
-        return Arr::except(Arr::sortRecursive(Arr::whereNotNull($validated)), $except);
+        return Arr::except(Arr::sortRecursive($validated), $except);
     }
 
     /**
      * Get the record matching the filter request if filter request exists.
-     *
-     * @return array{
-     *     pdf: bool,
-     *     iMode: bool,
-     *     ingredients: array,
-     *     ingredients_except: array,
-     *     allergens: array
-     * }
      */
     public function get(): array
     {
@@ -122,7 +124,7 @@ class FilterRequest
     public static function __callStatic($method, $args)
     {
         if (!isset($args[0])) {
-            throw new \ArgumentCountError(
+            throw new ArgumentCountError(
                 'Fatal error: Uncaught ArgumentCountError: ' .
                 sprintf('Too few arguments to function test(), 0 passed in %s', __CLASS__)
             );

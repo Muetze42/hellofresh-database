@@ -65,6 +65,9 @@ onMounted(() => {
       <template v-else-if="error instanceof AxiosError && error.response.status === 422">
         {{ error.response.data.message }}
       </template>
+      <template v-else-if="error instanceof AxiosError">
+        {{ error.response.data.message }}
+      </template>
       <template v-else>
         {{ error }}
       </template>

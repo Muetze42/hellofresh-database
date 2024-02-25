@@ -8,11 +8,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faScroll, faFileLines, faLemon, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 library.add(faScroll, faFileLines, faLemon, faCircleCheck)
 
+import ErrorModal from '@/Components/Modals/ErrorModal.vue'
 import FullPage from '@/Layouts/FullPage.vue'
 import Loading from '@/Components/Loading.vue'
 import Modal from '@/Components/Modals/Modal.vue'
-import ErrorModal from '@/Components/Modals/ErrorModal.vue'
 import Pagination from '@/Components/Pagination.vue'
+
 import * as Sentry from '@sentry/vue'
 
 import { __ } from '@/mixins.js'
@@ -50,13 +51,13 @@ createInertiaApp({
           }
         }
       })
-      .component('Modal', Modal)
-      .component('ErrorModal', ErrorModal)
+      .component('FontAwesomeIcon', FontAwesomeIcon)
       .component('Link', Link)
+      .component('ErrorModal', ErrorModal)
       .component('FullPage', FullPage)
       .component('Loading', Loading)
+      .component('Modal', Modal)
       .component('Pagination', Pagination)
-      .component('FontAwesomeIcon', FontAwesomeIcon)
       .mount(el)
   }
 })

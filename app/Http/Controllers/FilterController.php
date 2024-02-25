@@ -14,9 +14,14 @@ class FilterController extends Controller
         }
 
         /* @var \App\Models\Ingredient|\App\Models\Allergen $model */
-        $model = app('App\Models\\' . Str::ucfirst(Str::singular($model)));
+        $model = 'App\Models\\' . Str::studly(Str::singular($model));
+        if (!class_exists($model)) {
+            abort(404, 'Model not found');
+        }
+        $model = app($model);
 
         return $model::whereRaw('LOWER(name) like ?', ['%' . Str::lower($query) . '%'])
+            ->orWhere('id', 'like', '%' . $query . '%')
             ->limit(100)
             ->get(['id', 'name'])->toArray();
     }
