@@ -18,7 +18,8 @@ class RecipeController extends Controller
 
         return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection(
-                $recipes->orderBy('external_updated_at')->paginate(12)
+                $recipes->orderBy('external_updated_at')
+                    ->paginate(config('application.pagination.per_page', 12))
             ),
         ]);
     }

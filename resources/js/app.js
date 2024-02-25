@@ -13,6 +13,7 @@ import Loading from '@/Components/Loading.vue'
 import Pagination from '@/Components/Pagination.vue'
 import * as Sentry from '@sentry/vue'
 
+// noinspection JSIgnoredPromiseFromCall
 createInertiaApp({
   resolve: (name) => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
@@ -34,6 +35,9 @@ createInertiaApp({
         computed: {
           country() {
             return this.$page.props.country
+          },
+          config() {
+            return this.$page.props.config
           }
         },
         methods: {

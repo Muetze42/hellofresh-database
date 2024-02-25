@@ -13,15 +13,20 @@ Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.mixin({
   methods: {
     __(key, replace = {}) {
-      return 'ass'
+      return 'replaced'
     }
   },
   data() {
     return {
       country: {
-        code: String,
-        domain: String,
-        route: String
+        code: 'String',
+        domain: 'String',
+        route: 'String'
+      },
+      config: {
+        filter: {
+          max_filterable_items: 20
+        }
       }
     }
   }

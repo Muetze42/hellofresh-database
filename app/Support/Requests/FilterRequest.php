@@ -23,6 +23,7 @@ class FilterRequest
         'ingredients' => [],
         'ingredients_not' => [],
         'allergens' => [],
+        'tags' => [],
     ];
 
     /**
@@ -56,12 +57,14 @@ class FilterRequest
      */
     protected function filtered(): array
     {
+        $filterableItemsRules = ['array', 'max:' . config('application.max_filterable_items')];
+
         $validated = $this->request->validate([
             'pdf' => 'bool',
             'iMode' => 'bool',
-            'ingredients' => 'array',
-            'ingredients_not' => 'array',
-            'allergens' => 'array',
+            'ingredients' => $filterableItemsRules,
+            'ingredients_not' => $filterableItemsRules,
+            'allergens' => $filterableItemsRules,
         ]);
 
         $except = [];

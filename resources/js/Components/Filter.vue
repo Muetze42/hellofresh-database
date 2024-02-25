@@ -88,14 +88,14 @@ async function submit() {
                         <label class="clickable-label pad">
                           <input v-model="form.iMode" type="radio" :value="false" />
                           {{ __('Show only recipes with one of these ingredient') }}
-                          ({{ __('max :number', { number: 20 }) }})
+                          ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                         </label>
                       </div>
                       <div>
                         <label class="clickable-label pad">
                           <input v-model="form.iMode" type="radio" :value="true" />
                           {{ __('Show only recipes with each of these ingredients') }}
-                          ({{ __('max :number', { number: 20 }) }})
+                          ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                         </label>
                       </div>
                       <div class="mt-1">
@@ -105,14 +105,14 @@ async function submit() {
                     <label class="flex flex-col gap-1 filter-row">
                       <span class="pad">
                         {{ __('Show only recipes without this ingredient') }}
-                        ({{ __('max :number', { number: 20 }) }})
+                        ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>
                       <Multiselect v-model="form.ingredients_not" route="ingredients" />
                     </label>
                     <label class="flex flex-col gap-1 filter-row">
                       <span class="pad">
                         {{ __('Show only recipes without this allergens') }}
-                        ({{ __('max :number', { number: 20 }) }})
+                        ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>
                       <Multiselect v-model="form.allergens" route="allergens" />
                     </label>
@@ -121,6 +121,7 @@ async function submit() {
                     <button
                       type="button"
                       class="btn btn-danger"
+                      :disabled="processing"
                       @click="[form.reset(), (open = false)]"
                     >
                       {{ __('Cancel') }}
