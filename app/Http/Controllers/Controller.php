@@ -12,6 +12,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class Controller extends BaseController
@@ -40,40 +42,16 @@ class Controller extends BaseController
                 ->get(['name', 'id']);
         }
 
-        if (!empty($filter['ingredients_except'])) {
-            $recipes->whereDoesntHave('ingredients', function ($query) use ($filter) {
-                $query->whereNotIn('id', $filter['ingredients_except']);
-            });
-
-            $filter['ingredients_except'] = Ingredient::whereIn('id', $filter['ingredients_except'])
-                ->get(['name', 'id']);
-        }
-
-        if (!empty($filter['allergens'])) {
-            $recipes->whereDoesntHave('allergens', function ($query) use ($filter) {
-                $query->whereIn('id', $filter['allergens']);
-            });
-
-            $filter['allergens'] = Allergen::whereIn('id', $filter['allergens'])
-                ->get(['name', 'id']);
-        }
-
-        if (!empty($filter['tags'])) {
-            $recipes->whereHas('tags', function ($query) use ($filter) {
-                $query->whereIn('id', $filter['tags']);
-            });
-
-            $filter['tags'] = Tag::whereIn('id', $filter['tags'])
-                ->get(['name', 'id']);
-        }
-
-        if (!empty($filter['tags_except'])) {
-            $recipes->whereDoesntHave('tags', function ($query) use ($filter) {
-                $query->whereIn('id', $filter['tags_except']);
-            });
-
-            $filter['tags_except'] = Tag::whereIn('id', $filter['tags_except'])
-                ->get(['name', 'id']);
+        foreach (Arr::except($filter, ['pdf', 'iMode', 'ingredients']) as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $relation = explode('_', $key)[0];
+            if (str_ends_with($key, '_except')) {
+                $recipes->whereDoesntHave($relation, fn ($query) => $query->whereIn('id', $value));
+            } else {
+                $recipes->whereHas($relation, fn ($query) => $query->whereIn('id', $value));
+            }
         }
 
         Inertia::share('filter', $filter);
