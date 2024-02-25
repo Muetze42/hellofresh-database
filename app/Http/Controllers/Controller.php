@@ -52,6 +52,8 @@ class Controller extends BaseController
             } else {
                 $recipes->whereHas($relation, fn ($query) => $query->whereIn('id', $value));
             }
+            $model = 'App\Models\\' . Str::studly(Str::singular($relation));
+            $filter[$key] = app($model)::whereIn('id', $value)->get(['name', 'id']);
         }
 
         Inertia::share('filter', $filter);
