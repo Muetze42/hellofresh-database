@@ -88,6 +88,9 @@ class FilterRequest
         foreach ($validated as $key => $value) {
             if (str_ends_with($key, '_except')) {
                 $nonExceptKey = substr($key, 0, -7);
+                if (empty($validated[$nonExceptKey])) {
+                    continue;
+                }
                 $validated[$key] = array_diff($value, $validated[$nonExceptKey]);
                 $validated[$nonExceptKey] = array_diff($validated[$nonExceptKey], $value);
             }
