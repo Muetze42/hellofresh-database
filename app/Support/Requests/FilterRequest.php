@@ -27,8 +27,8 @@ class FilterRequest
         'allergens_except' => [],
         'tags' => [],
         'tags_except' => [],
-        'labels' => [],
-        'labels_except' => [],
+        //'label' => [], // Todo
+        //'label_except' => [],
     ];
 
     /**
