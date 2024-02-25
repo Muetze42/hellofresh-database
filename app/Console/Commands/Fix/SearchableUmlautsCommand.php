@@ -32,7 +32,7 @@ class SearchableUmlautsCommand extends AbstractCountryCommand
 
         $namespace = app()->getNamespace();
 
-        foreach (Finder::create()->in(app_path('models'))->files() as $file) {
+        foreach (Finder::create()->in(app_path('Models'))->files() as $file) {
             $model = $this->modellassFromFile($file, $namespace);
             if (is_subclass_of($model, AbstractTranslatableModel::class)) {
                 $this->translateAbleModels[] = $model;
