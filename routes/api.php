@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', fn () => response()->json(['message' => 'It works!']));
 Route::post('sentry-tunnel', SentryTunnelController::class);

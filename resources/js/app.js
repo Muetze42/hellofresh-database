@@ -10,8 +10,12 @@ library.add(faScroll, faFileLines, faLemon, faCircleCheck)
 
 import FullPage from '@/Layouts/FullPage.vue'
 import Loading from '@/Components/Loading.vue'
+import Modal from '@/Components/Modals/Modal.vue'
+import ErrorModal from '@/Components/Modals/ErrorModal.vue'
 import Pagination from '@/Components/Pagination.vue'
 import * as Sentry from '@sentry/vue'
+
+import { __ } from '@/mixins.js'
 
 // noinspection JSIgnoredPromiseFromCall
 createInertiaApp({
@@ -42,17 +46,12 @@ createInertiaApp({
         },
         methods: {
           __(key, replace = {}) {
-            let translations = this.$page.props.translations
-            if (translations && translations[key]) {
-              key = translations[key]
-            }
-            Object.keys(replace).forEach(function (search) {
-              key = key.replace(':' + search, replace[search])
-            })
-            return key
+            return __(key, replace)
           }
         }
       })
+      .component('Modal', Modal)
+      .component('ErrorModal', ErrorModal)
       .component('Link', Link)
       .component('FullPage', FullPage)
       .component('Loading', Loading)

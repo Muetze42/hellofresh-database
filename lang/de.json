@@ -10,6 +10,8 @@
     "Change country": "Land wechseln",
     "Countries": "Länder",
     "Country": "Land",
+    "OK": "OK",
+    "Error": "Fehler",
     "Cuisine": "Küche",
     "Cuisines": "Küchen",
     "Details": "Details",
@@ -56,5 +58,11 @@
     "View on HelloFresh": "Auf HelloFresh anzeigen",
     "View recipe PDF": "Rezept PDF anzeigen",
     "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen",
-    "max :number": "max :number"
+    "max :number": "max :number",
+    "Maintenance": "Wartung",
+    "Session expired": "Sitzung abgelaufen",
+    "Your session has expired.": "Deine Sitzung ist abgelaufen.",
+    "Click OK to reload the page.": "Bitte klicke auf OK, um die Seite neu zu laden.",
+    "There is an update in progress.": "Es ist ein Update in Gange.",
+    "This lasts only a few seconds.": " Dies wird nur ein paar Sekunden dauern."
 }

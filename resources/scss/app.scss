@@ -123,3 +123,6 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
     @apply px-3;
   }
 }
+.modal-footer {
+  @apply border-t border-gray-600/20 flex justify-end gap-2 p-2;
+}

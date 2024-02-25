@@ -6,6 +6,8 @@ import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 const open = ref(false)
+const showError = ref(false)
+const errors = ref(null)
 const processing = ref(false)
 const page = usePage()
 const filter = page.props.filter
@@ -28,7 +30,12 @@ async function submit() {
       router.get(page.url.split('?')[0], data)
     })
     .catch(function (error) {
-      alert(error.response.data) // Todo Error Handler
+      console.log(error)
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+      showError.value = true
+      errors.value = error
       processing.value = false
     })
 }
@@ -47,6 +54,7 @@ async function submit() {
 
 <template>
   <button type="button" class="btn" @click="open = true">{{ __('Filter') }}</button>
+  <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="relative z-40">
       <TransitionChild
@@ -135,10 +143,12 @@ async function submit() {
                       <Multiselect v-model="form.tags_except" route="tags" />
                     </label>
                   </div>
-                  <div class="flex gap-2 items-center justify-end p-2">
+                  <div
+                    class="flex flex-wrap gap-2 items-center justify-center xs:justify-between p-2"
+                  >
                     <button
                       type="button"
-                      class="btn btn-danger"
+                      class="btn btn-danger w-32 whitespace-nowrap"
                       :disabled="processing"
                       @click="[form.reset(), (open = false)]"
                     >
@@ -146,7 +156,7 @@ async function submit() {
                     </button>
                     <button
                       type="button"
-                      class="btn w-44"
+                      class="btn w-44 whitespace-nowrap"
                       :disabled="processing || !form.isDirty"
                       :class="{ 'btn-disabled': processing || !form.isDirty }"
                       @click="submit"

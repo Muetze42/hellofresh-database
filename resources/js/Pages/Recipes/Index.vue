@@ -84,11 +84,7 @@
  * @property recipes.data.tags.name
  * @property recipes.data.tags.color
  */
-import FullPage from '@/Layouts/FullPage.vue'
-import Pagination from '@/Components/Pagination.vue'
-
 export default {
-  components: { Pagination, FullPage },
   props: {
     recipes: {
       type: Object,
