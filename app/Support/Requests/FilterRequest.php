@@ -4,6 +4,7 @@ namespace App\Support\Requests;
 
 use App\Models\Filter;
 use ArgumentCountError;
+use BadMethodCallException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -144,7 +145,7 @@ class FilterRequest
         ];
 
         if (!isset($methods[$method])) {
-            throw new \BadMethodCallException(
+            throw new BadMethodCallException(
                 sprintf('Call to undefined method %s::%s()', __CLASS__, $method)
             );
         }

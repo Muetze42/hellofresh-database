@@ -81,7 +81,7 @@ async function submit() {
                     <button type="button" class="sr-only" />
                   </DialogTitle>
                   <div
-                    class="flex-1 flex flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
+                    class="flex-1 flex pb-12 flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
                     <div class="filter-row">
                       <label class="clickable-label child">
@@ -116,8 +116,8 @@ async function submit() {
                                 item: __(filterable.split('_')[0])
                               })
                             : __('Show only recipes with one of these :item', {
-                              item: __(filterable.split('_')[0])
-                            })
+                                item: __(filterable.split('_')[0])
+                              })
                         }}
                         ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>

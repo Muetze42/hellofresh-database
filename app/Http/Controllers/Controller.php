@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Allergen;
 use App\Models\Ingredient;
 use App\Models\Recipe;
-use App\Models\Tag;
 use App\Support\Requests\FilterRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -62,7 +60,7 @@ class Controller extends BaseController
             array_map('ucfirst', array_keys(
                 Arr::where(
                     FilterRequest::defaults(),
-                    fn(mixed $value, string $key) => is_array($value) && $key != 'ingredients'
+                    fn (mixed $value, string $key) => is_array($value) && $key != 'ingredients'
                 )
             ))
         );
