@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Allergen;
 use App\Models\Ingredient;
 use App\Models\Recipe;
+use App\Models\Tag;
 use App\Support\Requests\FilterRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -54,6 +55,15 @@ class Controller extends BaseController
             });
 
             $filter['allergens'] = Allergen::whereIn('id', $filter['allergens'])
+                ->get(['name', 'id']);
+        }
+
+        if (!empty($filter['tags'])) {
+            $recipes->whereHas('tags', function ($query) use ($filter) {
+                $query->whereIn('id', $filter['tags']);
+            });
+
+            $filter['tags'] = Tag::whereIn('id', $filter['tags'])
                 ->get(['name', 'id']);
         }
 

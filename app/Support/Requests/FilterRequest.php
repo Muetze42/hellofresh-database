@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 /**
  * @method static make(\Illuminate\Http\Request $request): ?string
  * phpcs:disable
- * @method static parse(\Illuminate\Http\Request $request): array{pdf: bool, iMode: bool, ingredients: array, ingredients_not: array}
+ * @method static parse(\Illuminate\Http\Request $request): array{pdf: bool, iMode: bool, ingredients: array, ingredients_not: array, tags: array, allergens: array}
  * phpcs:enable
  */
 class FilterRequest
@@ -57,7 +57,7 @@ class FilterRequest
      */
     protected function filtered(): array
     {
-        $filterableItemsRules = ['array', 'max:' . config('application.max_filterable_items')];
+        $filterableItemsRules = ['array', 'max:' . config('application.filter.max_filterable_items', 20)];
 
         $validated = $this->request->validate([
             'pdf' => 'bool',
@@ -65,6 +65,7 @@ class FilterRequest
             'ingredients' => $filterableItemsRules,
             'ingredients_not' => $filterableItemsRules,
             'allergens' => $filterableItemsRules,
+            'tags' => $filterableItemsRules,
         ]);
 
         $except = [];

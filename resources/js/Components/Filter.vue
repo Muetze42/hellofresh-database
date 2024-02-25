@@ -29,6 +29,7 @@ async function submit() {
     })
     .catch(function (error) {
       alert(error.response.data) // Todo Error Handler
+      processing.value = false
     })
 }
 
@@ -39,6 +40,7 @@ async function submit() {
  * @property {array} form.ingredients
  * @property {array} form.ingredients_not
  * @property {array} form.allergens
+ * @property {array} form.tags
  */
 </script>
 
@@ -115,6 +117,13 @@ async function submit() {
                         ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                       </span>
                       <Multiselect v-model="form.allergens" route="allergens" />
+                    </label>
+                    <label class="flex flex-col gap-1 filter-row">
+                      <span class="pad">
+                        {{ __('Show only recipes with one of these tags') }}
+                        ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+                      </span>
+                      <Multiselect v-model="form.tags" route="tags" />
                     </label>
                   </div>
                   <div class="flex gap-2 items-center justify-end p-2">
