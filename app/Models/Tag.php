@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\AbstractTranslatableModel;
 use App\Contracts\Models\CountryTrait;
 use App\Contracts\Models\HasActiveDisplayTrait;
-use App\Contracts\Models\HasTranslationsTrait;
 use App\Contracts\Models\UseHelloFreshIdTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Tag extends Model
+class Tag extends AbstractTranslatableModel
 {
     use HasFactory;
     use CountryTrait;
-    use HasTranslationsTrait;
     use UseHelloFreshIdTrait;
     use HasActiveDisplayTrait;
 

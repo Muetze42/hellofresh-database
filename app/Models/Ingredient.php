@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\AbstractTranslatableModel;
 use App\Contracts\Models\CountryTrait;
-use App\Contracts\Models\HasTranslationsTrait;
 use App\Contracts\Models\UseHelloFreshIdTrait;
 use App\Support\HelloFresh\IngredientAsset;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Ingredient extends Model
+class Ingredient extends AbstractTranslatableModel
 {
     use HasFactory;
     use CountryTrait;
-    use HasTranslationsTrait;
     use UseHelloFreshIdTrait;
 
     /**

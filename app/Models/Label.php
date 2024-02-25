@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
+use App\Contracts\Models\AbstractTranslatableModel;
 use App\Contracts\Models\CountryTrait;
 use App\Contracts\Models\HasActiveDisplayTrait;
-use App\Contracts\Models\HasTranslationsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Label extends Model
+class Label extends AbstractTranslatableModel
 {
     use HasFactory;
     use CountryTrait;
-    use HasTranslationsTrait;
     use HasActiveDisplayTrait;
 
     /**

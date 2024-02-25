@@ -61,7 +61,7 @@ class FilterRequest
         $validated = $this->request->validate(
             Arr::mapWithKeys(
                 $this->defaults,
-                fn(mixed $default, string $key) => !is_array($default) ? [$key => 'bool'] :
+                fn (mixed $default, string $key) => !is_array($default) ? [$key => 'bool'] :
                     [$key => ['array', 'max:' . config('application.filter.max_filterable_items', 20)]]
             )
         );
