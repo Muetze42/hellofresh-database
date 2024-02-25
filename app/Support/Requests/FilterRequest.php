@@ -58,17 +58,13 @@ class FilterRequest
      */
     protected function filtered(): array
     {
-        $filterableItemsRules = ['array', 'max:' . config('application.filter.max_filterable_items', 20)];
-
-        $validated = $this->request->validate([
-            'pdf' => 'bool',
-            'iMode' => 'bool',
-            'ingredients' => $filterableItemsRules,
-            'ingredients_except' => $filterableItemsRules,
-            'allergens' => $filterableItemsRules,
-            'tags' => $filterableItemsRules,
-            'tags_except' => $filterableItemsRules,
-        ]);
+        $validated = $this->request->validate(
+            Arr::mapWithKeys(
+                $this->defaults,
+                fn(mixed $default, string $key) => !is_array($default) ? [$key => 'bool'] :
+                    [$key => ['array', 'max:' . config('application.filter.max_filterable_items', 20)]]
+            )
+        );
 
         $except = [];
 
@@ -78,9 +74,18 @@ class FilterRequest
             }
         }
 
+        foreach ($validated as $key => $value) {
+            if (str_ends_with($key, '_except')) {
+                $parentKey = substr($key, 0, -7);
+                $validated[$key] = array_diff($value, $validated[$parentKey]);
+                $validated[$parentKey] = array_diff($validated[$parentKey], $value);
+            }
+        }
+
         if (empty($validated['ingredients']) && empty($validated['ingredients_except'])) {
             $except[] = 'iMode';
         }
+
 
         $validated = array_filter($validated);
 
