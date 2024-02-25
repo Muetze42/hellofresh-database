@@ -76,6 +76,7 @@ async function submit() {
                 <div class="flex h-full flex-col bg-gray-700 shadow-xl">
                   <DialogTitle class="text-base font-medium p-2 select-none">
                     {{ __('Filters') }}
+                    <button type="button" class="sr-only" />
                   </DialogTitle>
                   <div
                     class="flex-1 flex flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
