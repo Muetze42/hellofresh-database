@@ -5,9 +5,10 @@ import Multiselect from '@/Components/Forms/Multiselect.vue'
 import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 
-const open = ref(false)
 const showError = ref(false)
 const errors = ref(null)
+
+const open = ref(false)
 const processing = ref(false)
 const page = usePage()
 const filter = page.props.filter
@@ -30,10 +31,6 @@ async function submit() {
       router.get(page.url.split('?')[0], data)
     })
     .catch(function (error) {
-      console.log(error)
-      console.log(error.response.data)
-      console.log(error.response.status)
-      console.log(error.response.headers)
       showError.value = true
       errors.value = error
       processing.value = false

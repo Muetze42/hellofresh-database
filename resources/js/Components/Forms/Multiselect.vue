@@ -5,6 +5,9 @@ import Multiselect from '@vueform/multiselect'
 
 const emit = defineEmits(['update:modelValue'])
 
+const showError = ref(false)
+const errors = ref(null)
+
 const props = defineProps({
   route: {
     type: String,
@@ -31,9 +34,15 @@ async function getItems(query) {
   isLoading.value = true
   let data = {}
 
-  await axios.post(baseUrl + 'filters/' + props.route, { query: query }).then((response) => {
-    data = response.data
-  })
+  await axios
+    .post(baseUrl + 'filters/' + props.route, { query: query })
+    .then((response) => {
+      data = response.data
+    })
+    .catch((error) => {
+      showError.value = true
+      errors.value = error
+    })
 
   isLoading.value = false
 
@@ -45,6 +54,7 @@ async function getItems(query) {
 }
 </script>
 <template>
+  <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
   <Multiselect
     v-model="modelItems"
     mode="tags"

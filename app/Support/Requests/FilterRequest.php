@@ -58,10 +58,6 @@ class FilterRequest
      */
     protected function filtered(): array
     {
-        $this->request->validate([
-            'foo' => 'required',
-        ]);
-
         $validated = $this->request->validate(
             Arr::mapWithKeys(
                 $this->defaults,
