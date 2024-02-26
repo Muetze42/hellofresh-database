@@ -54,6 +54,16 @@ class Controller extends BaseController
             $filter[$key] = app($model)::whereIn('id', $value)->get(['name', 'id']);
         }
 
+        if ($search = $request->input('search')) {
+            $recipes->where(function (Builder $query) use ($search) {
+                /* @var \Illuminate\Database\Eloquent\Builder|\App\Models\Recipe $query */
+                $query->whereId($search)
+                    ->orWhereRaw('LOWER(name) like ?', ['%' . Str::lower($search) . '%'])
+                    ->orWhereRaw('LOWER(description) like ?', ['%' . Str::lower($search) . '%'])
+                ;
+            });
+        }
+
         Inertia::share('filter', $filter);
         Inertia::share(
             'filterable',

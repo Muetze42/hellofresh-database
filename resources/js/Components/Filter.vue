@@ -2,7 +2,7 @@
 import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import Multiselect from '@/Components/Forms/Multiselect.vue'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 const showError = ref(false)
@@ -17,6 +17,11 @@ const baseUrl = page.props.country.route
 // noinspection JSCheckFunctionSignatures
 const form = useForm(filter)
 
+const searchInit = new URLSearchParams(window.location.search).get('search')
+const search = reactive({
+  value: searchInit
+})
+
 async function submit() {
   // form.processing = true
   processing.value = true
@@ -27,6 +32,9 @@ async function submit() {
       let data = {}
       if (response.data) {
         data.filter = response.data
+      }
+      if (search.value && search.value.trim().length > 0) {
+        data.search = search.value.trim()
       }
       router.get(page.url.split('?')[0], data)
     })
@@ -47,7 +55,9 @@ async function submit() {
 </script>
 
 <template>
-  <button type="button" class="btn" @click="open = true">{{ __('Filter') }}</button>
+  <button type="button" class="btn" @click="open = true">
+    {{ __('Filter') }} / {{ __('Search') }}
+  </button>
   <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="relative z-40">
@@ -77,12 +87,23 @@ async function submit() {
               <DialogPanel class="pointer-events-auto w-screen max-w-2xl">
                 <div class="flex h-full flex-col bg-gray-700 shadow-xl">
                   <DialogTitle class="text-base font-medium p-2 select-none">
-                    {{ __('Filters') }}
+                    {{ __('Filters') }} / {{ __('Search') }}
                     <button type="button" class="sr-only" />
                   </DialogTitle>
                   <div
                     class="flex-1 flex pb-12 flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
+                    <div class="filter-row py-2">
+                      <label class="child flex flex-col">
+                        {{ __('Search') }}
+                        <input
+                          v-model="search.value"
+                          :placeholder="__('Search')"
+                          type="search"
+                          class="form-input w-full"
+                        />
+                      </label>
+                    </div>
                     <div class="filter-row">
                       <label class="clickable-label child">
                         <input v-model="form.pdf" type="checkbox" class="" />
@@ -149,13 +170,13 @@ async function submit() {
                     <button
                       type="button"
                       class="btn w-44 whitespace-nowrap"
-                      :disabled="processing || !form.isDirty"
-                      :class="{ 'btn-disabled': processing || !form.isDirty }"
+                      :disabled="processing || (!form.isDirty && searchInit == search.value)"
+                      :class="{ 'btn-disabled': processing || (!form.isDirty && searchInit == search.value) }"
                       @click="submit"
                     >
                       <Loading v-if="processing" class="w-6 h-6" />
                       <span v-else>
-                        {{ __('Apply filters') }}
+                        {{ __('Apply') }}
                       </span>
                     </button>
                   </div>
