@@ -23,6 +23,7 @@ class Country extends Model
         'code',
         'locales',
         'domain',
+        'data',
         'take',
     ];
 
@@ -39,6 +40,7 @@ class Country extends Model
     protected $casts = [
         'code' => UpperStringCast::class,
         'locales' => LowerArrayCast::class,
+        'data' => 'array',
         'take' => 'int',
     ];
 

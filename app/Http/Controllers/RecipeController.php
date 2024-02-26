@@ -14,11 +14,6 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
-        //dd(iso8601ToMinutes('PT1H25M'));
-        //dd(\Carbon\CarbonInterval::make('PT1H25M')->totalMinutes);
-        //dd((new \DateInterval('PT1H25M')));
-        dd(Recipe::whereNotNull('prep_time')->pluck('prep_time')->unique()->toArray());
-
         return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection(
                 $this->recipesFilterQuery(Recipe::query(), $request)

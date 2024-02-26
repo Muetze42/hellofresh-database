@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
             'translations' => $this->getJsonTranslations(),
             'locale' => app()->getLocale(),
             'config' => config('application'),
-            'country' => country()?->append('route')->only(['code', 'domain', 'route']),
+            'country' => country()?->append('route')->only(['code', 'domain', 'data', 'route']),
             'support' => (new Support())->toArray(),
         ]);
     }

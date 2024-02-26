@@ -79,6 +79,7 @@ namespace App\Models{
  * @property string $code
  * @property mixed $locales
  * @property string $domain
+ * @property array|null $data
  * @property int $take
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -92,6 +93,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Country whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereDomain($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Country whereLocales($value)
