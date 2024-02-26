@@ -17,7 +17,7 @@ class HelloFreshService
 {
     public static function syncRecipe(HelloFreshRecipe $item): ?Recipe
     {
-        if (!$item->active() || $item->isAddon() || empty($item->steps()) || count($item->ingredients()) < 2) {
+        if (!$item->active() || $item->isAddon() || empty($item->steps()) || count($item->ingredients()) < 4) {
             return null;
         }
 

@@ -24,6 +24,6 @@ class RemoveReadyMealsCommand extends AbstractCountryCommand
      */
     public function handle(): void
     {
-        Recipe::has('ingredients', '<', 2)->delete();
+        Recipe::has('ingredients', '<', 4)->delete();
     }
 }
