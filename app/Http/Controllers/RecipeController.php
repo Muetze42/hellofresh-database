@@ -19,6 +19,7 @@ class RecipeController extends Controller
                 $this->recipesFilterQuery(Recipe::query(), $request)
                     ->orderBy('external_updated_at')
                     ->paginate(config('application.pagination.per_page', 12))
+                    ->withQueryString()
             ),
         ]);
     }
