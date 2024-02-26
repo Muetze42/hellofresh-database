@@ -58,6 +58,9 @@
     @apply rounded;
     @apply hover:bg-neutral-800/40 pl-1 pr-1.5 py-0.5;
   }
+  .link {
+    @apply text-sky-400 hover:text-sky-300 hover:underline;
+  }
 }
 @layer utilities {
   .centered {
@@ -126,4 +129,15 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
 }
 .modal-footer {
   @apply border-t border-gray-600/20 flex justify-end gap-2 p-2;
+}
+
+nav, .nav {
+  a {
+    @apply text-neutral-300;
+    @apply hover:text-white;
+
+    &.active {
+      @apply text-neutral-200;
+    }
+  }
 }

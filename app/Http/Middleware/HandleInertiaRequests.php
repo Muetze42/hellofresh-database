@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\Support;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -38,6 +39,7 @@ class HandleInertiaRequests extends Middleware
             'locale' => app()->getLocale(),
             'config' => config('application'),
             'country' => country()?->append('route')->only(['code', 'domain', 'route']),
+            'support' => (new Support())->toArray(),
         ]);
     }
 

@@ -12,7 +12,7 @@ const open = ref(false)
 const processing = ref(false)
 const page = usePage()
 const filter = page.props.filter
-const baseUrl = page.props.country.route
+const baseUrl = page.props.country.route + '/'
 
 // noinspection JSCheckFunctionSignatures
 const form = useForm(filter)

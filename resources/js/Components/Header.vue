@@ -4,9 +4,11 @@ import Filter from '@/Components/Filter.vue'
 <template>
   <header class="nav-element border-b fixed py-2">
     <div class="container flex flex-wrap justify-between">
-      <ul>
-        <li>nav</li>
-      </ul>
+      <nav>
+        <Link :href="country.route" :class="{ active: $page.url === country.route }">
+          {{ __('Recipes') }}
+        </Link>
+      </nav>
       <div>
         <Filter v-if="filterable" />
       </div>

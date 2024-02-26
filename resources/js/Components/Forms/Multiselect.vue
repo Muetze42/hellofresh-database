@@ -24,7 +24,7 @@ const searchValue = ref('')
 const isLoading = ref(false)
 
 const page = usePage()
-const baseUrl = page.props.country.route
+const baseUrl = page.props.country.route + '/'
 
 function searchValueChange(value) {
   searchValue.value = value

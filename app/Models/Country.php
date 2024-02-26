@@ -57,7 +57,7 @@ class Country extends Model
     protected function route(): Attribute
     {
         return new Attribute(
-            get: fn () => '/' . Str::lower($this->code) . '-' . app()->getLocale() . '/',
+            get: fn () => '/' . Str::lower($this->code) . '-' . app()->getLocale(),
         );
     }
 }

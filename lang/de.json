@@ -46,7 +46,7 @@
     "Show only recipes with each of these ingredients": "Zeige nur Rezepte mit jeder dieser Zutaten",
     "Show only recipes with one of these :item": "Zeige nur Rezepte mit einer dieser :item",
     "Show only recipes without this :item": "Zeige nur Rezepte ohne diese :item",
-    "Source code": "Quellcode",
+    "Source code on GitHub": "Quellcode auf GitHub",
     "Support developer": "Entwickler unterstützen",
     "Tags": "Tags",
     "There is an update in progress.": "Es ist ein Update in Gange.",
@@ -58,5 +58,10 @@
     "View recipe PDF": "Rezept PDF anzeigen",
     "View recipe on the „HelloFresh“ website": "Rezept auf der „HelloFresh“ Website ansehen",
     "Your session has expired.": "Deine Sitzung ist abgelaufen.",
-    "max :number": "max :number"
+    "max :number": "max :number",
+    "Many thanks for any support": "Vielen Dank für jegliche Unterstützung",
+    "Support with reach": "Unterstützung mit Reichweite",
+    "Advertising links": "Werbelinks",
+    "Material support": "Materielle Unterstützung",
+    "Links for this project": "Links zu diesem Projekt"
 }
