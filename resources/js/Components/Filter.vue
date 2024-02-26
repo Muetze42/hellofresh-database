@@ -93,7 +93,11 @@ async function submit() {
                       <div>
                         <label class="clickable-label child">
                           <input v-model="form.iMode" type="radio" :value="false" />
-                          {{ __('Show only recipes with one of these ingredient') }}
+                          {{
+                            __('Show only recipes with one of these :item', {
+                              item: __('Ingredients')
+                            })
+                          }}
                           ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                         </label>
                       </div>
@@ -108,7 +112,11 @@ async function submit() {
                         <Multiselect v-model="form.ingredients" route="ingredients" />
                       </div>
                     </div>
-                    <label v-for="filterable in $page.props.filterable" :key="filterable">
+                    <label
+                      v-for="filterable in $page.props.filterable"
+                      :key="filterable"
+                      class="filter-row"
+                    >
                       <span class="child">
                         {{
                           filterable.endsWith('_except')

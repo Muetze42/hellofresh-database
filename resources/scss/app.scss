@@ -107,7 +107,8 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
   @apply text-neutral-700;
 }
 .multiselect-dropdown {
-  @apply scrollbar-thin scrollbar-thumb-rounded-full h-48;
+  @apply scrollbar-thin scrollbar-thumb-rounded-full;
+  //@apply h-48;
 }
 .multiselect-tags-search-wrapper {
   @apply mr-2;
