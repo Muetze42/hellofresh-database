@@ -35,8 +35,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen whereUpdatedAt($value)
@@ -62,8 +62,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
@@ -121,8 +121,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine whereUpdatedAt($value)
@@ -158,8 +158,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereExternalUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereIconPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Family whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Family whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family wherePriority($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Family whereType($value)
@@ -213,8 +213,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereFamilyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereImagePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereShipped($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient whereType($value)
@@ -250,8 +250,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Label whereForegroundColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Label whereHandle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Label whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Label whereText($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Label whereUpdatedAt($value)
  */
@@ -295,8 +295,9 @@ namespace App\Models{
  * @property string|null $cloned_from
  * @property array $headline
  * @property string|null $image_path
- * @property array|null $total_time
- * @property array|null $prep_time
+ * @property string|null $total_time
+ * @property string|null $prep_time
+ * @property int|null $minutes
  * @property array|null $description
  * @property int $average_rating
  * @property int $favorites_count
@@ -348,8 +349,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereImagePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereIsAddon($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereLabelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereMinutes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereNutrition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe wherePrepTime($value)
@@ -388,8 +390,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereDisplayLabel($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag wherePreferences($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereType($value)
@@ -448,8 +450,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil query()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereLocale(string $column, string $locale)
- * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereLocales(string $column, array $locales)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocale(string $column, string $locale)
+ * @method static \Illuminate\Database\Eloquent\Builder|AbstractTranslatableModel whereLocales(string $column, array $locales)
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil whereUpdatedAt($value)

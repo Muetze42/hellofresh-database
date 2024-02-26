@@ -55,6 +55,7 @@ class Recipe extends AbstractTranslatableModel
         'serving_size',
         'total_time',
         'prep_time',
+        'minutes',
         'uuid',
         'external_created_at',
         'external_updated_at',
@@ -77,8 +78,7 @@ class Recipe extends AbstractTranslatableModel
         'nutrition' => 'array',
         'steps' => 'array',
         'yields' => 'array',
-        'total_time' => 'array',
-        'prep_time' => 'array',
+        'minutes' => 'int',
     ];
 
     /**
@@ -151,5 +151,18 @@ class Recipe extends AbstractTranslatableModel
     public function asset(): RecipeAsset
     {
         return new RecipeAsset($this->image_path, $this->card_link);
+    }
+
+    /**
+     * Perform any actions required after the model boots.
+     *
+     * @return void
+     */
+    public static function booted(): void
+    {
+        static::saving(function (self $recipe) {
+            $minutes = $recipe->prep_time ? iso8601ToMinutes($recipe->prep_time) : 0;
+            $recipe->minutes = $minutes > 0 ? $minutes : null;
+        });
     }
 }
