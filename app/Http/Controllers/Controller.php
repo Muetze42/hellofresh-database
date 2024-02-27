@@ -40,7 +40,7 @@ class Controller extends BaseController
                 ->get(['name', 'id']);
         }
 
-        foreach (Arr::except($filter, ['pdf', 'iMode', 'ingredients']) as $key => $value) {
+        foreach (Arr::except($filter, ['pdf', 'iMode', 'ingredients', 'prepTime']) as $key => $value) {
             if (empty($value)) {
                 continue;
             }
@@ -64,13 +64,21 @@ class Controller extends BaseController
             });
         }
 
+        if ($filter['prepTime'][0] != data_get(country()->data, 'prepMin', 0)) {
+            $recipes->where('minutes', '>=', $filter['prepTime'][0]);
+        }
+
+        if ($filter['prepTime'][1] != data_get(country()->data, 'prepMin', 0)) {
+            $recipes->where('minutes', '<=', $filter['prepTime'][1]);
+        }
+
         Inertia::share('filter', $filter);
         Inertia::share(
             'filterable',
             array_map('ucfirst', array_keys(
                 Arr::where(
                     FilterRequest::defaults(),
-                    fn (mixed $value, string $key) => is_array($value) && $key != 'ingredients'
+                    fn (mixed $value, string $key) => is_array($value) && !in_array($key, ['ingredients', 'prepTime'])
                 )
             ))
         );

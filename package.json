@@ -35,6 +35,7 @@
         "@sentry/vite-plugin": "^2.14.1",
         "@sentry/vue": "^7.102.0",
         "@vueform/multiselect": "^2.6.6",
+        "@vueform/slider": "^2.1.10",
         "flag-icons": "^7.1.0",
         "sass": "1.71.1",
         "sass-loader": "14.1.1"

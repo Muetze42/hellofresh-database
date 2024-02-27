@@ -94,11 +94,30 @@ main {
   @apply scrollbar-thumb-emerald-500 scrollbar-track-green-900 scrollbar-track-rounded-full;
 }
 
+nav, .nav {
+  a {
+    @apply text-neutral-300;
+    @apply hover:text-white;
+
+    &.active {
+      @apply text-neutral-200;
+    }
+  }
+}
+
+/**
+ * Flag Icons
+ */
 $flag-icons-use-square: false;
 $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", "gb", "it", "lu", "nl", "no", "nz", "se", "us";
 @import "flag-icons/sass/variables";
 @import "flag-icons/sass/flag-icons-base";
 @import "flag-icons/sass/flag-icons-list";
+
+
+/**
+ * Multiselect
+ */
 
 @import "/node_modules/@vueform/multiselect/themes/default";
 
@@ -131,13 +150,8 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
   @apply border-t border-gray-600/20 flex justify-end gap-2 p-2;
 }
 
-nav, .nav {
-  a {
-    @apply text-neutral-300;
-    @apply hover:text-white;
+/**
+ * Slider
+ */
 
-    &.active {
-      @apply text-neutral-200;
-    }
-  }
-}
+@import "/node_modules/@vueform/slider/themes/default";

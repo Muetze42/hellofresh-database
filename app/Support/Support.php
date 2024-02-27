@@ -19,7 +19,7 @@ class Support
                     [
                         'label' => 'LinkedIn Follow/Connect',
                         'url' => 'https://github.com/Muetze42',
-                    ]
+                    ],
                 ],
             ],
             'material' => [
@@ -40,7 +40,7 @@ class Support
                     [
                         'label' => 'GitHub Sponsor',
                         'url' => 'https://github.com/sponsors/Muetze42',
-                    ]
+                    ],
                 ],
             ],
             'tinkerwell' => null,
@@ -50,8 +50,8 @@ class Support
                     [
                         'label' => __('Source code on GitHub'),
                         'url' => 'https://github.com/Muetze42/hellofresh-database',
-                    ]
-                ]
+                    ],
+                ],
             ],
             'advertising' => [
                 'title' => __('Advertising links'),
@@ -71,7 +71,7 @@ class Support
                     [
                         'label' => 'iGraal Cashback',
                         'url' => 'https://de.igraal.com/einladung?werber=AG_5a1ab979a2ff2',
-                    ]
+                    ],
                 ],
             ],
         ];

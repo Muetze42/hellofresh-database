@@ -36,6 +36,6 @@ if (!function_exists('iso8601ToMinutes')) {
      */
     function iso8601ToMinutes(string $iso8601): int
     {
-        return (CarbonInterval::make($iso8601))->totalMinutes;
+        return CarbonInterval::make($iso8601)->totalMinutes;
     }
 }

@@ -155,8 +155,6 @@ class Recipe extends AbstractTranslatableModel
 
     /**
      * Perform any actions required after the model boots.
-     *
-     * @return void
      */
     public static function booted(): void
     {

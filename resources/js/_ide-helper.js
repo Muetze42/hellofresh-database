@@ -21,6 +21,7 @@ Vue.mixin({
       country: {
         code: 'String',
         domain: 'String',
+        data: { prepMin: 4, prepMax: 200 },
         route: 'String'
       },
       config: {

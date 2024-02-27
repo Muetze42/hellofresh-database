@@ -21,14 +21,14 @@
         "ext-dom": "*",
         "ext-libxml": "*",
         "ext-pdo": "*",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.8",
         "inertiajs/inertia-laravel": "^0.6.11",
-        "laravel/framework": "^10.43",
+        "laravel/framework": "^10.46",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "norman-huth/hellofresh-scraper": "@dev",
         "sentry/sentry-laravel": "^4.2",
-        "spatie/laravel-translatable": "^6.5"
+        "spatie/laravel-translatable": "^6.6.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

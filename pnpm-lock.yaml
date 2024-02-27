@@ -29,6 +29,9 @@ dependencies:
   '@vueform/multiselect':
     specifier: ^2.6.6
     version: 2.6.6
+  '@vueform/slider':
+    specifier: ^2.1.10
+    version: 2.1.10
   flag-icons:
     specifier: ^7.1.0
     version: 7.1.0
@@ -1251,6 +1254,10 @@ packages:
 
   /@vueform/multiselect@2.6.6:
     resolution: {integrity: sha512-JDWesVRmyGz9HmHp2Ooy1cb8XgKohiztwMDtjm8c0/Th+7wEZENZuYa0iY5CTvaJNANl3LVqh9BNnCc/YlM/Bg==}
+    dev: false
+
+  /@vueform/slider@2.1.10:
+    resolution: {integrity: sha512-L2G3Ju51Yq6yWF2wzYYsicUUaH56kL1QKGVtimUVHT1K1ADcRT94xVyIeJpS0klliVEeF6iMZFbdXtHq8AsDHw==}
     dev: false
 
   /@webassemblyjs/ast@1.11.6:

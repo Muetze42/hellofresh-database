@@ -2,6 +2,7 @@
 import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import Multiselect from '@/Components/Forms/Multiselect.vue'
+import Slider from '@vueform/slider'
 import { ref, reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 
@@ -47,10 +48,14 @@ async function submit() {
 
 /**
  * @property {Object} form
- * @property {Boolean} form.pdf
+ * @property {array} form.allergens_except
  * @property {Boolean} form.iMode
- * @property {array} form.allergens
  * @property {array} form.ingredients
+ * @property {array} form.ingredients_except
+ * @property {Boolean} form.pdf
+ * @property {array} form.prepTime
+ * @property {array} form.tags
+ * @property {array} form.tags_except
  */
 </script>
 
@@ -98,7 +103,7 @@ async function submit() {
                         {{ __('Search') }}
                         <input
                           v-model="search.value"
-                          :placeholder="__('Search')"
+                          :placeholder="__('Enter search term') + '...'"
                           type="search"
                           class="form-input w-full"
                         />
@@ -155,6 +160,21 @@ async function submit() {
                         :route="filterable.split('_')[0].toLowerCase()"
                       />
                     </label>
+                    <label class="filter-row">
+                      <span class="child">
+                        {{ __('Prep time') }}: {{ form.prepTime[0] }} - {{ form.prepTime[1] }}
+                        {{ __('Minutes') }}
+                      </span>
+                      <div class="p-4 border-t border-gray-600">
+                        <Slider
+                          v-model="form.prepTime"
+                          :min="country.data.prepMin"
+                          :max="country.data.prepMax"
+                          :tooltips="false"
+                          :lazy="false"
+                        />
+                      </div>
+                    </label>
                   </div>
                   <div
                     class="flex flex-wrap gap-2 items-center justify-center xs:justify-between p-2"
@@ -171,7 +191,9 @@ async function submit() {
                       type="button"
                       class="btn w-44 whitespace-nowrap"
                       :disabled="processing || (!form.isDirty && searchInit == search.value)"
-                      :class="{ 'btn-disabled': processing || (!form.isDirty && searchInit == search.value) }"
+                      :class="{
+                        'btn-disabled': processing || (!form.isDirty && searchInit == search.value)
+                      }"
                       @click="submit"
                     >
                       <Loading v-if="processing" class="w-6 h-6" />

@@ -19,17 +19,7 @@ class FilterRequest
     /**
      * The default filter values.
      */
-    public array $defaults = [
-        'pdf' => false,
-        'iMode' => false,
-        'ingredients' => [],
-        'ingredients_except' => [],
-        'allergens_except' => [],
-        'tags' => [],
-        'tags_except' => [],
-        //'label' => [], // Todo
-        //'label_except' => [],
-    ];
+    public array $defaults;
 
     /**
      * The request instance.
@@ -39,6 +29,29 @@ class FilterRequest
     protected function __construct(Request $request = null)
     {
         $this->request = $request;
+        $this->setDefaults();
+    }
+
+    /**
+     * Set the default filter values.
+     */
+    public function setDefaults(): void
+    {
+        $this->defaults = [
+            'allergens_except' => [],
+            'iMode' => false,
+            'ingredients' => [],
+            'ingredients_except' => [],
+            'pdf' => false,
+            'prepTime' => [
+                data_get(country()->data, 'prepMin', 0),
+                data_get(country()->data, 'prepMax', 0),
+            ],
+            'tags' => [],
+            'tags_except' => [],
+            //'label' => [], // Todo
+            //'label_except' => [],
+        ];
     }
 
     /**
@@ -70,23 +83,33 @@ class FilterRequest
      */
     protected function filtered(): array
     {
+        $max = config('application.filter.max_filterable_items', 20);
+
         $validated = $this->request->validate(
             Arr::mapWithKeys(
                 $this->defaults,
-                fn (mixed $default, string $key) => !is_array($default) ? [$key => 'bool'] :
-                    [$key => ['array', 'max:' . config('application.filter.max_filterable_items', 20)]]
+                function (mixed $default, string $key) use ($max) {
+                    if (is_bool($default)) {
+                        return [$key => 'bool'];
+                    }
+                    if ($key == 'prepTime') {
+                        return [$key => 'array|min:2|max:2'];
+                    }
+
+                    return ['array', 'max:' . $max];
+                }
             )
         );
 
         $except = [];
 
-        foreach ($validated as $key => $value) {
+        foreach (Arr::except($validated, ['prepTime']) as $key => $value) {
             if (is_array($value)) {
                 $validated[$key] = Arr::pluck($value, 'id');
             }
         }
 
-        foreach ($validated as $key => $value) {
+        foreach (Arr::except($validated, ['prepTime']) as $key => $value) {
             if (str_ends_with($key, '_except')) {
                 $nonExceptKey = substr($key, 0, -7);
                 if (empty($validated[$nonExceptKey])) {
