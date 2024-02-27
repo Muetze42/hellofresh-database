@@ -49,6 +49,10 @@ async function submit() {
 /**
  * @property {Object} form
  * @property {array} form.allergens_except
+ * @property {array} form.difficulties
+ * @property {Boolean} form.difficulties.d1
+ * @property {Boolean} form.difficulties.d2
+ * @property {Boolean} form.difficulties.d3
  * @property {Boolean} form.iMode
  * @property {array} form.ingredients
  * @property {array} form.ingredients_except
@@ -175,6 +179,31 @@ async function submit() {
                         />
                       </div>
                     </label>
+                    <div class="filter-row">
+                      <span class="child">
+                        {{ __('Difficulties') }}
+                      </span>
+                      <div class="flex flex-col border-t border-gray-600">
+                        <div v-for="(state, difficulty) in form.difficulties" :key="difficulty">
+                          <label class="clickable-label child">
+                            <input
+                              v-model="form.difficulties[difficulty]"
+                              type="checkbox"
+                              class="form-checkbox"
+                            />
+                            <template v-if="difficulty === 'd1'">
+                              {{ __('Easy') }}
+                            </template>
+                            <template v-else-if="difficulty === 'd2'">
+                              {{ __('Medium') }}
+                            </template>
+                            <template v-else>
+                              {{ __('Hard') }}
+                            </template>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div
                     class="flex flex-wrap gap-2 items-center justify-center xs:justify-between p-2"

@@ -40,7 +40,7 @@ class Controller extends BaseController
                 ->get(['name', 'id']);
         }
 
-        foreach (Arr::except($filter, ['pdf', 'iMode', 'ingredients', 'prepTime']) as $key => $value) {
+        foreach (Arr::except($filter, ['pdf', 'iMode', 'ingredients', 'prepTime', 'difficulties']) as $key => $value) {
             if (empty($value)) {
                 continue;
             }
@@ -72,13 +72,23 @@ class Controller extends BaseController
             $recipes->where('minutes', '<=', $filter['prepTime'][1]);
         }
 
+        $difficulties = array_filter($filter['difficulties']);
+        if (count($difficulties) < 3) {
+            $difficulties = array_map(
+                fn (string $difficulty) => (int) preg_replace('/\D/', '', $difficulty),
+                array_keys($difficulties)
+            );
+            $recipes->whereIn('difficulty', $difficulties);
+        }
+
         Inertia::share('filter', $filter);
         Inertia::share(
             'filterable',
             array_map('ucfirst', array_keys(
                 Arr::where(
                     FilterRequest::defaults(),
-                    fn (mixed $value, string $key) => is_array($value) && !in_array($key, ['ingredients', 'prepTime'])
+                    fn (mixed $value, string $key) =>
+                        is_array($value) && !in_array($key, ['ingredients', 'prepTime', 'difficulties'])
                 )
             ))
         );

@@ -39,6 +39,11 @@ class FilterRequest
     {
         $this->defaults = [
             'allergens_except' => [],
+            'difficulties' => [
+                'd1' => true,
+                'd2' => true,
+                'd3' => true,
+            ],
             'iMode' => false,
             'ingredients' => [],
             'ingredients_except' => [],
@@ -95,6 +100,9 @@ class FilterRequest
                     if ($key == 'prepTime') {
                         return [$key => 'array|min:2|max:2'];
                     }
+                    if ($key == 'difficulties') {
+                        return [$key => 'array|min:3|max:3'];
+                    }
 
                     return ['array', 'max:' . $max];
                 }
@@ -103,13 +111,13 @@ class FilterRequest
 
         $except = [];
 
-        foreach (Arr::except($validated, ['prepTime']) as $key => $value) {
+        foreach (Arr::except($validated, ['prepTime', 'difficulties']) as $key => $value) {
             if (is_array($value)) {
                 $validated[$key] = Arr::pluck($value, 'id');
             }
         }
 
-        foreach (Arr::except($validated, ['prepTime']) as $key => $value) {
+        foreach (Arr::except($validated, ['prepTime', 'difficulties']) as $key => $value) {
             if (str_ends_with($key, '_except')) {
                 $nonExceptKey = substr($key, 0, -7);
                 if (empty($validated[$nonExceptKey])) {
@@ -124,7 +132,22 @@ class FilterRequest
             $except[] = 'iMode';
         }
 
+        if (
+            $validated['prepTime'][0] == data_get(country()->data, 'prepMin', 0) &&
+            $validated['prepTime'][1] == data_get(country()->data, 'prepMax', 0)
+        ) {
+            $except[] = 'prepTime';
+        }
+
         $validated = array_filter($validated);
+        $validated['difficulties'] = array_filter(
+            $validated['difficulties'],
+            fn (bool $state) => !$state
+        );
+
+        if (count($validated['difficulties']) >= 3) {
+            $except[] = 'difficulties';
+        }
 
         return Arr::except(Arr::sortRecursive($validated), $except);
     }
@@ -142,7 +165,7 @@ class FilterRequest
             return $this->defaults;
         }
 
-        return array_merge($this->defaults, unserialize($filter->data));
+        return array_replace_recursive($this->defaults, unserialize($filter->data));
     }
 
     /**
