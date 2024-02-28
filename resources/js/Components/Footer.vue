@@ -16,12 +16,12 @@ const open = ref(false)
       <div
         v-for="(section, key) in $page.props.support"
         :key="key"
-        class="flex flex-col border rounded-sm text-center border-gray-600/90"
+        class="flex flex-col border rounded-sm text-center border-primary-600/90"
       >
         <a
           v-if="key == 'tinkerwell'"
           href="https://tinkerwell.app/ref/Qdxy2Abv19"
-          class="p-2 flex hover:bg-gray-800 gap-2 items-center leading-4"
+          class="p-2 flex hover:bg-primary-800 gap-2 items-center leading-4"
           target="_blank"
         >
           <img src="@assets/tinkerwell.png" alt="" class="h-14 w-14" />
@@ -33,10 +33,10 @@ const open = ref(false)
           </span>
         </a>
         <template v-else>
-          <div class="font-medium border-b border-gray-600/80 p-1">
+          <div class="font-medium border-b border-primary-600/80 p-1">
             {{ section.title }}
           </div>
-          <div class="divide-y divide-gray-600/40">
+          <div class="divide-y divide-primary-600/40">
             <div v-for="(item, index) in section.items" :key="index" class="p-0.5">
               <a :href="item.url" class="link" target="_blank">
                 {{ item.label }}

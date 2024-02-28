@@ -94,13 +94,13 @@ async function submit() {
               leave-to="translate-x-full"
             >
               <DialogPanel class="pointer-events-auto w-screen max-w-2xl">
-                <div class="flex h-full flex-col bg-gray-700 shadow-xl">
+                <div class="flex h-full flex-col bg-primary-700 shadow-xl">
                   <DialogTitle class="text-base font-medium p-2 select-none">
                     {{ __('Filters') }} / {{ __('Search') }}
                     <button type="button" class="sr-only" />
                   </DialogTitle>
                   <div
-                    class="flex-1 flex pb-12 flex-col gap-4 border p-2 border-gray-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
+                    class="flex-1 flex pb-12 flex-col gap-4 border p-2 border-primary-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
                   >
                     <div class="filter-row py-2">
                       <label class="child flex flex-col">
@@ -169,7 +169,7 @@ async function submit() {
                         {{ __('Prep time') }}: {{ form.prepTime[0] }} - {{ form.prepTime[1] }}
                         {{ __('Minutes') }}
                       </span>
-                      <div class="p-4 border-t border-gray-600">
+                      <div class="p-4 border-t border-primary-600">
                         <Slider
                           v-model="form.prepTime"
                           :min="country.data.prepMin"
@@ -183,7 +183,7 @@ async function submit() {
                       <span class="child">
                         {{ __('Difficulties') }}
                       </span>
-                      <div class="flex flex-col border-t border-gray-600">
+                      <div class="flex flex-col border-t border-primary-600">
                         <div v-for="(state, difficulty) in form.difficulties" :key="difficulty">
                           <label class="clickable-label child">
                             <input

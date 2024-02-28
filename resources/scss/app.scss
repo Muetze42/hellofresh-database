@@ -17,14 +17,14 @@
     @apply font-medium rounded leading-normal transition duration-150 ease-in-out;
     @apply px-2.5 py-0.5;
     @apply bg-gradient-to-t shadow-lg;
-    @apply text-white from-emerald-700 to-emerald-500;
+    @apply text-white from-accent-700 to-accent-500;
 
     &:enabled, a {
-      @apply hover:to-emerald-400;
+      @apply hover:to-accent-400;
     }
   }
   .btn-disabled {
-    @apply text-gray-300/80 from-gray-800 to-gray-700;
+    @apply text-primary-300/80 from-primary-800 to-primary-700;
   }
   .btn-danger {
     @apply from-red-800 to-red-700;
@@ -36,7 +36,7 @@
     @apply px-1.5 text-sm;
   }
   .card {
-    @apply flex flex-col bg-gray-800 rounded shadow border border-gray-600;
+    @apply flex flex-col bg-primary-800 rounded shadow border border-primary-600;
   }
   .dotted-list {
     li {
@@ -51,7 +51,7 @@
   }
   /* For Semantic Elements */
   .nav-element {
-    @apply w-full z-30 transition duration-300 ease-in-out bg-gray-800 border-gray-600/50;
+    @apply w-full z-30 transition duration-300 ease-in-out bg-primary-800 border-primary-600/50;
   }
   .clickable-label {
     @apply inline-flex items-center gap-1.5 cursor-pointer select-none;
@@ -84,14 +84,14 @@ main {
 }
 
 .pagination {
-  @apply divide-x divide-gray-300/25 container flex gap-y-1.5 flex-wrap justify-center items-center;
+  @apply divide-x divide-primary-300/25 container flex gap-y-1.5 flex-wrap justify-center items-center;
   .btn {
     @apply rounded-none first:sm:rounded-l last:sm:rounded-r;
   }
 }
 
 .scrollbar, .scrollbar-thin {
-  @apply scrollbar-thumb-emerald-500 scrollbar-track-emerald-900 scrollbar-track-rounded-full;
+  @apply scrollbar-thumb-accent-500 scrollbar-track-accent-900 scrollbar-track-rounded-full;
 }
 
 nav, .nav {
@@ -122,7 +122,7 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
 @import "/node_modules/@vueform/multiselect/themes/default";
 
 .multiselect {
-  @apply bg-neutral-700/10 border-gray-600 py-0.5;
+  @apply bg-neutral-700/10 border-primary-600 py-0.5;
   @apply rounded-t-none #{!important};
 }
 .multiselect-option {
@@ -140,18 +140,18 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
   @apply focus:bg-white #{!important};
 }
 .filter-row {
-  @apply border border-gray-600 bg-slate-600/20 rounded;
+  @apply border border-primary-600 bg-primary-600/10 rounded;
 
   .child {
     @apply px-3;
   }
 }
 .modal-footer {
-  @apply border-t border-gray-600/20 flex justify-end gap-2 p-2;
+  @apply border-t border-primary-600/20 flex justify-end gap-2 p-2;
 }
 
 :root {
-  --ms-tag-bg: theme('colors.emerald.600');
+  --ms-tag-bg: theme('colors.accent.600');
 }
 
 /**
@@ -161,5 +161,5 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
 @import "/node_modules/@vueform/slider/themes/default";
 
 :root {
-  --slider-connect-bg: theme('colors.emerald.600');
+  --slider-connect-bg: theme('colors.accent.600');
 }

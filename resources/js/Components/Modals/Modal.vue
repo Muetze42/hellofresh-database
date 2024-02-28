@@ -41,10 +41,10 @@ defineEmits(['close'])
         >
           <DialogPanel
             as="div"
-            class="border border-gray-800/50 bg-gray-900 rounded-sm inline-block align-bottom overflow-hidden shadow-xl transform transition-all sm:align-middle w-full text-left"
+            class="border border-primary-800/50 bg-primary-900 rounded-sm inline-block align-bottom overflow-hidden shadow-xl transform transition-all sm:align-middle w-full text-left"
             :class="size"
           >
-            <div v-if="title" class="border-b border-gray-600/20 px-2 py-1 font-medium">
+            <div v-if="title" class="border-b border-primary-600/20 px-2 py-1 font-medium">
               {{ title }}
             </div>
             <slot />

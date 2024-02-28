@@ -61,7 +61,7 @@ function setFocus(state) {
     />
     <div
       v-if="isFocused && query.length > 2"
-      class="absolute border border-gray-600 bg-gray-700 z-40"
+      class="absolute border border-primary-600 bg-primary-700 z-40"
     >
       <div v-if="loading" class="text-center p-2">
         <Loading />
@@ -70,7 +70,7 @@ function setFocus(state) {
         <div
           v-for="item in items"
           :key="item.id"
-          class="bg-white hover:bg-gray-100 text-neutral-900 p-2 pr-4 cursor-pointer"
+          class="bg-white hover:bg-primary-100 text-neutral-900 p-2 pr-4 cursor-pointer"
           @click.prevent="addItem(item)"
         >
           <font-awesome-icon :icon="['fas', 'circle-check']" class="text-emerald-600" />

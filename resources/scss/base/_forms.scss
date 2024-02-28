@@ -7,7 +7,7 @@ input[type='radio'] {
 }
 
 input[type='radio'], input[type='checkbox'] {
-  @apply text-emerald-600 cursor-pointer select-none;
+  @apply text-accent-600 cursor-pointer select-none;
 }
 
 input[type='text'] {

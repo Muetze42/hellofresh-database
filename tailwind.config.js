@@ -1,5 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme.js')
-// const colors = require('tailwindcss/colors.js')
+const colors = require('tailwindcss/colors.js')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -14,6 +14,10 @@ module.exports = {
       }
     },
     extend: {
+      colors: {
+        primary: colors.gray,
+        accent: colors.emerald
+      },
       screens: {
         xs: '370px'
       },
