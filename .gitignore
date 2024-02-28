@@ -23,3 +23,4 @@ deploy.sh
 
 # Sentry Config File
 .env.sentry-build-plugin
+/sentry.auth.token

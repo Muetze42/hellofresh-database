@@ -1,8 +1,10 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin'
-import { defineConfig, splitVendorChunkPlugin } from 'vite'
+import { defineConfig, splitVendorChunkPlugin, loadEnv } from 'vite'
 import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'node:path'
+
+const env = loadEnv('all', process.cwd())
 
 export default defineConfig({
   plugins: [
@@ -25,7 +27,7 @@ export default defineConfig({
       release: {
         name: new Date().getTime()
       },
-      authToken: process.env.SENTRY_AUTH_TOKEN
+      authToken: env.VITE_SENTRY_AUTH_TOKEN.trim()
     })
   ],
 
