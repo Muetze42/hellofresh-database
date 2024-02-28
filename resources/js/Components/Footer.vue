@@ -56,7 +56,8 @@ const open = ref(false)
       <div class="max-sm:text-center">
         <button type="button" class="btn btn-sm" @click="open = true">
           {{ __('Support developer') }} /
-          {{ __('Questions') }}
+          {{ __('Questions') }} /
+          {{ __('Links') }}
         </button>
       </div>
     </div>

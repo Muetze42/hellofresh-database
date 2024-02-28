@@ -7,6 +7,7 @@ use ArgumentCountError;
 use BadMethodCallException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Inertia\Inertia;
 
 /**
  * @method static make(\Illuminate\Http\Request $request): ?string
@@ -185,6 +186,8 @@ class FilterRequest
         if (!$filter = Filter::find($filter)) {
             return $this->defaults;
         }
+
+        Inertia::share('filterKey', $filter->getKey());
 
         return array_replace_recursive($this->defaults, unserialize($filter->data));
     }

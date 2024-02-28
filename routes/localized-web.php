@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\FilterController;
-use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\RecipeMenuController;
 use App\Support\Requests\FilterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/menus/{menu}', [RecipeController::class, 'index'])
+Route::get('/menus/{menu}', [RecipeMenuController::class, 'index'])
     ->where('menu', '[0-9]+')
     ->name('recipes.menus');
-Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
+Route::get('/', [RecipeMenuController::class, 'index'])->name('recipes.index');
 //Route::get('{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
 
 Route::post('filter', fn (Request $request) => FilterRequest::make($request))->name('filter');

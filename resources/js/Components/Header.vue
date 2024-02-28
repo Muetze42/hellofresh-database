@@ -5,7 +5,7 @@ import Filter from '@/Components/Filter.vue'
   <header class="nav-element border-b fixed py-2">
     <div class="container flex flex-wrap justify-between">
       <nav>
-        <Link :href="country.route" :class="{ active: $page.url === country.route }">
+        <Link :href="filterLink(country.route)" :class="{ active: $page.url === country.route }">
           {{ __('Recipes') }}
         </Link>
       </nav>

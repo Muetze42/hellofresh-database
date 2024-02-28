@@ -3,7 +3,7 @@ import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import Multiselect from '@/Components/Forms/Multiselect.vue'
 import Slider from '@vueform/slider'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 const showError = ref(false)
@@ -21,6 +21,10 @@ const form = useForm(filter)
 const searchInit = new URLSearchParams(window.location.search).get('search')
 const search = reactive({
   value: searchInit
+})
+
+const isActive = computed(() => {
+  return page.props.filterKey || new URL(document.location).searchParams.get('search')
 })
 
 async function submit() {
@@ -64,8 +68,14 @@ async function submit() {
 </script>
 
 <template>
-  <button type="button" class="btn" @click="open = true">
+  <button type="button" class="relative btn" @click="open = true">
     {{ __('Filter') }} / {{ __('Search') }}
+    <span v-if="isActive" class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+      <span
+        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-100/80 opacity-75"
+      />
+      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-200" />
+    </span>
   </button>
   <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
   <TransitionRoot as="template" :show="open">

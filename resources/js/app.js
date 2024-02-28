@@ -44,11 +44,21 @@ createInertiaApp({
           },
           config() {
             return this.$page.props.config
+          },
+          filterKey() {
+            return this.$page.props.filterKey
           }
         },
         methods: {
           __(key, replace = {}) {
             return __(key, replace)
+          },
+          filterLink(link) {
+            if (this.filterKey) {
+              link = link + '?filter=' + this.filterKey
+            }
+
+            return link
           }
         }
       })

@@ -14,14 +14,14 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
-class RecipeController extends Controller
+class RecipeMenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request, ?Menu $menu = null)
     {
-        $recipes = $this->filterQuery(Recipe::query(), $request)
+        $recipes = $this->filterQuery($request)
             ->when(
                 $menu,
                 fn (Builder $query) => $query->whereIn('id', $menu->recipes->pluck('id')->toArray())
@@ -38,9 +38,9 @@ class RecipeController extends Controller
     /**
      * Build a filtered query for recipes.
      */
-    protected function filterQuery(Recipe|Builder $recipes, Request $request): Builder
+    protected function filterQuery(Request $request): Builder
     {
-        $recipes->active();
+        $recipes = Recipe::active();
         $filter = FilterRequest::parse($request);
         $filterable = FilterRequest::filterable();
 

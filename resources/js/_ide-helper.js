@@ -13,7 +13,10 @@ Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.mixin({
   methods: {
     __(key, replace = {}) {
-      return 'replaced'
+      return __(key, replace = {})
+    },
+    filterLink(link) {
+      return link
     }
   },
   data() {
@@ -28,7 +31,8 @@ Vue.mixin({
         filter: {
           max_filterable_items: 20
         }
-      }
+      },
+      filterKey: 'String'
     }
   }
 })
