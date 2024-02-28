@@ -42,16 +42,16 @@ class Controller extends BaseController
                 ->get(['name', 'id']);
         }
 
-        if (!empty($filter['label'])) {
-            $recipes->whereIn('label_id', $filter['label']);
-            $filter['label'] = Label::whereIn('id', $filter['label'])
+        if (!empty($filter['labels'])) {
+            $recipes->whereIn('label_id', $filter['labels']);
+            $filter['labels'] = Label::whereIn('id', $filter['labels'])
                 ->get(['text', 'id'])
                 ->map(fn (Label $label) => ['id' => $label->id, 'name' => $label->text]);
         }
 
-        if (!empty($filter['label_except'])) {
-            $recipes->whereIn('label_id', $filter['label_except']);
-            $filter['label_except'] = Label::whereNotIn('id', $filter['label_except'])
+        if (!empty($filter['labels_except'])) {
+            $recipes->whereIn('label_id', $filter['labels_except']);
+            $filter['labels_except'] = Label::whereNotIn('id', $filter['labels_except'])
                 ->get(['text', 'id'])
                 ->map(fn (Label $label) => ['id' => $label->id, 'name' => $label->text]);
         }
@@ -59,7 +59,7 @@ class Controller extends BaseController
         foreach (
             Arr::only($filter, Arr::where(
                 $filterable,
-                fn (string $value) => !in_array($value, ['ingredients', 'label', 'label_except'])
+                fn (string $value) => !in_array($value, ['ingredients', 'labels', 'labels_except'])
             )) as $key => $value
         ) {
             if (empty($value)) {
