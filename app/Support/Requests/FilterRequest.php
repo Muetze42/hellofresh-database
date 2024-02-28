@@ -145,7 +145,7 @@ class FilterRequest
             fn (bool $state) => !$state
         );
 
-        if (count($validated['difficulties']) >= 3) {
+        if (count($validated['difficulties']) >= 3 || !count($validated['difficulties'])) {
             $except[] = 'difficulties';
         }
 

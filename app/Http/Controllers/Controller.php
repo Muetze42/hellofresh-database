@@ -40,7 +40,9 @@ class Controller extends BaseController
                 ->get(['name', 'id']);
         }
 
-        foreach (Arr::except($filter, ['pdf', 'iMode', 'ingredients', 'prepTime', 'difficulties']) as $key => $value) {
+        foreach (
+            Arr::only($filter, ['allergens_except', 'ingredients_except', 'tags', 'tags_except']) as $key => $value
+        ) {
             if (empty($value)) {
                 continue;
             }
