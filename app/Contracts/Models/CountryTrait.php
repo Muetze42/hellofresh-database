@@ -99,8 +99,7 @@ trait CountryTrait
             return Str::lower($country->code) . '__';
         }
 
-
-        return Str::lower(country()->code) . '__';
+        return Str::lower($country->code) . '__';
     }
 
     /**

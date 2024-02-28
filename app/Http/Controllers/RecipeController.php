@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RecipeResource;
+use App\Models\Ingredient;
+use App\Models\Label;
+use App\Models\Menu;
 use App\Models\Recipe;
+use App\Support\Requests\FilterRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class RecipeController extends Controller
@@ -12,25 +19,110 @@ class RecipeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, ?Menu $menu = null)
     {
-        $recipes = RecipeResource::indexCollection(
-            $this->recipesFilterQuery(Recipe::query(), $request)
-                ->orderBy('external_updated_at')
-                ->paginate(config('application.pagination.per_page', 12))
-                ->withQueryString()
-        );
+        $recipes = $this->filterQuery(Recipe::query(), $request)
+            ->when(
+                $menu,
+                fn (Builder $query) => $query->whereIn('id', $menu->recipes->pluck('id')->toArray())
+            )
+            ->orderBy('external_updated_at')
+            ->paginate(config('application.pagination.per_page', 12))
+            ->withQueryString();
 
-        return Inertia::render('Recipes/Index', ['recipes' => $recipes])
-            ->toResponse($request)
-            ->setStatusCode($recipes->count() ? 200 : 404);
+        return Inertia::render('Recipes', [
+            'recipes' => RecipeResource::indexCollection($recipes),
+        ])->toResponse($request)->setStatusCode($recipes->count() ? 200 : 404);
     }
 
     /**
-     * Display the specified resource.
+     * Build a filtered query for recipes.
      */
-    public function show(Recipe $recipe)
+    protected function filterQuery(Recipe|Builder $recipes, Request $request): Builder
     {
-        dd($recipe);
+        $recipes->active();
+        $filter = FilterRequest::parse($request);
+        $filterable = FilterRequest::filterable();
+
+        if ($filter['pdf']) {
+            $recipes->whereNotNull('card_link');
+        }
+
+        if (!empty($filter['ingredients'])) {
+            $recipes->whereHas('ingredients', function ($query) use ($filter) {
+                $query->whereIn('id', $filter['ingredients']);
+            }, count: $filter['iMode'] ? count($filter['ingredients']) : 1);
+
+            $filter['ingredients'] = Ingredient::whereIn('id', $filter['ingredients'])
+                ->get(['name', 'id']);
+        }
+
+        if (!empty($filter['labels'])) {
+            $recipes->whereIn('label_id', $filter['labels']);
+            $filter['labels'] = Label::whereIn('id', $filter['labels'])
+                ->get(['text', 'id'])
+                ->map(fn (Label $label) => ['id' => $label->id, 'name' => $label->text]);
+        }
+
+        if (!empty($filter['labels_except'])) {
+            $recipes->whereIn('label_id', $filter['labels_except']);
+            $filter['labels_except'] = Label::whereNotIn('id', $filter['labels_except'])
+                ->get(['text', 'id'])
+                ->map(fn (Label $label) => ['id' => $label->id, 'name' => $label->text]);
+        }
+
+        foreach (
+            Arr::only($filter, Arr::where(
+                $filterable,
+                fn (string $value) => !in_array($value, ['ingredients', 'labels', 'labels_except'])
+            )) as $key => $value
+        ) {
+            if (empty($value)) {
+                continue;
+            }
+            $relation = explode('_', $key)[0];
+            if (str_ends_with($key, '_except')) {
+                $recipes->whereDoesntHave($relation, fn ($query) => $query->whereIn('id', $value));
+            } else {
+                $recipes->whereHas($relation, fn ($query) => $query->whereIn('id', $value));
+            }
+            $model = 'App\Models\\' . Str::studly(Str::singular($relation));
+            $filter[$key] = app($model)::whereIn('id', $value)->get(['name', 'id']);
+        }
+
+        if ($search = $request->input('search')) {
+            $recipes->where(function (Builder $query) use ($search) {
+                /* @var \Illuminate\Database\Eloquent\Builder|\App\Models\Recipe $query */
+                $query->whereId($search)
+                    ->orWhereRaw('LOWER(name) like ?', ['%' . Str::lower($search) . '%'])
+                    ->orWhereRaw('LOWER(description) like ?', ['%' . Str::lower($search) . '%'])
+                ;
+            });
+        }
+
+        if ($filter['prepTime'][0] != data_get(country()->data, 'prepMin', 0)) {
+            $recipes->where('minutes', '>=', $filter['prepTime'][0]);
+        }
+
+        if ($filter['prepTime'][1] != data_get(country()->data, 'prepMin', 0)) {
+            $recipes->where('minutes', '<=', $filter['prepTime'][1]);
+        }
+
+        $difficulties = array_filter($filter['difficulties']);
+        if (count($difficulties) < 3) {
+            $difficulties = array_map(
+                fn (string $difficulty) => (int) preg_replace('/\D/', '', $difficulty),
+                array_keys($difficulties)
+            );
+            $recipes->whereIn('difficulty', $difficulties);
+        }
+
+        Inertia::share('filter', $filter);
+        Inertia::share(
+            'filterable',
+            array_map('ucfirst', Arr::where($filterable, fn (string $value) => $value != 'ingredients'))
+        );
+
+        return $recipes;
     }
 }

@@ -34,13 +34,19 @@ class UpdateMenuJob extends AbstractCountryJob
             return;
         }
 
+        $recipes = Recipe::whereIn('id', $response['ids'])->pluck('id')->toArray();
+
+        if (!count($recipes)) {
+            return;
+        }
+
         $menu = Menu::updateOrCreate(
             ['year_week' => $response['year'] . $response['weak']],
             ['start' => $response['current']]
         );
 
         $menu->recipes()->sync(
-            Recipe::whereIn('id', $response['ids'])->pluck('id')->toArray()
+            $recipes
         );
     }
 }

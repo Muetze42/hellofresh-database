@@ -22,7 +22,7 @@ class FilterRequest
     public array $defaults;
 
     /**
-     * The filterable
+     * The filterable.
      */
     public array $filterable;
 

@@ -13,6 +13,14 @@ class Menu extends Model
     use CountryTrait;
 
     /**
+     * Retrieve the model for a bound value.
+     */
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this->where('year_week', $value)->firstOrFail();
+    }
+
+    /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
