@@ -100,28 +100,30 @@ async function submit() {
                     <button type="button" class="sr-only" />
                   </DialogTitle>
                   <div
-                    class="flex-1 flex pb-12 flex-col gap-4 border p-2 border-primary-600/90 overflow-y-auto m-1 rounded scrollbar-thin scrollbar-thumb-rounded-full"
+                    class="flex-1 flex pb-12 flex-col gap-4 border p-2 border-primary-600/90 overflow-y-auto m-1 rounded-sm scrollbar-thin scrollbar-thumb-rounded-full"
                   >
-                    <div class="filter-row py-2">
-                      <label class="child flex flex-col">
+                    <label class="filter-row">
+                      <span class="child">
                         {{ __('Search') }}
+                      </span>
+                      <div class="px-3 py-2 border-t border-primary-600">
                         <input
                           v-model="search.value"
                           :placeholder="__('Enter search term') + '...'"
                           type="search"
                           class="form-input w-full"
                         />
-                      </label>
-                    </div>
+                      </div>
+                    </label>
                     <div class="filter-row">
                       <label class="clickable-label child">
                         <input v-model="form.pdf" type="checkbox" class="" />
                         {{ __('Show only recipes with PDF') }}
                       </label>
                     </div>
-                    <div class="flex flex-col filter-row">
-                      <div>
-                        <label class="clickable-label child">
+                    <div class="filter-row">
+                      <div class="child">
+                        <label class="clickable-label">
                           <input v-model="form.iMode" type="radio" :value="false" />
                           {{
                             __('Show only recipes with one of these :item', {
@@ -130,9 +132,7 @@ async function submit() {
                           }}
                           ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
                         </label>
-                      </div>
-                      <div>
-                        <label class="clickable-label child">
+                        <label class="clickable-label">
                           <input v-model="form.iMode" type="radio" :value="true" />
                           {{ __('Show only recipes with each of these ingredients') }}
                           ({{ __('max :number', { number: config.filter.max_filterable_items }) }})

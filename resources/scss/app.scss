@@ -124,6 +124,7 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
 .multiselect {
   @apply bg-neutral-700/10 border-primary-600 py-0.5;
   @apply rounded-t-none #{!important};
+  @apply border-l-0 border-r-0 border-b-0;
 }
 .multiselect-option {
   @apply text-neutral-700;
@@ -140,7 +141,7 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
   @apply focus:bg-white #{!important};
 }
 .filter-row {
-  @apply border border-primary-600 bg-primary-600/10 rounded;
+  @apply border border-primary-600 bg-primary-600/10 rounded-sm py-0.5;
 
   .child {
     @apply px-3;

@@ -1,3 +1,35 @@
+<script setup>
+defineProps({
+  recipes: {
+    type: Object,
+    required: true
+  },
+  menus: {
+    type: Object,
+    required: false,
+    default: null
+  }
+})
+/**
+ * @property recipes
+ * @property recipes.links
+ * @property recipes.meta
+ * @property recipes.data
+ * @property recipes.data.id
+ * @property recipes.data.name
+ * @property recipes.data.slug
+ * @property recipes.data.pdf
+ * @property recipes.data.headline
+ * @property recipes.data.image
+ * @property recipes.data.label
+ * @property recipes.data.label.text
+ * @property recipes.data.label.color
+ * @property recipes.data.label.bg
+ * @property recipes.data.tags
+ * @property recipes.data.tags.name
+ * @property recipes.data.tags.color
+ */
+</script>
 <template>
   <FullPage :filterable="true">
     <h1 class="sr-only">{{ __('Recipes') }}</h1>
@@ -12,7 +44,7 @@
           <div
             v-if="recipe.label"
             :style="{ color: recipe.label.color, backgroundColor: recipe.label.bg }"
-            class="absolute py-0.5 px-1.5 rounded-br font-medium"
+            class="absolute py-0.5 px-1.5 rounded-br-sm font-medium"
           >
             {{ recipe.label.text }}
           </div>
@@ -64,34 +96,3 @@
     <Pagination :links="recipes.meta.links" class="mt-8" />
   </FullPage>
 </template>
-
-<script>
-
-/**
- * @property recipes
- * @property recipes.links
- * @property recipes.meta
- * @property recipes.data
- * @property recipes.data.id
- * @property recipes.data.name
- * @property recipes.data.slug
- * @property recipes.data.pdf
- * @property recipes.data.headline
- * @property recipes.data.image
- * @property recipes.data.label
- * @property recipes.data.label.text
- * @property recipes.data.label.color
- * @property recipes.data.label.bg
- * @property recipes.data.tags
- * @property recipes.data.tags.name
- * @property recipes.data.tags.color
- */
-export default {
-  props: {
-    recipes: {
-      type: Object,
-      required: true
-    }
-  }
-}
-</script>

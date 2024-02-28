@@ -48,7 +48,15 @@ class Support
                 'title' => __('Links for this project'),
                 'items' => [
                     [
-                        'label' => __('Source code on GitHub'),
+                        'label' => __('Questions, ideas, discussions') . ' (English)',
+                        'url' => 'https://github.com/Muetze42/hellofresh-database/discussionse',
+                    ],
+                    [
+                        'label' => __('Report error') . ' (English)',
+                        'url' => 'https://github.com/Muetze42/hellofresh-database/issues',
+                    ],
+                    [
+                        'label' => __('Source code'),
                         'url' => 'https://github.com/Muetze42/hellofresh-database',
                     ],
                 ],
