@@ -14,6 +14,7 @@ const processing = ref(false)
 const page = usePage()
 const filter = page.props.filter
 const baseUrl = page.props.country.route + '/'
+import { __ } from '@/mixins.js'
 
 // noinspection JSCheckFunctionSignatures
 const form = useForm(filter)
@@ -22,6 +23,19 @@ const searchInit = new URLSearchParams(window.location.search).get('search')
 const search = reactive({
   value: searchInit
 })
+
+function reset() {
+  if (confirm(__('Are you sure?'))) {
+    router.get(page.url.split('?')[0])
+  }
+}
+
+function cancel() {
+  if (confirm(__('Are you sure?'))) {
+    form.reset()
+    open.value = false
+  }
+}
 
 const isActive = computed(() => {
   return page.props.filterKey || new URL(document.location).searchParams.get('search')
@@ -216,16 +230,21 @@ async function submit() {
                     </div>
                   </div>
                   <div
-                    class="flex flex-wrap gap-2 items-center justify-center xs:justify-between p-2"
+                    class="flex flex-wrap gap-2 items-center justify-center sm:justify-between p-2"
                   >
-                    <button
-                      type="button"
-                      class="btn btn-danger w-32 whitespace-nowrap"
-                      :disabled="processing"
-                      @click="[form.reset(), (open = false)]"
-                    >
-                      {{ __('Cancel') }}
-                    </button>
+                    <div class="flex gap-2">
+                      <button
+                        type="button"
+                        class="btn btn-danger w-32 whitespace-nowrap"
+                        :disabled="processing"
+                        @click="cancel"
+                      >
+                        {{ __('Cancel') }}
+                      </button>
+                      <button v-if="isActive" type="button" class="btn btn-danger" @click="reset">
+                        {{ __('Reset') }}
+                      </button>
+                    </div>
                     <button
                       type="button"
                       class="btn w-44 whitespace-nowrap"
