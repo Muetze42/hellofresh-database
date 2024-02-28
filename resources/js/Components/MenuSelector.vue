@@ -52,12 +52,6 @@ defineProps({
           >
             {{ menu.start }} - {{ menu.end }}
           </Link>
-          <MenuItem
-            as="div"
-            class="p-1 bg-white text-neutral-500/70"
-          >
-            {{ __('Archive') }}
-          </MenuItem>
         </MenuItems>
       </transition>
     </Menu>

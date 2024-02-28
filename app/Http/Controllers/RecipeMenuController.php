@@ -55,7 +55,7 @@ class RecipeMenuController extends Controller
                 'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
             ],
             'list' => Menu::where('year_week', '>=', $formatted)
-                ->whereNot('year_week', $menu->year_week)
+                //->whereNot('year_week', $menu->year_week)
                 ->get()
                 ->map(fn (Menu $menu) => [
                     'value' => $menu->year_week,
@@ -70,9 +70,9 @@ class RecipeMenuController extends Controller
      */
     protected function formattedCurrentMenuWeek()
     {
-        $week = now()->subDays(8);
+        $week = now()->subWeek();
 
-        return $week->format('Y') . $week->format('W');
+        return $week->format('YW');
     }
 
     /**
