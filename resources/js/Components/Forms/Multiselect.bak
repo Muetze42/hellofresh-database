@@ -73,7 +73,7 @@ function setFocus(state) {
           class="bg-white hover:bg-gray-100 text-neutral-900 p-2 pr-4 cursor-pointer"
           @click.prevent="addItem(item)"
         >
-          <font-awesome-icon :icon="['fas', 'circle-check']" class="text-green-600" />
+          <font-awesome-icon :icon="['fas', 'circle-check']" class="text-emerald-600" />
           {{ item.name }}
         </div>
       </div>

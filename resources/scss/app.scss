@@ -17,10 +17,10 @@
     @apply font-medium rounded leading-normal transition duration-150 ease-in-out;
     @apply px-2.5 py-0.5;
     @apply bg-gradient-to-t shadow-lg;
-    @apply text-white from-green-700 to-green-400;
+    @apply text-white from-emerald-700 to-emerald-500;
 
     &:enabled, a {
-      @apply hover:to-green-500;
+      @apply hover:to-emerald-400;
     }
   }
   .btn-disabled {
@@ -91,7 +91,7 @@ main {
 }
 
 .scrollbar, .scrollbar-thin {
-  @apply scrollbar-thumb-emerald-500 scrollbar-track-green-900 scrollbar-track-rounded-full;
+  @apply scrollbar-thumb-emerald-500 scrollbar-track-emerald-900 scrollbar-track-rounded-full;
 }
 
 nav, .nav {
@@ -150,8 +150,16 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
   @apply border-t border-gray-600/20 flex justify-end gap-2 p-2;
 }
 
+:root {
+  --ms-tag-bg: theme('colors.emerald.600');
+}
+
 /**
  * Slider
  */
 
 @import "/node_modules/@vueform/slider/themes/default";
+
+:root {
+  --slider-connect-bg: theme('colors.emerald.600');
+}

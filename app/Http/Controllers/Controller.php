@@ -86,13 +86,7 @@ class Controller extends BaseController
         Inertia::share('filter', $filter);
         Inertia::share(
             'filterable',
-            array_map('ucfirst', array_keys(
-                Arr::where(
-                    FilterRequest::defaults(),
-                    fn (mixed $value, string $key) =>
-                        is_array($value) && !in_array($key, ['ingredients', 'prepTime', 'difficulties'])
-                )
-            ))
+            array_map('ucfirst', ['allergens_except', 'ingredients_except', 'tags', 'tags_except'])
         );
 
         return $recipes;
