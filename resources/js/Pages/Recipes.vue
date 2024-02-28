@@ -40,7 +40,17 @@ defineProps({
         :key="recipe.id"
         class="card w-full sm:w-96 2xl:w-[29.3rem]"
       >
-        <Link v-if="recipe.image" :href="country.route + '/' + recipe.id + '-' + recipe.slug">
+<!--        <Link v-if="recipe.image" :href="country.route + '/' + recipe.id + '-' + recipe.slug">-->
+<!--          <div-->
+<!--            v-if="recipe.label"-->
+<!--            :style="{ color: recipe.label.color, backgroundColor: recipe.label.bg }"-->
+<!--            class="absolute py-0.5 px-1.5 rounded-br-sm font-medium"-->
+<!--          >-->
+<!--            {{ recipe.label.text }}-->
+<!--          </div>-->
+<!--          <img :src="recipe.image" :alt="recipe.name" class="w-full" />-->
+<!--        </Link>-->
+        <div>
           <div
             v-if="recipe.label"
             :style="{ color: recipe.label.color, backgroundColor: recipe.label.bg }"
@@ -49,7 +59,7 @@ defineProps({
             {{ recipe.label.text }}
           </div>
           <img :src="recipe.image" :alt="recipe.name" class="w-full" />
-        </Link>
+        </div>
         <div class="py-2 flex flex-col h-full gap-2">
           <h2 class="px-2 font-medium text-lg">
             {{ recipe.name }}
@@ -84,12 +94,12 @@ defineProps({
               {{ __('View PDF') }}
             </Component>
           </div>
-          <div class="text-center">
-            <Link :href="country.route + '/' + recipe.id + '-' + recipe.slug" class="btn">
-              <font-awesome-icon :icon="['fas', 'scroll']" fixed-width />
-              {{ __('Details') }}
-            </Link>
-          </div>
+<!--          <div class="text-center">-->
+<!--            <Link :href="country.route + '/' + recipe.id + '-' + recipe.slug" class="btn">-->
+<!--              <font-awesome-icon :icon="['fas', 'scroll']" fixed-width />-->
+<!--              {{ __('Details') }}-->
+<!--            </Link>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
