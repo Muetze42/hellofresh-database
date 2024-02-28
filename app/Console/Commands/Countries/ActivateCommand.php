@@ -56,7 +56,7 @@ class ActivateCommand extends Command
 
     protected function getCountriesTableData(): array
     {
-        $countries = $this->argument('countries');
+        $countries = last(explode('=', $this->argument('countries')));
         $this->countries = $countries == '*' ? Country::all() :
             Country::whereIn('id', explode(',', $countries))->get();
 
