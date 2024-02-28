@@ -12,6 +12,7 @@ import ErrorModal from '@/Components/Modals/ErrorModal.vue'
 import FullPage from '@/Layouts/FullPage.vue'
 import Loading from '@/Components/Loading.vue'
 import Modal from '@/Components/Modals/Modal.vue'
+import NotFound from '@/Components/NotFound.vue'
 import Pagination from '@/Components/Pagination.vue'
 
 import * as Sentry from '@sentry/vue'
@@ -57,6 +58,7 @@ createInertiaApp({
       .component('FullPage', FullPage)
       .component('Loading', Loading)
       .component('Modal', Modal)
+      .component('NotFound', NotFound)
       .component('Pagination', Pagination)
       .mount(el)
   }

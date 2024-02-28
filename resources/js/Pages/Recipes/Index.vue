@@ -1,7 +1,8 @@
 <template>
   <FullPage :filterable="true">
     <h1 class="sr-only">{{ __('Recipes') }}</h1>
-    <div class="flex flex-wrap justify-around items-stretch gap-8">
+    <NotFound v-if="!recipes.data.length" />
+    <div v-else class="flex flex-wrap justify-around items-stretch gap-8">
       <div
         v-for="recipe in recipes.data"
         :key="recipe.id"
@@ -65,6 +66,7 @@
 </template>
 
 <script>
+
 /**
  * @property recipes
  * @property recipes.links

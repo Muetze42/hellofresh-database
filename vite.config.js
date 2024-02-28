@@ -21,7 +21,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve('./resources/js'),
-      '@assets': '/resources/assets'
+      '@assets': resolve('./resources/assets')
     }
   },
 

@@ -14,14 +14,16 @@ class RecipeController extends Controller
      */
     public function index(Request $request)
     {
-        return Inertia::render('Recipes/Index', [
-            'recipes' => RecipeResource::indexCollection(
-                $this->recipesFilterQuery(Recipe::query(), $request)
-                    ->orderBy('external_updated_at')
-                    ->paginate(config('application.pagination.per_page', 12))
-                    ->withQueryString()
-            ),
-        ]);
+        $recipes = RecipeResource::indexCollection(
+            $this->recipesFilterQuery(Recipe::query(), $request)
+                ->orderBy('external_updated_at')
+                ->paginate(config('application.pagination.per_page', 12))
+                ->withQueryString()
+        );
+
+        return Inertia::render('Recipes/Index', ['recipes' => $recipes])
+            ->toResponse($request)
+            ->setStatusCode($recipes->count() ? 200 : 404);
     }
 
     /**
