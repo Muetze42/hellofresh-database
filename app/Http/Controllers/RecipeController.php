@@ -65,8 +65,8 @@ class RecipeController extends Controller
         }
 
         if (!empty($filter['labels_except'])) {
-            $recipes->whereIn('label_id', $filter['labels_except']);
-            $filter['labels_except'] = Label::whereNotIn('id', $filter['labels_except'])
+            $recipes->whereNotIn('label_id', $filter['labels_except']);
+            $filter['labels_except'] = Label::whereIn('id', $filter['labels_except'])
                 ->get(['text', 'id'])
                 ->map(fn (Label $label) => ['id' => $label->id, 'name' => $label->text]);
         }
