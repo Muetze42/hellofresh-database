@@ -22,17 +22,16 @@ class FilterController extends Controller
         }
         $model = app($model);
 
-        $key = $model instanceof Label ? 'handle' : 'id';
         $value = $model instanceof Label ? 'text' : 'name';
 
         $data = $model::whereRaw('LOWER(' . $value . ') like ?', ['%' . Str::lower($query) . '%'])
             ->orWhere('id', 'like', '%' . $query . '%')
             ->limit(100)
-            ->get([$key, $value])->toArray();
+            ->get(['id', $value])->toArray();
 
         if ($model instanceof Label) {
             return Arr::map($data, fn (array $label) => [
-                'id' => $label['handle'],
+                'id' => $label['id'],
                 'name' => $label['text'],
             ]);
         }

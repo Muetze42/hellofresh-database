@@ -48,6 +48,8 @@ class FilterRequest
             'allergens_except',
             'tags',
             'tags_except',
+            'label',
+            'label_except',
         ];
 
         $this->defaults = [
@@ -60,6 +62,8 @@ class FilterRequest
             'iMode' => false,
             'ingredients' => [],
             'ingredients_except' => [],
+            'label' => [],
+            'label_except' => [],
             'pdf' => false,
             'prepTime' => [
                 data_get(country()->data, 'prepMin', 0),
@@ -67,8 +71,6 @@ class FilterRequest
             ],
             'tags' => [],
             'tags_except' => [],
-            //'label' => [], // Todo
-            //'label_except' => [],
         ];
     }
 

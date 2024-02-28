@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
+use App\Models\Label;
 use App\Models\Recipe;
 use App\Support\Requests\FilterRequest;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,8 +42,25 @@ class Controller extends BaseController
                 ->get(['name', 'id']);
         }
 
+        if (!empty($filter['label'])) {
+            $recipes->whereIn('label_id', $filter['label']);
+            $filter['label'] = Label::whereIn('id', $filter['label'])
+                ->get(['text', 'id'])
+                ->map(fn (Label $label) => ['id' => $label->id, 'name' => $label->text]);
+        }
+
+        if (!empty($filter['label_except'])) {
+            $recipes->whereIn('label_id', $filter['label_except']);
+            $filter['label_except'] = Label::whereNotIn('id', $filter['label_except'])
+                ->get(['text', 'id'])
+                ->map(fn (Label $label) => ['id' => $label->id, 'name' => $label->text]);
+        }
+
         foreach (
-            Arr::only($filter, Arr::where($filterable, fn (string $value) => $value != 'ingredients')) as $key => $value
+            Arr::only($filter, Arr::where(
+                $filterable,
+                fn (string $value) => !in_array($value, ['ingredients', 'label', 'label_except'])
+            )) as $key => $value
         ) {
             if (empty($value)) {
                 continue;
