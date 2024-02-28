@@ -1,11 +1,12 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin'
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'node:path'
 
 export default defineConfig({
   plugins: [
+    splitVendorChunkPlugin(),
     laravel({
       input: ['resources/scss/app.scss', 'resources/js/app.js'],
       refresh: true
@@ -30,7 +31,8 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '@': resolve('./resources/js')
+      '@': resolve('./resources/js'),
+      '@assets': resolve('./resources/assets')
     }
   },
   build: {
