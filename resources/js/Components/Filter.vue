@@ -31,7 +31,7 @@ function reset() {
 }
 
 function cancel() {
-  if ((!form.isDirty && searchInit.toLowerCase() == search.value.toLowerCase()) || confirm(__('Are you sure?'))) {
+  if ((!form.isDirty && searchInit == search.value) || confirm(__('Are you sure?'))) {
     form.reset()
     open.value = false
   }
@@ -248,9 +248,9 @@ async function submit() {
                     <button
                       type="button"
                       class="btn w-44 whitespace-nowrap"
-                      :disabled="processing || (!form.isDirty && searchInit.toLowerCase() == search.value.toLowerCase())"
+                      :disabled="processing || (!form.isDirty && searchInit == search.value)"
                       :class="{
-                        'btn-disabled': processing || (!form.isDirty && searchInit.toLowerCase() == search.value.toLowerCase())
+                        'btn-disabled': processing || (!form.isDirty && searchInit == search.value)
                       }"
                       @click="submit"
                     >
