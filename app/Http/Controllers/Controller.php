@@ -26,6 +26,7 @@ class Controller extends BaseController
     {
         $recipes->active();
         $filter = FilterRequest::parse($request);
+        $filterable = FilterRequest::filterable();
 
         if ($filter['pdf']) {
             $recipes->whereNotNull('card_link');
@@ -41,7 +42,7 @@ class Controller extends BaseController
         }
 
         foreach (
-            Arr::only($filter, ['allergens_except', 'ingredients_except', 'tags', 'tags_except']) as $key => $value
+            Arr::only($filter, Arr::where($filterable, fn (string $value) => $value != 'ingredients')) as $key => $value
         ) {
             if (empty($value)) {
                 continue;
@@ -86,7 +87,7 @@ class Controller extends BaseController
         Inertia::share('filter', $filter);
         Inertia::share(
             'filterable',
-            array_map('ucfirst', ['allergens_except', 'ingredients_except', 'tags', 'tags_except'])
+            array_map('ucfirst', Arr::where($filterable, fn (string $value) => $value != 'ingredients'))
         );
 
         return $recipes;

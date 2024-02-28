@@ -22,6 +22,11 @@ class FilterRequest
     public array $defaults;
 
     /**
+     * The filterable
+     */
+    public array $filterable;
+
+    /**
      * The request instance.
      */
     protected ?Request $request;
@@ -37,6 +42,14 @@ class FilterRequest
      */
     public function setDefaults(): void
     {
+        $this->filterable = [
+            'ingredients',
+            'ingredients_except',
+            'allergens_except',
+            'tags',
+            'tags_except',
+        ];
+
         $this->defaults = [
             'allergens_except' => [],
             'difficulties' => [
@@ -65,6 +78,14 @@ class FilterRequest
     public static function defaults(): array
     {
         return (new static())->defaults;
+    }
+
+    /**
+     * Get the filterable.
+     */
+    public static function filterable(): array
+    {
+        return (new static())->filterable;
     }
 
     /**
@@ -104,20 +125,18 @@ class FilterRequest
                         return [$key => 'array|min:3|max:3'];
                     }
 
-                    return ['array', 'max:' . $max];
+                    return [$key => 'array', 'max:' . $max];
                 }
             )
         );
 
         $except = [];
 
-        foreach (Arr::except($validated, ['prepTime', 'difficulties']) as $key => $value) {
-            if (is_array($value)) {
-                $validated[$key] = Arr::pluck($value, 'id');
-            }
+        foreach (Arr::only($validated, $this->filterable) as $key => $value) {
+            $validated[$key] = Arr::pluck($value, 'id');
         }
 
-        foreach (Arr::except($validated, ['prepTime', 'difficulties']) as $key => $value) {
+        foreach (Arr::only($validated, $this->filterable) as $key => $value) {
             if (str_ends_with($key, '_except')) {
                 $nonExceptKey = substr($key, 0, -7);
                 if (empty($validated[$nonExceptKey])) {
