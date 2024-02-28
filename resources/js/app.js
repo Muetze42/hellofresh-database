@@ -5,8 +5,14 @@ import { createInertiaApp, Link } from '@inertiajs/vue3'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faScroll, faFileLines, faLemon, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-library.add(faScroll, faFileLines, faLemon, faCircleCheck)
+import {
+  faScroll,
+  faFileLines,
+  faLemon,
+  faCircleCheck,
+  faAngleRight,
+} from '@fortawesome/free-solid-svg-icons'
+library.add(faScroll, faFileLines, faLemon, faCircleCheck, faAngleRight)
 
 import ErrorModal from '@/Components/Modals/ErrorModal.vue'
 import FullPage from '@/Layouts/FullPage.vue'

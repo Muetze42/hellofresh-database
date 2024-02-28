@@ -7,10 +7,12 @@ use App\Console\Commands\Development\MigrateCommand;
 use App\Console\Commands\Development\RollbackCommand;
 use App\Database\Migrations\Migrator;
 use App\Services\LengthAwarePaginator as CustomLengthAwarePaginator;
+use Carbon\CarbonInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,8 +31,23 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->binds();
+        $this->macros();
     }
 
+    /**
+     * Register application macros.
+     */
+    protected function macros(): void
+    {
+        Carbon::macro(
+            'publicFormatted',
+            fn() => $this->translatedFormat('M j')
+        );
+    }
+
+    /**
+     * Register application bindings.
+     */
     protected function binds(): void
     {
         $this->app->bind(

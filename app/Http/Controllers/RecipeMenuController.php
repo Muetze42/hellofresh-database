@@ -8,6 +8,7 @@ use App\Models\Label;
 use App\Models\Menu;
 use App\Models\Recipe;
 use App\Support\Requests\FilterRequest;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -32,7 +33,46 @@ class RecipeMenuController extends Controller
 
         return Inertia::render('Recipes', [
             'recipes' => RecipeResource::indexCollection($recipes),
+            'menus' => $this->menuData($menu),
         ])->toResponse($request)->setStatusCode($recipes->count() ? 200 : 404);
+    }
+
+    /**
+     * Get the menu data for current the request.
+     */
+    protected function menuData(?Menu $menu): ?array
+    {
+        if (!$menu) {
+            return null;
+        }
+
+        $formatted = $this->formattedCurrentMenuWeek();
+
+        return [
+            'current' => [
+                'value' => $menu->year_week,
+                'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)->publicFormatted(),
+                'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
+            ],
+            'list' => Menu::where('year_week', '>=', $formatted)
+                ->whereNot('year_week', $menu->year_week)
+                ->get()
+                ->map(fn (Menu $menu) => [
+                    'value' => $menu->year_week,
+                    'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)->publicFormatted(),
+                    'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
+                ])->toArray(),
+        ];
+    }
+
+    /**
+     * Get the current menu week formatted for a query.
+     */
+    protected function formattedCurrentMenuWeek()
+    {
+        $week = now()->subDays(8);
+
+        return $week->format('Y') . $week->format('W');
     }
 
     /**
@@ -40,10 +80,9 @@ class RecipeMenuController extends Controller
      */
     public function findMenu()
     {
-        $week = now()->subDays(8);
-        $format = $week->format('Y') . $week->format('W');
+        $formatted = $this->formattedCurrentMenuWeek();
 
-        $menu = Menu::where('year_week', '>=', $format)->first();
+        $menu = Menu::where('year_week', '>=', $formatted)->first();
 
         if ($menu) {
             return redirect(countryRoute('recipes.menus', ['menu' => $menu->year_week]));

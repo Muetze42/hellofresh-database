@@ -21,7 +21,7 @@ class UpdateMenusCommand extends AbstractUpdateCommand
      */
     public function handle(): void
     {
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 0; $i <= 6; $i++) {
             UpdateMenuJob::countryDispatch($i);
         }
     }

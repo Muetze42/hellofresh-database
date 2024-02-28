@@ -1,4 +1,6 @@
 <script setup>
+import MenuSelector from '@/Components/MenuSelector.vue'
+
 defineProps({
   recipes: {
     type: Object,
@@ -33,6 +35,7 @@ defineProps({
 <template>
   <FullPage :filterable="true">
     <h1 class="sr-only">{{ __('Recipes') }}</h1>
+    <MenuSelector v-if="menus" :menus="menus" />
     <NotFound v-if="!recipes.data.length" />
     <div v-else class="flex flex-wrap justify-around items-stretch gap-8">
       <div
@@ -40,16 +43,16 @@ defineProps({
         :key="recipe.id"
         class="card w-full sm:w-96 2xl:w-[29.3rem]"
       >
-<!--        <Link v-if="recipe.image" :href="country.route + '/' + recipe.id + '-' + recipe.slug">-->
-<!--          <div-->
-<!--            v-if="recipe.label"-->
-<!--            :style="{ color: recipe.label.color, backgroundColor: recipe.label.bg }"-->
-<!--            class="absolute py-0.5 px-1.5 rounded-br-sm font-medium"-->
-<!--          >-->
-<!--            {{ recipe.label.text }}-->
-<!--          </div>-->
-<!--          <img :src="recipe.image" :alt="recipe.name" class="w-full" />-->
-<!--        </Link>-->
+        <!--        <Link v-if="recipe.image" :href="country.route + '/' + recipe.id + '-' + recipe.slug">-->
+        <!--          <div-->
+        <!--            v-if="recipe.label"-->
+        <!--            :style="{ color: recipe.label.color, backgroundColor: recipe.label.bg }"-->
+        <!--            class="absolute py-0.5 px-1.5 rounded-br-sm font-medium"-->
+        <!--          >-->
+        <!--            {{ recipe.label.text }}-->
+        <!--          </div>-->
+        <!--          <img :src="recipe.image" :alt="recipe.name" class="w-full" />-->
+        <!--        </Link>-->
         <div>
           <div
             v-if="recipe.label"
@@ -94,12 +97,12 @@ defineProps({
               {{ __('View PDF') }}
             </Component>
           </div>
-<!--          <div class="text-center">-->
-<!--            <Link :href="country.route + '/' + recipe.id + '-' + recipe.slug" class="btn">-->
-<!--              <font-awesome-icon :icon="['fas', 'scroll']" fixed-width />-->
-<!--              {{ __('Details') }}-->
-<!--            </Link>-->
-<!--          </div>-->
+          <!--          <div class="text-center">-->
+          <!--            <Link :href="country.route + '/' + recipe.id + '-' + recipe.slug" class="btn">-->
+          <!--              <font-awesome-icon :icon="['fas', 'scroll']" fixed-width />-->
+          <!--              {{ __('Details') }}-->
+          <!--            </Link>-->
+          <!--          </div>-->
         </div>
       </div>
     </div>
