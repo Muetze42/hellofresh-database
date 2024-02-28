@@ -5,6 +5,7 @@ import Multiselect from '@/Components/Forms/Multiselect.vue'
 import Slider from '@vueform/slider'
 import { ref, reactive, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
+import { __, optional } from '@/mixins.js'
 
 const showError = ref(false)
 const errors = ref(null)
@@ -14,12 +15,11 @@ const processing = ref(false)
 const page = usePage()
 const filter = page.props.filter
 const baseUrl = page.props.country.route + '/'
-import { __ } from '@/mixins.js'
 
 // noinspection JSCheckFunctionSignatures
 const form = useForm(filter)
 
-const searchInit = new URLSearchParams(window.location.search).get('search')
+const searchInit = optional(new URLSearchParams(window.location.search).get('search'), '')
 const search = reactive({
   value: searchInit
 })
@@ -31,7 +31,7 @@ function reset() {
 }
 
 function cancel() {
-  if ((!form.isDirty && searchInit == search.value) || confirm(__('Are you sure?'))) {
+  if ((!form.isDirty && searchInit.toLowerCase() === search.value.toLowerCase()) || confirm(__('Are you sure?'))) {
     form.reset()
     open.value = false
   }
@@ -248,9 +248,9 @@ async function submit() {
                     <button
                       type="button"
                       class="btn w-44 whitespace-nowrap"
-                      :disabled="processing || (!form.isDirty && searchInit == search.value)"
+                      :disabled="processing || (!form.isDirty && searchInit.toLowerCase() == search.value.toLowerCase())"
                       :class="{
-                        'btn-disabled': processing || (!form.isDirty && searchInit == search.value)
+                        'btn-disabled': processing || (!form.isDirty && searchInit.toLowerCase() == search.value.toLowerCase())
                       }"
                       @click="submit"
                     >
