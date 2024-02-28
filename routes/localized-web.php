@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/menus', [RecipeMenuController::class, 'findMenu'])
+    ->name('menus.find');
 Route::get('/menus/{menu}', [RecipeMenuController::class, 'index'])
     ->where('menu', '[0-9]+')
     ->name('recipes.menus');

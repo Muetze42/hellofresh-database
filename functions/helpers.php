@@ -39,3 +39,17 @@ if (!function_exists('iso8601ToMinutes')) {
         return CarbonInterval::make($iso8601)->totalMinutes;
     }
 }
+
+if (!function_exists('countryRoute')) {
+    /**
+     * Generate the URL to a named route.
+     */
+    function countryRoute(string $name, array $parameters = [], bool $absolute = true)
+    {
+        $parameters = array_merge([
+            'country_lang' => Str::lower(country()->code) . '-' . app()->getLocale(),
+        ], $parameters);
+
+        return app('url')->route($name, $parameters, $absolute);
+    }
+}

@@ -36,6 +36,28 @@ class RecipeMenuController extends Controller
     }
 
     /**
+     * Find the current menu and redirect to it.
+     */
+    public function findMenu()
+    {
+        $week = now()->subDays(8);
+        $format = $week->format('Y') . $week->format('W');
+
+        $menu = Menu::where('year_week', '>=', $format)->first();
+
+        if ($menu) {
+            return redirect(countryRoute('recipes.menus', ['menu' => $menu->year_week]));
+        }
+
+        if ($menu = Menu::orderByDesc('year_week')->first()) {
+            /* @var \App\Models\Menu $menu */
+            return redirect(countryRoute('recipes.menus', ['menu' => $menu->year_week]));
+        }
+
+        abort(404);
+    }
+
+    /**
      * Build a filtered query for recipes.
      */
     protected function filterQuery(Request $request): Builder
