@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use Carbon\CarbonInterface;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:hello-fresh:update-recipes', [
-            '--limit' => 100
+            '--limit' => 100,
         ])->days([1, 2, 3, 4, 5, 6])->at('3:00');
         $schedule->command('app:hello-fresh:update-recipes')
             ->weeklyOn(0, '3:00');
