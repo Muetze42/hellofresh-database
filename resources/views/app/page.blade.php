@@ -23,7 +23,7 @@
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     @inertiaHead
 </head>
-<body class="antialiased bg-primary-900 text-primary-50 tracking-tight">
+<body class="antialiased bg-primary-300/70 text-primary-900 tracking-tight">
 @inertia
 </body>
 </html>

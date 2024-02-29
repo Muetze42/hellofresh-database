@@ -67,11 +67,11 @@ defineProps({
           <h2 class="px-2 font-medium text-lg">
             {{ recipe.name }}
           </h2>
-          <div class="px-2 grow text-primary-300 leading-tight pb-1 flex flex-col">
+          <div class="px-2 grow text-primary-800 leading-tight pb-1 flex flex-col">
             {{ recipe.headline }}
             <ul
               v-if="recipe.tags.length"
-              class="text-sm inline-flex flex-wrap text-primary-300/90 dotted-list pt-4"
+              class="text-sm inline-flex flex-wrap text-primary-800/90 dotted-list pt-4"
             >
               <li v-for="tag in recipe.tags" :key="tag">{{ tag }}</li>
             </ul>

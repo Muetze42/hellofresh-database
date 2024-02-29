@@ -86,9 +86,9 @@ async function submit() {
     {{ __('Filter') }} / {{ __('Search') }}
     <span v-if="isActive" class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
       <span
-        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-100/80 opacity-75"
+        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
       />
-      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-200" />
+      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
     </span>
   </button>
   <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
@@ -118,7 +118,7 @@ async function submit() {
               leave-to="translate-x-full"
             >
               <DialogPanel class="pointer-events-auto w-screen max-w-2xl">
-                <div class="flex h-full flex-col bg-primary-700 shadow-xl">
+                <div class="flex h-full flex-col bg-primary-200 shadow-xl">
                   <DialogTitle class="text-base font-medium p-2 select-none">
                     {{ __('Filters') }} / {{ __('Search') }}
                     <button type="button" class="sr-only" />

@@ -4,6 +4,7 @@ input[type='checkbox'] {
 
 input[type='radio'] {
   @apply form-radio;
+  @apply form-radio;
 }
 
 input[type='radio'], input[type='checkbox'] {
@@ -26,5 +27,6 @@ input[type='text'], input[type='password'], input[type='search'], input[type='em
   @apply rounded-sm py-0.5 px-2;
   @apply text-neutral-900;
   @apply placeholder-neutral-400;
+  @apply border-primary-700;
 }
 
