@@ -21,7 +21,7 @@ const open = ref(false)
         <a
           v-if="key == 'tinkerwell'"
           href="https://tinkerwell.app/ref/Qdxy2Abv19"
-          class="p-2 flex hover:bg-primary-800 gap-2 items-center leading-4"
+          class="p-2 flex hover:bg-primary-500 gap-2 items-center leading-4"
           target="_blank"
         >
           <img src="@assets/tinkerwell.png" alt="" class="h-14 w-14" />
