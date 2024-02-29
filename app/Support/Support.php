@@ -56,6 +56,18 @@ class Support
                         'url' => 'https://github.com/Muetze42/hellofresh-database/issues',
                     ],
                     [
+                        'label' => __('Post on :page', ['page' => 'Ko-Fi']),
+                        'url' => 'https://ko-fi.com/post/HelloFresh-Recipes-Database-Relaunched-D1D8V2OF7',
+                    ],
+                    [
+                        'label' => __('Post on :page', ['page' => 'LinkedIn']),
+                        'url' => 'https://www.linkedin.com/posts/normanhuth_hellofresh-database-activity-7169039554446901248-CrKH', // phpcs:ignore
+                    ],
+                    [
+                        'label' => __('Post on :page', ['page' => 'Reddit']),
+                        'url' => 'https://www.reddit.com/r/hellofresh/comments/1b37z4x/hellofresh_recipes_database_relaunched/', // phpcs:ignore
+                    ],
+                    [
                         'label' => __('Source code'),
                         'url' => 'https://github.com/Muetze42/hellofresh-database',
                     ],
