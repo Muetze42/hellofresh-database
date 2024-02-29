@@ -93,6 +93,6 @@ class GenerateSocialPreview extends Command
         $box->setTextAlign('center');
         $box->draw(Number::format(count($recipes)) . ' Recipes');
 
-        imagepng($image, public_path('assets/social-preview.png'), 0, PNG_NO_FILTER);
+        imagepng($image, public_path('assets/social-preview.png'), 1);
     }
 }
