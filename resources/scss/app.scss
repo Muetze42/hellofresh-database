@@ -18,6 +18,8 @@
     @apply px-2.5 py-0.5;
     @apply bg-gradient-to-t shadow-lg;
     @apply text-white from-accent-700 to-accent-500;
+    @apply focus:ring focus:ring-accent-300;
+    @apply active:brightness-110;
 
     &:enabled, a {
       @apply hover:to-accent-400;
