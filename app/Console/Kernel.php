@@ -12,15 +12,27 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('app:hello-fresh:update-recipes', [
+            '--limit' => 100,
+        ])->days([1, 2, 3, 4, 5, 6])->at('3:00');
+        $schedule->command('app:hello-fresh:update-recipes')
+            ->weeklyOn(0, '3:00');
+
+        $schedule->command('app:assets:generate-social-preview')
+            ->twiceDailyAt('6:00', '18:00');
+
+        $schedule->command('app:hello-fresh:update-menus')
+            ->dailyAt('6:00');
+
         $schedule->command('queue:work', [
             '--queue' => 'hellofresh',
             '--timeout' => 0,
             '--sleep' => 1,
             '--stop-when-empty',
-        ])->everyMinute()->withoutOverlapping();
-        //    ->when(function () {
-        //    return $this->app['config']->get('queue.default') == 'database';
-        //});
+        ])->everyMinute()->withoutOverlapping()
+            ->when(function () {
+                return $this->app['config']->get('queue.default') == 'database';
+            });
     }
 
     /**
