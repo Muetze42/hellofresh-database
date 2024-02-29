@@ -19,6 +19,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:hello-fresh:update-recipes')
             ->weeklyOn(0, '3:00');
 
+        $schedule->command('app:assets:generate-social-preview')
+            ->twiceDailyAt('6:00', '18:00');
+
         $schedule->command('app:hello-fresh:update-menus')
             ->dailyAt('6:00');
 
