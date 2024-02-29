@@ -157,7 +157,14 @@ class RecipeMenuController extends Controller
                 $query->whereId($search)
                     ->orWhereRaw('LOWER(name) like ?', ['%' . Str::lower($search) . '%'])
                     ->orWhereRaw('LOWER(description) like ?', ['%' . Str::lower($search) . '%'])
-                ;
+                    ->orWhereHas(
+                        'tags',
+                        fn ($tag) => $tag->whereRaw('LOWER(name) like ?', ['%' . Str::lower($search) . '%'])
+                    )
+                    ->orWhereHas(
+                        'label',
+                        fn ($tag) => $tag->whereRaw('LOWER(text) like ?', ['%' . Str::lower($search) . '%'])
+                    );
             });
         }
 

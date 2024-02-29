@@ -15,7 +15,18 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: colors.gray,
+        primary: {
+          50: '#fdfcfa',
+          100: '#fcf9f5',
+          200: '#f8f3eb',
+          300: '#f5ece1',
+          400: '#f1e6d7',
+          500: '#eee0cd',
+          600: '#beb3a4',
+          700: '#8f867b',
+          800: '#5f5a52',
+          900: '#302d29'
+        },
         accent: colors.emerald
       },
       screens: {

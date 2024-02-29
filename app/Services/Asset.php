@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Artisan;
-
 class Asset
 {
     public static function socialPreview(): string

@@ -7,7 +7,6 @@ use App\Console\Commands\Development\MigrateCommand;
 use App\Console\Commands\Development\RollbackCommand;
 use App\Database\Migrations\Migrator;
 use App\Services\LengthAwarePaginator as CustomLengthAwarePaginator;
-use Carbon\CarbonInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
@@ -41,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::macro(
             'publicFormatted',
-            fn() => $this->translatedFormat('M j')
+            fn () => $this->translatedFormat('M j')
         );
     }
 
