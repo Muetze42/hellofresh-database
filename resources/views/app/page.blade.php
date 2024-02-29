@@ -20,6 +20,7 @@
     <meta name="copyright" content="Norman Huth">
     <meta name="designer" content="Norman Huth">
     <meta name="rating" content="general">
+    @include('app.favicon')
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     @inertiaHead
 </head>

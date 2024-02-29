@@ -18,7 +18,7 @@ defineProps({
 <template>
   <div class="flex flex-wrap justify-center gap-4 pt-4 container text-center">
     <h1 class="sr-only">Countries</h1>
-    <h2 class="w-full text-lg">Choose a country and a language</h2>
+    <h2 class="w-full text-lg">Choose a country and language</h2>
     <div v-for="country in countries" :key="country.code" class="p-2 card w-72">
       <h3 class="font-medium mb-2 text-lg flex flex-wrap justify-center gap-2 items-center">
         <span class="fi" :class="'fi-' + country.code.toLowerCase()" />
