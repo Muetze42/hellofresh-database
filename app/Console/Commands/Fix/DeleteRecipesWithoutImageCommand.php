@@ -3,27 +3,27 @@
 namespace App\Console\Commands\Fix;
 
 use App\Contracts\Commands\AbstractCountryCommand;
-use App\Models\Menu;
+use App\Models\Recipe;
 use Symfony\Component\Console\Attribute\AsCommand;
 
-#[AsCommand(name: 'fix:delete-empty-menus')]
-class DeleteEmptyMenusCommand extends AbstractCountryCommand
+#[AsCommand(name: 'fix:delete-recipes-without-image')]
+class DeleteRecipesWithoutImageCommand extends AbstractCountryCommand
 {
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'fix:delete-empty-menus';
+    protected $signature = 'fix:delete-recipes-without-image';
 
     /**
      * The console command description.
      */
-    protected $description = 'Delete menus without recipes';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
      */
     public function handle(): void
     {
-        Menu::whereDoesntHave('recipes')->delete();
+        Recipe::whereNull('image_path')->orWhere('image_path', '')->delete();
     }
 }
