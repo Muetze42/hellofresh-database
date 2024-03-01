@@ -19,7 +19,7 @@ const open = ref(false)
           class="p-2 flex hover:bg-primary-500 gap-2 items-center leading-4"
           target="_blank"
         >
-          <img src="@assets/tinkerwell.png" alt="" class="h-14 w-14" />
+          <img src="../../assets/tinkerwell.png" alt="" class="h-14 w-14" />
           <span class="text-left">
             <span class="font-semibold block">Tinkerwell</span>
             <span class="text-xs leading-3">
