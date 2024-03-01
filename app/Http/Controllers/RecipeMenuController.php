@@ -31,7 +31,7 @@ class RecipeMenuController extends Controller
             ->paginate(config('application.pagination.per_page', 12))
             ->withQueryString();
 
-        return Inertia::render('Recipes', [
+        return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection($recipes),
             'menus' => $this->menuData($menu),
         ])->toResponse($request)->setStatusCode($recipes->count() ? 200 : 404);
@@ -55,7 +55,7 @@ class RecipeMenuController extends Controller
                 'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
             ],
             'list' => Menu::where('year_week', '>=', $formatted)
-                //->whereNot('year_week', $menu->year_week)
+                ->whereNot('year_week', $menu->year_week)
                 ->get()
                 ->map(fn (Menu $menu) => [
                     'value' => $menu->year_week,

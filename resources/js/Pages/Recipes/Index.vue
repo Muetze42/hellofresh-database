@@ -33,7 +33,7 @@ defineProps({
  */
 </script>
 <template>
-  <FullPage :filterable="true">
+  <FullPage>
     <h1 class="sr-only">{{ __('Recipes') }}</h1>
     <MenuSelector v-if="menus" :menus="menus" />
     <NotFound v-if="!recipes.data.length" />
@@ -70,7 +70,7 @@ defineProps({
           <div class="px-2 grow text-primary-800 leading-tight pb-1 flex flex-col">
             {{ recipe.headline }}
             <ul
-              v-if="recipe.tags.length"
+              v-if="recipe.tags && recipe.tags.length"
               class="text-sm inline-flex flex-wrap text-primary-800/90 dotted-list pt-4"
             >
               <li v-for="tag in recipe.tags" :key="tag">{{ tag }}</li>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Country;
 use App\Support\Support;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,18 +37,38 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'translations' => $this->getJsonTranslations(),
+            'translations' => $this->jsonTranslations(),
             'locale' => app()->getLocale(),
             'config' => config('application'),
             'country' => country()?->append('route')->only(['code', 'domain', 'data', 'route']),
             'support' => (new Support())->toArray(),
+            'countries' => $this->availableCountries(),
         ]);
+    }
+
+    public function availableCountries()
+    {
+        $locales = require storage_path('languages.php');
+
+        return Country::active()->orderBy('code')
+            ->get(['code', 'locales'])
+            ->map(fn (Country $country) => [
+                'country' => __('country.' . $country->code),
+                'code' => $country->code,
+                'locales' => array_map(
+                    fn ($locale) => [
+                        'locale' => $locale,
+                        'lang' => Str::ucfirst(data_get($locales, $locale, $locale)),
+                    ],
+                    $country->locales
+                ),
+            ]);
     }
 
     /**
      * Load the messages for the current locale.
      */
-    protected function getJsonTranslations(): array
+    protected function jsonTranslations(): array
     {
         return app('translator')
             ->getLoader()
