@@ -73,6 +73,14 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'sentry' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/sentry.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 14,
+            'replace_placeholders' => true,
+        ],
+
         'debug' => [
             'driver' => 'daily',
             'path' => storage_path('logs/debug.log'),

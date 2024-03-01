@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SentryTunnelController extends Controller
 {
@@ -35,6 +36,8 @@ class SentryTunnelController extends Controller
         );
 
         $response = Http::withBody($envelope, 'application/x-sentry-envelope')->post($url);
+
+        Log::driver('sentry')->error($envelope);
 
         return response()->json($response->json(), $response->status());
     }
