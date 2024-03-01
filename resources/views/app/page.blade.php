@@ -21,8 +21,8 @@
     <meta name="designer" content="Norman Huth">
     <meta name="rating" content="general">
     @include('app.favicon')
-    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
     @inertiaHead
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-primary-300/70 text-primary-900 tracking-tight">
 @inertia
