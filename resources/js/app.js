@@ -11,20 +11,21 @@ import {
   faLemon,
   faCircleCheck,
   faAngleRight,
+  faBars,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons'
-library.add(faScroll, faFileLines, faLemon, faCircleCheck, faAngleRight)
-import {
-  faCopyright,
-} from '@fortawesome/free-regular-svg-icons'
+library.add(faScroll, faFileLines, faLemon, faCircleCheck, faAngleRight, faBars, faXmark)
+import { faCopyright } from '@fortawesome/free-regular-svg-icons'
 library.add(faCopyright)
 
 import CountrySelect from '@/Components/CountrySelect.vue'
 import ErrorModal from '@/Components/Modals/ErrorModal.vue'
-import FullPage from '@/Layouts/FullPage.vue'
+import FullPage from '@/Layout/FullPage.vue'
 import Loading from '@/Components/Loading.vue'
 import Modal from '@/Components/Modals/Modal.vue'
 import NotFound from '@/Components/NotFound.vue'
 import Pagination from '@/Components/Pagination.vue'
+import Sidebar from '@/Components/Sidebar.vue'
 
 import * as Sentry from '@sentry/vue'
 
@@ -82,6 +83,7 @@ createInertiaApp({
       .component('Modal', Modal)
       .component('NotFound', NotFound)
       .component('Pagination', Pagination)
+      .component('Sidebar', Sidebar)
       .mount(el)
   }
 })

@@ -1,13 +1,26 @@
 <script setup>
 import Image from '@assets/NotFoundImage.vue'
+import { router, usePage } from "@inertiajs/vue3";
+import { __ } from '@/mixins.js'
+const page = usePage()
+function reset() {
+  if (confirm(__('Are you sure?'))) {
+    router.get(page.url.split('?')[0])
+  }
+}
 </script>
 <template>
   <div class="text-center">
-    <div class="lg:flex justify-center mb-4">
-      <p
-        class="text-2xl mb-4 bg-rose-200/90 text-red-700 shadow-lg shadow-rose-500 font-medium p-2 lg:px-4 rounded-sm"
-      >
-        {{ __('Oops. No recipes were found using these criteria.') }}
+    <div
+      class="flex flex-col justify-center max-w-4xl gap-2 lg:gap-4 mx-auto mb-8 bg-rose-200/90 text-red-700 shadow-lg shadow-rose-500 rounded-sm p-2 lg:p-4"
+    >
+      <p class="text-xl md:text-2xl font-medium">
+        {{ __('Oops. No recipes were found with the current filter settings.') }}
+      </p>
+      <p>
+        <button type="button" class="btn btn-danger" @click="reset">
+          {{ __('Delete current filter') }}
+        </button>
       </p>
     </div>
     <Image class="rounded-sm" />

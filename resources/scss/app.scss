@@ -102,9 +102,12 @@ nav, .nav {
     @apply text-primary-800;
     @apply hover:text-primary-900;
 
-    &.active {
-      @apply text-neutral-800;
-    }
+    //&.active {
+    //  @apply text-neutral-800;
+    //}
+  }
+  &.mobile {
+    max-height: calc(100vh - theme('height.12'));
   }
 }
 
