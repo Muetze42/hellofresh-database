@@ -6,12 +6,12 @@ const showCountrySelect = ref(false)
 </script>
 <template>
   <header class="nav-element border-b fixed py-2">
-    <div class="container flex flex-wrap gap-2 justify-between">
+    <div class="container flex flex-wrap gap-2 justify-between items-center">
       <nav class="flex gap-2">
         <button
           type="button"
           title="Choose a country and language"
-          class="btn px-1.5"
+          class="btn px-1"
           @click="showCountrySelect = true"
         >
           <span class="fi rounded-sm" :class="'fi-' + country.code.toLowerCase()" />
