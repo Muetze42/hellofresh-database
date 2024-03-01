@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Number;
 
 class LengthAwarePaginator extends Paginator
 {
@@ -28,7 +29,7 @@ class LengthAwarePaginator extends Paginator
             return collect($item)->map(function ($url, $page) {
                 return [
                     'url' => $url,
-                    'label' => (string) $page,
+                    'label' => Number::format($page),
                     'active' => $this->currentPage() === $page,
                 ];
             });
