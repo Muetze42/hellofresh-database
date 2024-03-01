@@ -51,7 +51,7 @@ const links = {
       </button>
     </DialogTitle>
     <nav
-      class="mobile flex flex-col gap-2 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full p-2"
+      class="mobile flex flex-col gap-4 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full p-2"
     >
       <Link v-for="(link, label) in links" :key="label" :href="filterLink(country.route + link)">
         {{ __(label) }}

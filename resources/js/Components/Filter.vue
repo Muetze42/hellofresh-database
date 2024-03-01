@@ -117,10 +117,12 @@ async function submit() {
         </div>
       </label>
       <div class="filter-row">
-        <label class="clickable-label child">
-          <input v-model="form.pdf" type="checkbox" class="" />
-          {{ __('Show only recipes with PDF') }}
-        </label>
+        <div class="child">
+          <label class="clickable-label">
+            <input v-model="form.pdf" type="checkbox" class="" />
+            {{ __('Show only recipes with PDF') }}
+          </label>
+        </div>
       </div>
       <div class="filter-row">
         <div class="child">
@@ -181,8 +183,8 @@ async function submit() {
           {{ __('Difficulties') }}
         </span>
         <div class="flex flex-col border-t border-primary-600">
-          <div v-for="(state, difficulty) in form.difficulties" :key="difficulty">
-            <label class="clickable-label child">
+          <div v-for="(state, difficulty) in form.difficulties" :key="difficulty" class="child">
+            <label class="clickable-label">
               <input
                 v-model="form.difficulties[difficulty]"
                 type="checkbox"
