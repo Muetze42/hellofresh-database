@@ -24,7 +24,6 @@ export default defineConfig({
       '@assets': resolve('./resources/assets')
     }
   },
-
   build: {
     sourcemap: true
   }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce61926d7bc862bbae177ca29c2ea940",
+    "content-hash": "f8166c2dc67d742cd4fba78e88ba85b8",
     "packages": [
         {
             "name": "brick/math",
@@ -2513,12 +2513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Muetze42/hellofresh-scraper.git",
-                "reference": "c9fdd25a06cfdfee052ebec06e2df80d7d7abdf8"
+                "reference": "985b87aaea7c89e4f5dea35a373d63ad3581d132"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Muetze42/hellofresh-scraper/zipball/c9fdd25a06cfdfee052ebec06e2df80d7d7abdf8",
-                "reference": "c9fdd25a06cfdfee052ebec06e2df80d7d7abdf8",
+                "url": "https://api.github.com/repos/Muetze42/hellofresh-scraper/zipball/985b87aaea7c89e4f5dea35a373d63ad3581d132",
+                "reference": "985b87aaea7c89e4f5dea35a373d63ad3581d132",
                 "shasum": ""
             },
             "require": {
@@ -2579,7 +2579,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2024-02-12T19:00:01+00:00"
+            "time": "2024-03-01T04:54:59+00:00"
         },
         {
             "name": "nunomaduro/termwind",
@@ -10652,9 +10652,10 @@
     "platform": {
         "php": "^8.2",
         "ext-dom": "*",
+        "ext-gd": "*",
         "ext-libxml": "*",
         "ext-pdo": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
