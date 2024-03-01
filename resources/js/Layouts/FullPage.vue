@@ -4,20 +4,9 @@ import Footer from '@/Components/Footer.vue'
 </script>
 
 <template>
-  <Header :filterable="filterable" />
+  <Header />
   <main>
     <slot />
   </main>
   <Footer />
 </template>
-<script>
-export default {
-  props: {
-    filterable: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  }
-}
-</script>

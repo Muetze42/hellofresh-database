@@ -13,7 +13,12 @@ import {
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons'
 library.add(faScroll, faFileLines, faLemon, faCircleCheck, faAngleRight)
+import {
+  faCopyright,
+} from '@fortawesome/free-regular-svg-icons'
+library.add(faCopyright)
 
+import CountrySelect from '@/Components/CountrySelect.vue'
 import ErrorModal from '@/Components/Modals/ErrorModal.vue'
 import FullPage from '@/Layouts/FullPage.vue'
 import Loading from '@/Components/Loading.vue'
@@ -70,6 +75,7 @@ createInertiaApp({
       })
       .component('FontAwesomeIcon', FontAwesomeIcon)
       .component('Link', Link)
+      .component('CountrySelect', CountrySelect)
       .component('ErrorModal', ErrorModal)
       .component('FullPage', FullPage)
       .component('Loading', Loading)

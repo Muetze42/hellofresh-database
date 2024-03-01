@@ -4,12 +4,7 @@ import { ref } from 'vue'
 const open = ref(false)
 </script>
 <template>
-  <Modal
-    :show="open"
-    :title="__('Many thanks for any support')"
-    @close="open = false"
-    size="max-w-lg"
-  >
+  <Modal :show="open" :title="__('Many thanks for any support')" @close="open = false">
     <div
       class="p-2 flex flex-col gap-2 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full"
     >
@@ -48,9 +43,9 @@ const open = ref(false)
     </div>
   </Modal>
   <footer class="nav-element border-t pt-1 pb-2">
-    <div class="container flex gap-1 max-sm:flex-col flex-wrap justify-center sm:justify-between">
-      <div class="max-sm:text-center">
-        HelloFresh DB by
+    <div class="container flex gap-1 max-sm:flex-col flex-wrap justify-center sm:justify-between items-center">
+      <div class="max-sm:text-center text-sm inline-flex items-center gap-1">
+        <font-awesome-icon :icon="['far', 'copyright']" flip="horizontal" /> 2024
         <a href="https://huth.it" target="_blank" class="link">Norman Huth</a>
       </div>
       <div class="max-sm:text-center">

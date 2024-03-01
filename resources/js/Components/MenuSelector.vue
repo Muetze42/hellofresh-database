@@ -1,5 +1,5 @@
 <script setup>
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { Menu, MenuButton, MenuItems } from '@headlessui/vue'
 
 defineProps({
   menus: {
@@ -48,7 +48,7 @@ defineProps({
             v-for="menu in menus.list"
             :key="menu.value"
             :href="filterLink(country.route + '/menus/' + menu.value)"
-            class="p-1 bg-white text-neutral-900 hover:bg-blue-700 hover:text-white"
+            class="p-1 bg-white text-neutral-900 hover:bg-blue-700 hover:text-white active:brightness-110"
           >
             {{ menu.start }} - {{ menu.end }}
           </Link>

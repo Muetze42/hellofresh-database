@@ -17,7 +17,7 @@ const filter = page.props.filter
 const baseUrl = page.props.country.route + '/'
 
 // noinspection JSCheckFunctionSignatures
-const form = useForm(filter)
+const form = filter ? useForm(filter) : null
 
 const searchInit = optional(new URLSearchParams(window.location.search).get('search'), '')
 const search = reactive({
@@ -31,7 +31,10 @@ function reset() {
 }
 
 function cancel() {
-  if ((!form.isDirty && searchInit.toLowerCase() === search.value.toLowerCase()) || confirm(__('Are you sure?'))) {
+  if (
+    (!form.isDirty && searchInit.toLowerCase() === search.value.toLowerCase()) ||
+    confirm(__('Do you want to discard the changes?'))
+  ) {
     form.reset()
     open.value = false
   }
@@ -82,7 +85,7 @@ async function submit() {
 </script>
 
 <template>
-  <button type="button" class="relative btn" @click="open = true">
+  <button v-if="filter" type="button" class="relative btn" @click="open = true">
     {{ __('Filter') }} / {{ __('Search') }}
     <span v-if="isActive" class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
       <span
@@ -92,7 +95,7 @@ async function submit() {
     </span>
   </button>
   <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
-  <TransitionRoot as="template" :show="open">
+  <TransitionRoot v-if="filter" as="template" :show="open">
     <Dialog as="div" class="relative z-40">
       <TransitionChild
         as="template"
@@ -105,12 +108,12 @@ async function submit() {
       >
         <div class="fixed inset-0 overlay transition-opacity" />
       </TransitionChild>
-      <div class="fixed inset-0 overflow-hidden">
+      <div class="fixed inset-0 overflow-hidden" @click="cancel">
         <div class="absolute inset-0 overflow-hidden">
           <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
             <TransitionChild
               as="template"
-              enter="transform transition ease-in-out duration-500 sm:duration-700"
+              enter="transform transition ease-in-out duration-700 sm:duration-1000"
               enter-from="translate-x-full"
               enter-to="translate-x-0"
               leave="transform transition ease-in-out duration-500 sm:duration-700"

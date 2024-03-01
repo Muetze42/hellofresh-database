@@ -11,7 +11,7 @@ defineEmits(['close'])
 
 <template>
   <TransitionRoot as="template">
-    <Dialog as="div" class="fixed z-50 inset-0 px-4">
+    <Dialog as="div" class="fixed z-50 inset-0 px-4" @close="$emit('close')">
       <div
         class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
       >
@@ -25,7 +25,10 @@ defineEmits(['close'])
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 overlay transition-opacity" @click="$emit('close')" />
+          <DialogOverlay
+            class="fixed inset-0 overlay transition-opacity"
+            @click.self="$emit('close')"
+          />
         </TransitionChild>
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
           &#8203;
