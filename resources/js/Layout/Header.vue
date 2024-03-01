@@ -30,7 +30,7 @@ const links = {
         >
           {{ __(label) }}
         </Link>
-        <button type="button " class="btn md:hidden h-8 w-8" @click="open = true">
+        <button type="button" class="btn md:hidden h-8 w-8" @click="open = true">
           <font-awesome-icon :icon="['fas', 'bars']" />
         </button>
       </nav>

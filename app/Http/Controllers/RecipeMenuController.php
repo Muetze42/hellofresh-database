@@ -78,19 +78,21 @@ class RecipeMenuController extends Controller
     /**
      * Find the current menu and redirect to it.
      */
-    public function findMenu()
+    public function findMenu(Request $request)
     {
         $formatted = $this->formattedCurrentMenuWeek();
 
         $menu = Menu::where('year_week', '>=', $formatted)->first();
 
+        $query = $request->input('filter') ? '?filter=' . $request->input('filter') : '';
+
         if ($menu) {
-            return redirect(countryRoute('recipes.menus', ['menu' => $menu->year_week]));
+            return redirect(countryRoute('recipes.menus', ['menu' => $menu->year_week]) . $query);
         }
 
         if ($menu = Menu::orderByDesc('year_week')->first()) {
             /* @var \App\Models\Menu $menu */
-            return redirect(countryRoute('recipes.menus', ['menu' => $menu->year_week]));
+            return redirect(countryRoute('recipes.menus', ['menu' => $menu->year_week]) . $query);
         }
 
         abort(404);
