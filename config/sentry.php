@@ -70,31 +70,31 @@ return [
         'queue_job_transactions' => env('SENTRY_TRACE_QUEUE_ENABLED', false),
 
         // Capture queue jobs as spans when executed on the sync driver
-        'queue_jobs' => env('SENTRY_TRACE_QUEUE_JOBS_ENABLED', true),
+        'queue_jobs' => env('SENTRY_TRACE_QUEUE_JOBS_ENABLED', false),
 
         // Capture SQL queries as spans
-        'sql_queries' => env('SENTRY_TRACE_SQL_QUERIES_ENABLED', true),
+        'sql_queries' => env('SENTRY_TRACE_SQL_QUERIES_ENABLED', false),
 
         // Capture SQL query bindings (parameters) in SQL query spans
         'sql_bindings' => env('SENTRY_TRACE_SQL_BINDINGS_ENABLED', false),
 
         // Capture where the SQL query originated from on the SQL query spans
-        'sql_origin' => env('SENTRY_TRACE_SQL_ORIGIN_ENABLED', true),
+        'sql_origin' => env('SENTRY_TRACE_SQL_ORIGIN_ENABLED', false),
 
         // Capture views rendered as spans
-        'views' => env('SENTRY_TRACE_VIEWS_ENABLED', true),
+        'views' => env('SENTRY_TRACE_VIEWS_ENABLED', false),
 
         // Capture Livewire components as spans
-        'livewire' => env('SENTRY_TRACE_LIVEWIRE_ENABLED', true),
+        'livewire' => env('SENTRY_TRACE_LIVEWIRE_ENABLED', false),
 
         // Capture HTTP client requests as spans
-        'http_client_requests' => env('SENTRY_TRACE_HTTP_CLIENT_REQUESTS_ENABLED', true),
+        'http_client_requests' => env('SENTRY_TRACE_HTTP_CLIENT_REQUESTS_ENABLED', false),
 
         // Capture Redis operations as spans (this enables Redis events in Laravel)
         'redis_commands' => env('SENTRY_TRACE_REDIS_COMMANDS', false),
 
         // Capture where the Redis command originated from on the Redis command spans
-        'redis_origin' => env('SENTRY_TRACE_REDIS_ORIGIN_ENABLED', true),
+        'redis_origin' => env('SENTRY_TRACE_REDIS_ORIGIN_ENABLED', false),
 
         // Enable tracing for requests without a matching route (404's)
         'missing_routes' => env('SENTRY_TRACE_MISSING_ROUTES_ENABLED', false),
@@ -103,10 +103,10 @@ return [
         // the application terminates
         // This is required to capture any spans that are created after the response has been sent like queue jobs
         // dispatched using `dispatch(...)->afterResponse()` for example
-        'continue_after_response' => env('SENTRY_TRACE_CONTINUE_AFTER_RESPONSE', true),
+        'continue_after_response' => env('SENTRY_TRACE_CONTINUE_AFTER_RESPONSE', false),
 
         // Enable the tracing integrations supplied by Sentry (recommended)
-        'default_integrations' => env('SENTRY_TRACE_DEFAULT_INTEGRATIONS_ENABLED', true),
+        'default_integrations' => env('SENTRY_TRACE_DEFAULT_INTEGRATIONS_ENABLED', false),
     ],
 
 ];
