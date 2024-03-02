@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import config from './../../data/config.json'
 
 /**
  * @property {Object} user
@@ -27,11 +28,7 @@ Vue.mixin({
         data: { prepMin: 4, prepMax: 200 },
         route: 'String'
       },
-      config: {
-        filter: {
-          max_filterable_items: 20
-        }
-      },
+      config: config,
       filterKey: 'String'
     }
   }
