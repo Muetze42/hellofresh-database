@@ -1,5 +1,5 @@
-const defaultTheme = require('tailwindcss/defaultTheme.js')
-const colors = require('tailwindcss/colors.js')
+const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -37,5 +37,10 @@ module.exports = {
       }
     }
   },
-  plugins: [require('@tailwindcss/forms'), require('tailwind-scrollbar')({ nocompatible: true })]
+  plugins: [
+    require('@tailwindcss/forms')({
+      strategy: 'base'
+    }),
+    require('tailwind-scrollbar')({ nocompatible: true })
+  ]
 }

@@ -1,26 +1,9 @@
 input[type='checkbox'] {
-  @apply form-checkbox rounded-sm;
-}
-
-input[type='radio'] {
-  @apply form-radio;
-  @apply form-radio;
+  @apply rounded-sm;
 }
 
 input[type='radio'], input[type='checkbox'] {
   @apply text-accent-600 cursor-pointer select-none;
-}
-
-input[type='text'] {
-  @apply form-input;
-}
-
-textarea {
-  @apply form-textarea;
-}
-
-select {
-  @apply form-select;
 }
 
 input[type='text'], input[type='password'], input[type='search'], input[type='email'], select, textarea {

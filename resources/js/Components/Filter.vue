@@ -112,7 +112,7 @@ async function submit() {
             v-model="search.value"
             :placeholder="__('Enter search term') + '...'"
             type="search"
-            class="form-input w-full"
+            class="w-full"
           />
         </div>
       </label>
@@ -188,7 +188,6 @@ async function submit() {
               <input
                 v-model="form.difficulties[difficulty]"
                 type="checkbox"
-                class="form-checkbox"
               />
               <template v-if="difficulty === 'd1'">
                 {{ __('Easy') }}
