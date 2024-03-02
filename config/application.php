@@ -6,7 +6,7 @@
 
 return [
     'filter' => [
-        'max_filterable_items' => 20,
+        'max_filterable_items' => 30,
     ],
     'pagination' => [
         'per_page' => 12,
