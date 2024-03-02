@@ -29,7 +29,7 @@ class ShoppingListController extends Controller
 
         $recipes = Recipe::whereIn('id', $request->input('recipes'))->get(['id', 'name', 'yields']);
 
-        $ingredientIds = $recipes->flatten(1)
+        $ingredientIds = $recipes
             ->pluck('yields')
             ->flatten(1)
             ->pluck('ingredients')
