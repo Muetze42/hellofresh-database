@@ -17,7 +17,11 @@
                     <div class="w-16 h-1 bg-purple-light my-3 md:my-6"></div>
 
                     <p class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal">
-                        {!! nl2br(e(__($__env->yieldContent('message')))) !!}
+                        @if($__env->yieldContent('code') == 503)
+                            {{ __('There is an update in progress.') }}
+                        @else
+                            {!! nl2br(e(__($__env->yieldContent('message')))) !!}
+                        @endif
                     </p>
                     @if($__env->yieldContent('code') == 419)
                         <a href="{{ url()->current() }}">
@@ -25,7 +29,9 @@
                                 {{ __('Reload page') }}
                             </button>
                         </a>
-                    @elseif($__env->yieldContent('code') != 503)
+                    @elseif($__env->yieldContent('code') == 503)
+                        <p class="text-2xl">{{ __('This lasts only a few seconds.') }}</p>
+                    @else
                         <a href="{{ app('router')->has('home') ? route('home') : url('/') }}">
                             <button class="bg-transparent text-grey-darkest font-bold uppercase tracking-wide py-3 px-6 border-2 border-grey-light hover:border-grey rounded-lg">
                                 {{ __('Go Home') }}

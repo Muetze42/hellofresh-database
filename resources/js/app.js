@@ -38,16 +38,16 @@ createInertiaApp({
     return pages[`./Pages/${name}.vue`]
   },
   setup({ el, App, props, plugin }) {
-    const appInstance = createApp({ render: () => h(App, props) })
+    const app = createApp({ render: () => h(App, props) })
     Sentry.init({
-      appInstance,
+      app,
       dsn: import.meta.env.VITE_SENTRY_DSN_PUBLIC,
       tunnel: '/api/sentry-tunnel',
       trackComponents: true,
       logErrors: true
     })
 
-    appInstance
+    app
       .use(plugin)
       .mixin({
         computed: {
