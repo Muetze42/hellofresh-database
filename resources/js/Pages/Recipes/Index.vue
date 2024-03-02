@@ -3,19 +3,16 @@ import MenuSelector from '@/Components/MenuSelector.vue'
 import { ref } from 'vue'
 
 const shoppingList = ref(JSON.parse(localStorage.getItem('shoppingList') || '[]'))
-console.log(shoppingList.value)
 
 function storeShoppingList() {
   localStorage.setItem('shoppingList', JSON.stringify(shoppingList.value))
 }
 function shoppingListPush(id) {
-  console.log('shoppingListPush', id)
   // noinspection JSUnresolvedReference
   shoppingList.value.push(id)
   storeShoppingList()
 }
 function shoppingListRemove(id) {
-  console.log('shoppingListRemove', id)
   // noinspection JSUnresolvedReference
   shoppingList.value = shoppingList.value.filter((item) => item !== id)
   storeShoppingList()

@@ -7,7 +7,8 @@ const showCountries = ref(false)
 const open = ref(false)
 const links = {
   Recipes: '',
-  Menus: '/menus'
+  Menus: '/menus',
+  'Shopping List': '/shopping-list'
 }
 </script>
 <template>
