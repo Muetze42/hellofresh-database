@@ -1,5 +1,22 @@
 <script setup>
 import MenuSelector from '@/Components/MenuSelector.vue'
+import { ref } from 'vue'
+
+const shoppingList = ref(JSON.parse(localStorage.getItem('shoppingList') || '[]'))
+
+function storeShoppingList() {
+  localStorage.setItem('shoppingList', JSON.stringify(shoppingList.value))
+}
+function shoppingListPush(id) {
+  // noinspection JSUnresolvedReference
+  shoppingList.value.push(id)
+  storeShoppingList()
+}
+function shoppingListRemove(id) {
+  // noinspection JSUnresolvedReference
+  shoppingList.value = shoppingList.value.filter((item) => item !== id)
+  storeShoppingList()
+}
 
 defineProps({
   recipes: {
@@ -97,12 +114,44 @@ defineProps({
               {{ __('View PDF') }}
             </Component>
           </div>
-          <!--          <div class="text-center">-->
+<!--          <div class="text-center">-->
+<!--            <button-->
+<!--              type="button"-->
+<!--              class="btn gap-2"-->
+<!--              :class="{-->
+<!--                'btn-danger': shoppingList.indexOf(recipe.id) > -1,-->
+<!--                'btn-disabled':-->
+<!--                  shoppingList.indexOf(recipe.id) < 0 &&-->
+<!--                  shoppingList.length >= config.shopping_list.max_items-->
+<!--              }"-->
+<!--              :disabled="-->
+<!--                shoppingList.indexOf(recipe.id) < 0 &&-->
+<!--                shoppingList.length >= config.shopping_list.max_items-->
+<!--              "-->
+<!--              @click="-->
+<!--                shoppingList.indexOf(recipe.id) > -1-->
+<!--                  ? shoppingListRemove(recipe.id)-->
+<!--                  : shoppingListPush(recipe.id)-->
+<!--              "-->
+<!--            >-->
+<!--              <font-awesome-icon-->
+<!--                :icon="['fas', shoppingList.indexOf(recipe.id) > -1 ? 'xmark' : 'cart-plus']"-->
+<!--                fixed-width-->
+<!--              />-->
+<!--              {{-->
+<!--                __(-->
+<!--                  shoppingList.indexOf(recipe.id) > -1-->
+<!--                    ? __('Removed from the :list')-->
+<!--                    : __('Add to the :list'),-->
+<!--                  { list: __('shopping list') }-->
+<!--                )-->
+<!--              }}-->
+<!--            </button>-->
+<!--          </div>-->
           <!--            <Link :href="country.route + '/' + recipe.id + '-' + recipe.slug" class="btn">-->
           <!--              <font-awesome-icon :icon="['fas', 'scroll']" fixed-width />-->
           <!--              {{ __('Details') }}-->
           <!--            </Link>-->
-          <!--          </div>-->
         </div>
       </div>
     </div>

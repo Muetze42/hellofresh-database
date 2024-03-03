@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
             'translations' => $this->jsonTranslations(),
             'locale' => app()->getLocale(),
             'config' => config('application'),
-            'country' => country()?->append('route')->only(['code', 'domain', 'data', 'route']),
+            'country' => fn() => country()?->append('route')->only(['code', 'domain', 'data', 'route']),
             'support' => (new Support())->toArray(),
             'countries' => $this->availableCountries(),
         ]);

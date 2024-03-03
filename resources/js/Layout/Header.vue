@@ -8,6 +8,7 @@ const open = ref(false)
 const links = {
   Recipes: '',
   Menus: '/menus'
+  // 'Shopping List': '/shopping-list'
 }
 </script>
 <template>
@@ -40,7 +41,7 @@ const links = {
     </div>
   </header>
   <Sidebar :show="open" :is-left="true" @close="open = false">
-    <DialogTitle class="w-full text-right p-2">
+    <DialogTitle class="w-full text-right p-2" as="div">
       <button
         type="button"
         class="btn h-8 w-8"

@@ -11,4 +11,7 @@ return [
     'pagination' => [
         'per_page' => 12,
     ],
+    'shopping_list' => [
+        'max_items' => 50,
+    ],
 ];

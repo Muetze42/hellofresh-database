@@ -6,15 +6,27 @@ import { createInertiaApp, Link } from '@inertiajs/vue3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-  faScroll,
-  faFileLines,
-  faLemon,
-  faCircleCheck,
   faAngleRight,
   faBars,
+  faCartPlus,
+  faCircleCheck,
+  faFileLines,
+  faLemon,
+  faListCheck,
+  faScroll,
   faXmark
 } from '@fortawesome/free-solid-svg-icons'
-library.add(faScroll, faFileLines, faLemon, faCircleCheck, faAngleRight, faBars, faXmark)
+library.add(
+  faAngleRight,
+  faBars,
+  faCartPlus,
+  faCircleCheck,
+  faFileLines,
+  faLemon,
+  faListCheck,
+  faScroll,
+  faXmark
+)
 import { faCopyright } from '@fortawesome/free-regular-svg-icons'
 library.add(faCopyright)
 

@@ -24,7 +24,7 @@ defineProps({
     <Menu v-slot="{ open }" as="div" class="relative inline-block">
       <MenuButton
         as="button"
-        class="form-input text-neutral-900 transition-all transform py-1 rounded-sm inline-flex items-center justify-center gap-3 font-medium"
+        class="text-neutral-900 transition-all transform py-1 rounded-sm inline-flex items-center justify-center gap-3 font-medium"
       >
         {{ menus.current.start }} - {{ menus.current.end }}
         <font-awesome-icon

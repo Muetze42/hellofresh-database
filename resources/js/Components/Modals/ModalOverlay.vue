@@ -4,5 +4,9 @@ defineEmits(['close'])
 </script>
 
 <template>
-  <DialogOverlay class="fixed inset-0 overlay transition-opacity" @click="$emit('close')" />
+  <DialogOverlay
+    class="fixed inset-0 overlay transition-opacity"
+    as="div"
+    @click="$emit('close')"
+  />
 </template>
