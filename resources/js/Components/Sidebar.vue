@@ -39,7 +39,7 @@ defineProps({
               leave-from="translate-x-0"
               :leave-to="isLeft ? '-translate-x-full' : 'translate-x-full'"
             >
-              <DialogPanel class="pointer-events-auto w-screen max-w-2xl">
+              <DialogPanel class="pointer-events-auto w-screen max-w-2xl" as="div">
                 <div class="flex h-full flex-col bg-primary-200 shadow-xl">
                   <slot />
                 </div>

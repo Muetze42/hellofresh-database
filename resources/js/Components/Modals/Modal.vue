@@ -26,6 +26,7 @@ defineEmits(['close'])
           leave-to="opacity-0"
         >
           <DialogOverlay
+            ad="div"
             class="fixed inset-0 overlay transition-opacity"
             @click.self="$emit('close')"
           />

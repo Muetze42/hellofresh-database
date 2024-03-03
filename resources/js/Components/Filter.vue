@@ -96,7 +96,7 @@ async function submit() {
   </button>
   <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
   <Sidebar v-if="filter" :show="open" @close="cancel">
-    <DialogTitle class="text-base font-medium p-2 select-none">
+    <DialogTitle class="text-base font-medium p-2 select-none" as="div">
       {{ __('Filters') }} / {{ __('Search') }}
       <button type="button" class="sr-only" />
     </DialogTitle>
