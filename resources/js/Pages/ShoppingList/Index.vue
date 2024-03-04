@@ -49,11 +49,11 @@ async function updateData() {
 }
 
 function isFloat(n) {
-  return n === +n && n !== (n|0);
+  return n === +n && n !== (n | 0)
 }
 
 function isInteger(n) {
-  return n === +n && n === (n|0);
+  return n === +n && n === (n | 0)
 }
 
 function isNumeric(n) {
@@ -169,7 +169,7 @@ onMounted(() => {
                 <td class="px-2 border border-primary-600/90 border-r-0">
                   {{ recipes[recipeId].name }} ({{ form[recipeId] }})
                 </td>
-                <td class="px-2 text-right border border-primary-600/90 border-l-0 font-medium">
+                <td class="px-2 text-right border border-primary-600/90 border-l-0">
                   {{
                     isNumeric(item[form[recipeId]].amount)
                       ? new Intl.NumberFormat($page.props.locale + '-' + country.code).format(
@@ -181,6 +181,11 @@ onMounted(() => {
                 </td>
               </tr>
             </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="px-2 text-right font-medium">a</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </section>
