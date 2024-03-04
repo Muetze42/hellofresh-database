@@ -74,7 +74,7 @@ defineProps({
           <div
             v-if="recipe.label"
             :style="{ color: recipe.label.color, backgroundColor: recipe.label.bg }"
-            class="absolute py-0.5 px-1.5 rounded-br-sm font-medium"
+            class="absolute py-0.5 px-1.5 rounded-br-sm font-medium z-30"
           >
             {{ recipe.label.text }}
           </div>

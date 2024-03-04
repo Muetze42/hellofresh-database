@@ -21,10 +21,10 @@ defineProps({
 </script>
 <template>
   <div class="mb-8 text-center">
-    <Menu v-slot="{ open }" as="div" class="relative inline-block">
+    <Menu v-slot="{ open }" as="div" class="relative inline-block z-40">
       <MenuButton
         as="button"
-        class="text-neutral-900 transition-all transform py-1 rounded-sm inline-flex items-center justify-center gap-3 font-medium"
+        class="transition-all transform rounded-sm inline-flex items-center justify-center gap-3 font-medium bg-white text-neutral-900 py-0.5 px-2 border border-primary-700"
       >
         {{ menus.current.start }} - {{ menus.current.end }}
         <font-awesome-icon
