@@ -60,21 +60,22 @@ function isNumeric(n) {
   return isFloat(n) || isInteger(n)
 }
 
-const calculated = computed(() => {
-  if (!ingredients.value || !form.value) {
-    return null
-  }
-
-  console.log(ingredients.value)
-
-  let calculatedIngredients = {}
-
-  for (const [key, value] of Object.entries(ingredients.value)) {
-    console.log(key, value)
-  }
-
-  return null
-})
+// Todo
+// const calculated = computed(() => {
+//   if (!ingredients.value || !form.value) {
+//     return null
+//   }
+//
+//   console.log(ingredients.value)
+//
+//   let calculatedIngredients = {}
+//
+//   for (const [key, value] of Object.entries(ingredients.value)) {
+//     console.log(key, value)
+//   }
+//
+//   return null
+// })
 
 onMounted(() => {
   updateData()
@@ -200,11 +201,11 @@ onMounted(() => {
                 </td>
               </tr>
             </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="2" class="px-2 text-right font-medium">a</td>
-              </tr>
-            </tfoot>
+<!--            <tfoot>-->
+<!--              <tr>-->
+<!--                <td colspan="2" class="px-2 text-right font-medium">a</td>-->
+<!--              </tr>-->
+<!--            </tfoot>-->
           </table>
         </div>
       </section>
