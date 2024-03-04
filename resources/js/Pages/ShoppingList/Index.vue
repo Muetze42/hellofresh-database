@@ -1,5 +1,5 @@
 <script setup>
-import { defineExpose, ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { usePage } from '@inertiajs/vue3'
 import { __ } from '@/mixins.js'
@@ -47,6 +47,35 @@ async function updateData() {
       processing.value = false
     })
 }
+
+function isFloat(n) {
+  return n === +n && n !== (n | 0)
+}
+
+function isInteger(n) {
+  return n === +n && n === (n | 0)
+}
+
+function isNumeric(n) {
+  return isFloat(n) || isInteger(n)
+}
+
+// Todo
+// const calculated = computed(() => {
+//   if (!ingredients.value || !form.value) {
+//     return null
+//   }
+//
+//   console.log(ingredients.value)
+//
+//   let calculatedIngredients = {}
+//
+//   for (const [key, value] of Object.entries(ingredients.value)) {
+//     console.log(key, value)
+//   }
+//
+//   return null
+// })
 
 onMounted(() => {
   updateData()
@@ -103,10 +132,12 @@ onMounted(() => {
           <div
             v-for="(recipe, recipeId) in recipes"
             :key="recipeId"
-            class="border border-primary-600/90 p-1 flex flex-wrap gap-2"
+            class="border border-primary-600/90 p-1 flex flex-wrap gap-1 max-sm:flex-col"
           >
-            <img :src="recipe.image" :alt="recipe.name" class="h-16 m-1 mx-auto" />
-            <div class="p-1 grow">
+            <div class="text-center mx-auto p-1">
+              <img :src="recipe.image" :alt="recipe.name" class="h-16" />
+            </div>
+            <div class="p-1 grow max-sm:text-center">
               <h3 class="font-medium">{{ recipe.name }}</h3>
               <p class="max-sm:hidden">{{ recipe.headline }}</p>
               <div class="text-center btn-group">
@@ -134,35 +165,47 @@ onMounted(() => {
       <section class="card">
         <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm">
           {{ __('Ingredients') }}
+          {{ calculated }}
         </h2>
         <div class="p-2 flex flex-col gap-2 w-full max-w-xl mx-auto">
           <table
-            v-for="(ingredient, ingredientId) in ingredients"
-            :key="ingredientId"
-            class="table-auto border-collapse border border-primary-600/90 rounded-sm"
+            v-for="(ingredient, ingredientName) in ingredients"
+            :key="ingredientName"
+            class="table-auto border-collapse border border-primary-600/90 rounded-sm bg-primary-500"
           >
             <thead>
               <tr>
-                <th colspan="2" class="text-left p-2 inline-flex items-center gap-2">
-                  <img :src="ingredient.image" :alt="ingredient.name" class="h-12" />
-                  {{ ingredient.name }}
+                <th colspan="2" class="text-left px-2 py-0.5 inline-flex items-center gap-2">
+                  <img :src="ingredient.image" :alt="ingredient.name" class="h-10" />
+                  {{ ingredientName }}
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr
                 v-for="(item, recipeId) in ingredient.recipe_yields"
-                :key="ingredientId + recipeId"
+                :key="ingredientName + recipeId"
               >
-                <td class="px-2 border border-primary-600/90 border-r-0">
+                <td class="px-2 border border-primary-600/90 border-r-0 bg-primary-400">
                   {{ recipes[recipeId].name }} ({{ form[recipeId] }})
                 </td>
-                <td class="px-2 text-right border border-primary-600/90 border-l-0 font-medium">
-                  {{ item[form[recipeId]].amount }}
+                <td class="px-2 text-right border border-primary-600/90 border-l-0 bg-primary-400">
+                  {{
+                    isNumeric(item[form[recipeId]].amount)
+                      ? new Intl.NumberFormat($page.props.locale + '-' + country.code).format(
+                          item[form[recipeId]].amount
+                        )
+                      : item[form[recipeId]].amount
+                  }}
                   {{ item[form[recipeId]].unit }}
                 </td>
               </tr>
             </tbody>
+<!--            <tfoot>-->
+<!--              <tr>-->
+<!--                <td colspan="2" class="px-2 text-right font-medium">a</td>-->
+<!--              </tr>-->
+<!--            </tfoot>-->
           </table>
         </div>
       </section>
