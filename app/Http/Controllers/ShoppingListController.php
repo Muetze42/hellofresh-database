@@ -61,7 +61,7 @@ class ShoppingListController extends Controller
                     'name' => $ingredient->name,
                     'image' => $ingredient->asset()->image(),
                     'recipe_yields' => [],
-                ]])->toArray();
+                ]])->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->toArray();
 
         foreach ($recipes as $recipe) {
             if (!count($recipe['options'])) {
