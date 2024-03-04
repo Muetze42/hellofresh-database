@@ -42,11 +42,19 @@ import Sidebar from '@/Components/Sidebar.vue'
 import * as Sentry from '@sentry/vue'
 
 import { __ } from '@/mixins.js'
+Sentry.init({
+  app,
+  dsn: import.meta.env.VITE_SENTRY_DSN_PUBLIC,
+  tunnel: '/api/sentry-tunnel',
+  trackComponents: true,
+  logErrors: true
+})
 
 // noinspection JSIgnoredPromiseFromCall
 createInertiaApp({
   resolve: (name) => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+
     return pages[`./Pages/${name}.vue`]
   },
   setup({ el, App, props, plugin }) {
@@ -98,4 +106,4 @@ createInertiaApp({
       .component('Sidebar', Sidebar)
       .mount(el)
   }
-}).then()
+})

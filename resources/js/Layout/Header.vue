@@ -7,8 +7,8 @@ const showCountries = ref(false)
 const open = ref(false)
 const links = {
   Recipes: '',
-  Menus: '/menus'
-  // 'Shopping List': '/shopping-list'
+  Menus: '/menus',
+  'shopping list': '/shopping-list'
 }
 </script>
 <template>
@@ -29,7 +29,7 @@ const links = {
           :href="filterLink(country.route + link)"
           class="max-md:hidden"
         >
-          {{ __(label) }}
+          {{ __(label).charAt(0).toUpperCase() + __(label).slice(1) }}
         </Link>
         <button type="button" class="btn md:hidden h-8 w-8" @click="open = true">
           <font-awesome-icon :icon="['fas', 'bars']" />

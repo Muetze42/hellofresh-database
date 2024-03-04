@@ -37,6 +37,11 @@
   .btn-sm {
     @apply px-1.5 text-sm;
   }
+  .btn-group {
+    .btn {
+      @apply rounded-none first:sm:rounded-l last:sm:rounded-r;
+    }
+  }
   .card {
     @apply flex flex-col bg-primary-400 rounded shadow border border-primary-600;
   }
@@ -87,9 +92,6 @@ main {
 
 .pagination {
   @apply divide-x divide-primary-300/25 container flex gap-y-1.5 flex-wrap justify-center items-center;
-  .btn {
-    @apply rounded-none first:sm:rounded-l last:sm:rounded-r;
-  }
 }
 
 .scrollbar, .scrollbar-thin {

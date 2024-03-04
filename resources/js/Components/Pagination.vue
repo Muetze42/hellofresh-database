@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-  <div v-if="links.length > 3" class="pagination">
+  <div v-if="links.length > 3" class="pagination btn-group">
     <template v-for="link in links">
       <Component
         :is="link.url && !link.active ? 'Link' : 'span'"
