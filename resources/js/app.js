@@ -42,13 +42,6 @@ import Sidebar from '@/Components/Sidebar.vue'
 import * as Sentry from '@sentry/vue'
 
 import { __ } from '@/mixins.js'
-Sentry.init({
-  app,
-  dsn: import.meta.env.VITE_SENTRY_DSN_PUBLIC,
-  tunnel: '/api/sentry-tunnel',
-  trackComponents: true,
-  logErrors: true
-})
 
 // noinspection JSIgnoredPromiseFromCall
 createInertiaApp({

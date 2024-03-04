@@ -6,6 +6,6 @@
         "per_page": 12
     },
     "shopping_list": {
-        "max_items": 30
+        "max_items": 50
     }
 }
