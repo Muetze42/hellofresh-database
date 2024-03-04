@@ -131,10 +131,12 @@ onMounted(() => {
           <div
             v-for="(recipe, recipeId) in recipes"
             :key="recipeId"
-            class="border border-primary-600/90 p-1 flex flex-wrap gap-2"
+            class="border border-primary-600/90 p-1 flex flex-wrap gap-1 max-sm:flex-col"
           >
-            <img :src="recipe.image" :alt="recipe.name" class="h-16 m-1 mx-auto" />
-            <div class="p-1 grow">
+            <div class="text-center mx-auto p-1">
+              <img :src="recipe.image" :alt="recipe.name" class="h-16" />
+            </div>
+            <div class="p-1 grow max-sm:text-center">
               <h3 class="font-medium">{{ recipe.name }}</h3>
               <p class="max-sm:hidden">{{ recipe.headline }}</p>
               <div class="text-center btn-group">
@@ -168,12 +170,12 @@ onMounted(() => {
           <table
             v-for="(ingredient, ingredientName) in ingredients"
             :key="ingredientName"
-            class="table-auto border-collapse border border-primary-600/90 rounded-sm"
+            class="table-auto border-collapse border border-primary-600/90 rounded-sm bg-primary-500"
           >
             <thead>
               <tr>
-                <th colspan="2" class="text-left p-2 inline-flex items-center gap-2">
-                  <img :src="ingredient.image" :alt="ingredient.name" class="h-12" />
+                <th colspan="2" class="text-left px-2 py-0.5 inline-flex items-center gap-2">
+                  <img :src="ingredient.image" :alt="ingredient.name" class="h-10" />
                   {{ ingredientName }}
                 </th>
               </tr>
@@ -183,10 +185,10 @@ onMounted(() => {
                 v-for="(item, recipeId) in ingredient.recipe_yields"
                 :key="ingredientName + recipeId"
               >
-                <td class="px-2 border border-primary-600/90 border-r-0">
+                <td class="px-2 border border-primary-600/90 border-r-0 bg-primary-400">
                   {{ recipes[recipeId].name }} ({{ form[recipeId] }})
                 </td>
-                <td class="px-2 text-right border border-primary-600/90 border-l-0">
+                <td class="px-2 text-right border border-primary-600/90 border-l-0 bg-primary-400">
                   {{
                     isNumeric(item[form[recipeId]].amount)
                       ? new Intl.NumberFormat($page.props.locale + '-' + country.code).format(
