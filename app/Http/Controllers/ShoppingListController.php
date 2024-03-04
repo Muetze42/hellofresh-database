@@ -54,14 +54,14 @@ class ShoppingListController extends Controller
             'options' => array_map(fn (int $yields) => $yields . 'p', Arr::pluck((array) $recipe->yields, 'yields')),
         ])->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->toArray();
 
-        $ingredients = Ingredient::whereIn('id', $ingredientIds)
-            ->get()
-            ->mapWithKeys(fn (Ingredient $ingredient) =>
-                [$ingredient->getKey() => [
-                    'name' => $ingredient->name,
-                    'image' => $ingredient->asset()->image(),
-                    'recipe_yields' => [],
-                ]])->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->toArray();
+        $ingredients = Ingredient::whereIn('id', $ingredientIds)->get();
+
+        $ingredientName = $ingredients->pluck('name', 'id')->toArray();
+
+        $ingredients = $ingredients->mapWithKeys(fn (Ingredient $ingredient) => [$ingredient->name => [
+            'image' => $ingredient->asset()->image(),
+            'recipe_yields' => [],
+        ]])->sortKeys(SORT_NATURAL | SORT_FLAG_CASE)->toArray();
 
         foreach ($recipes as $recipe) {
             if (!count($recipe['options'])) {
@@ -73,9 +73,9 @@ class ShoppingListController extends Controller
             foreach ($recipe['yields'] as $yield) {
                 $yields = $yield['yields'];
                 foreach ($yield['ingredients'] as $ingredient) {
-                    $ingredients[$ingredient['id']]['recipe_yields'][$recipe['id']][$yields . 'p'] = [
-                        'amount' => is_numeric($ingredient['amount']) ? Number::format($ingredient['amount']) :
-                            $ingredient['amount'],
+                    //$ingredients[$ingredient['id']]['recipe_yields'][$recipe['id']][$yields . 'p'] = [
+                    $ingredients[$ingredientName[$ingredient['id']]]['recipe_yields'][$recipe['id']][$yields . 'p'] = [
+                        'amount' => $ingredient['amount'],
                         'unit' => $ingredient['unit'],
                     ];
                 }

@@ -1,5 +1,5 @@
 <script setup>
-import { defineExpose, ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { usePage } from '@inertiajs/vue3'
 import { __ } from '@/mixins.js'
@@ -46,6 +46,18 @@ async function updateData() {
       form.value = response.data.form
       processing.value = false
     })
+}
+
+function isFloat(n) {
+  return n === +n && n !== (n|0);
+}
+
+function isInteger(n) {
+  return n === +n && n === (n|0);
+}
+
+function isNumeric(n) {
+  return isFloat(n) || isInteger(n)
 }
 
 onMounted(() => {
@@ -137,28 +149,34 @@ onMounted(() => {
         </h2>
         <div class="p-2 flex flex-col gap-2 w-full max-w-xl mx-auto">
           <table
-            v-for="(ingredient, ingredientId) in ingredients"
-            :key="ingredientId"
+            v-for="(ingredient, ingredientName) in ingredients"
+            :key="ingredientName"
             class="table-auto border-collapse border border-primary-600/90 rounded-sm"
           >
             <thead>
               <tr>
                 <th colspan="2" class="text-left p-2 inline-flex items-center gap-2">
                   <img :src="ingredient.image" :alt="ingredient.name" class="h-12" />
-                  {{ ingredient.name }}
+                  {{ ingredientName }}
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr
                 v-for="(item, recipeId) in ingredient.recipe_yields"
-                :key="ingredientId + recipeId"
+                :key="ingredientName + recipeId"
               >
                 <td class="px-2 border border-primary-600/90 border-r-0">
                   {{ recipes[recipeId].name }} ({{ form[recipeId] }})
                 </td>
                 <td class="px-2 text-right border border-primary-600/90 border-l-0 font-medium">
-                  {{ item[form[recipeId]].amount }}
+                  {{
+                    isNumeric(item[form[recipeId]].amount)
+                      ? new Intl.NumberFormat($page.props.locale + '-' + country.code).format(
+                          item[form[recipeId]].amount
+                        )
+                      : item[form[recipeId]].amount
+                  }}
                   {{ item[form[recipeId]].unit }}
                 </td>
               </tr>
