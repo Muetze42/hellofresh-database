@@ -6,6 +6,7 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Number;
 use Inertia\Inertia;
 
 class ShoppingListController extends Controller
@@ -31,7 +32,7 @@ class ShoppingListController extends Controller
         $form = $request->input('form', []);
 
         $recipes = Recipe::whereIn('id', $request->input('recipes'))
-            ->get(['id', 'name', 'yields', 'image_path']);
+            ->get(['id', 'name', 'yields', 'image_path', 'headline']);
 
         $ingredientIds = $recipes
             ->pluck('yields')
@@ -47,6 +48,7 @@ class ShoppingListController extends Controller
         $recipes = $recipes->map(fn (Recipe $recipe) => [
             'id' => $recipe->getKey(),
             'name' => $recipe->name,
+            'headline' => $recipe->headline,
             'yields' => (array) $recipe->yields,
             'image' => $recipe->asset()->preview(),
             'options' => array_map(fn (int $yields) => $yields . 'p', Arr::pluck((array) $recipe->yields, 'yields')),
@@ -66,13 +68,14 @@ class ShoppingListController extends Controller
                 continue;
             }
             $form[$recipe['id']] = !empty($form[$recipe['id']]) && in_array($form[$recipe['id']], $recipe['options']) ?
-                $form[$recipe['id']] : $recipe['yields'][array_key_first($recipe['yields'])]['yields'];
+                $form[$recipe['id']] : $recipe['yields'][array_key_first($recipe['yields'])]['yields'] . 'p';
 
             foreach ($recipe['yields'] as $yield) {
                 $yields = $yield['yields'];
                 foreach ($yield['ingredients'] as $ingredient) {
                     $ingredients[$ingredient['id']]['recipe_yields'][$recipe['id']][$yields . 'p'] = [
-                        'amount' => $ingredient['amount'],
+                        'amount' => is_numeric($ingredient['amount']) ? Number::format($ingredient['amount']) :
+                            $ingredient['amount'],
                         'unit' => $ingredient['unit'],
                     ];
                 }
@@ -84,6 +87,8 @@ class ShoppingListController extends Controller
             'recipes' => Arr::mapWithKeys($recipes, fn ($recipe) => [$recipe['id'] => [
                 'name' => $recipe['name'],
                 'image' => $recipe['image'],
+                'headline' => $recipe['headline'],
+                'options' => $recipe['options'],
             ]]),
             'ingredients' => $ingredients,
         ];
