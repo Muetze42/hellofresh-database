@@ -50,8 +50,8 @@ defineProps({
  */
 </script>
 <template>
+  <h1 class="sr-only">{{ __('Recipes') }}</h1>
   <FullPage>
-    <h1 class="sr-only">{{ __('Recipes') }}</h1>
     <MenuSelector v-if="menus" :menus="menus" />
     <NotFound v-if="!recipes.data.length" />
     <div v-else class="flex flex-wrap justify-around items-stretch gap-8">
@@ -114,40 +114,40 @@ defineProps({
               {{ __('View PDF') }}
             </Component>
           </div>
-<!--          <div class="text-center">-->
-<!--            <button-->
-<!--              type="button"-->
-<!--              class="btn gap-2"-->
-<!--              :class="{-->
-<!--                'btn-danger': shoppingList.indexOf(recipe.id) > -1,-->
-<!--                'btn-disabled':-->
-<!--                  shoppingList.indexOf(recipe.id) < 0 &&-->
-<!--                  shoppingList.length >= config.shopping_list.max_items-->
-<!--              }"-->
-<!--              :disabled="-->
-<!--                shoppingList.indexOf(recipe.id) < 0 &&-->
-<!--                shoppingList.length >= config.shopping_list.max_items-->
-<!--              "-->
-<!--              @click="-->
-<!--                shoppingList.indexOf(recipe.id) > -1-->
-<!--                  ? shoppingListRemove(recipe.id)-->
-<!--                  : shoppingListPush(recipe.id)-->
-<!--              "-->
-<!--            >-->
-<!--              <font-awesome-icon-->
-<!--                :icon="['fas', shoppingList.indexOf(recipe.id) > -1 ? 'xmark' : 'cart-plus']"-->
-<!--                fixed-width-->
-<!--              />-->
-<!--              {{-->
-<!--                __(-->
-<!--                  shoppingList.indexOf(recipe.id) > -1-->
-<!--                    ? __('Removed from the :list')-->
-<!--                    : __('Add to the :list'),-->
-<!--                  { list: __('shopping list') }-->
-<!--                )-->
-<!--              }}-->
-<!--            </button>-->
-<!--          </div>-->
+          <div class="text-center">
+            <button
+              type="button"
+              class="btn gap-2"
+              :class="{
+                'btn-danger': shoppingList.indexOf(recipe.id) > -1,
+                'btn-disabled':
+                  shoppingList.indexOf(recipe.id) < 0 &&
+                  shoppingList.length >= config.shopping_list.max_items
+              }"
+              :disabled="
+                shoppingList.indexOf(recipe.id) < 0 &&
+                shoppingList.length >= config.shopping_list.max_items
+              "
+              @click="
+                shoppingList.indexOf(recipe.id) > -1
+                  ? shoppingListRemove(recipe.id)
+                  : shoppingListPush(recipe.id)
+              "
+            >
+              <font-awesome-icon
+                :icon="['fas', shoppingList.indexOf(recipe.id) > -1 ? 'xmark' : 'cart-plus']"
+                fixed-width
+              />
+              {{
+                __(
+                  shoppingList.indexOf(recipe.id) > -1
+                    ? __('Removed from the :list')
+                    : __('Add to the :list'),
+                  { list: __('shopping list') }
+                )
+              }}
+            </button>
+          </div>
           <!--            <Link :href="country.route + '/' + recipe.id + '-' + recipe.slug" class="btn">-->
           <!--              <font-awesome-icon :icon="['fas', 'scroll']" fixed-width />-->
           <!--              {{ __('Details') }}-->

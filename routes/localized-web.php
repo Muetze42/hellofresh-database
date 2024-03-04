@@ -26,6 +26,8 @@ Route::get('/menus/{menu}', [RecipeMenuController::class, 'index'])
 
 Route::get('shopping-list', [ShoppingListController::class, 'index'])
     ->name('shopping-list.index');
+Route::post('shopping-list', [ShoppingListController::class, 'data'])
+    ->name('shopping-list.data');
 
 Route::post('filter', fn (Request $request) => FilterRequest::make($request))->name('filter');
 
