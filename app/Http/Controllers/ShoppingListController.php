@@ -52,7 +52,7 @@ class ShoppingListController extends Controller
             'yields' => (array) $recipe->yields,
             'image' => $recipe->asset()->preview(),
             'options' => array_map(fn (int $yields) => $yields . 'p', Arr::pluck((array) $recipe->yields, 'yields')),
-        ])->toArray();
+        ])->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->toArray();
 
         $ingredients = Ingredient::whereIn('id', $ingredientIds)
             ->get()
