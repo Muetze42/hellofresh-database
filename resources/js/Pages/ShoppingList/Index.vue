@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { usePage } from '@inertiajs/vue3'
 import { __ } from '@/mixins.js'
@@ -59,6 +59,22 @@ function isInteger(n) {
 function isNumeric(n) {
   return isFloat(n) || isInteger(n)
 }
+
+const calculated = computed(() => {
+  if (!ingredients.value || !form.value) {
+    return null
+  }
+
+  console.log(ingredients.value)
+
+  let calculatedIngredients = {}
+
+  for (const [key, value] of Object.entries(ingredients.value)) {
+    console.log(key, value)
+  }
+
+  return null
+})
 
 onMounted(() => {
   updateData()
@@ -146,6 +162,7 @@ onMounted(() => {
       <section class="card">
         <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm">
           {{ __('Ingredients') }}
+          {{ calculated }}
         </h2>
         <div class="p-2 flex flex-col gap-2 w-full max-w-xl mx-auto">
           <table
