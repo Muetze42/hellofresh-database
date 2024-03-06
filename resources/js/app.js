@@ -68,7 +68,20 @@ createInertiaApp({
             return this.$page.props.country
           },
           config() {
-            return this.$page.props.config
+            if (this.$page.props.config) {
+              return this.$page.props.config
+            }
+            return {
+              filter: {
+                max_filterable_items: 30
+              },
+              pagination: {
+                per_page: 12
+              },
+              shopping_list: {
+                max_items: 50
+              }
+            }
           },
           filterKey() {
             return this.$page.props.filterKey
