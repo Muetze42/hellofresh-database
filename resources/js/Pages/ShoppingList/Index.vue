@@ -103,7 +103,7 @@ onMounted(() => {
       </section>
     </TransitionRoot>
     <TransitionRoot
-      :show="!processing && !shoppingList.length"
+      :show="!processing && !Object.keys(recipes).length"
       enter="transition-opacity duration-250"
       enter-from="opacity-0"
       enter-to="opacity-100"
@@ -118,7 +118,7 @@ onMounted(() => {
     </TransitionRoot>
 
     <TransitionRoot
-      :show="!processing && shoppingList.length > 0"
+      :show="!processing && Object.keys(recipes).length > 0"
       enter="transition-opacity duration-250"
       enter-from="opacity-0"
       enter-to="opacity-100"
