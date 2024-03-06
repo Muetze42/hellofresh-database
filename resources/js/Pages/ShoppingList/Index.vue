@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { usePage } from '@inertiajs/vue3'
 import { __ } from '@/mixins.js'
 
 const page = usePage()
 
-const shoppingList = ref(JSON.parse(localStorage.getItem('shoppingList') || '[]'))
+const shoppingList = ref(null)
 const form = ref(null)
 const recipes = ref({})
 const ingredients = ref({})
@@ -18,7 +18,7 @@ function remove(id) {
   }
   // noinspection JSUnresolvedReference
   shoppingList.value = shoppingList.value.filter((item) => item !== id)
-  localStorage.setItem('shoppingList', JSON.stringify(shoppingList.value))
+  localStorage.setItem('shoppingList' + page.props.country.code, JSON.stringify(shoppingList.value))
   processing.value = true
   updateData()
 }
@@ -78,6 +78,9 @@ function isNumeric(n) {
 // })
 
 onMounted(() => {
+  shoppingList.value = JSON.parse(
+    localStorage.getItem('shoppingList' + page.props.country.code) || '[]'
+  )
   updateData()
 })
 </script>
@@ -165,7 +168,6 @@ onMounted(() => {
       <section class="card">
         <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm">
           {{ __('Ingredients') }}
-          {{ calculated }}
         </h2>
         <div class="p-2 flex flex-col gap-2 w-full max-w-xl mx-auto">
           <table

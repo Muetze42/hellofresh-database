@@ -1,11 +1,16 @@
 <script setup>
 import MenuSelector from '@/Components/MenuSelector.vue'
 import { ref } from 'vue'
+import { usePage } from '@inertiajs/vue3'
 
-const shoppingList = ref(JSON.parse(localStorage.getItem('shoppingList') || '[]'))
+const page = usePage()
+
+const shoppingList = ref(
+  JSON.parse(localStorage.getItem('shoppingList' + page.props.country.code) || '[]')
+)
 
 function storeShoppingList() {
-  localStorage.setItem('shoppingList', JSON.stringify(shoppingList.value))
+  localStorage.setItem('shoppingList' + page.props.country.code, JSON.stringify(shoppingList.value))
 }
 function shoppingListPush(id) {
   // noinspection JSUnresolvedReference
