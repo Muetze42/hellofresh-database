@@ -17,7 +17,3 @@ use the [discussions area](https://github.com/Muetze42/hellofresh-database/discu
 ## Development
 
 Translations can be found in the `/lang` directory
-
-### Code Deployment
-
-Staging server update when merging into the main branch and production server update with every release.
