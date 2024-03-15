@@ -9,3 +9,10 @@ main {
 table {
   page-break-inside: avoid;
 }
+
+.card, body {
+  @apply print:bg-transparent;
+}
+body {
+  @apply tracking-normal;
+}
