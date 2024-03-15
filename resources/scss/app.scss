@@ -82,6 +82,8 @@
 /**
  * Theme
  */
+@import "print";
+
 #app {
   @apply flex flex-col min-h-screen overflow-hidden;
 }
