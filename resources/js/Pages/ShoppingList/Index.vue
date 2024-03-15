@@ -77,7 +77,7 @@ const calculated = computed(() => {
   for (const [ingredientName, ingredient] of Object.entries(ingredients.value)) {
     for (const [recipeId, item] of Object.entries(ingredient.recipe_yields)) {
       let unit = item[form.value[recipeId]].unit
-      let itemValue = data_get(collection, ingredientName + '.' + unit, 0)
+      let itemValue = data_get(collection, ingredient.id + '.' + unit, 0)
       let value = item[form.value[recipeId]].amount
       if (value && is_numeric(value)) {
         itemValue += value
