@@ -59,6 +59,7 @@ class ShoppingListController extends Controller
         $ingredientName = $ingredients->pluck('name', 'id')->toArray();
 
         $ingredients = $ingredients->mapWithKeys(fn (Ingredient $ingredient) => [$ingredient->name => [
+            'id' => $ingredient->getKey(),
             'image' => $ingredient->asset()->image(),
             'recipe_yields' => [],
         ]])->sortKeys(SORT_NATURAL | SORT_FLAG_CASE)->toArray();

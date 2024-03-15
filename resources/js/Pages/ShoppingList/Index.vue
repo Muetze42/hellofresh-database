@@ -82,16 +82,16 @@ const calculated = computed(() => {
       if (value && is_numeric(value)) {
         itemValue += value
       }
-      data_set(collection, ingredientName + '.' + unit, itemValue)
+      data_set(collection, ingredient.id + '.' + unit, itemValue)
     }
   }
   let merged = {}
-  for (const [ingredientName, calculatedData] of Object.entries(collection)) {
-    merged[ingredientName] = ''
+  for (const [ingredientId, calculatedData] of Object.entries(collection)) {
+    merged[ingredientId] = ''
     // noinspection JSCheckFunctionSignatures
     for (let [unit, value] of Object.entries(calculatedData)) {
-      if (merged[ingredientName].length) {
-        merged[ingredientName] += ' + '
+      if (merged[ingredientId].length) {
+        merged[ingredientId] += ' + '
       }
       if (unit === 'g' && value >= 1000) {
         unit = 'kg'
@@ -101,11 +101,11 @@ const calculated = computed(() => {
         value = value / 1000
       }
       if (value > 0) {
-        merged[ingredientName] +=
+        merged[ingredientId] +=
           new Intl.NumberFormat(page.props.locale + '-' + page.props.country.code).format(value) +
           ' '
       }
-      merged[ingredientName] += unit
+      merged[ingredientId] += unit
     }
   }
 
@@ -257,7 +257,7 @@ onMounted(() => {
             <tfoot :class="{ hidden: view === 'C' }">
               <tr>
                 <td colspan="2" class="px-2 text-right font-medium">
-                  {{ calculated[ingredientName] }}
+                  {{ calculated[ingredient.id] }}
                 </td>
               </tr>
             </tfoot>
