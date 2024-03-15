@@ -76,7 +76,6 @@ const calculated = computed(() => {
 
   for (const [ingredientName, ingredient] of Object.entries(ingredients.value)) {
     for (const [recipeId, item] of Object.entries(ingredient.recipe_yields)) {
-      //console.log(recipeId)
       let unit = item[form.value[recipeId]].unit
       let itemValue = data_get(collection, ingredientName + '.' + unit, 0)
       let value = item[form.value[recipeId]].amount
@@ -85,10 +84,8 @@ const calculated = computed(() => {
       }
       data_set(collection, ingredientName + '.' + unit, itemValue)
     }
-    // console.log(ingredientName, ingredient)
   }
   let merged = {}
-  console.log(collection)
   for (const [ingredientName, calculatedData] of Object.entries(collection)) {
     merged[ingredientName] = ''
     // noinspection JSCheckFunctionSignatures
