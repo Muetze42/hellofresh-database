@@ -1,0 +1,18 @@
+.btn, header, footer {
+  @apply print:hidden;
+}
+
+main {
+  @apply print:p-0 print:m-0 print:max-w-full;
+}
+
+table {
+  page-break-inside: avoid;
+}
+
+.card, body {
+  @apply print:bg-transparent;
+}
+body {
+  @apply tracking-normal;
+}

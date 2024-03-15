@@ -82,6 +82,9 @@
 /**
  * Theme
  */
+body {
+  @apply bg-primary-300/70 text-primary-900 tracking-tight;
+}
 #app {
   @apply flex flex-col min-h-screen overflow-hidden;
 }
@@ -174,3 +177,5 @@ $flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", 
 :root {
   --slider-connect-bg: theme('colors.accent.600');
 }
+
+@import "print";

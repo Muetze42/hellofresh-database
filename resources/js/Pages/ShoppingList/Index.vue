@@ -1,16 +1,35 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { usePage } from '@inertiajs/vue3'
 import { __ } from '@/mixins.js'
+import {
+  data_get,
+  data_set,
+  is_numeric
+} from '@norman-huth/helpers-collection-js/helpers/helpers.js'
 
 const page = usePage()
-
 const shoppingList = ref(null)
+const view = ref('')
+if (
+  typeof localStorage.getItem('shoppingListView') == 'string' &&
+  ['A', 'B', 'C'].includes(localStorage.getItem('shoppingListView'))
+) {
+  view.value = localStorage.getItem('shoppingListView').toUpperCase()
+} else {
+  view.value = 'A'
+}
+
 const form = ref(null)
 const recipes = ref({})
 const ingredients = ref({})
 const processing = ref(true)
+
+function setView(value) {
+  view.value = value.toUpperCase()
+  localStorage.setItem('shoppingListView', view.value)
+}
 
 function remove(id) {
   if (!confirm(__('Are you sure?'))) {
@@ -48,34 +67,50 @@ async function updateData() {
     })
 }
 
-function isFloat(n) {
-  return n === +n && n !== (n | 0)
-}
+const calculated = computed(() => {
+  if (!ingredients.value || !form.value) {
+    return null
+  }
 
-function isInteger(n) {
-  return n === +n && n === (n | 0)
-}
+  let collection = {}
 
-function isNumeric(n) {
-  return isFloat(n) || isInteger(n)
-}
+  for (const [ingredientName, ingredient] of Object.entries(ingredients.value)) {
+    for (const [recipeId, item] of Object.entries(ingredient.recipe_yields)) {
+      let unit = item[form.value[recipeId]].unit
+      let itemValue = data_get(collection, ingredientName + '.' + unit, 0)
+      let value = item[form.value[recipeId]].amount
+      if (value && is_numeric(value)) {
+        itemValue += value
+      }
+      data_set(collection, ingredientName + '.' + unit, itemValue)
+    }
+  }
+  let merged = {}
+  for (const [ingredientName, calculatedData] of Object.entries(collection)) {
+    merged[ingredientName] = ''
+    // noinspection JSCheckFunctionSignatures
+    for (let [unit, value] of Object.entries(calculatedData)) {
+      if (merged[ingredientName].length) {
+        merged[ingredientName] += ' + '
+      }
+      if (unit === 'g' && value >= 1000) {
+        unit = 'kg'
+        value = value / 1000
+      } else if (unit === 'ml' && value >= 1000) {
+        unit = 'l'
+        value = value / 1000
+      }
+      if (value > 0) {
+        merged[ingredientName] +=
+          new Intl.NumberFormat(page.props.locale + '-' + page.props.country.code).format(value) +
+          ' '
+      }
+      merged[ingredientName] += unit
+    }
+  }
 
-// Todo
-// const calculated = computed(() => {
-//   if (!ingredients.value || !form.value) {
-//     return null
-//   }
-//
-//   console.log(ingredients.value)
-//
-//   let calculatedIngredients = {}
-//
-//   for (const [key, value] of Object.entries(ingredients.value)) {
-//     console.log(key, value)
-//   }
-//
-//   return null
-// })
+  return merged
+})
 
 onMounted(() => {
   shoppingList.value = JSON.parse(
@@ -128,7 +163,7 @@ onMounted(() => {
       class="flex flex-col gap-2"
     >
       <section class="card mb-4">
-        <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm">
+        <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm print:px-2 print:py-1">
           {{ __('Recipes') }}
         </h2>
         <div class="p-2 flex flex-col gap-2">
@@ -166,9 +201,25 @@ onMounted(() => {
         </div>
       </section>
       <section class="card">
-        <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm">
-          {{ __('Ingredients') }}
-        </h2>
+        <div class="flex justify-between gap-2 border-b border-primary-600/90 rounded-sm p-4 print:px-2 print:py-1 items-center">
+          <h2 class="font-medium">
+            {{ __('Ingredients') }}
+          </h2>
+          <div class="print:hidden text-right btn-group">
+            {{ __('View') }}:
+            <button
+              v-for="viewOption in ['A', 'B', 'C']"
+              :key="viewOption"
+              type="button"
+              class="btn"
+              :class="{ 'btn-disabled': view === viewOption }"
+              :disabled="view === viewOption"
+              @click="setView(viewOption)"
+            >
+              {{ viewOption }}
+            </button>
+          </div>
+        </div>
         <div class="p-2 flex flex-col gap-2 w-full max-w-xl mx-auto">
           <table
             v-for="(ingredient, ingredientName) in ingredients"
@@ -178,12 +229,12 @@ onMounted(() => {
             <thead>
               <tr>
                 <th colspan="2" class="text-left px-2 py-0.5 inline-flex items-center gap-2">
-                  <img :src="ingredient.image" :alt="ingredient.name" class="h-10" />
+                  <img :src="ingredient.image" :alt="ingredient.name" class="h-10 print:h-6" />
                   {{ ingredientName }}
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody :class="{ hidden: view === 'B' }">
               <tr
                 v-for="(item, recipeId) in ingredient.recipe_yields"
                 :key="ingredientName + recipeId"
@@ -193,7 +244,7 @@ onMounted(() => {
                 </td>
                 <td class="px-2 text-right border border-primary-600/90 border-l-0 bg-primary-400">
                   {{
-                    isNumeric(item[form[recipeId]].amount)
+                    is_numeric(item[form[recipeId]].amount)
                       ? new Intl.NumberFormat($page.props.locale + '-' + country.code).format(
                           item[form[recipeId]].amount
                         )
@@ -203,11 +254,13 @@ onMounted(() => {
                 </td>
               </tr>
             </tbody>
-<!--            <tfoot>-->
-<!--              <tr>-->
-<!--                <td colspan="2" class="px-2 text-right font-medium">a</td>-->
-<!--              </tr>-->
-<!--            </tfoot>-->
+            <tfoot :class="{ hidden: view === 'C' }">
+              <tr>
+                <td colspan="2" class="px-2 text-right font-medium">
+                  {{ calculated[ingredientName] }}
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </section>
