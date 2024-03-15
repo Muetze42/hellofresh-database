@@ -17,13 +17,3 @@ export function __(key, replace = {}) {
 
   return key
 }
-
-/**
- * @param {String|Number} value
- * @param {String|Number} defaultValue
-
- * @return String|Number
- */
-export function optional(value, defaultValue = null) {
-  return value ? value : defaultValue
-}

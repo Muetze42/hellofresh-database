@@ -1,8 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { usePage } from '@inertiajs/vue3'
 import { __ } from '@/mixins.js'
+import {
+  data_get,
+  data_set,
+  is_numeric
+} from '@norman-huth/helpers-collection-js/helpers/helpers.js'
 
 const page = usePage()
 
@@ -48,34 +53,53 @@ async function updateData() {
     })
 }
 
-function isFloat(n) {
-  return n === +n && n !== (n | 0)
-}
+const calculated = computed(() => {
+  if (!ingredients.value || !form.value) {
+    return null
+  }
 
-function isInteger(n) {
-  return n === +n && n === (n | 0)
-}
+  let collection = {}
 
-function isNumeric(n) {
-  return isFloat(n) || isInteger(n)
-}
+  for (const [ingredientName, ingredient] of Object.entries(ingredients.value)) {
+    for (const [recipeId, item] of Object.entries(ingredient.recipe_yields)) {
+      //console.log(recipeId)
+      let unit = item[form.value[recipeId]].unit
+      let itemValue = data_get(collection, ingredientName + '.' + unit, 0)
+      let value = item[form.value[recipeId]].amount
+      if (value && is_numeric(value)) {
+        itemValue += value
+      }
+      data_set(collection, ingredientName + '.' + unit, itemValue)
+    }
+    // console.log(ingredientName, ingredient)
+  }
+  let merged = {}
+  console.log(collection)
+  for (const [ingredientName, calculatedData] of Object.entries(collection)) {
+    merged[ingredientName] = ''
+    // noinspection JSCheckFunctionSignatures
+    for (let [unit, value] of Object.entries(calculatedData)) {
+      if (merged[ingredientName].length) {
+        merged[ingredientName] += ' + '
+      }
+      if (unit === 'g' && value >= 1000) {
+        unit = 'kg'
+        value = value / 1000
+      } else if (unit === 'ml' && value >= 1000) {
+        unit = 'l'
+        value = value / 1000
+      }
+      if (value > 0) {
+        merged[ingredientName] +=
+          new Intl.NumberFormat(page.props.locale + '-' + page.props.country.code).format(value) +
+          ' '
+      }
+      merged[ingredientName] += unit
+    }
+  }
 
-// Todo
-// const calculated = computed(() => {
-//   if (!ingredients.value || !form.value) {
-//     return null
-//   }
-//
-//   console.log(ingredients.value)
-//
-//   let calculatedIngredients = {}
-//
-//   for (const [key, value] of Object.entries(ingredients.value)) {
-//     console.log(key, value)
-//   }
-//
-//   return null
-// })
+  return merged
+})
 
 onMounted(() => {
   shoppingList.value = JSON.parse(
@@ -193,7 +217,7 @@ onMounted(() => {
                 </td>
                 <td class="px-2 text-right border border-primary-600/90 border-l-0 bg-primary-400">
                   {{
-                    isNumeric(item[form[recipeId]].amount)
+                    is_numeric(item[form[recipeId]].amount)
                       ? new Intl.NumberFormat($page.props.locale + '-' + country.code).format(
                           item[form[recipeId]].amount
                         )
@@ -203,11 +227,13 @@ onMounted(() => {
                 </td>
               </tr>
             </tbody>
-<!--            <tfoot>-->
-<!--              <tr>-->
-<!--                <td colspan="2" class="px-2 text-right font-medium">a</td>-->
-<!--              </tr>-->
-<!--            </tfoot>-->
+            <tfoot>
+              <tr>
+                <td colspan="2" class="px-2 text-right font-medium">
+                  {{ calculated[ingredientName] }}
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </section>

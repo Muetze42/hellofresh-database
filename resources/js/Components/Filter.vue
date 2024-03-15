@@ -5,7 +5,8 @@ import Multiselect from '@/Components/Forms/Multiselect.vue'
 import Slider from '@vueform/slider'
 import { ref, reactive, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { __, optional } from '@/mixins.js'
+import { __ } from '@/mixins.js'
+import { optional } from '@norman-huth/helpers-collection-js/helpers/helpers.js'
 
 const showError = ref(false)
 const errors = ref(null)
