@@ -128,7 +128,7 @@ onMounted(() => {
       class="flex flex-col gap-2"
     >
       <section class="card mb-4">
-        <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm">
+        <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm print:px-2 print:py-1">
           {{ __('Recipes') }}
         </h2>
         <div class="p-2 flex flex-col gap-2">
@@ -166,7 +166,7 @@ onMounted(() => {
         </div>
       </section>
       <section class="card">
-        <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm">
+        <h2 class="font-medium p-4 border-b border-primary-600/90 rounded-sm print:px-2 print:py-1">
           {{ __('Ingredients') }}
         </h2>
         <div class="p-2 flex flex-col gap-2 w-full max-w-xl mx-auto">
@@ -178,7 +178,7 @@ onMounted(() => {
             <thead>
               <tr>
                 <th colspan="2" class="text-left px-2 py-0.5 inline-flex items-center gap-2">
-                  <img :src="ingredient.image" :alt="ingredient.name" class="h-10" />
+                  <img :src="ingredient.image" :alt="ingredient.name" class="h-10 print:h-6" />
                   {{ ingredientName }}
                 </th>
               </tr>
