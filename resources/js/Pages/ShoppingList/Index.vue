@@ -31,6 +31,54 @@ function setView(value) {
   localStorage.setItem('shoppingListView', view.value)
 }
 
+function amountUnitFormat(amount, unit) {
+  let result = ''
+  if (amount && is_numeric(amount) && amount > 0) {
+    let suffix = ''
+
+    if (unit === 'g' && amount >= 1000) {
+      unit = 'kg'
+      amount = amount / 1000
+    } else if (unit === 'ml' && amount >= 1000) {
+      unit = 'l'
+      amount = amount / 1000
+    }
+
+    let split = amount.toString().split('.')
+    if (split[1]) {
+      if (split[1] === '1') {
+        suffix = '⅒'
+        amount = amount - 0.1
+      } else if (split[1] === '2') {
+        suffix = '⅕'
+        amount = amount - 0.2
+      } else if (split[1] === '125') {
+        suffix = '⅛'
+        amount = amount - 0.125
+      } else if (split[1] === '25') {
+        suffix = '¼'
+        amount = amount - 0.25
+      } else if (split[1] === '5') {
+        suffix = '½'
+        amount = amount - 0.5
+      } else if (split[1] === '75') {
+        suffix = '¾'
+        amount = amount - 0.75
+      }
+    }
+
+    amount = new Intl.NumberFormat(page.props.locale + '-' + page.props.country.code).format(amount)
+
+    if (amount > 0) {
+      result += amount
+    }
+
+    result += suffix + ' '
+  }
+
+  return result + unit
+}
+
 function remove(id) {
   if (!confirm(__('Are you sure?'))) {
     return
@@ -93,19 +141,7 @@ const calculated = computed(() => {
       if (merged[ingredientId].length) {
         merged[ingredientId] += ' + '
       }
-      if (unit === 'g' && value >= 1000) {
-        unit = 'kg'
-        value = value / 1000
-      } else if (unit === 'ml' && value >= 1000) {
-        unit = 'l'
-        value = value / 1000
-      }
-      if (value > 0) {
-        merged[ingredientId] +=
-          new Intl.NumberFormat(page.props.locale + '-' + page.props.country.code).format(value) +
-          ' '
-      }
-      merged[ingredientId] += unit
+      merged[ingredientId] += value > 0 ? amountUnitFormat(value, unit) : unit
     }
   }
 
@@ -243,14 +279,7 @@ onMounted(() => {
                   {{ recipes[recipeId].name }} ({{ form[recipeId] }})
                 </td>
                 <td class="px-2 text-right border border-primary-600/90 border-l-0 bg-primary-400">
-                  {{
-                    is_numeric(item[form[recipeId]].amount)
-                      ? new Intl.NumberFormat($page.props.locale + '-' + country.code).format(
-                          item[form[recipeId]].amount
-                        )
-                      : item[form[recipeId]].amount
-                  }}
-                  {{ item[form[recipeId]].unit }}
+                  {{ amountUnitFormat(item[form[recipeId]].amount, item[form[recipeId]].unit) }}
                 </td>
               </tr>
             </tbody>
