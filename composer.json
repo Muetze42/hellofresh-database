@@ -7,7 +7,7 @@
         "framework",
         "hellofresh",
         "laravel",
-        "recipes"
+        "recipes",
         "framework"
     ],
     "license": "MIT",
