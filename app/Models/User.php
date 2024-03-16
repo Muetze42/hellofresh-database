@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -44,5 +45,13 @@ class User extends Authenticatable
             'active_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the stored filters for the user.
+     */
+    public function filters(): HasMany
+    {
+        return $this->hasMany(UserFilter::class);
     }
 }

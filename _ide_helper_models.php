@@ -406,6 +406,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserFilter> $filters
+ * @property-read int|null $filters_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -424,6 +426,30 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $filter_id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter query()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereFilterId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereUserId($value)
+ */
+	class UserFilter extends \Eloquent {}
 }
 
 namespace App\Models{
