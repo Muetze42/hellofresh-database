@@ -29,11 +29,16 @@ class Menu extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'start' => 'date',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'start' => 'date',
+        ];
+    }
 
     /**
      * The recipes that belong to the menu.

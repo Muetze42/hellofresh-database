@@ -16,6 +16,7 @@ return new class () extends Migration
             $table->char('code', 2)->unique();
             $table->json('locales');
             $table->string('domain');
+            $table->json('data')->nullable();
             $table->unsignedTinyInteger('take');
             $table->boolean('active')->default(false);
             $table->timestamps();

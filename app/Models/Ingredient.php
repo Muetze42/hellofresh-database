@@ -34,11 +34,16 @@ class Ingredient extends AbstractTranslatableModel
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'shipped' => 'bool',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'shipped' => 'bool',
+        ];
+    }
 
     /**
      * The recipes that belong to the ingredient.

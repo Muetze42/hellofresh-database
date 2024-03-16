@@ -33,12 +33,17 @@ class Tag extends AbstractTranslatableModel
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'preferences' => 'array',
-        'display_label' => 'bool',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'preferences' => 'array',
+            'display_label' => 'bool',
+        ];
+    }
 
     /**
      * The recipes that belong to the tag.

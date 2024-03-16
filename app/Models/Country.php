@@ -35,14 +35,19 @@ class Country extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'code' => UpperStringCast::class,
-        'locales' => LowerArrayCast::class,
-        'data' => 'array',
-        'take' => 'int',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'code' => UpperStringCast::class,
+            'locales' => LowerArrayCast::class,
+            'data' => 'array',
+            'take' => 'int',
+        ];
+    }
 
     /**
      * Switch to this country.
@@ -54,7 +59,7 @@ class Country extends Model
     }
 
     /**
-     * Determine if the user is an administrator.
+     * Get public route path for country.
      */
     protected function route(): Attribute
     {

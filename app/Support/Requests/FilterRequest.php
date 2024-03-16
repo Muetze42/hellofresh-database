@@ -187,7 +187,7 @@ class FilterRequest
             return $this->defaults;
         }
 
-        Inertia::share('filterKey', $filter->getKey());
+        //Inertia::share('filterKey', $filter->getKey());
 
         return array_replace_recursive($this->defaults, unserialize($filter->data));
     }

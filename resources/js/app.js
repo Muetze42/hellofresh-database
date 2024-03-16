@@ -42,6 +42,7 @@ import Sidebar from '@/Components/Sidebar.vue'
 import * as Sentry from '@sentry/vue'
 
 import { __ } from '@/mixins.js'
+import {Exception} from "sass";
 
 // noinspection JSIgnoredPromiseFromCall
 createInertiaApp({

@@ -13,6 +13,7 @@ use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,15 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->binds();
         $this->macros();
+
+        Password::defaults(static function () {
+            return Password::min(12)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+                ->uncompromised();
+        });
     }
 
     /**

@@ -43,6 +43,7 @@ class HandleInertiaRequests extends Middleware
             'country' => fn () => country()?->append('route')->only(['code', 'domain', 'data', 'route']),
             'support' => (new Support())->toArray(),
             'countries' => $this->availableCountries(),
+            'filterKey' => $request->input('filter'),
         ]);
     }
 

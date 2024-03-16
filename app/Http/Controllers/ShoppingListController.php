@@ -6,7 +6,6 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Number;
 use Inertia\Inertia;
 
 class ShoppingListController extends Controller

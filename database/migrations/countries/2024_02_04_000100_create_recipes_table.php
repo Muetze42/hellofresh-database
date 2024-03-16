@@ -28,6 +28,7 @@ return new class () extends Migration
             $table->string('image_path')->nullable();
             $table->string('total_time')->nullable();
             $table->string('prep_time')->nullable();
+            $table->unsignedInteger('minutes');
             $table->json('description')->nullable();
             $table->unsignedInteger('average_rating');
             $table->unsignedInteger('favorites_count');

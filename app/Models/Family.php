@@ -34,13 +34,18 @@ class Family extends AbstractTranslatableModel
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'priority' => 'int',
-        'external_created_at' => 'datetime',
-        'external_updated_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'priority' => 'int',
+            'external_created_at' => 'datetime',
+            'external_updated_at' => 'datetime',
+        ];
+    }
 
     /**
      * Get the ingredients for the family.

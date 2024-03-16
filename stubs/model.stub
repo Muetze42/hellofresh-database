@@ -2,21 +2,35 @@
 
 namespace {{ namespace }};
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class {{ class }} extends Model
 {
-    //use \Illuminate\Database\Eloquent\Factories\HasFactory;
+    use HasFactory;
+    //use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
      */
     protected $fillable = [];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
      */
-    protected $casts = [
-        '' => '',
-    ];
+    protected $hidden = [];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [];
+    }
 }

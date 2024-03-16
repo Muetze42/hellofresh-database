@@ -16,7 +16,13 @@ class CountryMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $name = $request->route()->parameter('country_lang');
+        $route = $request->route();
+
+        if ($route->getName() == 'home') {
+            return $next($request);
+        }
+
+        $name = $route->parameter('country_lang');
 
         if ($name && substr_count($name, '-') === 1) {
             [$country, $locale] = explode('-', $name);

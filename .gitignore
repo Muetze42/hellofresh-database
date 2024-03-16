@@ -17,9 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+deploy.sh
 .php-cs-fixer.cache
-
-# Sentry Config File
+/deploy/*.sh
+/public/assets/social-preview.png
 .env.sentry-build-plugin
 /sentry.auth.token
-/public/assets/social-preview.png

@@ -31,13 +31,16 @@ class Label extends AbstractTranslatableModel
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'display_label' => 'bool',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'display_label' => 'bool',
+        ];
+    }
 
     /**
      * Get the recipes for the label.

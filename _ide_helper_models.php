@@ -13,7 +13,7 @@
 
 namespace App\Models{
 /**
- * App\Models\Allergen
+ * 
  *
  * @property string $id
  * @property array $name
@@ -27,7 +27,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
- * @method static \Database\Factories\AllergenFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Allergen query()
@@ -46,7 +45,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Category
+ * 
  *
  * @property string $id
  * @property array $name
@@ -56,7 +55,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
- * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category query()
@@ -73,7 +71,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Country
+ * 
  *
  * @property int $id
  * @property string $code
@@ -86,7 +84,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read mixed $route
  * @method static \Illuminate\Database\Eloquent\Builder|Country active()
- * @method static \Database\Factories\CountryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Country newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Country query()
@@ -105,7 +102,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Cuisine
+ * 
  *
  * @property string $id
  * @property string $type
@@ -116,7 +113,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
- * @method static \Database\Factories\CuisineFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cuisine query()
@@ -134,7 +130,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Family
+ * 
  *
  * @property string $id
  * @property string $uuid
@@ -150,7 +146,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
  * @property-read mixed $translations
- * @method static \Database\Factories\FamilyFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Family newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Family query()
@@ -173,7 +168,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Filter
+ * 
  *
  * @property string $id
  * @property string $data
@@ -188,7 +183,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Ingredient
+ * 
  *
  * @property string $id
  * @property string|null $family_id
@@ -206,7 +201,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
- * @method static \Database\Factories\IngredientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ingredient query()
@@ -228,7 +222,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Label
+ * 
  *
  * @property int $id
  * @property string|null $handle
@@ -242,7 +236,6 @@ namespace App\Models{
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
  * @method static \Illuminate\Database\Eloquent\Builder|Label active()
- * @method static \Database\Factories\LabelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Label newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Label newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Label query()
@@ -262,7 +255,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Menu
+ * 
  *
  * @property int $id
  * @property int $year_week
@@ -271,7 +264,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
- * @method static \Database\Factories\MenuFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Menu newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Menu newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Menu query()
@@ -286,7 +278,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Recipe
+ * 
  *
  * @property string $id
  * @property int|null $label_id
@@ -331,7 +323,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Utensil> $utensils
  * @property-read int|null $utensils_count
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe active()
- * @method static \Database\Factories\RecipeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe query()
@@ -370,7 +361,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Tag
+ * 
  *
  * @property string $id
  * @property string $type
@@ -384,7 +375,6 @@ namespace App\Models{
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
  * @method static \Illuminate\Database\Eloquent\Builder|Tag active()
- * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag query()
@@ -404,7 +394,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\User
+ * 
  *
  * @property int $id
  * @property string $name
@@ -412,17 +402,19 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $active_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
- * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereActiveAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
@@ -436,7 +428,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Utensil
+ * 
  *
  * @property string $id
  * @property string|null $type
@@ -446,7 +438,6 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
- * @method static \Database\Factories\UtensilFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Utensil query()

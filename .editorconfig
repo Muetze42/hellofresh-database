@@ -15,7 +15,7 @@ indent_size = 2
 ij_php_phpdoc_use_fqcn = true
 ij_php_line_comment_at_first_column = false
 
-[resources/views/emails/**.php]
+[{resources/views/mail/**.php,resources/views/emails/**.php,resources/views/vendor/mail/html/**.php}]
 trim_trailing_whitespace = false
 indent_size = 0
 

@@ -64,22 +64,27 @@ class Recipe extends AbstractTranslatableModel
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'average_rating' => 'int',
-        'difficulty' => 'int',
-        'favorites_count' => 'int',
-        'ratings_count' => 'int',
-        'serving_size' => 'int',
-        'is_addon' => 'bool',
-        'external_created_at' => 'datetime',
-        'external_updated_at' => 'datetime',
-        'nutrition' => 'array',
-        'steps' => 'array',
-        'yields' => 'array',
-        'minutes' => 'int',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'average_rating' => 'int',
+            'difficulty' => 'int',
+            'favorites_count' => 'int',
+            'ratings_count' => 'int',
+            'serving_size' => 'int',
+            'is_addon' => 'bool',
+            'external_created_at' => 'datetime',
+            'external_updated_at' => 'datetime',
+            'nutrition' => 'array',
+            'steps' => 'array',
+            'yields' => 'array',
+            'minutes' => 'int',
+        ];
+    }
 
     /**
      * The allergens that belong to the recipe.

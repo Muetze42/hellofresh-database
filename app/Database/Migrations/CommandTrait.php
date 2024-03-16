@@ -25,7 +25,7 @@ trait CommandTrait
      */
     public function handle(): void
     {
-        $this->migrationTable = Config::get('database.migrations');
+        $this->migrationTable = Config::get('database.migrations.table');
 
         Country::each(function (Country $country) {
             $country->switch($country->locales[0]);
