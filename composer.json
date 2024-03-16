@@ -1,9 +1,13 @@
 {
-    "name": "laravel/laravel",
+    "name": "norman-huth/hellofresh-database",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework. Created with norman-huth/advanced-laravel-installer.",
+    "description": "HelloFresh for different countries including features like filtering by ingredients, allergens, tags, etc.",
     "keywords": [
+        "cooking",
+        "framework",
+        "hellofresh",
         "laravel",
+        "recipes"
         "framework"
     ],
     "license": "MIT",
