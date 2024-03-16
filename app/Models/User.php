@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,5 +54,14 @@ class User extends Authenticatable
     public function filters(): HasMany
     {
         return $this->hasMany(UserFilter::class);
+    }
+
+    /**
+     * The favorite recipes that belong to the user.
+     */
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class)
+            ->using(RecipeUser::class);
     }
 }
