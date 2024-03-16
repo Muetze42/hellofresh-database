@@ -3,6 +3,7 @@
 use App\Application;
 use App\Http\Middleware\CountryMiddleware;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\LogActivityMiddleware;
 use App\Http\Middleware\LowerCaseUrlsMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             LowerCaseUrlsMiddleware::class,
             HandleInertiaRequests::class,
+            LogActivityMiddleware::class,
         ], prepend: CountryMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
