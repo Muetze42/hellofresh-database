@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecipeMenuController;
@@ -23,6 +24,9 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::prefix('{country_lang}')
     ->group(function () {
+        Route::post('login', [AuthController::class, 'login'])
+            ->name('auth.login');
+
         Route::get('/menus', [RecipeMenuController::class, 'findMenu'])
             ->name('menus.find');
         Route::get('/menus/{menu}', [RecipeMenuController::class, 'index'])

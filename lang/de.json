@@ -13,6 +13,14 @@
     "Category": "Kategorie",
     "Change country": "Land wechseln",
     "Click OK to reload the page.": "Bitte klicke auf OK, um die Seite neu zu laden.",
+    "Login": "Login",
+    "Logout": "Abmelden",
+    "Password": "Passwort",
+    "Reset Password": "Passwort zurücksetzen",
+    "Register": "Registrieren",
+    "Email Address": "E-Mail Adresse",
+    "Forgot your password?": "Passwort vergessen?",
+    "Remember me": "Angemeldet bleiben",
     "Close menu": "Menu schließen",
     "Countries": "Länder",
     "Country": "Land",
@@ -82,5 +90,6 @@
     "You don't have any recipes on your :list.": "Du hast keine Rezepte auf Deiner :list.",
     "Your session has expired.": "Deine Sitzung ist abgelaufen.",
     "max :number": "max :number",
-    "shopping list": "Einkaufliste"
+    "shopping list": "Einkaufliste",
+    "Submit": "Absenden"
 }

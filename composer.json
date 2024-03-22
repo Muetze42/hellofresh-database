@@ -17,6 +17,7 @@
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.5",
         "norman-huth/gd-text": "^1.0",
         "norman-huth/hellofresh-scraper": "^0.1.0",
         "sentry/sentry-laravel": "^4.3",

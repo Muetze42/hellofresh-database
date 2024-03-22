@@ -2,6 +2,7 @@
 import Filter from '@/Components/Filter.vue'
 import { ref } from 'vue'
 import { DialogTitle } from '@headlessui/vue'
+import User from '@/Layout/User.vue'
 
 const showCountries = ref(false)
 const open = ref(false)
@@ -35,7 +36,8 @@ const links = {
           <font-awesome-icon :icon="['fas', 'bars']" />
         </button>
       </nav>
-      <div>
+      <div class="flex gap-2">
+        <User />
         <Filter />
       </div>
     </div>

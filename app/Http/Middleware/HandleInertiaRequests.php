@@ -44,6 +44,7 @@ class HandleInertiaRequests extends Middleware
             'support' => (new Support())->toArray(),
             'countries' => $this->availableCountries(),
             'filterKey' => $request->input('filter'),
+            'user' => fn () => $request->user()?->only(['id', 'name', 'email']),
         ]);
     }
 
