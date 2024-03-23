@@ -34,6 +34,11 @@ async function logout() {
     processing.value = false
   })
 }
+const loginTabs = ref({
+  login: 'Login',
+  register: 'Register',
+  forgot: 'Forgot your password?'
+})
 </script>
 
 <template>
