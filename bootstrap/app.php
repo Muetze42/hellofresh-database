@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->validateCsrfTokens(except: [
+            '*/logout',
+        ]);
         $middleware->redirectGuestsTo('');
         $middleware->web(append: [
             LowerCaseUrlsMiddleware::class,
