@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecipeMenuController;
@@ -39,10 +40,15 @@ Route::prefix('{country_lang}')
             ->name('password.email');
 
         Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
-            ->name('show.reset.form');
+            ->middleware('guest')->name('show.reset.form');
         Route::post('/password/reset', [ResetPasswordController::class, 'reset'])
             ->name('password.reset');
         Route::get('/password/reset', fn () => abort(404));
+
+        Route::post('/email/verification-notification', [VerificationController::class, 'resend'])
+            ->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+        Route::post('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+            ->middleware(['auth', 'signed'])->name('verification.verify');
 
         Route::get('/menus', [RecipeMenuController::class, 'findMenu'])
             ->name('menus.find');

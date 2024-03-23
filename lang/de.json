@@ -19,6 +19,7 @@
     "Close menu": "Menu schließen",
     "Confirm Email Address": "E-Mail Adresse bestätigen",
     "Confirm Password": "Passwort bestätigen",
+    "Congratulations, your account has been successfully created": "Herzlichen Glückwunsch, Dein Konto wurde erfolgreich erstellt",
     "Countries": "Länder",
     "Country": "Land",
     "Cuisine": "Küche",
@@ -105,5 +106,6 @@
     "View recipe PDF": "Rezept PDF anzeigen",
     "You are receiving this email because we received a password reset request for your account.": "Du erhältst diese E-Mail, weil wir eine Anfrage zum Zurücksetzen des Passworts für dein Konto erhalten haben.",
     "You don't have any recipes on your :list.": "Du hast keine Rezepte auf Deiner :list.",
+    "Your email address has been confirmed": "Deine E-Mail Adresse wurde bestätigt",
     "Your session has expired.": "Deine Sitzung ist abgelaufen."
 }

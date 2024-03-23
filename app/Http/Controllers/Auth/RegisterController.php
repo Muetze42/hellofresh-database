@@ -20,7 +20,10 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        return new JsonResponse([], 201);
+        $message = trans('Congratulations, your account has been successfully created');
+        $request->session()->flash('message', $message);
+
+        return new JsonResponse([], 204);
     }
 
     /**

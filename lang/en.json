@@ -19,6 +19,7 @@
     "Close menu": "Close menu",
     "Confirm Email Address": "Confirm Email Address",
     "Confirm Password": "Confirm Password",
+    "Congratulations, your account has been successfully created": "Congratulations, your account has been successfully created",
     "Countries": "Countries",
     "Country": "Country",
     "Cuisine": "Cuisine",
@@ -105,5 +106,6 @@
     "View recipe PDF": "View recipe PDF",
     "You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
     "You don't have any recipes on your :list.": "You don't have any recipes on your :list.",
+    "Your email address has been confirmed": "Your email address has been confirmed",
     "Your session has expired.": "Your session has expired."
 }
