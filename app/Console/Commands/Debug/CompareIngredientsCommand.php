@@ -6,8 +6,6 @@ use App\Contracts\Commands\AbstractCountryCommand;
 use App\Models\Ingredient;
 use Symfony\Component\Console\Attribute\AsCommand;
 
-use function Symfony\Component\Translation\t;
-
 #[AsCommand(name: 'app:compare-ingredients-command')]
 class CompareIngredientsCommand extends AbstractCountryCommand
 {

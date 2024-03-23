@@ -19,18 +19,22 @@ import {
 import { ref } from 'vue'
 import { router, useForm, usePage } from '@inertiajs/vue3'
 import axios from 'axios'
+import InputField from '@/Components/Forms/InputField.vue'
+import CheckboxField from '@/Components/Forms/CheckboxField.vue'
 
+const showError = ref(false)
+const errors = ref(null)
 const baseUrl = usePage().props.country.route + '/'
 const processing = ref(false)
 const isOpen = ref(false)
+
 const loginForm = useForm({
-  email: 'norman@huth.it',
-  password: 'norman@huth.it',
-  // email: null,
-  // password: null,
+  email: null,
+  password: null,
   remember: false
 })
 const loginErrors = ref(null)
+
 const registerForm = useForm({
   name: null,
   email_confirmation: null,
@@ -39,11 +43,13 @@ const registerForm = useForm({
   password_confirmation: null
 })
 const registerErrors = ref(null)
+
 const resetForm = useForm({
   email: null,
   email_confirmation: null
 })
 const resetErrors = ref(null)
+
 const loginTabs = ref({
   login: 'Login',
   register: 'Register',
@@ -68,9 +74,11 @@ function login() {
           errors: error.response.data.errors
         }
       } else {
-        alert(error.response.data)
+        showError.value = true
+        errors.value = error
       }
     })
+  loginForm.reset('password')
 }
 
 async function logout() {
@@ -83,9 +91,10 @@ async function logout() {
 </script>
 
 <template>
+  <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
   <div v-if="$page.props.user">
     {{ $page.props.user.name }}
-    <button type="button" @click="logout" class="btn">{{ __('Logout') }}</button>
+    <button type="button" class="btn" @click="logout">{{ __('Logout') }}</button>
   </div>
   <button v-else class="btn" @click="isOpen = true">Login</button>
   <TransitionRoot appear :show="isOpen" as="template">
@@ -146,50 +155,17 @@ async function logout() {
                       <div v-if="loginErrors && loginErrors.message" class="invalid">
                         {{ loginErrors.message }}
                       </div>
-                      <label>
-                        {{ __('Email Address') }}
-                        <input v-model="loginForm.email" type="email" class="w-full" />
-                        <div
-                          v-if="
-                            loginErrors &&
-                            loginErrors.errors &&
-                            loginErrors.errors.email &&
-                            loginErrors.errors.email.length !== 1
-                          "
-                          class="invalid"
-                        >
-                          <ul>
-                            <li v-for="(error, index) in loginErrors.errors.email" :key="index">
-                              {{ error }}
-                            </li>
-                          </ul>
-                        </div>
-                      </label>
-                      <label>
-                        {{ __('Password') }}
-                        <input v-model="loginForm.password" type="password" class="w-full" />
-                        <div
-                          v-if="
-                            loginErrors &&
-                            loginErrors.errors &&
-                            loginErrors.errors.password &&
-                            loginErrors.errors.password.length !== 1
-                          "
-                          class="invalid"
-                        >
-                          <ul>
-                            <li v-for="(error, index) in loginErrors.errors.password" :key="index">
-                              {{ error }}
-                            </li>
-                          </ul>
-                        </div>
-                      </label>
-                      <div class="text-center">
-                        <label class="clickable-label">
-                          <input v-model="loginForm.remember" type="checkbox" />
-                          {{ __('Remember Me') }}
-                        </label>
-                      </div>
+                      <InputField
+                        v-model="loginForm.email"
+                        :label="__('Email Address')"
+                        type="email"
+                      />
+                      <InputField
+                        v-model="loginForm.password"
+                        :label="__('Password')"
+                        type="password"
+                      />
+                      <CheckboxField v-model="loginForm.remember" :label="__('Remember Me')" />
                       <div class="f">
                         <button type="button" class="btn btn-danger" @click="isOpen = false">
                           {{ __('Cancel') }}
