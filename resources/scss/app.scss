@@ -56,6 +56,9 @@
   .overlay {
     @apply bg-neutral-900 bg-opacity-90;
   }
+  .scroll-content {
+    @apply max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full;
+  }
   /* For Semantic Elements */
   .nav-element {
     @apply w-full z-30 transition duration-300 ease-in-out bg-primary-500 border-primary-600/50;

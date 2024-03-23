@@ -20,9 +20,8 @@ import { ref } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import axios from 'axios'
 import LoginForm from '@/Components/Forms/LoginForm.vue'
+import RegisterForm from '@/Components/Forms/RegisterForm.vue'
 
-const showError = ref(false)
-const errors = ref(null)
 const baseUrl = usePage().props.country.route + '/'
 const processing = ref(false)
 const isOpen = ref(false)
@@ -42,7 +41,6 @@ const loginTabs = ref({
 </script>
 
 <template>
-  <ErrorModal v-if="showError" :error="errors" @close="showError = false" />
   <div v-if="$page.props.user">
     {{ $page.props.user.name }}
     <button type="button" class="btn" @click="logout">{{ __('Logout') }}</button>
@@ -104,7 +102,9 @@ const loginTabs = ref({
                   <TabPanel :key="loginTabs.login">
                     <LoginForm @close="isOpen = false" />
                   </TabPanel>
-                  <TabPanel :key="loginTabs.register">register</TabPanel>
+                  <TabPanel :key="loginTabs.register">
+                    <RegisterForm @close="isOpen = false" />
+                  </TabPanel>
                   <TabPanel :key="loginTabs.forgot">forgot</TabPanel>
                 </TabPanels>
               </TabGroup>

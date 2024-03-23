@@ -6,7 +6,7 @@ const open = ref(false)
 <template>
   <Modal :show="open" :title="__('Many thanks for any support')" @close="open = false">
     <div
-      class="p-2 flex flex-col gap-2 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full"
+      class="p-2 flex flex-col gap-2 scroll-content"
     >
       <div
         v-for="(section, key) in $page.props.support"

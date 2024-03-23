@@ -14,7 +14,7 @@ input[type='text'], input[type='password'], input[type='search'], input[type='em
 }
 
 .form-modal {
-  @apply flex flex-col divide-y divide-primary-600;
+  @apply flex flex-col divide-y divide-primary-600 scroll-content;
 
   > * {
     @apply p-2;
@@ -23,8 +23,7 @@ input[type='text'], input[type='password'], input[type='search'], input[type='em
   .invalid {
     @apply bg-rose-200/90 text-red-700 border border-rose-400 px-1.5 font-bold rounded-sm;
   }
-
-  .f {
-    @apply bg-primary-500 rounded-b-sm flex items-center flex-wrap justify-center gap-2;
-  }
+}
+.f {
+  @apply px-2 pb-2 pt-3 bg-primary-500 rounded-b-sm flex items-center flex-wrap justify-center gap-2;
 }

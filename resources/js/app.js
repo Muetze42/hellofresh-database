@@ -84,6 +84,11 @@ createInertiaApp({
               },
               shopping_list: {
                 max_items: 50
+              },
+              users: {
+                name: {
+                  max_length: 20
+                }
               }
             }
           },

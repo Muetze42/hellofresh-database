@@ -21,8 +21,8 @@ dependencies:
     specifier: 3.0.6
     version: 3.0.6(@fortawesome/fontawesome-svg-core@6.5.1)(vue@3.4.21)
   '@norman-huth/helpers-collection-js':
-    specifier: ^0.0.13
-    version: 0.0.13
+    specifier: ^0.0.16
+    version: 0.0.16
   '@sentry/vite-plugin':
     specifier: ^2.16.0
     version: 2.16.0
@@ -714,8 +714,8 @@ packages:
       fastq: 1.17.1
     dev: true
 
-  /@norman-huth/helpers-collection-js@0.0.13:
-    resolution: {integrity: sha512-Aq+VHLgm6kyn9kLUM+c6UN9J1yaF/Vc7dXF9EErNX1RRBIGvPIXMqrrYHA+EcvbLjmIw74Ed7ty/4zrncb1Ywg==}
+  /@norman-huth/helpers-collection-js@0.0.16:
+    resolution: {integrity: sha512-QSSR2GxjybU7S7lSptKek3k1ZvkdqXoe9HEaBWX0pHOcPigBX3MPt9ep+Tk3/kHqZhJjcWBVx+oNQ6L5pbkaIw==}
     dev: false
 
   /@pkgjs/parseargs@0.11.0:

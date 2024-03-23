@@ -9,20 +9,25 @@ const showError = ref(false)
 const errors = ref(null)
 const baseUrl = usePage().props.country.route + '/'
 const processing = ref(false)
+const formErrors = ref(null)
 
 const emit = defineEmits(['close'])
 
 const form = useForm({
+  name: null,
   email: null,
+  email_confirmation: null,
   password: null,
-  remember: false
+  password_confirmation: null,
+  privacy: false
 })
-const formErrors = ref(null)
+
 function submit() {
   processing.value = true
   formErrors.value = null
+
   axios
-    .post(baseUrl + 'login', form)
+    .post(baseUrl + 'register', form)
     .then(() => {
       router.reload({ only: ['user'] })
       processing.value = false
@@ -40,8 +45,9 @@ function submit() {
         errors.value = error
       }
     })
-  form.reset('password')
+  form.reset('password', 'password_confirmation')
 }
+const privacyTag = ref('<a href="https://huth.it/privacy" class="link" target="_blank">')
 </script>
 
 <template>
@@ -51,9 +57,61 @@ function submit() {
       <div v-if="formErrors && formErrors.message" class="invalid">
         {{ formErrors.message }}
       </div>
-      <InputField v-model="form.email" :label="__('Email Address')" type="email" required />
-      <InputField v-model="form.password" :label="__('Password')" type="password" required />
-      <CheckboxField v-model="form.remember" :label="__('Remember Me')" class="text-center" />
+      <InputField
+        v-model="form.name"
+        :label="__('Name')"
+        :errors="formErrors"
+        errors-key="name"
+        :maxlength="config.users.name.max_length"
+        required
+      />
+      <InputField
+        v-model="form.email"
+        :label="__('Email Address')"
+        :errors="formErrors"
+        errors-key="email"
+        type="email"
+        :maxlength="255"
+        required
+      />
+      <InputField
+        v-model="form.email_confirmation"
+        :label="__('Confirm Email Address')"
+        :errors="formErrors"
+        errors-key="email_confirmation"
+        type="email"
+        :maxlength="255"
+        required
+      />
+      <InputField
+        v-model="form.password"
+        :label="__('Password')"
+        :errors="formErrors"
+        errors-key="password"
+        type="password"
+        required
+      />
+      <InputField
+        v-model="form.password_confirmation"
+        :label="__('Confirm Password')"
+        :errors="formErrors"
+        errors-key="password_confirmation"
+        type="password"
+        required
+      />
+      <CheckboxField
+        v-model="form.privacy"
+        :errors="formErrors"
+        errors-key="privacy"
+        class="text-center"
+        required
+      >
+        <template #label>
+          <span
+            v-html="__('Accept :privacy', { privacy: privacyTag + __('Privacy Policy') + '</a>' })"
+          />
+        </template>
+      </CheckboxField>
     </div>
     <div class="f">
       <button type="button" class="btn btn-danger" @click="emit('close')">

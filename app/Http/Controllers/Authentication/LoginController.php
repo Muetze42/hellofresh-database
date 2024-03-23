@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Authentication;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class LoginController extends Controller
 {
     use AuthenticatesUsers;
     use ThrottlesLogins;
@@ -17,8 +18,6 @@ class AuthController extends Controller
      */
     public function authenticated(Request $request, $user)
     {
-        return new JsonResponse([
-            'successful' => true,
-        ]);
+        return new JsonResponse([], 204);
     }
 }

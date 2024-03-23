@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecipeMenuController;
@@ -25,10 +26,12 @@ Route::get('/', HomeController::class)
 
 Route::prefix('{country_lang}')
     ->group(function () {
-        Route::post('login', [AuthController::class, 'login'])
+        Route::post('login', [LoginController::class, 'login'])
             ->name('auth.login');
-        Route::post('logout', [AuthController::class, 'logout'])
+        Route::post('logout', [LoginController::class, 'logout'])
             ->name('auth.logout');
+        Route::post('register', [RegisterController::class, 'register'])
+            ->name('auth.register');
 
         Route::get('/menus', [RecipeMenuController::class, 'findMenu'])
             ->name('menus.find');
