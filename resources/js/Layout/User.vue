@@ -17,69 +17,15 @@ import {
   TransitionRoot
 } from '@headlessui/vue'
 import { ref } from 'vue'
-import { router, useForm, usePage } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
 import axios from 'axios'
-import InputField from '@/Components/Forms/InputField.vue'
-import CheckboxField from '@/Components/Forms/CheckboxField.vue'
+import LoginForm from '@/Components/Forms/LoginForm.vue'
 
 const showError = ref(false)
 const errors = ref(null)
 const baseUrl = usePage().props.country.route + '/'
 const processing = ref(false)
 const isOpen = ref(false)
-
-const loginForm = useForm({
-  email: null,
-  password: null,
-  remember: false
-})
-const loginErrors = ref(null)
-
-const registerForm = useForm({
-  name: null,
-  email_confirmation: null,
-  email: null,
-  password: null,
-  password_confirmation: null
-})
-const registerErrors = ref(null)
-
-const resetForm = useForm({
-  email: null,
-  email_confirmation: null
-})
-const resetErrors = ref(null)
-
-const loginTabs = ref({
-  login: 'Login',
-  register: 'Register',
-  forgot: 'Forgot your password?'
-})
-
-function login() {
-  processing.value = true
-  loginErrors.value = null
-  axios
-    .post(baseUrl + 'login', loginForm)
-    .then(() => {
-      router.reload({ only: ['user'] })
-      processing.value = false
-      isOpen.value = false
-    })
-    .catch(function (error) {
-      processing.value = false
-      if (error.response.status === 422) {
-        loginErrors.value = {
-          message: error.response.data.message,
-          errors: error.response.data.errors
-        }
-      } else {
-        showError.value = true
-        errors.value = error
-      }
-    })
-  loginForm.reset('password')
-}
 
 async function logout() {
   processing.value = true
@@ -151,51 +97,7 @@ async function logout() {
                 </TabList>
                 <TabPanels>
                   <TabPanel :key="loginTabs.login">
-                    <form class="form-modal" @submit.prevent="login">
-                      <div v-if="loginErrors && loginErrors.message" class="invalid">
-                        {{ loginErrors.message }}
-                      </div>
-                      <InputField
-                        v-model="loginForm.email"
-                        :label="__('Email Address')"
-                        type="email"
-                      />
-                      <InputField
-                        v-model="loginForm.password"
-                        :label="__('Password')"
-                        type="password"
-                      />
-                      <CheckboxField v-model="loginForm.remember" :label="__('Remember Me')" />
-                      <div class="f">
-                        <button type="button" class="btn btn-danger" @click="isOpen = false">
-                          {{ __('Cancel') }}
-                        </button>
-                        <button
-                          type="submit"
-                          class="btn"
-                          :disabled="
-                            processing ||
-                            !loginForm.isDirty ||
-                            !loginForm.email ||
-                            !loginForm.password
-                          "
-                          :class="{
-                            'btn-disabled':
-                              processing ||
-                              !loginForm.isDirty ||
-                              !loginForm.email ||
-                              !loginForm.password
-                          }"
-                        >
-                          <Loading
-                            class="w-4 transition-all"
-                            :class="{ 'opacity-0': !processing }"
-                          />
-                          {{ __('Submit') }}
-                          <Loading class="w-4 opacity-0" />
-                        </button>
-                      </div>
-                    </form>
+                    <LoginForm @close="isOpen = false" />
                   </TabPanel>
                   <TabPanel :key="loginTabs.register">register</TabPanel>
                   <TabPanel :key="loginTabs.forgot">forgot</TabPanel>
