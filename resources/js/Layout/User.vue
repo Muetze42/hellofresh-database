@@ -21,6 +21,7 @@ import { router, usePage } from '@inertiajs/vue3'
 import axios from 'axios'
 import LoginForm from '@/Components/Forms/LoginForm.vue'
 import RegisterForm from '@/Components/Forms/RegisterForm.vue'
+import ForgotPasswordForm from '@/Components/Forms/ForgotPasswordForm.vue'
 
 const baseUrl = usePage().props.country.route + '/'
 const processing = ref(false)
@@ -105,7 +106,9 @@ const loginTabs = ref({
                   <TabPanel :key="loginTabs.register">
                     <RegisterForm @close="isOpen = false" />
                   </TabPanel>
-                  <TabPanel :key="loginTabs.forgot">forgot</TabPanel>
+                  <TabPanel :key="loginTabs.forgot">
+                    <ForgotPasswordForm @close="isOpen = false" />
+                  </TabPanel>
                 </TabPanels>
               </TabGroup>
             </DialogPanel>

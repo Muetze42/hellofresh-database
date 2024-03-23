@@ -6,13 +6,16 @@ use App\Console\Commands\Development\Illuminate\InstallCommand;
 use App\Console\Commands\Development\MigrateCommand;
 use App\Console\Commands\Development\RollbackCommand;
 use App\Database\Migrations\Migrator;
+use App\Models\User;
 use App\Services\LengthAwarePaginator as CustomLengthAwarePaginator;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,6 +35,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->binds();
         $this->macros();
+
+        ResetPassword::createUrlUsing(function (User $user, string $token) {
+            return route('show.reset.form', [
+                'country_lang' => Str::lower(country()->code) . '-' . $this->app->getLocale(),
+                'token' => $token,
+            ]);
+        });
 
         Password::defaults(static function () {
             return Password::min(12)

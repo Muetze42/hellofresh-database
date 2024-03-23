@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Authentication\LoginController;
-use App\Http\Controllers\Authentication\RegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecipeMenuController;
@@ -26,12 +28,21 @@ Route::get('/', HomeController::class)
 
 Route::prefix('{country_lang}')
     ->group(function () {
-        Route::post('login', [LoginController::class, 'login'])
+        Route::post('/login', [LoginController::class, 'login'])
             ->name('auth.login');
-        Route::post('logout', [LoginController::class, 'logout'])
+        Route::post('/logout', [LoginController::class, 'logout'])
             ->name('auth.logout');
-        Route::post('register', [RegisterController::class, 'register'])
+        Route::post('/register', [RegisterController::class, 'register'])
             ->name('auth.register');
+
+        Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+            ->name('password.email');
+
+        Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
+            ->name('show.reset.form');
+        Route::post('/password/reset', [ResetPasswordController::class, 'reset'])
+            ->name('password.reset');
+        Route::get('/password/reset', fn () => abort(404));
 
         Route::get('/menus', [RecipeMenuController::class, 'findMenu'])
             ->name('menus.find');
@@ -39,14 +50,14 @@ Route::prefix('{country_lang}')
             ->where('menu', '[0-9]+')
             ->name('recipes.menus');
 
-        Route::get('shopping-list', [ShoppingListController::class, 'index'])
+        Route::get('/shopping-list', [ShoppingListController::class, 'index'])
             ->name('shopping-list.index');
-        Route::post('shopping-list', [ShoppingListController::class, 'data'])
+        Route::post('/shopping-list', [ShoppingListController::class, 'data'])
             ->name('shopping-list.data');
 
-        Route::post('filter', fn (Request $request) => FilterRequest::make($request))->name('filter');
+        Route::post('/filter', fn (Request $request) => FilterRequest::make($request))->name('filter');
 
-        Route::post('filters/{model}', [FilterController::class, 'index'])
+        Route::post('/filters/{model}', [FilterController::class, 'index'])
             ->name('filter.index');
 
         Route::get('/', [RecipeMenuController::class, 'index'])->name('recipes.index');

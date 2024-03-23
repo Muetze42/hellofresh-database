@@ -25,6 +25,8 @@ Schedule::command('app:assets:generate-social-preview')
 Schedule::command('app:hello-fresh:update-menus')
     ->dailyAt('6:00');
 
+Schedule::command('auth:clear-resets')->everyFifteenMinutes();
+
 Schedule::command('queue:work', [
     '--queue' => 'hellofresh',
     '--timeout' => 0,
