@@ -20,12 +20,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', HomeController::class)->name('home');
+Route::get('/', HomeController::class)
+    ->name('home');
 
 Route::prefix('{country_lang}')
     ->group(function () {
         Route::post('login', [AuthController::class, 'login'])
             ->name('auth.login');
+        Route::post('logout', [AuthController::class, 'logout'])
+            ->name('auth.logout');
 
         Route::get('/menus', [RecipeMenuController::class, 'findMenu'])
             ->name('menus.find');

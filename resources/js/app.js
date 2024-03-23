@@ -42,7 +42,6 @@ import Sidebar from '@/Components/Sidebar.vue'
 import * as Sentry from '@sentry/vue'
 
 import { __ } from '@/mixins.js'
-import {Exception} from "sass";
 
 // noinspection JSIgnoredPromiseFromCall
 createInertiaApp({
@@ -50,6 +49,10 @@ createInertiaApp({
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
 
     return pages[`./Pages/${name}.vue`]
+  },
+  progress: {
+    color: '#f43f5e',
+    showSpinner: true
   },
   setup({ el, App, props, plugin }) {
     const app = createApp({ render: () => h(App, props) })

@@ -116,6 +116,18 @@ nav, .nav {
   }
 }
 
+#nprogress {
+  .bar {
+    @apply h-12 opacity-50 #{!important};
+  }
+  .spinner-icon {
+    @apply border-4 h-6 w-6 #{!important};
+  }
+}
+//#nprogress .bar {
+//  height: 20px !important;
+//}
+
 /**
  * Flag Icons
  */

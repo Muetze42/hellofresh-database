@@ -18,13 +18,16 @@ import {
 } from '@headlessui/vue'
 import { ref } from 'vue'
 import { router, useForm, usePage } from '@inertiajs/vue3'
+import axios from 'axios'
 
 const baseUrl = usePage().props.country.route + '/'
 const processing = ref(false)
 const isOpen = ref(false)
 const loginForm = useForm({
-  email: null,
-  password: null,
+  email: 'norman@huth.it',
+  password: 'norman@huth.it',
+  // email: null,
+  // password: null,
   remember: false
 })
 const loginErrors = ref(null)
@@ -47,10 +50,10 @@ const loginTabs = ref({
   forgot: 'Forgot your password?'
 })
 
-async function login() {
+function login() {
   processing.value = true
   loginErrors.value = null
-  await axios
+  axios
     .post(baseUrl + 'login', loginForm)
     .then(() => {
       router.reload({ only: ['user'] })
@@ -69,11 +72,20 @@ async function login() {
       }
     })
 }
+
+async function logout() {
+  processing.value = true
+  axios.post(baseUrl + 'logout').then(() => {
+    router.reload({ only: ['user'] })
+    processing.value = false
+  })
+}
 </script>
 
 <template>
   <div v-if="$page.props.user">
     {{ $page.props.user.name }}
+    <button type="button" @click="logout" class="btn">{{ __('Logout') }}</button>
   </div>
   <button v-else class="btn" @click="isOpen = true">Login</button>
   <TransitionRoot appear :show="isOpen" as="template">
