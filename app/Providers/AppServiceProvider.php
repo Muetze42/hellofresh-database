@@ -37,8 +37,11 @@ class AppServiceProvider extends ServiceProvider
         $this->macros();
 
         ResetPassword::createUrlUsing(function (User $user, string $token) {
+            $country = country();
+            $parameter = $country ? Str::lower(country()?->code) . '-' . $this->app->getLocale() : 'us-en';
+
             return route('show.reset.form', [
-                'country_lang' => Str::lower(country()->code) . '-' . $this->app->getLocale(),
+                'country_lang' => $parameter,
                 'token' => $token,
             ]);
         });
