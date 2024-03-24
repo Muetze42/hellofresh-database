@@ -30,7 +30,8 @@ module.exports = {
         accent: colors.emerald
       },
       screens: {
-        xs: '370px'
+        xs: '370px',
+        mobile: defaultTheme.screens.md
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
