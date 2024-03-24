@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Collection;
-
 class Setting
 {
     /**
-     * The collection of settings.
+     * The data array.
      */
-    public Collection $data;
+    public array $data;
 
     protected function __construct()
     {
-        $this->data = collect(json_decode(file_get_contents(base_path('settings.json')), true));
+        $this->data = json_decode(file_get_contents(base_path('settings.json')), true);
     }
 
     /**
@@ -33,18 +31,13 @@ class Setting
      *          name: array{
      *              max_length: int,
      *          }
-     *      }
+     *      },
+     *     flash: array{
+     *         duration: int,
+     *     }
      *  }
      */
     public static function toArray(): array
-    {
-        return (new static())->data->toArray();
-    }
-
-    /**
-     * Get the collection of items.
-     */
-    public static function all(): Collection
     {
         return (new static())->data;
     }

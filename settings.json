@@ -12,5 +12,8 @@
         "name": {
             "max_length": 20
         }
+    },
+    "flash": {
+        "duration": 3
     }
 }
