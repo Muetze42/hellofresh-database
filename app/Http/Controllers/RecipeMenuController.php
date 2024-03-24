@@ -34,14 +34,14 @@ class RecipeMenuController extends Controller
 
         return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection($recipes),
-            'menus' => $this->menuData($menu),
+            'menus' => $this->menuData($menu, $request),
         ])->toResponse($request)->setStatusCode($recipes->count() ? 200 : 404);
     }
 
     /**
      * Get the menu data for current the request.
      */
-    protected function menuData(?Menu $menu): ?array
+    protected function menuData(?Menu $menu, Request $request): ?array
     {
         if (!$menu) {
             return null;
@@ -52,16 +52,24 @@ class RecipeMenuController extends Controller
         return [
             'current' => [
                 'value' => $menu->year_week,
-                'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)->publicFormatted(),
-                'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
+                'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)
+                    ->resolveTimezone($request)
+                    ->publicFormatted(),
+                'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)
+                    ->resolveTimezone($request)
+                    ->publicFormatted(),
             ],
             'list' => Menu::where('year_week', '>=', $formatted)
                 ->whereNot('year_week', $menu->year_week)
                 ->get()
                 ->map(fn (Menu $menu) => [
                     'value' => $menu->year_week,
-                    'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)->publicFormatted(),
-                    'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
+                    'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)
+                        ->resolveTimezone($request)
+                        ->publicFormatted(),
+                    'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)
+                        ->resolveTimezone($request)
+                        ->publicFormatted(),
                 ])->toArray(),
         ];
     }

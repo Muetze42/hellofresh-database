@@ -13,6 +13,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
@@ -84,6 +85,16 @@ class AppServiceProvider extends ServiceProvider
         Carbon::macro(
             'publicFormatted',
             fn () => $this->translatedFormat('M j')
+        );
+        Carbon::macro(
+            'resolveTimezone',
+            function (Request $request) {
+                if ($user = $request->user()) {
+                    return $this->tz($user->timezone);
+                }
+
+                return $this;
+            }
         );
     }
 
