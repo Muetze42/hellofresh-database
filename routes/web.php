@@ -47,7 +47,7 @@ Route::prefix('{country_lang}')
 
         Route::post('/email/verification-notification', [VerificationController::class, 'resend'])
             ->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-        Route::post('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+        Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
             ->middleware(['auth', 'signed'])->name('verification.verify');
 
         Route::get('/menus', [RecipeMenuController::class, 'findMenu'])

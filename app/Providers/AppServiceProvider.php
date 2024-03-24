@@ -9,11 +9,14 @@ use App\Database\Migrations\Migrator;
 use App\Models\User;
 use App\Services\LengthAwarePaginator as CustomLengthAwarePaginator;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
@@ -37,12 +40,22 @@ class AppServiceProvider extends ServiceProvider
         $this->macros();
 
         ResetPassword::createUrlUsing(function (User $user, string $token) {
-            $country = country();
-
-            return route('show.reset.form', [
-                'country_lang' => $country ? Str::lower($country->code) . '-' . $this->app->getLocale() : 'us-en',
+            return countryRoute('show.reset.form', [
+                'country_lang' => $this->countryLangPath(),
                 'token' => $token,
             ]);
+        });
+
+        VerifyEmail::createUrlUsing(function ($notifiable): string {
+            return URL::temporarySignedRoute(
+                'verification.verify',
+                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                [
+                    'country_lang' => $this->countryLangPath(),
+                    'id' => $notifiable->getKey(),
+                    'hash' => sha1($notifiable->getEmailForVerification()),
+                ]
+            );
         });
 
         Password::defaults(static function () {
@@ -53,6 +66,14 @@ class AppServiceProvider extends ServiceProvider
                 ->symbols()
                 ->uncompromised();
         });
+    }
+
+    protected function countryLangPath(): string
+    {
+        $country = country();
+        $locale = $this->app->getLocale();
+
+        return $country && in_array($locale, $country->locales) ? Str::lower($country->code) . '-' . $locale : 'us-en';
     }
 
     /**
