@@ -60,7 +60,7 @@
     @apply bg-neutral-900 bg-opacity-90;
   }
   .scroll-content {
-    @apply max-h-[calc(100vh-160px)] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full;
+    @apply max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full;
   }
   /* For Semantic Elements */
   .nav-element {

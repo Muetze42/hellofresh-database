@@ -1,13 +1,7 @@
 <script setup>
 import {
   Dialog,
-  DialogDescription,
   DialogPanel,
-  DialogTitle,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
   Tab,
   TabGroup,
   TabList,
@@ -17,23 +11,12 @@ import {
   TransitionRoot
 } from '@headlessui/vue'
 import { ref } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
-import axios from 'axios'
 import LoginForm from '@/Components/Forms/LoginForm.vue'
 import RegisterForm from '@/Components/Forms/RegisterForm.vue'
 import ForgotPasswordForm from '@/Components/Forms/ForgotPasswordForm.vue'
 
-const baseUrl = usePage().props.country.route + '/'
-const processing = ref(false)
 const isOpen = ref(false)
 
-async function logout() {
-  processing.value = true
-  axios.post(baseUrl + 'logout').then(() => {
-    router.reload({ only: ['user'] })
-    processing.value = false
-  })
-}
 const loginTabs = ref({
   login: 'Login',
   register: 'Register',
@@ -42,11 +25,7 @@ const loginTabs = ref({
 </script>
 
 <template>
-  <div v-if="$page.props.user">
-    {{ $page.props.user.name }}
-    <button type="button" class="btn" @click="logout">{{ __('Logout') }}</button>
-  </div>
-  <button v-else class="btn" @click="isOpen = true">Login</button>
+  <button class="btn" @click="isOpen = true">Login</button>
   <TransitionRoot appear :show="isOpen" as="template">
     <Dialog as="div" class="relative z-40" @close="isOpen = false">
       <TransitionChild
@@ -87,13 +66,12 @@ const loginTabs = ref({
                   >
                     <button
                       disabled
-                      :class="[
-                        'w-full rounded-t-sm text-sm font-medium leading-5 py-1',
-                        'ring-white/60 ring-offset-1 ring-offset-accent-500 focus:outline-none focus:ring-2',
+                      class="w-full rounded-t-sm text-xs sm:text-sm leading-snug sm:leading-tight font-medium py-1 ring-white/60 ring-offset-1 ring-offset-accent-500 focus:outline-none focus:ring-2"
+                      :class="
                         selected
                           ? 'bg-accent-400 shadow'
                           : 'bg-primary-600 text-neutral-700 hover:bg-accent-400/50'
-                      ]"
+                      "
                     >
                       {{ __(label) }}
                     </button>

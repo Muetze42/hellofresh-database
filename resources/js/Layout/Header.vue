@@ -2,7 +2,7 @@
 import Filter from '@/Components/Filter.vue'
 import { ref } from 'vue'
 import { DialogTitle } from '@headlessui/vue'
-import User from '@/Layout/User.vue'
+import User from '@/Components/Navigation/UserMenu.vue'
 
 const showCountries = ref(false)
 const open = ref(false)

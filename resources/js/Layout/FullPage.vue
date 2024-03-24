@@ -38,7 +38,7 @@ onMounted(() => {
     <div class="fixed z-60 w-full top-12">
       <div class="container flex justify-end">
         <div
-          class="sm:ml-auto max-sm:w-full inline-flex items-center gap-2 font-medium border-l-4 border-blue-400 bg-blue-200/95 text-blue-700 p-3 shadow shadow-blue-500"
+          class="sm:ml-auto max-sm:w-full inline-flex gap-1 sm:gap-2 font-medium border-l-4 border-blue-400 bg-blue-200/95 text-blue-700 px-3 py-2 pr-2 shadow shadow-blue-500"
         >
           <div class="flex gap-2 items-center">
             <font-awesome-icon :icon="['fas', 'arrow-right']" class="animate-bounce-x" />
@@ -46,7 +46,7 @@ onMounted(() => {
           </div>
           <button
             type="button"
-            class="btn"
+            class="btn h-6"
             :aria-label="__('Close notification')"
             @click="closeFlashMessage()"
           >
