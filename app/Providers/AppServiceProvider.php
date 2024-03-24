@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Translatable\Facades\Translatable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->binds();
         $this->macros();
+
+        Translatable::fallback(
+            fallbackAny: true,
+        );
 
         ResetPassword::createUrlUsing(function (User $user, string $token) {
             return countryRoute('show.reset.form', [
