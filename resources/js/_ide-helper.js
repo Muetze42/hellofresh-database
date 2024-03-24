@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import config from './../../data/config.json'
+import config from './../../settings.json'
 
 /**
  * @property {Object} user

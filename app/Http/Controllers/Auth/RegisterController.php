@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Models\User;
 use App\Rules\DisposableEmailRule;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -32,7 +33,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'unique:users', 'max:' . config('application.users.name.max_length')],
+            'name' => ['required', 'string', 'unique:users', 'max:' . Setting::get('users.name.max_length', 20)],
             'email' =>
                 [
                     'required', 'string', 'email:rfc,dns', 'max:255', 'unique:users', 'confirmed',

@@ -7,6 +7,7 @@ use App\Models\Ingredient;
 use App\Models\Label;
 use App\Models\Menu;
 use App\Models\Recipe;
+use App\Models\Setting;
 use App\Support\Requests\FilterRequest;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,7 +29,7 @@ class RecipeMenuController extends Controller
                 fn (Builder $query) => $query->whereIn('id', $menu->recipes->pluck('id')->toArray())
             )
             ->orderBy('external_updated_at')
-            ->paginate(config('application.pagination.per_page', 12))
+            ->paginate(Setting::get('pagination.per_page', 12))
             ->withQueryString();
 
         return Inertia::render('Recipes/Index', [

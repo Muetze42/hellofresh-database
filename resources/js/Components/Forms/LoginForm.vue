@@ -53,7 +53,7 @@ function submit() {
       </div>
       <InputField v-model="form.email" :label="__('Email Address')" type="email" required />
       <InputField v-model="form.password" :label="__('Password')" type="password" required />
-      <CheckboxField v-model="form.remember" :label="__('Remember Me')" class="text-center" />
+      <CheckboxField v-model="form.remember" :label="__('Remember me')" class="text-center" />
     </div>
     <div class="f">
       <button type="button" class="btn btn-danger" @click="emit('close')">

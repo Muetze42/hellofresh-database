@@ -43,6 +43,8 @@ import * as Sentry from '@sentry/vue'
 
 import { __ } from '@/mixins.js'
 
+import fallbackSettings from './../../settings.json'
+
 // noinspection JSIgnoredPromiseFromCall
 createInertiaApp({
   resolve: (name) => {
@@ -75,22 +77,7 @@ createInertiaApp({
             if (this.$page.props.config) {
               return this.$page.props.config
             }
-            return {
-              filter: {
-                max_filterable_items: 30
-              },
-              pagination: {
-                per_page: 12
-              },
-              shopping_list: {
-                max_items: 50
-              },
-              users: {
-                name: {
-                  max_length: 20
-                }
-              }
-            }
+            return fallbackSettings
           },
           filterKey() {
             return this.$page.props.filterKey
