@@ -73,9 +73,9 @@ createInertiaApp({
           country() {
             return this.$page.props.country
           },
-          config() {
-            if (this.$page.props.config) {
-              return this.$page.props.config
+          settings() {
+            if (this.$page.props.settings) {
+              return this.$page.props.settings
             }
             return fallbackSettings
           },

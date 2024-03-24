@@ -134,12 +134,12 @@ async function submit() {
                 item: __('Ingredients')
               })
             }}
-            ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+            ({{ __('max :number', { number: settings.filter.max_filterable_items }) }})
           </label>
           <label class="clickable-label">
             <input v-model="form.iMode" type="radio" :value="true" />
             {{ __('Show only recipes with each of these ingredients') }}
-            ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+            ({{ __('max :number', { number: settings.filter.max_filterable_items }) }})
           </label>
         </div>
         <div class="mt-1">
@@ -157,7 +157,7 @@ async function submit() {
                   item: __(filterable.split('_')[0])
                 })
           }}
-          ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+          ({{ __('max :number', { number: settings.filter.max_filterable_items }) }})
         </span>
         <Multiselect
           v-model="form[filterable.toLowerCase()]"

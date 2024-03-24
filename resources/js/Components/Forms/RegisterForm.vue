@@ -62,7 +62,7 @@ const privacyTag = ref('<a href="https://huth.it/privacy" class="link" target="_
         :label="__('Name')"
         :errors="formErrors"
         errors-key="name"
-        :maxlength="config.users.name.max_length"
+        :maxlength="settings.users.name.max_length"
         required
       />
       <InputField

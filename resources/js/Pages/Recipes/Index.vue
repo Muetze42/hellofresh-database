@@ -127,11 +127,11 @@ defineProps({
                 'btn-danger': shoppingList.indexOf(recipe.id) > -1,
                 'btn-disabled':
                   shoppingList.indexOf(recipe.id) < 0 &&
-                  shoppingList.length >= config.shopping_list.max_items
+                  shoppingList.length >= settings.shopping_list.max_items
               }"
               :disabled="
                 shoppingList.indexOf(recipe.id) < 0 &&
-                shoppingList.length >= config.shopping_list.max_items
+                shoppingList.length >= settings.shopping_list.max_items
               "
               @click="
                 shoppingList.indexOf(recipe.id) > -1
