@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
+use NormanHuth\Library\Lib\MacroRegistry;
+use NormanHuth\Library\Support\Macros\Carbon\ToUserTimezoneMacro;
 use Spatie\Translatable\Facades\Translatable;
 
 class AppServiceProvider extends ServiceProvider
@@ -89,18 +91,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::macro(
             'publicFormatted',
-            fn () => $this->translatedFormat('M j')
+            fn (Request $request) => $this->toUserTimezone($request)->translatedFormat('M j')
         );
-        Carbon::macro(
-            'resolveTimezone',
-            function (Request $request) {
-                if ($user = $request->user()) {
-                    return $this->tz($user->timezone);
-                }
-
-                return $this;
-            }
-        );
+        MacroRegistry::macros([
+            ToUserTimezoneMacro::class => Carbon::class,
+        ]);
     }
 
     /**

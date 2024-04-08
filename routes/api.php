@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\SentryTunnelController;
 use Illuminate\Support\Facades\Route;
+use NormanHuth\Library\Http\Controllers\Api\SentryTunnelController;
 
 /*
 |--------------------------------------------------------------------------

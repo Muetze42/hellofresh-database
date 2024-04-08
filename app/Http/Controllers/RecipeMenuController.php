@@ -53,11 +53,9 @@ class RecipeMenuController extends Controller
             'current' => [
                 'value' => $menu->year_week,
                 'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)
-                    ->resolveTimezone($request)
-                    ->publicFormatted(),
+                    ->publicFormatted($request),
                 'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)
-                    ->resolveTimezone($request)
-                    ->publicFormatted(),
+                    ->publicFormatted($request),
             ],
             'list' => Menu::where('year_week', '>=', $formatted)
                 ->whereNot('year_week', $menu->year_week)
@@ -65,11 +63,9 @@ class RecipeMenuController extends Controller
                 ->map(fn (Menu $menu) => [
                     'value' => $menu->year_week,
                     'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)
-                        ->resolveTimezone($request)
-                        ->publicFormatted(),
+                        ->publicFormatted($request),
                     'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)
-                        ->resolveTimezone($request)
-                        ->publicFormatted(),
+                        ->publicFormatted($request),
                 ])->toArray(),
         ];
     }

@@ -20,6 +20,7 @@
         "laravel/ui": "^4.5",
         "norman-huth/gd-text": "^1.0",
         "norman-huth/hellofresh-scraper": "^0.1.0",
+        "norman-huth/php-library": "^0.0.4",
         "sentry/sentry-laravel": "^4.3",
         "spatie/laravel-translatable": "^6.6"
     },

@@ -7,6 +7,7 @@ use App\Http\Middleware\LogActivityMiddleware;
 use App\Http\Middleware\LowerCaseUrlsMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use NormanHuth\Library\Lib\CommandRegistry;
 use Sentry\Laravel\Integration;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -26,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             LogActivityMiddleware::class,
         ], prepend: CountryMiddleware::class);
     })
+    ->withCommands(CommandRegistry::devCommands())
     ->withExceptions(function (Exceptions $exceptions) {
         Integration::handles($exceptions);
     })->create();
