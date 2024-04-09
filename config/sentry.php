@@ -8,6 +8,8 @@
 
 return [
 
+
+
     /*
     |--------------------------------------------------------------------------
     | Data Source Name (DSN)
@@ -96,7 +98,9 @@ return [
     'send_default_pii' => env('SENTRY_SEND_DEFAULT_PII', false),
 
     // @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#ignore-exceptions
-    // 'ignore_exceptions' => [],
+    'ignore_exceptions' => [
+        \Symfony\Component\Console\Exception\CommandNotFoundException::class,
+    ],
 
     // @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#ignore-transactions
     // 'ignore_transactions' => [],
