@@ -1,6 +1,6 @@
 # Hello Fresh Database
 
-HelloFresh database for 16 countries including features like filtering by ingredients, allergens, tags, etc.
+HelloFresh database for 17 countries including features like filtering by ingredients, allergens, tags, etc.
 
 * Made with [Laravel](https://laravel.com/), [Tailwind CSS](https://tailwindcss.com/), [Vue.js](https://vuejs.org/), 
   [Inertia.js](https://inertiajs.com/) and ♥
