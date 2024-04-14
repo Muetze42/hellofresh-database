@@ -7,6 +7,7 @@ use App\Models\Ingredient;
 use App\Models\Label;
 use App\Models\Menu;
 use App\Models\Recipe;
+use App\Models\Setting;
 use App\Support\Requests\FilterRequest;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,12 +16,12 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
-class RecipeMenuController extends Controller
+class RecipeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, ?Menu $menu = null)
+    public function index(Request $request, ?Menu $menu = null, bool $favorites = false)
     {
         $recipes = $this->filterQuery($request)
             ->when(
@@ -28,19 +29,19 @@ class RecipeMenuController extends Controller
                 fn (Builder $query) => $query->whereIn('id', $menu->recipes->pluck('id')->toArray())
             )
             ->orderBy('external_updated_at')
-            ->paginate(config('application.pagination.per_page', 12))
+            ->paginate(Setting::get('pagination.per_page', 12))
             ->withQueryString();
 
         return Inertia::render('Recipes/Index', [
             'recipes' => RecipeResource::indexCollection($recipes),
-            'menus' => $this->menuData($menu),
+            'menus' => $this->menuData($menu, $request),
         ])->toResponse($request)->setStatusCode($recipes->count() ? 200 : 404);
     }
 
     /**
      * Get the menu data for current the request.
      */
-    protected function menuData(?Menu $menu): ?array
+    protected function menuData(?Menu $menu, Request $request): ?array
     {
         if (!$menu) {
             return null;
@@ -51,16 +52,20 @@ class RecipeMenuController extends Controller
         return [
             'current' => [
                 'value' => $menu->year_week,
-                'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)->publicFormatted(),
-                'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
+                'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)
+                    ->publicFormatted($request),
+                'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)
+                    ->publicFormatted($request),
             ],
             'list' => Menu::where('year_week', '>=', $formatted)
                 ->whereNot('year_week', $menu->year_week)
                 ->get()
                 ->map(fn (Menu $menu) => [
                     'value' => $menu->year_week,
-                    'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)->publicFormatted(),
-                    'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->publicFormatted(),
+                    'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)
+                        ->publicFormatted($request),
+                    'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)
+                        ->publicFormatted($request),
                 ])->toArray(),
         ];
     }

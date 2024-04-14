@@ -53,8 +53,14 @@
       }
     }
   }
+  .successfully {
+    @apply bg-green-200/90 text-green-700 border border-green-400 px-1.5 rounded-sm m-1 text-center;
+  }
   .overlay {
     @apply bg-neutral-900 bg-opacity-90;
+  }
+  .scroll-content {
+    @apply max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full;
   }
   /* For Semantic Elements */
   .nav-element {
@@ -116,11 +122,23 @@ nav, .nav {
   }
 }
 
+#nprogress {
+  .bar {
+    @apply h-12 opacity-50 #{!important};
+  }
+  .spinner-icon {
+    @apply border-4 h-6 w-6 #{!important};
+  }
+}
+//#nprogress .bar {
+//  height: 20px !important;
+//}
+
 /**
  * Flag Icons
  */
 $flag-icons-use-square: false;
-$flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", "gb", "it", "lu", "nl", "no", "nz", "se", "us";
+$flag-icons-included-countries: "at", "au", "be", "ca", "ch", "de", "dk", "fr", "gb", "ie", "it", "lu", "nl", "no", "nz", "se", "us";
 @import "flag-icons/sass/variables";
 @import "flag-icons/sass/flag-icons-base";
 @import "flag-icons/sass/flag-icons-list";

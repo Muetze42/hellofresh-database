@@ -62,7 +62,7 @@ async function getItems(query) {
     :filter-results="false"
     :delay="200"
     :min-chars="2"
-    :max="config.filter.max_filterable_items"
+    :max="settings.filter.max_filterable_items"
     :object="true"
     :resolve-on-load="false"
     :no-options-text="searchValue.length > 2 ? __('No results found') : null"

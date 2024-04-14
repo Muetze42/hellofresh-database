@@ -17,8 +17,10 @@
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.5",
         "norman-huth/gd-text": "^1.0",
-        "norman-huth/hellofresh-scraper": "@dev",
+        "norman-huth/hellofresh-scraper": "^0.1",
+        "norman-huth/php-library": "^0.4",
         "sentry/sentry-laravel": "^4.3",
         "spatie/laravel-translatable": "^6.6"
     },
@@ -50,7 +52,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan app:update-disposable-email-domains --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

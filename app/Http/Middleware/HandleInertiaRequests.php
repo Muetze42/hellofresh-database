@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Country;
+use App\Models\Setting;
 use App\Support\Support;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -39,11 +40,15 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'translations' => $this->jsonTranslations(),
             'locale' => app()->getLocale(),
-            'config' => config('application'),
+            'settings' => Setting::toArray(),
             'country' => fn () => country()?->append('route')->only(['code', 'domain', 'data', 'route']),
             'support' => (new Support())->toArray(),
             'countries' => $this->availableCountries(),
             'filterKey' => $request->input('filter'),
+            'user' => fn () => $request->user()?->only(['id', 'name']),
+            'flash' => [
+                'message' => fn () => $request->session()->get('message'),
+            ],
         ]);
     }
 

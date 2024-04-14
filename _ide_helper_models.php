@@ -363,6 +363,17 @@ namespace App\Models{
 /**
  * 
  *
+ * @method static \Illuminate\Database\Eloquent\Builder|RecipeUser newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecipeUser newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RecipeUser query()
+ */
+	class RecipeUser extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property string $id
  * @property string $type
  * @property array $name
@@ -398,14 +409,20 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property string $timezone
+ * @property string $locale
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
+ * @property bool $is_admin
  * @property \Illuminate\Support\Carbon|null $active_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read mixed $avatar
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $favorites
+ * @property-read int|null $favorites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserFilter> $filters
  * @property-read int|null $filters_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -420,34 +437,25 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLocale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereTimezone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  */
-	class User extends \Eloquent {}
+	class User extends \Eloquent implements \Illuminate\Contracts\Auth\MustVerifyEmail {}
 }
 
 namespace App\Models{
 /**
  * 
  *
- * @property int $id
- * @property int $user_id
- * @property string $filter_id
- * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|UserFilter newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserFilter newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserFilter query()
- * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereFilterId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserFilter whereUserId($value)
  */
 	class UserFilter extends \Eloquent {}
 }

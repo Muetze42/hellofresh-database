@@ -3,6 +3,7 @@
 namespace App\Support\Requests;
 
 use App\Models\Filter;
+use App\Models\Setting;
 use ArgumentCountError;
 use BadMethodCallException;
 use Illuminate\Http\Request;
@@ -112,7 +113,7 @@ class FilterRequest
      */
     protected function filtered(): array
     {
-        $max = config('application.filter.max_filterable_items', 20);
+        $max = Setting::get('filter.max_filterable_items', 20);
 
         $validated = $this->request->validate(
             Arr::mapWithKeys(
