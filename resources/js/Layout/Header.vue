@@ -2,6 +2,7 @@
 import Filter from '@/Components/Filter.vue'
 import { ref } from 'vue'
 import { DialogTitle } from '@headlessui/vue'
+import User from '@/Components/Navigation/UserMenu.vue'
 
 const showCountries = ref(false)
 const open = ref(false)
@@ -17,8 +18,9 @@ const links = {
       <nav class="flex gap-2 items-center">
         <button
           type="button"
+          lang="en"
           title="Choose a country and language"
-          class="btn px-1 h-8 w-8"
+          class="btn px-1 h-8 w-8 max-mobile:hidden"
           @click="showCountries = true"
         >
           <span class="fi rounded-sm" :class="'fi-' + country.code.toLowerCase()" />
@@ -27,15 +29,16 @@ const links = {
           v-for="(link, label) in links"
           :key="label"
           :href="filterLink(country.route + link)"
-          class="max-md:hidden"
+          class="max-mobile:hidden"
         >
           {{ __(label).charAt(0).toUpperCase() + __(label).slice(1) }}
         </Link>
-        <button type="button" class="btn md:hidden h-8 w-8" @click="open = true">
+        <button type="button" class="btn mobile:hidden h-8 w-8" @click="open = true">
           <font-awesome-icon :icon="['fas', 'bars']" />
         </button>
       </nav>
-      <div>
+      <div class="flex gap-2">
+        <User />
         <Filter />
       </div>
     </div>
@@ -54,6 +57,15 @@ const links = {
     <nav
       class="mobile flex flex-col gap-4 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full p-2"
     >
+      <button
+        type="button"
+        lang="en"
+        title="Choose a country and language"
+        class="btn px-1 h-8 w-8"
+        @click="showCountries = true"
+      >
+        <span class="fi rounded-sm" :class="'fi-' + country.code.toLowerCase()" />
+      </button>
       <Link v-for="(link, label) in links" :key="label" :href="filterLink(country.route + link)">
         {{ __(label) }}
       </Link>

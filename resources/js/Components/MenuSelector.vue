@@ -21,7 +21,7 @@ defineProps({
 </script>
 <template>
   <div class="mb-8 text-center">
-    <Menu v-slot="{ open }" as="div" class="relative inline-block z-40">
+    <Menu v-slot="{ open }" as="div" class="relative inline-block z-20">
       <MenuButton
         as="button"
         class="transition-all transform rounded-sm inline-flex items-center justify-center gap-3 font-medium bg-white text-neutral-900 py-0.5 px-2 border border-primary-700"

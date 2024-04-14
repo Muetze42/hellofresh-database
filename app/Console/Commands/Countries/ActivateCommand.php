@@ -52,6 +52,7 @@ class ActivateCommand extends Command
         $this->components->info('Command executed');
         $tableData = $this->getCountriesTableData();
         $this->table($tableData['headers'], $tableData['rows']);
+        $this->call('app:development:flags');
     }
 
     protected function getCountriesTableData(): array

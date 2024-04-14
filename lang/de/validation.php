@@ -110,7 +110,7 @@ return [
         'mixed'         => ':Attribute muss mindestens einen Großbuchstaben und einen Kleinbuchstaben beinhalten.',
         'numbers'       => ':Attribute muss mindestens eine Zahl beinhalten.',
         'symbols'       => ':Attribute muss mindestens ein Sonderzeichen beinhalten.',
-        'uncompromised' => ':Attribute wurde in einem Datenleck gefunden. Bitte wählen Sie ein anderes :attribute.',
+        'uncompromised' => ':Attribute wurde in einem Datenleck gefunden. Bitte wähle ein anderes :attribute.',
     ],
     'present'              => ':Attribute muss vorhanden sein.',
     'present_if'           => 'Das Feld :attribute muss vorhanden sein, wenn :other gleich :value ist.',

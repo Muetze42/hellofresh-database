@@ -52,8 +52,12 @@ class Country extends Model
     /**
      * Switch to this country.
      */
-    public function switch(string $locale): void
+    public function switch(?string $locale = null): void
     {
+        if (!$locale) {
+            $locale = $this->locales[0];
+        }
+
         App::setCountry($this);
         App::setLocale($locale);
     }

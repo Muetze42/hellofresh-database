@@ -49,7 +49,7 @@ class Support
                 'items' => [
                     [
                         'label' => __('Questions, ideas, discussions') . ' (English)',
-                        'url' => 'https://github.com/Muetze42/hellofresh-database/discussionse',
+                        'url' => 'https://github.com/Muetze42/hellofresh-database/discussions',
                     ],
                     [
                         'label' => __('Report error') . ' (English)',

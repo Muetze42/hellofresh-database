@@ -6,14 +6,24 @@ use App\Console\Commands\Development\Illuminate\InstallCommand;
 use App\Console\Commands\Development\MigrateCommand;
 use App\Console\Commands\Development\RollbackCommand;
 use App\Database\Migrations\Migrator;
+use App\Models\User;
 use App\Services\LengthAwarePaginator as CustomLengthAwarePaginator;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
+use NormanHuth\Library\Lib\MacroRegistry;
+use NormanHuth\Library\Support\Macros\Carbon\ToUserTimezoneMacro;
+use Spatie\Translatable\Facades\Translatable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +43,29 @@ class AppServiceProvider extends ServiceProvider
         $this->binds();
         $this->macros();
 
+        Translatable::fallback(
+            fallbackAny: true,
+        );
+
+        ResetPassword::createUrlUsing(function (User $user, string $token) {
+            return countryRoute('show.reset.form', [
+                'country_lang' => $this->countryLangPath(),
+                'token' => $token,
+            ]);
+        });
+
+        VerifyEmail::createUrlUsing(function ($notifiable): string {
+            return URL::temporarySignedRoute(
+                'verification.verify',
+                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                [
+                    'country_lang' => $this->countryLangPath(),
+                    'id' => $notifiable->getKey(),
+                    'hash' => sha1($notifiable->getEmailForVerification()),
+                ]
+            );
+        });
+
         Password::defaults(static function () {
             return Password::min(12)
                 ->letters()
@@ -43,6 +76,14 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 
+    protected function countryLangPath(): string
+    {
+        $country = country();
+        $locale = $this->app->getLocale();
+
+        return $country && in_array($locale, $country->locales) ? Str::lower($country->code) . '-' . $locale : 'us-en';
+    }
+
     /**
      * Register application macros.
      */
@@ -50,8 +91,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::macro(
             'publicFormatted',
-            fn () => $this->translatedFormat('M j')
+            fn (Request $request) => $this->toUserTimezone($request)->translatedFormat('M j')
         );
+        MacroRegistry::macros([
+            ToUserTimezoneMacro::class => Carbon::class,
+        ]);
     }
 
     /**

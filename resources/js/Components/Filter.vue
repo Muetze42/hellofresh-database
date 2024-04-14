@@ -87,7 +87,7 @@ async function submit() {
 
 <template>
   <button v-if="filter" type="button" class="relative btn h-8 px-4" @click="open = true">
-    {{ __('Filter') }} / {{ __('Search') }}
+    {{ __('Filter') }}<span class="max-mobile:sr-only"> / {{ __('Search') }}</span>
     <span v-if="isActive" class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
       <span
         class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
@@ -134,12 +134,12 @@ async function submit() {
                 item: __('Ingredients')
               })
             }}
-            ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+            ({{ __('max :number', { number: settings.filter.max_filterable_items }) }})
           </label>
           <label class="clickable-label">
             <input v-model="form.iMode" type="radio" :value="true" />
             {{ __('Show only recipes with each of these ingredients') }}
-            ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+            ({{ __('max :number', { number: settings.filter.max_filterable_items }) }})
           </label>
         </div>
         <div class="mt-1">
@@ -157,7 +157,7 @@ async function submit() {
                   item: __(filterable.split('_')[0])
                 })
           }}
-          ({{ __('max :number', { number: config.filter.max_filterable_items }) }})
+          ({{ __('max :number', { number: settings.filter.max_filterable_items }) }})
         </span>
         <Multiselect
           v-model="form[filterable.toLowerCase()]"

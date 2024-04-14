@@ -30,10 +30,29 @@ module.exports = {
         accent: colors.emerald
       },
       screens: {
-        xs: '370px'
+        xs: '370px',
+        mobile: defaultTheme.screens.md
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
+      },
+      animation: {
+        'bounce-x': 'bounce-x 1s infinite'
+      },
+      keyframes: {
+        'bounce-x': {
+          '0%, 100%': {
+            transform: 'translateX(-25%)',
+            animationTimingFunction: 'cubic-bezier(0.8,0,1,1)'
+          },
+          '50%': {
+            transform: 'none',
+            animationTimingFunction: 'cubic-bezier(0,0,0.2,1)'
+          }
+        }
+      },
+      zIndex: {
+        60: '60'
       }
     }
   },

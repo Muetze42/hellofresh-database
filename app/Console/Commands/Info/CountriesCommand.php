@@ -30,12 +30,13 @@ class CountriesCommand extends Command
      */
     public function handle(): void
     {
-        $infos = Country::orderBy('code')
+        $infos = Country::orderBy('id')
             ->get()
             ->map(function (Country $country) {
                 $locales = $country->locales;
                 sort($locales);
                 $data = [
+                    'ID' => $country->id,
                     'code' => $country->code,
                     'country' => __('country.' . Str::upper($country->code)),
                     'locales' => implode(',', $locales),

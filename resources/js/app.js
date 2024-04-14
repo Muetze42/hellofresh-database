@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faAngleRight,
+  faArrowRight,
   faBars,
   faCartPlus,
   faCircleCheck,
@@ -18,6 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
   faAngleRight,
+  faArrowRight,
   faBars,
   faCartPlus,
   faCircleCheck,
@@ -42,7 +44,8 @@ import Sidebar from '@/Components/Sidebar.vue'
 import * as Sentry from '@sentry/vue'
 
 import { __ } from '@/mixins.js'
-import {Exception} from "sass";
+
+import fallbackSettings from './../../settings.json'
 
 // noinspection JSIgnoredPromiseFromCall
 createInertiaApp({
@@ -50,6 +53,10 @@ createInertiaApp({
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
 
     return pages[`./Pages/${name}.vue`]
+  },
+  progress: {
+    color: '#f43f5e',
+    showSpinner: true
   },
   setup({ el, App, props, plugin }) {
     const app = createApp({ render: () => h(App, props) })
@@ -68,21 +75,11 @@ createInertiaApp({
           country() {
             return this.$page.props.country
           },
-          config() {
-            if (this.$page.props.config) {
-              return this.$page.props.config
+          settings() {
+            if (this.$page.props.settings) {
+              return this.$page.props.settings
             }
-            return {
-              filter: {
-                max_filterable_items: 30
-              },
-              pagination: {
-                per_page: 12
-              },
-              shopping_list: {
-                max_items: 50
-              }
-            }
+            return fallbackSettings
           },
           filterKey() {
             return this.$page.props.filterKey
