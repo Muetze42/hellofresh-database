@@ -11,10 +11,13 @@ use NormanHuth\Library\Lib\CommandRegistry;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__ . '/../routes/web.php',
+        web: [
+            __DIR__ . '/../routes/auth.php',
+            __DIR__ . '/../routes/web.php',
+        ],
         commands: __DIR__ . '/../routes/console.php',
         then: function (): void {
-            Route::middleware(['api', 'auth:sanctum'])
+            Route::middleware('api')
                 ->prefix('api')
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
