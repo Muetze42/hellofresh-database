@@ -1,0 +1,135 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "norman-huth/laravel-starter-kit",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.24",
+        "laravel/tinker": "^2.10.1",
+        "livewire/flux": "^2.2",
+        "livewire/flux-pro": "^2.2",
+        "livewire/livewire": "^3.6",
+        "livewire/volt": "^1.7",
+        "norman-huth/php-library": "^2.44",
+        "sentry/sentry-laravel": "^4.15",
+        "thecodingmachine/safe": "^3.3"
+    },
+    "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.6",
+        "brianium/paratest": "^7.8",
+        "driftingly/rector-laravel": "^2.0",
+        "fakerphp/faker": "^1.24",
+        "infection/infection": "^0.29.14",
+        "itsgoingd/clockwork": "^5.3",
+        "larastan/larastan": "^3.6",
+        "laravel/pail": "^1.2.2",
+        "laravel/pint": "^1.24",
+        "laravel/sail": "^1.44",
+        "mockery/mockery": "^1.6",
+        "norman-huth/find-command": "^1.2",
+        "nunomaduro/collision": "^8.8",
+        "phpmd/phpmd": "^2.15",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpunit/phpunit": "^11.5.3",
+        "rector/rector": "^2.1",
+        "roave/security-advisories": "dev-latest",
+        "thecodingmachine/phpstan-safe-rule": "^1.4",
+        "spatie/laravel-ray": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"pnpm run dev\" --names=server,queue,logs,vite"
+        ],
+        "phpmd": "./vendor/bin/phpmd app,bootstrap,config,database,routes ansi phpmd.xml",
+        "pint": "./vendor/bin/pint --ansi",
+        "rector": "./vendor/bin/rector --ansi",
+        "safe": "./vendor/bin/rector app --config vendor/thecodingmachine/safe/rector-migrate.php --ansi",
+        "stan": "./vendor/bin/phpstan analyse -v --ansi",
+        "mutation": "@php vendor/bin/infection --configuration=.infection.json --threads=$(nproc) --ansi",
+        "checks": [
+            "@stan",
+            "@phpmd",
+            "@rector",
+            "@pint"
+        ],
+        "full-checks": [
+            "@checks",
+            "@mutation"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
+        ]
+    },
+    "scripts-descriptions": {
+        "phpmd": "Look for several potential problems within the source",
+        "pint": "Fix code style issues",
+        "rector": "Instant Upgrades and Automated Refactoring Code",
+        "stan": "Run static analysis to find bugs",
+        "checks": "Running all analysis and fixer tools",
+        "mutation": "Run mutation testing using Infection with parallel threads"
+    },
+    "scripts-aliases": {
+        "checks": [
+            "c"
+        ],
+        "full-checks": [
+            "fc"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true,
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "repositories": {
+        "flux-pro": {
+            "type": "composer",
+            "url": "https://composer.fluxui.dev"
+        }
+    }
+}

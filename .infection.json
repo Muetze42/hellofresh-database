@@ -1,0 +1,12 @@
+{
+    "source": {
+        "directories": ["app"]
+    },
+    "mutators": {
+        "@default": true,
+        "PublicVisibility": false
+    },
+    "logs": {
+        "text": "storage/logs/infection.log"
+    }
+}

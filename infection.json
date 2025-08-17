@@ -1,0 +1,18 @@
+{
+    "$schema": "https://infection.github.io/schema.json",
+    "timeout": 60,
+    "source": {
+        "directories": ["app"]
+    },
+    "phpUnit": {
+        "configDir": ".",
+        "customPath": "./vendor/bin/phpunit"
+    },
+    "logs": {
+        "text": "storage/logs/infection.log",
+        "summary": "storage/logs/infection-summary.log"
+    },
+    "mutators": {
+        "@default": true
+    }
+}

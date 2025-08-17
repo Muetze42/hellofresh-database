@@ -1,0 +1,32 @@
+includes:
+  - vendor/larastan/larastan/extension.neon
+  - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+  - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+
+parameters:
+  paths:
+    - app/
+    - bootstrap/
+#  reportUnmatchedIgnoredErrors: false
+
+#  treatPhpDocTypesAsCertain: false
+#
+#  universalObjectCratesClasses:
+#    - Illuminate\Database\Eloquent\Relations\Pivot
+#    - Illuminate\Http\Resources\Json\JsonResource
+
+  level: 8
+
+#  ignoreErrors:
+#    - '#Static call to instance method App\\Support\\Facades\\[a-zA-Z0-9\\_]+.#'
+#    - '#Static call to instance method App\\[a-zA-Z0-9\\_]+\:\:make.#'
+#    - '#Call to an undefined method App\\Support\\Macros\\[a-zA-Z0-9\\_]+.#'
+#    - '#Call to an undefined method Illuminate\\Support\\Carbon::toFrontend\(\).#'
+#    - '#Call to an undefined method Illuminate\\Support\\Carbon::toFrontendTimezone\(\).#'
+#    -
+#      identifier: new.static
+#      paths:
+#        - app/Traits/*
+#        - app/Support/*
+#        - app/ValueObjects/*
+#        - app/*/Concerns/*

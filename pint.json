@@ -1,0 +1,189 @@
+{
+    "preset": "psr12",
+    "notName": [
+        "_ide_help*.php",
+        ".phpstorm.meta.php",
+        "*.blade.php"
+    ],
+    "rules": {
+        "array_syntax": {
+            "syntax": "short"
+        },
+        "binary_operator_spaces": {
+            "default": "single_space"
+        },
+        "blank_line_before_statement": {
+            "statements": [
+                "continue",
+                "return"
+            ]
+        },
+        "braces_position": {
+            "control_structures_opening_brace": "same_line",
+            "functions_opening_brace": "next_line_unless_newline_at_signature_end",
+            "anonymous_functions_opening_brace": "same_line",
+            "classes_opening_brace": "next_line_unless_newline_at_signature_end",
+            "anonymous_classes_opening_brace": "next_line_unless_newline_at_signature_end",
+            "allow_single_line_empty_anonymous_classes": false,
+            "allow_single_line_anonymous_functions": false
+        },
+        "class_attributes_separation": {
+            "elements": {
+                "const": "one",
+                "method": "one",
+                "property": "one",
+                "trait_import": "none"
+            }
+        },
+        "class_definition": {
+            "multi_line_extends_each_single_line": true,
+            "single_item_single_line": true,
+            "single_line": true,
+            "space_before_parenthesis": true
+        },
+        "concat_space": {
+            "spacing": "one"
+        },
+        "constant_case": {
+            "case": "lower"
+        },
+        "control_structure_continuation_position": {
+            "position": "same_line"
+        },
+        "fully_qualified_strict_types": false,
+        "increment_style": {
+            "style": "post"
+        },
+        "method_argument_space": {
+            "on_multiline": "ignore"
+        },
+        "multiline_whitespace_before_semicolons": {
+            "strategy": "no_multi_line"
+        },
+        "new_with_parentheses": true,
+        "no_extra_blank_lines": {
+            "tokens": [
+                "extra",
+                "throw",
+                "use"
+            ]
+        },
+        "no_mixed_echo_print": {
+            "use": "echo"
+        },
+        "no_spaces_around_offset": {
+            "positions": [
+                "inside",
+                "outside"
+            ]
+        },
+        "no_superfluous_phpdoc_tags": {
+            "allow_mixed": true,
+            "allow_unused_params": true
+        },
+        "no_unneeded_control_parentheses": {
+            "statements": [
+                "break",
+                "clone",
+                "continue",
+                "echo_print",
+                "return",
+                "switch_case",
+                "yield"
+            ]
+        },
+        "ordered_imports": {
+            "sort_algorithm": "alpha",
+            "imports_order": [
+                "const",
+                "class",
+                "function"
+            ]
+        },
+        "phpdoc_align": {
+            "align": "left",
+            "spacing": {
+                "param": 2
+            }
+        },
+        "phpdoc_order": {
+            "order": [
+                "param",
+                "return",
+                "throws"
+            ]
+        },
+        "phpdoc_separation": {
+            "groups": [
+                [
+                    "deprecated",
+                    "link",
+                    "see",
+                    "since"
+                ],
+                [
+                    "author",
+                    "copyright",
+                    "license"
+                ],
+                [
+                    "category",
+                    "package",
+                    "subpackage"
+                ],
+                [
+                    "property",
+                    "property-read",
+                    "property-write"
+                ],
+                [
+                    "param",
+                    "return"
+                ]
+            ]
+        },
+        "phpdoc_summary": false,
+        "phpdoc_tag_type": {
+            "tags": {
+                "inheritdoc": "inline"
+            }
+        },
+        "phpdoc_to_comment": false,
+        "psr_autoloading": false,
+        "return_type_declaration": {
+            "space_before": "none"
+        },
+        "self_accessor": false,
+        "simplified_null_return": false,
+        "single_class_element_per_statement": {
+            "elements": [
+                "const",
+                "property"
+            ]
+        },
+        "single_line_comment_style": {
+            "comment_types": [
+                "hash"
+            ]
+        },
+        "trailing_comma_in_multiline": {
+            "elements": [
+                "arrays"
+            ]
+        },
+        "types_spaces": false,
+        "visibility_required": {
+            "elements": [
+                "method",
+                "property"
+            ]
+        },
+        "yoda_style": {
+            "always_move_variable": false,
+            "equal": false,
+            "identical": false,
+            "less_and_greater": false
+        }
+    },
+    "Laravel/laravel_phpdoc_alignment": true
+}

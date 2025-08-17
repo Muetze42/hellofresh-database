@@ -1,0 +1,186 @@
+.theme-accent-red {
+  --color-accent: var(--color-red-500);
+  --color-accent-content: var(--color-red-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-red.dark {
+  --color-accent: var(--color-red-500);
+  --color-accent-content: var(--color-red-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-orange {
+  --color-accent: var(--color-orange-500);
+  --color-accent-content: var(--color-orange-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-orange.dark {
+  --color-accent: var(--color-orange-400);
+  --color-accent-content: var(--color-orange-400);
+  --color-accent-foreground: var(--color-orange-950);
+}
+
+.theme-accent-orange {
+  --color-accent: var(--color-amber-400);
+  --color-accent-content: var(--color-amber-600);
+  --color-accent-foreground: var(--color-amber-950);
+}
+.theme-accent-amber.dark {
+  --color-accent: var(--color-amber-400);
+  --color-accent-content: var(--color-amber-400);
+  --color-accent-foreground: var(--color-amber-950);
+}
+
+.theme-accent-yellow {
+  --color-accent: var(--color-yellow-400);
+  --color-accent-content: var(--color-yellow-600);
+  --color-accent-foreground: var(--color-yellow-950);
+}
+.theme-accent-yellow.dark {
+  --color-accent: var(--color-yellow-400);
+  --color-accent-content: var(--color-yellow-400);
+  --color-accent-foreground: var(--color-yellow-950);
+}
+
+.theme-accent-lime {
+  --color-accent: var(--color-lime-400);
+  --color-accent-content: var(--color-lime-600);
+  --color-accent-foreground: var(--color-lime-900);
+}
+.theme-accent-lime.dark {
+  --color-accent: var(--color-lime-400);
+  --color-accent-content: var(--color-lime-400);
+  --color-accent-foreground: var(--color-lime-950);
+}
+
+.theme-accent-green {
+  --color-accent: var(--color-green-600);
+  --color-accent-content: var(--color-green-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-green.dark {
+  --color-accent: var(--color-green-600);
+  --color-accent-content: var(--color-green-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-emerald {
+  --color-accent: var(--color-emerald-600);
+  --color-accent-content: var(--color-emerald-600);
+  --color-accent-foreground: var(--color-white)
+}
+.theme-accent-emerald.dark {
+  --color-accent: var(--color-emerald-600);
+  --color-accent-content: var(--color-emerald-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-teal {
+  --color-accent: var(--color-teal-600);
+  --color-accent-content: var(--color-teal-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-teal.dark {
+  --color-accent: var(--color-teal-600);
+  --color-accent-content: var(--color-teal-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-cyan {
+  --color-accent: var(--color-cyan-600);
+  --color-accent-content: var(--color-cyan-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-cyan.dark {
+  --color-accent: var(--color-cyan-600);
+  --color-accent-content: var(--color-cyan-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-sky {
+  --color-accent: var(--color-sky-600);
+  --color-accent-content: var(--color-sky-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-sky.dark {
+  --color-accent: var(--color-sky-600);
+  --color-accent-content: var(--color-sky-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-blue {
+  --color-accent: var(--color-blue-500);
+  --color-accent-content: var(--color-blue-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-blue.dark {
+  --color-accent: var(--color-blue-500);
+  --color-accent-content: var(--color-blue-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-indigo {
+  --color-accent: var(--color-indigo-500);
+  --color-accent-content: var(--color-indigo-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-indigo.dark {
+  --color-accent: var(--color-indigo-500);
+  --color-accent-content: var(--color-indigo-300);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-violet {
+  --color-accent: var(--color-violet-500);
+  --color-accent-content: var(--color-violet-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-violet.dark {
+  --color-accent: var(--color-violet-500);
+  --color-accent-content: var(--color-violet-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-purple {
+  --color-accent: var(--color-purple-500);
+  --color-accent-content: var(--color-purple-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-purple.dark {
+  --color-accent: var(--color-purple-500);
+  --color-accent-content: var(--color-purple-300);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-fuchsia {
+  --color-accent: var(--color-fuchsia-600);
+  --color-accent-content: var(--color-fuchsia-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-fuchsia.dark {
+  --color-accent: var(--color-fuchsia-600);
+  --color-accent-content: var(--color-fuchsia-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-pink {
+  --color-accent: var(--color-pink-600);
+  --color-accent-content: var(--color-pink-600);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-pink.dark {
+  --color-accent: var(--color-pink-600);
+  --color-accent-content: var(--color-pink-400);
+  --color-accent-foreground: var(--color-white);
+}
+
+.theme-accent-rose {
+  --color-accent: var(--color-rose-500);
+  --color-accent-content: var(--color-rose-500);
+  --color-accent-foreground: var(--color-white);
+}
+.theme-accent-rose.dark {
+  --color-accent: var(--color-rose-500);
+  --color-accent-content: var(--color-rose-400);
+  --color-accent-foreground: var(--color-white);
+}

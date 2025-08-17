@@ -1,0 +1,10 @@
+<?php
+
+namespace [namespace];
+
+use Livewire\Component;
+
+class [class] extends Component
+{
+    //
+}

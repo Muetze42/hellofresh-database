@@ -1,0 +1,33 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Console\Command;
+use Illuminate\Contracts\Console\PromptsForMissingInput;
+use Symfony\Component\Console\Attribute\AsCommand;
+
+#[AsCommand(name: '{{ command }}')]
+class {{ class }} extends Command implements PromptsForMissingInput
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = '{{ command }}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle(): void
+    {
+        //
+    }
+}

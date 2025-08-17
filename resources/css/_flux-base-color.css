@@ -1,0 +1,52 @@
+.theme-bg-gray  {
+  --color-zinc-50: var(--color-gray-50);
+  --color-zinc-100: var(--color-gray-100);
+  --color-zinc-200: var(--color-gray-200);
+  --color-zinc-300: var(--color-gray-300);
+  --color-zinc-400: var(--color-gray-400);
+  --color-zinc-500: var(--color-gray-500);
+  --color-zinc-600: var(--color-gray-600);
+  --color-zinc-700: var(--color-gray-700);
+  --color-zinc-800: var(--color-gray-800);
+  --color-zinc-900: var(--color-gray-900);
+  --color-zinc-950: var(--color-gray-950);
+}
+.theme-bg-slate {
+  --color-zinc-50: var(--color-slate-50);
+  --color-zinc-100: var(--color-slate-100);
+  --color-zinc-200: var(--color-slate-200);
+  --color-zinc-300: var(--color-slate-300);
+  --color-zinc-400: var(--color-slate-400);
+  --color-zinc-500: var(--color-slate-500);
+  --color-zinc-600: var(--color-slate-600);
+  --color-zinc-700: var(--color-slate-700);
+  --color-zinc-800: var(--color-slate-800);
+  --color-zinc-900: var(--color-slate-900);
+  --color-zinc-950: var(--color-slate-950);
+}
+.theme-bg-neutral {
+  --color-zinc-50: var(--color-neutral-50);
+  --color-zinc-100: var(--color-neutral-100);
+  --color-zinc-200: var(--color-neutral-200);
+  --color-zinc-300: var(--color-neutral-300);
+  --color-zinc-400: var(--color-neutral-400);
+  --color-zinc-500: var(--color-neutral-500);
+  --color-zinc-600: var(--color-neutral-600);
+  --color-zinc-700: var(--color-neutral-700);
+  --color-zinc-800: var(--color-neutral-800);
+  --color-zinc-900: var(--color-neutral-900);
+  --color-zinc-950: var(--color-neutral-950);
+}
+.theme-bg-stone {
+  --color-zinc-50: var(--color-stone-50);
+  --color-zinc-100: var(--color-stone-100);
+  --color-zinc-200: var(--color-stone-200);
+  --color-zinc-300: var(--color-stone-300);
+  --color-zinc-400: var(--color-stone-400);
+  --color-zinc-500: var(--color-stone-500);
+  --color-zinc-600: var(--color-stone-600);
+  --color-zinc-700: var(--color-stone-700);
+  --color-zinc-800: var(--color-stone-800);
+  --color-zinc-900: var(--color-stone-900);
+  --color-zinc-950: var(--color-stone-950);
+}
