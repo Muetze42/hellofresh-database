@@ -1,4 +1,4 @@
-<flux:footer class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700 print:hidden !py-4 text-sm">
+<flux:footer id="site-footer" class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700 print:hidden !py-4 text-sm">
   <div class="flex flex-col sm:flex-row items-center justify-between gap-ui">
     <div class="flex items-center gap-ui">
       <flux:link href="https://github.com/Muetze42/hellofresh-database" target="_blank" class="inline-flex items-center gap-1 hover:text-zinc-700 dark:hover:text-zinc-200">

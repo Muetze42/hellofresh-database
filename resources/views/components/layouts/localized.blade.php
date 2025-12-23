@@ -4,7 +4,7 @@
     'ogDescription' => null,
     'ogImage' => null,
 ])
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}-{{ resolve('current.country')->code }}">
 <head>
   <meta charset="utf-8">
@@ -45,6 +45,32 @@
   <flux:toast />
 </flux:toast.group>
 @endpersist
+{{-- Mini Shopping List Floating Button (hidden on shopping list page) --}}
+@unless(request()->routeIs('localized.shopping-list.*'))
+  <div
+    x-data="{ footerVisible: false }"
+    x-init="
+      const footer = document.getElementById('site-footer');
+      if (footer) {
+        new IntersectionObserver(([e]) => footerVisible = e.isIntersecting, { threshold: 0 }).observe(footer);
+      }
+    "
+    x-show="$store.shoppingList && $store.shoppingList.count > 0"
+    x-cloak
+    class="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-50 sm:transition-transform sm:duration-300 sm:ease-out"
+    :class="footerVisible ? 'sm:-translate-y-6' : 'sm:translate-y-0'"
+  >
+    <button
+      type="button"
+      x-on:click="Livewire.dispatch('mini-cart-open', { ids: $store.shoppingList.items })"
+      class="flex items-center gap-ui rounded-full bg-green-500 px-4 py-3 text-white shadow-lg hover:bg-green-600 transition-colors"
+    >
+      <flux:icon.shopping-basket variant="mini" />
+      <span x-text="$store.shoppingList.count"></span>
+    </button>
+  </div>
+  <livewire:shopping-list.mini-cart />
+@endunless
 @vite(['resources/js/app.js'])
 @livewireScripts
 @fluxScripts
