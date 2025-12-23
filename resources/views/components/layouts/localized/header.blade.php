@@ -101,6 +101,12 @@
         </flux:sidebar.item>
         <flux:sidebar.item icon="shopping-basket" :href="localized_route('localized.shopping-list.index')" wire:navigate>
             {{ __('Shopping List') }}
+            <span
+                x-data
+                x-show="$store.shoppingList && $store.shoppingList.count > 0"
+                x-text="$store.shoppingList ? $store.shoppingList.count : ''"
+                class="ml-1 inline-flex items-center justify-center size-5 text-xs font-medium rounded-full bg-green-500 text-white"
+            ></span>
         </flux:sidebar.item>
 
         @auth
