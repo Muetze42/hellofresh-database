@@ -20,8 +20,7 @@ class BringExportController extends Controller
         $recipeIds = $this->parseRecipeIds($request->string('recipes')->toString());
         $servingsMap = $this->parseServings($request->string('servings')->toString());
 
-        $recipes = Recipe::query()
-            ->whereIn('id', $recipeIds)
+        $recipes = Recipe::whereIn('id', $recipeIds)
             ->where('country_id', $country->id)
             ->with('ingredients')
             ->get();
@@ -127,6 +126,7 @@ class BringExportController extends Controller
                 foreach ($byUnit as $unit => $total) {
                     $parts[] = number_format($total, $total == (int) $total ? 0 : 1) . ' ' . $unit;
                 }
+
                 $amountStr = implode(', ', $parts);
             }
 
@@ -156,11 +156,11 @@ class BringExportController extends Controller
                 $result = [];
                 /** @var list<array<string, mixed>> $ingredients */
                 $ingredients = $yield['ingredients'] ?? [];
-                foreach ($ingredients as $ing) {
-                    $name = (string) ($ing['name'] ?? '');
+                foreach ($ingredients as $ingredient) {
+                    $name = (string) ($ingredient['name'] ?? '');
                     $result[$name] = [
-                        'amount' => isset($ing['amount']) ? (float) $ing['amount'] : null,
-                        'unit' => (string) ($ing['unit'] ?? ''),
+                        'amount' => isset($ingredient['amount']) ? (float) $ingredient['amount'] : null,
+                        'unit' => (string) ($ingredient['unit'] ?? ''),
                     ];
                 }
 
