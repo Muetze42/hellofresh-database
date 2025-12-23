@@ -1,0 +1,20 @@
+[
+  {"code": "DE", "locales": ["de"], "domain": "https://www.hellofresh.de", "take": 100},
+  {"code": "AT", "locales": ["de"], "domain": "https://www.hellofresh.at", "take": 40},
+  {"code": "AU", "locales": ["en"], "domain": "https://www.hellofresh.com.au", "take": 40},
+  {"code": "BE", "locales": ["nl", "fr"], "domain": "https://www.hellofresh.be", "take": 40},
+  {"code": "CA", "locales": ["en", "fr"], "domain": "https://www.hellofresh.ca", "take": 50},
+  {"code": "CH", "locales": ["de"], "domain": "https://www.hellofresh.ch", "take": 50},
+  {"code": "DK", "locales": ["da"], "domain": "https://www.hellofresh.dk", "take": 100},
+  {"code": "ES", "locales": ["es"], "domain": "https://www.hellofresh.es", "take": 40},
+  {"code": "FR", "locales": ["fr"], "domain": "https://www.hellofresh.fr", "take": 100},
+  {"code": "GB", "locales": ["en"], "domain": "https://www.hellofresh.co.uk", "take": 25},
+  {"code": "IE", "locales": ["en"], "domain": "https://www.hellofresh.ie", "take": 50},
+  {"code": "IT", "locales": ["it"], "domain": "https://www.hellofresh.it", "take": 100},
+  {"code": "LU", "locales": ["fr"], "domain": "https://www.hellofresh.lu", "take": 100},
+  {"code": "NL", "locales": ["nl"], "domain": "https://www.hellofresh.nl", "take": 100},
+  {"code": "NO", "locales": ["nb"], "domain": "https://www.hellofresh.no", "take": 100},
+  {"code": "NZ", "locales": ["en"], "domain": "https://www.hellofresh.co.nz", "take": 100},
+  {"code": "SE", "locales": ["sv"], "domain": "https://www.hellofresh.se", "take": 100},
+  {"code": "US", "locales": ["en"], "domain": "https://www.hellofresh.com", "take": 50}
+]

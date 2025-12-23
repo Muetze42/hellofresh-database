@@ -3,6 +3,19 @@
 return [
     /*
     |--------------------------------------------------------------------------
+    | HelloFresh CDN
+    |--------------------------------------------------------------------------
+    |
+    | Base URL and bucket name for HelloFresh's Cloudinary CDN.
+    |
+    */
+    'cdn' => [
+        'base_url' => 'https://img.hellofresh.com',
+        'bucket' => 'hellofresh_s3',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | HelloFresh Assets
     |--------------------------------------------------------------------------
     |
@@ -12,15 +25,14 @@ return [
     |
     */
     'assets' => [
-        'recipes' => [
+        'recipe' => [
             'header' => 'c_fit,f_auto,fl_lossy,h_1100,q_auto,w_2600',
-            'preview' => 'w_470,q_auto,f_auto,c_limit,fl_lossy',
+            'card' => 'w_470,q_auto,f_auto,c_limit,fl_lossy',
         ],
         'ingredient' => [
-            'image' => 'w_96,q_auto,f_auto,c_limit,fl_lossy',
-            // w_96,q_auto,f_auto,c_limit,fl_lossy
+            'thumbnail' => 'w_96,q_auto,f_auto,c_limit,fl_lossy',
         ],
-        'steps' => [
+        'step' => [
             'image' => 'f_auto,fl_lossy,q_auto,w_340',
         ],
     ],

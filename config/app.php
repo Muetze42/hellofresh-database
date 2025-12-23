@@ -65,7 +65,20 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => 'UTC',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Schedule Timezone
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the timezone for all scheduled tasks. This will
+    | override the application timezone for the scheduler only. If not set,
+    | scheduled tasks will use the application timezone defined above.
+    |
+    */
+
+    'schedule_timezone' => 'Europe/Berlin',
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +114,7 @@ return [
 
     'previous_keys' => [
         ...array_filter(
-            explode(',', env('APP_PREVIOUS_KEYS', ''))
+            explode(',', (string) env('APP_PREVIOUS_KEYS', ''))
         ),
     ],
 

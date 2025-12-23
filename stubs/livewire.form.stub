@@ -1,0 +1,11 @@
+<?php
+
+namespace DummyNamespace;
+
+use Livewire\Attributes\Validate;
+use NormanHuth\Library\Livewire\AbstractForm;
+
+class DummyClass extends AbstractForm
+{
+    //
+}

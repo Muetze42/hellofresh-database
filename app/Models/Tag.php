@@ -2,33 +2,55 @@
 
 namespace App\Models;
 
-use App\Contracts\Models\AbstractTranslatableModel;
-use App\Contracts\Models\CountryTrait;
-use App\Contracts\Models\HasActiveDisplayTrait;
-use App\Contracts\Models\UseHelloFreshIdTrait;
+use App\Models\Concerns\ActivatableTrait;
+use App\Models\Concerns\HasHelloFreshIdsTrait;
+use Database\Factories\TagFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Translatable\HasTranslations;
 
-class Tag extends AbstractTranslatableModel
+/**
+ * @mixin Builder<Tag>
+ */
+class Tag extends Model
 {
+    use ActivatableTrait;
+
+    /** @use HasFactory<TagFactory> */
     use HasFactory;
-    use CountryTrait;
-    use UseHelloFreshIdTrait;
-    use HasActiveDisplayTrait;
+
+    use HasHelloFreshIdsTrait;
+    use HasTranslations;
 
     /**
      * The attributes that are translatable.
+     *
+     * @var list<string>
      */
-    public array $translatable = ['name'];
+    public array $translatable = [
+        'name',
+    ];
 
     /**
      * The attributes that are mass assignable.
+     *
+     * @var list<string>
      */
     protected $fillable = [
-        'type',
         'name',
-        'color_handle',
-        'preferences',
+        'display_label',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'hellofresh_ids',
         'display_label',
     ];
 
@@ -40,13 +62,24 @@ class Tag extends AbstractTranslatableModel
     protected function casts(): array
     {
         return [
-            'preferences' => 'array',
             'display_label' => 'bool',
         ];
     }
 
     /**
-     * The recipes that belong to the tag.
+     * Get the country that owns the tag.
+     *
+     * @return BelongsTo<Country, $this>
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the recipes that have this tag.
+     *
+     * @return BelongsToMany<Recipe, $this>
      */
     public function recipes(): BelongsToMany
     {

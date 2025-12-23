@@ -2,51 +2,76 @@
 
 namespace App\Models;
 
-use App\Contracts\Models\AbstractTranslatableModel;
-use App\Contracts\Models\CountryTrait;
-use App\Contracts\Models\UseHelloFreshIdTrait;
-use App\Support\HelloFresh\IngredientAsset;
+use App\Models\Concerns\ActivatableTrait;
+use App\Models\Concerns\HasHelloFreshIdsTrait;
+use Database\Factories\IngredientFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
+use Spatie\Translatable\HasTranslations;
 
-class Ingredient extends AbstractTranslatableModel
+/**
+ * @mixin Builder<Ingredient>
+ */
+class Ingredient extends Model
 {
+    use ActivatableTrait;
+
+    /** @use HasFactory<IngredientFactory> */
     use HasFactory;
-    use CountryTrait;
-    use UseHelloFreshIdTrait;
+
+    use HasHelloFreshIdsTrait;
+    use HasTranslations;
 
     /**
      * The attributes that are translatable.
+     *
+     * @var list<string>
      */
-    public array $translatable = ['name', 'description'];
-
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [
-        'uuid',
-        'type',
-        'image_path',
+    public array $translatable = [
         'name',
-        'shipped',
-        'description',
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that are mass assignable.
      *
-     * @return array<string, string>
+     * @var list<string>
      */
-    protected function casts(): array
+    protected $fillable = [
+        'name',
+        'name_slug',
+        'image_path',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'hellofresh_ids',
+        'name_slug',
+        'image_path',
+    ];
+
+    /**
+     * Get the country that owns the ingredient.
+     *
+     * @return BelongsTo<Country, $this>
+     */
+    public function country(): BelongsTo
     {
-        return [
-            'shipped' => 'bool',
-        ];
+        return $this->belongsTo(Country::class);
     }
 
     /**
-     * The recipes that belong to the ingredient.
+     * Get the recipes that use this ingredient.
+     *
+     * @return BelongsToMany<Recipe, $this>
      */
     public function recipes(): BelongsToMany
     {
@@ -54,7 +79,9 @@ class Ingredient extends AbstractTranslatableModel
     }
 
     /**
-     * The allergens that belong to ingredient.
+     * Get the allergens for the ingredient.
+     *
+     * @return BelongsToMany<Allergen, $this>
      */
     public function allergens(): BelongsToMany
     {
@@ -62,18 +89,92 @@ class Ingredient extends AbstractTranslatableModel
     }
 
     /**
-     * Get the family that owns the ingredient.
+     * Normalize a name to a match slug for duplicate detection.
+     *
+     * Uses Laravel's Str::slug with German locale for proper umlaut conversion.
      */
-    public function family(): BelongsTo
+    public static function normalizeToSlug(string $name): string
     {
-        return $this->belongsTo(Family::class);
+        return Str::slug($name, '', 'de');
     }
 
     /**
-     * Get a ingredient asset.
+     * Update or create an ingredient by HelloFresh ID with slug-based matching.
+     *
+     * For primary locale: also matches by normalized slug to detect spelling variants.
+     * For secondary locale: only matches by hellofresh_id.
+     *
+     * @template TParent of Model
+     *
+     * @param  HasMany<static, TParent>  $relation
+     * @param  array<string, mixed>  $attributes
      */
-    public function asset(): IngredientAsset
-    {
-        return new IngredientAsset($this->image_path);
+    public static function updateOrCreateByHelloFreshId(
+        HasMany $relation,
+        string $hellofreshId,
+        string $locale,
+        array $attributes,
+        bool $isPrimaryLocale = true,
+    ): static {
+        // 1. Search by hellofresh_id in the array (most common case, no slug needed)
+        /** @var static|null $model */
+        $model = (clone $relation)
+            ->whereJsonContains('hellofresh_ids', $hellofreshId)
+            ->first();
+
+        if ($model !== null) {
+            // Update slug on primary locale if not set yet
+            if ($isPrimaryLocale && $model->name_slug === null && isset($attributes['name'])) {
+                $attributes['name_slug'] = self::normalizeToSlug($attributes['name']);
+            }
+
+            $model->update($attributes);
+
+            // No need to addHelloFreshId - we found it by that ID, so it's already there
+            return $model;
+        }
+
+        // Calculate slug only when needed (not found by hellofresh_id)
+        $searchSlug = isset($attributes['name'])
+            ? self::normalizeToSlug($attributes['name'])
+            : null;
+
+        // 2. For primary locale: search by normalized slug (spelling variants)
+        /** @var static|null $model */
+        $model = $isPrimaryLocale && $searchSlug !== null
+            ? (clone $relation)->where('name_slug', $searchSlug)->first()
+            : null;
+
+        if ($model !== null) {
+            // Found by slug - add hellofresh_id but DON'T update name or slug
+            return $model->addHelloFreshId($hellofreshId);
+        }
+
+        // 3. Search by exact name using JSON path for locale
+        /** @var static|null $model */
+        $model = isset($attributes['name'])
+            ? (clone $relation)->where('name->' . $locale, $attributes['name'])->first()
+            : null;
+
+        if ($model !== null) {
+            // Set slug on primary locale if not set yet
+            if ($isPrimaryLocale && $model->name_slug === null && $searchSlug !== null) {
+                $attributes['name_slug'] = $searchSlug;
+            }
+
+            $model->update($attributes);
+
+            return $model->addHelloFreshId($hellofreshId);
+        }
+
+        // 4. Not found, create new model with slug
+        if ($isPrimaryLocale && $searchSlug !== null) {
+            $attributes['name_slug'] = $searchSlug;
+        }
+
+        /** @var static $model */
+        $model = $relation->create($attributes);
+
+        return $model->addHelloFreshId($hellofreshId);
     }
 }

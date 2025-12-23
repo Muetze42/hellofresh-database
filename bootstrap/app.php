@@ -1,36 +1,39 @@
 <?php
 
-use App\Application;
 use App\Http\Middleware\CountryMiddleware;
-use App\Http\Middleware\HandleInertiaRequests;
-use App\Http\Middleware\LowerCaseUrlsMiddleware;
+use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use NormanHuth\Library\Commands\UpdateDisposableEmailDomainsCommand;
-use NormanHuth\Library\Http\Middleware\LogUserActivityMiddleware;
-use NormanHuth\Library\Lib\CommandRegistry;
-use Sentry\Laravel\Integration;
+use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
-        api: __DIR__ . '/../routes/api.php',
         commands: __DIR__ . '/../routes/console.php',
+        channels: __DIR__ . '/../routes/channels.php',
+        then: function (): void {
+            Route::middleware(['api'])
+                ->prefix('api')
+                ->name('api.')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware(['web', CountryMiddleware::class])
+                ->name('localized.')
+                ->prefix('{locale}-{country:code}')
+                ->group(base_path('routes/web-localized.php'));
+        }
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except: [
-            '*/logout',
-        ]);
-        $middleware->redirectGuestsTo('');
-        $middleware->web(append: [
-            LowerCaseUrlsMiddleware::class,
-            HandleInertiaRequests::class,
-            LogUserActivityMiddleware::class,
-        ], prepend: CountryMiddleware::class);
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->replace(
+            PreventRequestsDuringMaintenance::class,
+            PreventRequestsDuringMaintenanceMiddleware::class
+        );
     })
-    ->withCommands(array_merge(CommandRegistry::devCommands(), [
-        UpdateDisposableEmailDomainsCommand::class,
-    ]))
-    ->withExceptions(function (Exceptions $exceptions) {
-        Integration::handles($exceptions);
+    ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->shouldRenderJsonWhen(function (Request $request): bool {
+            return $request->expectsJson() || $request->is('api') || $request->is('api/*');
+        });
     })->create();

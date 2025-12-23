@@ -1,0 +1,28 @@
+{
+    "source": {
+        "directories": ["app"],
+        "excludes": [
+            "Console/Commands/Development",
+            "Console/Commands/DataMaintenance/ActivateAllCountriesCommand.php",
+            "Console/Commands/LauncherCommand.php",
+            "Console/Commands/SystemCheckCommand.php",
+            "Console/Commands/PruneLanguageFilesCommand.php",
+            "Providers/AppServiceProvider.php",
+            "Providers/HttpClientProvider.php",
+            "Providers/FrontendServiceProvider.php",
+            "Providers/MacroServiceProvider.php",
+            "Providers/MigrationServiceProvider.php",
+            "Providers/HorizonServiceProvider.php",
+            "Providers/DatabaseServiceProvider.php",
+            "Services/Database/Migrations/MigrationCreator.php",
+            "Services/Foundation/MacroRegistryService.php"
+        ]
+    },
+    "mutators": {
+        "@default": true,
+        "PublicVisibility": false
+    },
+    "logs": {
+        "text": "storage/logs/infection.log"
+    }
+}

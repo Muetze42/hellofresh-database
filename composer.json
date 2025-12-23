@@ -1,38 +1,51 @@
 {
-    "name": "norman-huth/hellofresh-database",
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "norman-huth/laravel-starter-kit",
     "type": "project",
-    "description": "HelloFresh for different countries including features like filtering by ingredients, allergens, tags, etc.",
+    "description": "The skeleton application for the Laravel framework.",
     "keywords": [
-        "cooking",
-        "framework",
-        "hellofresh",
         "laravel",
-        "recipes",
         "framework"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.fluxui.dev"
+        }
+    ],
     "require": {
-        "php": "^8.2",
-        "guzzlehttp/guzzle": "^7.8",
-        "inertiajs/inertia-laravel": "^1.0",
-        "laravel/framework": "^11.0",
-        "laravel/tinker": "^2.9",
-        "laravel/ui": "^4.5",
+        "php": "^8.4",
+        "ext-dom": "*",
+        "ext-pdo": "*",
+        "laravel/framework": "^12.40",
+        "laravel/horizon": "^5.40",
+        "laravel/reverb": "^1.0",
+        "laravel/tinker": "^2.10",
+        "livewire/flux-pro": "^2.9",
         "norman-huth/gd-text": "^1.0",
-        "norman-huth/hellofresh-scraper": "^0.1",
-        "norman-huth/php-library": "^0.4",
-        "sentry/sentry-laravel": "^4.3",
-        "spatie/laravel-translatable": "^6.6"
+        "sentry/sentry-laravel": "^4.20",
+        "spatie/laravel-translatable": "^6.12"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^3.0",
-        "fakerphp/faker": "^1.23",
-        "laravel/pint": "^1.13",
-        "laravel/sail": "^1.26",
+        "barryvdh/laravel-ide-helper": "^3.6",
+        "brianium/paratest": "^7.8",
+        "driftingly/rector-laravel": "^2.1",
+        "fakerphp/faker": "^1.24",
+        "infection/infection": "^0.29",
+        "itsgoingd/clockwork": "^5.3",
+        "larastan/larastan": "^3.8",
+        "laravel/boost": "^1.8",
+        "laravel/pail": "^1.2",
+        "laravel/pint": "^1.26",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^10.5",
-        "spatie/laravel-ignition": "^2.4"
+        "norman-huth/find-command": "^1.2",
+        "nunomaduro/collision": "^8.8",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpunit/phpunit": "^11.5",
+        "rector/rector": "^2.2",
+        "roave/security-advisories": "dev-latest",
+        "spatie/laravel-ray": "^1.4"
     },
     "autoload": {
         "psr-4": {
@@ -40,8 +53,8 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
-        "files": [
-            "functions/helpers.php"
+        "files":[
+            "support/helpers.php"
         ]
     },
     "autoload-dev": {
@@ -53,28 +66,69 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
-            "@php artisan app:update-disposable-email-domains --ansi"
+            "@php artisan data-maintenance:update-disposable-email-domains --ansi",
+            "@php artisan development:ai-background-update --ansi"
+        ],
+        "post-install-cmd": [
+            "@php artisan system:check-requirements --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan system:check-requirements --ansi",
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@ai-mcp"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --graceful --ansi"
+            "@php artisan key:generate --ansi"
         ],
-        "phpmd": [
-            "phpmd app,database,config,routes,functions text phpmd.xml"
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"pnpm run dev\" --names=server,queue,logs,vite"
         ],
-        "pint": [
-            "./vendor/bin/pint"
+        "ide-helper": [
+            "@php artisan ide-helper:models --nowrite --ansi",
+            "@php artisan ide-helper:generate --ansi",
+            "@php artisan ide-helper:meta --ansi"
         ],
-        "code-quality": [
-            "./vendor/bin/pint",
-            "phpmd app,database,config,routes,functions text phpmd.xml"
+        "pint": "./vendor/bin/pint --parallel --ansi",
+        "rector": "./vendor/bin/rector --ansi",
+        "analyse": "./vendor/bin/phpstan analyse -v --ansi",
+        "mutation": "@php vendor/bin/infection --configuration=.infection.json --threads=$(nproc) --ansi",
+        "lint": [
+            "@pint"
+        ],
+        "checks": [
+            "@rector",
+            "@lint",
+            "@analyse"
+        ],
+        "full-checks": [
+            "@checks",
+            "@mutation"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test --parallel"
+        ]
+    },
+    "scripts-descriptions": {
+        "analyse": "Run static analysis to find bugs",
+        "checks": "Running all analysis and fixer tools",
+        "full-checks": "Running all analysis and fixer tools and infection",
+        "ide-helper": "Generate IDE helper files",
+        "lint": "Fix code style issues",
+        "mutation": "Run mutation testing using Infection with parallel threads",
+        "pint": "Run Laravel Pint CS Fixer",
+        "rector": "Instant Upgrades and Automated Refactoring Code"
+    },
+    "scripts-aliases": {
+        "checks": [
+            "c"
+        ],
+        "full-checks": [
+            "fc"
         ]
     },
     "extra": {
@@ -87,7 +141,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true,
+            "infection/extension-installer": true,
             "php-http/discovery": true
         }
     },

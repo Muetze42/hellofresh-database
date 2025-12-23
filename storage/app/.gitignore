@@ -1,3 +1,5 @@
 *
+!examples/
+!private/
 !public/
 !.gitignore

@@ -1,0 +1,12 @@
+{
+    "rules": {
+        "NoMixedTypeRule": {
+            "enabled": false
+        },
+        "NoFillableForeignKeyRule": {
+            "excluded_columns": [
+                "hellofresh_id"
+            ]
+        }
+    }
+}

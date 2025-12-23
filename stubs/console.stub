@@ -3,10 +3,11 @@
 namespace {{ namespace }};
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: '{{ command }}')]
-class {{ class }} extends Command
+class {{ class }} extends Command implements PromptsForMissingInput
 {
     /**
      * The name and signature of the console command.
