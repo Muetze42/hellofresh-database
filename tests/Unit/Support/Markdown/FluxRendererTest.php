@@ -45,7 +45,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('# Heading 1');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:heading size="xl" level="1">Heading 1</flux:heading>', (string) $output);
+        $this->assertStringContainsString('<flux:heading size="xl" level="1">Heading 1</flux:heading>', $output);
     }
 
     #[Test]
@@ -54,7 +54,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('## Heading 2');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:heading size="lg" level="2">Heading 2</flux:heading>', (string) $output);
+        $this->assertStringContainsString('<flux:heading size="lg" level="2">Heading 2</flux:heading>', $output);
     }
 
     #[Test]
@@ -63,7 +63,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('### Heading 3');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:heading size="base" level="3">Heading 3</flux:heading>', (string) $output);
+        $this->assertStringContainsString('<flux:heading size="base" level="3">Heading 3</flux:heading>', $output);
     }
 
     #[Test]
@@ -72,7 +72,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('#### Heading 4');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:heading size="base" level="4">Heading 4</flux:heading>', (string) $output);
+        $this->assertStringContainsString('<flux:heading size="base" level="4">Heading 4</flux:heading>', $output);
     }
 
     #[Test]
@@ -81,7 +81,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('This is a paragraph.');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:text>This is a paragraph.</flux:text>', (string) $output);
+        $this->assertStringContainsString('<flux:text>This is a paragraph.</flux:text>', $output);
     }
 
     #[Test]
@@ -90,7 +90,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('This is **bold** text.');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<strong>bold</strong>', (string) $output);
+        $this->assertStringContainsString('<strong>bold</strong>', $output);
     }
 
     #[Test]
@@ -99,7 +99,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('This is *italic* text.');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<em>italic</em>', (string) $output);
+        $this->assertStringContainsString('<em>italic</em>', $output);
     }
 
     #[Test]
@@ -110,8 +110,8 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Link](/path/to/page)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="/path/to/page">Link</flux:link>', (string) $output);
-        $this->assertStringNotContainsString('external', (string) $output);
+        $this->assertStringContainsString('<flux:link href="/path/to/page">Link</flux:link>', $output);
+        $this->assertStringNotContainsString('external', $output);
     }
 
     #[Test]
@@ -122,7 +122,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[External](https://other.com/page)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="https://other.com/page" external>External</flux:link>', (string) $output);
+        $this->assertStringContainsString('<flux:link href="https://other.com/page" external>External</flux:link>', $output);
     }
 
     #[Test]
@@ -131,8 +131,8 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Anchor](#section)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="#section">Anchor</flux:link>', (string) $output);
-        $this->assertStringNotContainsString('external', (string) $output);
+        $this->assertStringContainsString('<flux:link href="#section">Anchor</flux:link>', $output);
+        $this->assertStringNotContainsString('external', $output);
     }
 
     #[Test]
@@ -141,8 +141,8 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Email](mailto:test@example.com)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="mailto:test@example.com">Email</flux:link>', (string) $output);
-        $this->assertStringNotContainsString('external', (string) $output);
+        $this->assertStringContainsString('<flux:link href="mailto:test@example.com">Email</flux:link>', $output);
+        $this->assertStringNotContainsString('external', $output);
     }
 
     #[Test]
@@ -151,9 +151,9 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("- Item 1\n- Item 2");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<ul class="ml-6 list-disc space-y-2">', (string) $output);
-        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">Item 1</li>', (string) $output);
-        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">Item 2</li>', (string) $output);
+        $this->assertStringContainsString('<ul class="ml-6 list-disc space-y-2">', $output);
+        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">Item 1</li>', $output);
+        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">Item 2</li>', $output);
     }
 
     #[Test]
@@ -162,8 +162,8 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("1. First\n2. Second");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<ol class="ml-6 list-disc space-y-2">', (string) $output);
-        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">First</li>', (string) $output);
+        $this->assertStringContainsString('<ol class="ml-6 list-disc space-y-2">', $output);
+        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">First</li>', $output);
     }
 
     #[Test]
@@ -172,7 +172,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("Above\n\n---\n\nBelow");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:separator />', (string) $output);
+        $this->assertStringContainsString('<flux:separator />', $output);
     }
 
     #[Test]
@@ -181,7 +181,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('Use `inline code` here.');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm dark:bg-zinc-800">inline code</code>', (string) $output);
+        $this->assertStringContainsString('<code class="rounded bg-zinc-100 px-1.5 py-0.5 text-sm dark:bg-zinc-800">inline code</code>', $output);
     }
 
     #[Test]
@@ -190,8 +190,8 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("```php\necho 'Hello';\n```");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<pre class="overflow-x-auto rounded-lg bg-zinc-100 p-4 dark:bg-zinc-800"><code>', (string) $output);
-        $this->assertStringContainsString('echo &#039;Hello&#039;;', (string) $output);
+        $this->assertStringContainsString('<pre class="overflow-x-auto rounded-lg bg-zinc-100 p-4 dark:bg-zinc-800"><code>', $output);
+        $this->assertStringContainsString('echo &#039;Hello&#039;;', $output);
     }
 
     #[Test]
@@ -200,8 +200,8 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('    indented code');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<pre class="overflow-x-auto rounded-lg bg-zinc-100 p-4 dark:bg-zinc-800"><code>', (string) $output);
-        $this->assertStringContainsString('indented code', (string) $output);
+        $this->assertStringContainsString('<pre class="overflow-x-auto rounded-lg bg-zinc-100 p-4 dark:bg-zinc-800"><code>', $output);
+        $this->assertStringContainsString('indented code', $output);
     }
 
     #[Test]
@@ -210,9 +210,9 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('> This is a quote');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:callout>', (string) $output);
-        $this->assertStringContainsString('This is a quote', (string) $output);
-        $this->assertStringContainsString('</flux:callout>', (string) $output);
+        $this->assertStringContainsString('<flux:callout>', $output);
+        $this->assertStringContainsString('This is a quote', $output);
+        $this->assertStringContainsString('</flux:callout>', $output);
     }
 
     #[Test]
@@ -222,11 +222,11 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse($markdown);
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:table>', (string) $output);
-        $this->assertStringContainsString('<flux:table.columns>', (string) $output);
-        $this->assertStringContainsString('<flux:table.column>Header 1</flux:table.column>', (string) $output);
-        $this->assertStringContainsString('<flux:table.rows>', (string) $output);
-        $this->assertStringContainsString('<flux:table.cell>Cell 1</flux:table.cell>', (string) $output);
+        $this->assertStringContainsString('<flux:table>', $output);
+        $this->assertStringContainsString('<flux:table.columns>', $output);
+        $this->assertStringContainsString('<flux:table.column>Header 1</flux:table.column>', $output);
+        $this->assertStringContainsString('<flux:table.rows>', $output);
+        $this->assertStringContainsString('<flux:table.cell>Cell 1</flux:table.cell>', $output);
     }
 
     #[Test]
@@ -236,7 +236,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse($markdown);
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:table.column>Header</flux:table.column>', (string) $output);
+        $this->assertStringContainsString('<flux:table.column>Header</flux:table.column>', $output);
     }
 
     #[Test]
@@ -246,7 +246,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse($markdown);
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:table.cell>Cell</flux:table.cell>', (string) $output);
+        $this->assertStringContainsString('<flux:table.cell>Cell</flux:table.cell>', $output);
     }
 
     #[Test]
@@ -255,7 +255,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("Line 1  \nLine 2");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<br />', (string) $output);
+        $this->assertStringContainsString('<br />', $output);
     }
 
     #[Test]
@@ -264,7 +264,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("Line 1\nLine 2");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('Line 1 Line 2', (string) $output);
+        $this->assertStringContainsString('Line 1 Line 2', $output);
     }
 
     #[Test]
@@ -273,7 +273,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("<div>Custom HTML</div>\n\n");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<div>Custom HTML</div>', (string) $output);
+        $this->assertStringContainsString('<div>Custom HTML</div>', $output);
     }
 
     #[Test]
@@ -282,7 +282,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('Text with <span>inline HTML</span> here.');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<span>inline HTML</span>', (string) $output);
+        $this->assertStringContainsString('<span>inline HTML</span>', $output);
     }
 
     #[Test]
@@ -291,9 +291,9 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('Text with special chars: & < >');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('&amp;', (string) $output);
-        $this->assertStringContainsString('&lt;', (string) $output);
-        $this->assertStringContainsString('&gt;', (string) $output);
+        $this->assertStringContainsString('&amp;', $output);
+        $this->assertStringContainsString('&lt;', $output);
+        $this->assertStringContainsString('&gt;', $output);
     }
 
     #[Test]
@@ -302,7 +302,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Link](https://example.com/path?foo=bar&baz=qux)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('href="https://example.com/path?foo=bar&amp;baz=qux"', (string) $output);
+        $this->assertStringContainsString('href="https://example.com/path?foo=bar&amp;baz=qux"', $output);
     }
 
     #[Test]
@@ -311,7 +311,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse("```\n<script>alert('xss')</script>\n```");
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('&lt;script&gt;', (string) $output);
+        $this->assertStringContainsString('&lt;script&gt;', $output);
     }
 
     #[Test]
@@ -329,8 +329,8 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('This is ***bold and italic*** text.');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<strong>', (string) $output);
-        $this->assertStringContainsString('<em>', (string) $output);
+        $this->assertStringContainsString('<strong>', $output);
+        $this->assertStringContainsString('<em>', $output);
     }
 
     #[Test]
@@ -342,7 +342,7 @@ final class FluxRendererTest extends TestCase
         $output = $this->fluxRenderer->render($document);
 
         // Relative URLs without leading slash are treated as external by parse_url
-        $this->assertStringContainsString('href="relative/path"', (string) $output);
+        $this->assertStringContainsString('href="relative/path"', $output);
     }
 
     #[Test]
@@ -353,7 +353,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Link](https://example.com/page)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringNotContainsString('external', (string) $output);
+        $this->assertStringNotContainsString('external', $output);
     }
 
     #[Test]
@@ -362,7 +362,7 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('- Item with **bold** and *italic*');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">Item with <strong>bold</strong> and <em>italic</em></li>', (string) $output);
+        $this->assertStringContainsString('<li class="text-zinc-600 dark:text-zinc-400">Item with <strong>bold</strong> and <em>italic</em></li>', $output);
     }
 
     #[Test]
@@ -372,6 +372,6 @@ final class FluxRendererTest extends TestCase
         $output = $this->fluxRenderer->render($document);
 
         // URLs without a host should not be marked external
-        $this->assertStringNotContainsString(' external', (string) $output);
+        $this->assertStringNotContainsString(' external', $output);
     }
 }
