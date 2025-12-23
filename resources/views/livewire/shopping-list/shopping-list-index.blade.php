@@ -45,6 +45,25 @@
         printList(style) {
             this.printStyle = style;
             this.$nextTick(() => window.print());
+        },
+        exportToBring() {
+            const items = $store.shoppingList.items;
+            const servings = $store.shoppingList.servings;
+
+            if (items.length === 0) return;
+
+            const recipesParam = items.join(',');
+            const servingsParam = items.map(id => id + ':' + (servings[id] || 2)).join(',');
+
+            const bringUrl = '{{ localized_route('localized.shopping-list.bring') }}'
+                + '?recipes=' + encodeURIComponent(recipesParam)
+                + '&servings=' + encodeURIComponent(servingsParam);
+
+            const url = 'https://api.getbring.com/rest/bringrecipes/deeplink'
+                + '?url=' + encodeURIComponent(bringUrl)
+                + '&source=web';
+
+            window.open(url, '_blank');
         }
     }"
 >
@@ -198,6 +217,8 @@
             </flux:menu>
           </flux:dropdown>
 
+          <flux:button size="sm" icon="bring" square x-on:click="exportToBring()" title="Bring!" />
+
           <flux:button size="sm" icon="bookmark" square wire:click="openSaveModal" />
 
           <flux:button variant="danger" size="sm" icon="trash" square x-on:click="confirmClearAll()" />
@@ -233,6 +254,10 @@
             </flux:menu.item>
           </flux:menu>
         </flux:dropdown>
+
+        <flux:button variant="subtle" size="sm" icon="bring" x-on:click="exportToBring()">
+          Bring!
+        </flux:button>
 
         <flux:button variant="subtle" size="sm" icon="bookmark" wire:click="openSaveModal">
           {{ __('Save') }}

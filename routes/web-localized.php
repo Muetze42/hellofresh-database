@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BringExportController;
 use App\Http\Controllers\MenuRedirectController;
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\PrivacyPolicy\PrivacyPolicyShow;
@@ -17,6 +18,7 @@ Route::get('recipes/{recipe}', RecipeShow::class)
     ->name('recipes.show');
 Route::get('shopping-list', ShoppingListIndex::class)->name('shopping-list.index');
 Route::get('shopping-list/print', ShoppingListIndex::class)->name('shopping-list.print');
+Route::get('shopping-list/bring', BringExportController::class)->name('shopping-list.bring');
 
 Route::get('menus', MenuRedirectController::class)
     ->name('menus.index');
