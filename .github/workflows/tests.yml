@@ -34,18 +34,19 @@ jobs:
         with:
           php-version: '8.4'
           extensions: pgsql, pdo_pgsql, mbstring, dom, fileinfo, json, libxml
+          ini-values: upload_max_filesize=64M, post_max_size=64M
           coverage: xdebug
           tools: composer:v2
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 10
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -57,6 +58,9 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
+
+      - name: Configure Flux Pro authentication
+        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -141,18 +145,19 @@ jobs:
         with:
           php-version: '8.4'
           extensions: pgsql, pdo_pgsql, mbstring, dom, fileinfo, json, libxml
+          ini-values: upload_max_filesize=64M, post_max_size=64M
           coverage: xdebug
           tools: composer:v2
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 10
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -164,6 +169,9 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
+
+      - name: Configure Flux Pro authentication
+        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
