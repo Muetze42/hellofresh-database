@@ -2,29 +2,57 @@
 
 namespace App\Models;
 
-use App\Contracts\Models\AbstractTranslatableModel;
-use App\Contracts\Models\CountryTrait;
-use App\Contracts\Models\HasActiveDisplayTrait;
+use App\Models\Concerns\ActivatableTrait;
+use App\Models\Concerns\HasHandlesTrait;
+use Database\Factories\LabelFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
-class Label extends AbstractTranslatableModel
+/**
+ * @mixin Builder<Label>
+ */
+class Label extends Model
 {
+    use ActivatableTrait;
+
+    /** @use HasFactory<LabelFactory> */
     use HasFactory;
-    use CountryTrait;
-    use HasActiveDisplayTrait;
+
+    use HasHandlesTrait;
+    use HasTranslations;
 
     /**
      * The attributes that are translatable.
+     *
+     * @var list<string>
      */
-    public array $translatable = ['text'];
+    public array $translatable = [
+        'name',
+    ];
 
     /**
      * The attributes that are mass assignable.
+     *
+     * @var list<string>
      */
     protected $fillable = [
-        'text',
-        'handle',
+        'name',
+        'foreground_color',
+        'background_color',
+        'display_label',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'handles',
         'foreground_color',
         'background_color',
         'display_label',
@@ -43,7 +71,19 @@ class Label extends AbstractTranslatableModel
     }
 
     /**
-     * Get the recipes for the label.
+     * Get the country that owns the label.
+     *
+     * @return BelongsTo<Country, $this>
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the recipes that have this label.
+     *
+     * @return HasMany<Recipe, $this>
      */
     public function recipes(): HasMany
     {

@@ -1,45 +1,19 @@
 {
+    "$schema": "https://json.schemastore.org/package.json",
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
         "build": "vite build",
-        "prod.build": "vite build --config vite.prod.config.js"
-    },
-    "devDependencies": {
-        "@babel/plugin-syntax-dynamic-import": "7.8.3",
-        "@headlessui/vue": "1.7.19",
-        "@inertiajs/vue3": "1.0.15",
-        "@rushstack/eslint-patch": "1.10.1",
-        "@tailwindcss/forms": "0.5.7",
-        "@vitejs/plugin-vue": "5.0.4",
-        "@vue/eslint-config-prettier": "9.0.0",
-        "autoprefixer": "10.4.19",
-        "axios": "^1.6.8",
-        "eslint": "8.57.0",
-        "eslint-plugin-vue": "9.24.1",
-        "laravel-vite-plugin": "^1.0",
-        "postcss": "8.4.38",
-        "tailwind-scrollbar": "3.1.0",
-        "tailwindcss": "3.4.3",
-        "vite": "^5.2",
-        "vue": "3.4.21",
-        "vue-loader": "17.4.2"
+        "dev": "vite"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "6.5.2",
-        "@fortawesome/free-brands-svg-icons": "6.5.2",
-        "@fortawesome/free-regular-svg-icons": "6.5.2",
-        "@fortawesome/free-solid-svg-icons": "6.5.2",
-        "@fortawesome/vue-fontawesome": "3.0.6",
-        "@norman-huth/helpers-collection-js": "^0.0.16",
-        "@sentry/vite-plugin": "^2.16.1",
-        "@sentry/vue": "^7.109.0",
-        "@vueform/multiselect": "^2.6.7",
-        "@vueform/slider": "^2.1.10",
-        "flag-icons": "^7.2.1",
-        "sass": "1.74.1",
-        "sass-loader": "14.1.1"
-    },
-    "packageManager": "pnpm@8.15.6+sha1.8105075ad0aa306138be128c017e9c41e28ecffa"
+        "@tailwindcss/vite": "^4.1.17",
+        "axios": "^1.13.2",
+        "concurrently": "^9.2.1",
+        "laravel-echo": "^2.2.6",
+        "laravel-vite-plugin": "^2.0.1",
+        "pusher-js": "^8.4.0",
+        "tailwindcss": "^4.1.17",
+        "vite": "^7.2.2"
+    }
 }

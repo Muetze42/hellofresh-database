@@ -1,42 +1,32 @@
 <?php
 
+use App\Jobs\SyncMenusJob;
+use App\Jobs\SyncRecipesJob;
+use App\Jobs\UpdateCountryStatisticsJob;
+use Illuminate\Console\Scheduling\Schedule as ConsoleSchedule;
+use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
-/*
-|--------------------------------------------------------------------------
-| Console Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of your Closure based console
-| commands. Each Closure is bound to a command instance allowing a
-| simple approach to interacting with each command's IO methods.
-|
-*/
+Artisan::command('inspire', function (): void {
+    $this->comment(Inspiring::quote());
+})->purpose('Display an inspiring quote');
 
-Schedule::command('app:hello-fresh:update-recipes', [
-    '--limit' => 100,
-])->days([1, 2, 3, 4, 5, 6])->at('3:00');
-Schedule::command('app:hello-fresh:update-recipes')
-    ->weeklyOn(0, '3:00');
-
-Schedule::command('app:assets:generate-social-preview')
-    ->twiceDailyAt(6, 18);
-
-Schedule::command('app:hello-fresh:update-menus')
-    ->dailyAt('6:00');
-
-Schedule::command('app:update-disposable-email-domains')
+Schedule::job(new SyncRecipesJob(true))
     ->weekly();
+Schedule::job(new SyncRecipesJob())
+    ->daily()
+    ->days([
+        ConsoleSchedule::MONDAY,
+        ConsoleSchedule::TUESDAY,
+        ConsoleSchedule::WEDNESDAY,
+        ConsoleSchedule::THURSDAY,
+        ConsoleSchedule::FRIDAY,
+        ConsoleSchedule::SATURDAY,
+    ]);
 
-Schedule::command('auth:clear-resets')
-    ->everyFifteenMinutes();
+Schedule::job(new SyncMenusJob())
+    ->twiceDaily();
 
-Schedule::command('queue:work', [
-    '--queue' => 'hellofresh',
-    '--timeout' => 0,
-    '--sleep' => 1,
-    '--stop-when-empty',
-])->everyMinute()->withoutOverlapping()
-    ->when(function () {
-        return $this->app['config']->get('queue.default') == 'database';
-    });
+Schedule::job(new UpdateCountryStatisticsJob())
+    ->twiceDaily(4, 16);

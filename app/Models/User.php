@@ -2,59 +2,44 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Notifications\ResetPasswordNotification;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 
-class User extends Authenticatable implements MustVerifyEmail
+/**
+ * @mixin Builder<User>
+ */
+class User extends Authenticatable
 {
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     use Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'timezone',
-        'locale',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['avatar'];
-
-    /**
-     * Determine the user's avatar.
-     */
-    protected function avatar(): Attribute
-    {
-        return new Attribute(
-            get: fn () => 'https://www.gravatar.com/avatar/' . md5(Str::lower($this->email)),
-        );
-    }
 
     /**
      * Get the attributes that should be cast.
@@ -64,27 +49,48 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
+            'password' => 'hashed',
             'email_verified_at' => 'datetime',
             'active_at' => 'datetime',
-            'password' => 'hashed',
-            'is_admin' => 'bool',
+            'admin' => 'bool',
         ];
     }
 
     /**
-     * Get the stored filters for the user.
+     * Send the password reset notification.
      */
-    public function filters(): HasMany
+    public function sendPasswordResetNotification(mixed $token): void
     {
-        return $this->hasMany(UserFilter::class);
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     /**
-     * The favorite recipes that belong to the user.
+     * Get the favorites for the user.
+     *
+     * @return HasMany<Favorite, $this>
      */
-    public function favorites(): BelongsToMany
+    public function favorites(): HasMany
     {
-        return $this->belongsToMany(Recipe::class)
-            ->using(RecipeUser::class);
+        return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * Get the recipe lists for the user.
+     *
+     * @return HasMany<RecipeList, $this>
+     */
+    public function recipeLists(): HasMany
+    {
+        return $this->hasMany(RecipeList::class);
+    }
+
+    /**
+     * Get the shopping lists for the user.
+     *
+     * @return HasMany<ShoppingList, $this>
+     */
+    public function shoppingLists(): HasMany
+    {
+        return $this->hasMany(ShoppingList::class);
     }
 }

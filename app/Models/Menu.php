@@ -2,30 +2,45 @@
 
 namespace App\Models;
 
-use App\Contracts\Models\CountryTrait;
+use App\Models\Concerns\ActivatableTrait;
+use Carbon\Carbon;
+use Database\Factories\MenuFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property int $year_week
+ * @property Carbon $start
+ *
+ * @mixin Builder<Menu>
+ */
 class Menu extends Model
 {
-    use HasFactory;
-    use CountryTrait;
+    use ActivatableTrait;
 
-    /**
-     * Retrieve the model for a bound value.
-     */
-    public function resolveRouteBinding($value, $field = null): ?Model
-    {
-        return $this->where('year_week', $value)->firstOrFail();
-    }
+    /** @use HasFactory<MenuFactory> */
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
+     *
+     * @var list<string>
      */
     protected $fillable = [
         'year_week',
         'start',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'year_week',
     ];
 
     /**
@@ -36,12 +51,25 @@ class Menu extends Model
     protected function casts(): array
     {
         return [
+            'year_week' => 'int',
             'start' => 'date',
         ];
     }
 
     /**
-     * The recipes that belong to the menu.
+     * Get the country that owns the menu.
+     *
+     * @return BelongsTo<Country, $this>
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the recipes in this menu.
+     *
+     * @return BelongsToMany<Recipe, $this>
      */
     public function recipes(): BelongsToMany
     {

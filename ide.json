@@ -1,0 +1,14 @@
+{
+  "$schema": "https://laravel-ide.com/schema/laravel-ide-v2.json",
+  "completions": [
+    {
+      "complete": "routeName",
+      "condition": [
+        {
+          "functionNames": ["localized_route"],
+          "parameters": [1]
+        }
+      ]
+    }
+  ]
+}

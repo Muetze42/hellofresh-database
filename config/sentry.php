@@ -1,14 +1,13 @@
 <?php
 
+use Symfony\Component\Console\Exception\CommandNotFoundException;
+
 /**
  * Sentry Laravel SDK configuration file.
  *
  * @see https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/
  */
-
 return [
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +77,7 @@ return [
     | Profiles Sample Rate
     |--------------------------------------------------------------------------
     |
-    | @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/ options/#profiles-sample-rate
+    | @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#profiles-sample-rate
     |
     */
     'profiles_sample_rate' => env('SENTRY_PROFILES_SAMPLE_RATE') === null ?
@@ -99,11 +98,14 @@ return [
 
     // @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#ignore-exceptions
     'ignore_exceptions' => [
-        \Symfony\Component\Console\Exception\CommandNotFoundException::class,
+        CommandNotFoundException::class,
     ],
 
     // @see: https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/#ignore-transactions
-    // 'ignore_transactions' => [],
+    'ignore_transactions' => [
+        // Ignore Laravel's default health URL
+        '/up', // Todo: Customize health URL if changed or not exists
+    ],
 
     /*
     |--------------------------------------------------------------------------

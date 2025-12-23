@@ -4,27 +4,50 @@ namespace App\Support\HelloFresh;
 
 class HelloFreshAsset
 {
-    protected ?string $image;
-
-    public function __construct(?string $image)
-    {
-        $this->image = $image;
-    }
-
     /**
-     * Generate an asset url for a HelloFresh cloud media.
+     * Generate an asset URL for a HelloFresh cloud media.
      */
-    protected function asset(string $path): ?string
+    public static function url(?string $imagePath, string $transformation): ?string
     {
-        if (!$this->image) {
+        if ($imagePath === null || $imagePath === '') {
             return null;
         }
 
-        return 'https://img.hellofresh.com/' . $path . '/hellofresh_s3' . $this->image;
+        $baseUrl = config('hellofresh.cdn.base_url');
+        $bucket = config('hellofresh.cdn.bucket');
+
+        return $baseUrl . '/' . $transformation . '/' . $bucket . $imagePath;
     }
 
-    public static function get(string $path, ?string $image): ?string
+    /**
+     * Generate a recipe card image URL.
+     */
+    public static function recipeCard(?string $imagePath): ?string
     {
-        return (new static($image))->asset($path);
+        return self::url($imagePath, config('hellofresh.assets.recipe.card'));
+    }
+
+    /**
+     * Generate a recipe header image URL.
+     */
+    public static function recipeHeader(?string $imagePath): ?string
+    {
+        return self::url($imagePath, config('hellofresh.assets.recipe.header'));
+    }
+
+    /**
+     * Generate an ingredient thumbnail URL.
+     */
+    public static function ingredientThumbnail(?string $imagePath): ?string
+    {
+        return self::url($imagePath, config('hellofresh.assets.ingredient.thumbnail'));
+    }
+
+    /**
+     * Generate a step image URL.
+     */
+    public static function stepImage(?string $imagePath): ?string
+    {
+        return self::url($imagePath, config('hellofresh.assets.step.image'));
     }
 }
