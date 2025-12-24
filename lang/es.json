@@ -215,5 +215,6 @@
     "We have emailed your password reset link.": "Te hemos enviado un enlace para restablecer tu contraseña.",
     "Send Reset Link": "Enviar enlace",
     "Back to Login": "Volver al inicio de sesión",
-    "Enter your new password below.": "Ingresa tu nueva contraseña a continuación."
+    "Enter your new password below.": "Ingresa tu nueva contraseña a continuación.",
+    "Remember me": "Recordarme"
 }

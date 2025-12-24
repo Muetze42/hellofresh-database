@@ -215,5 +215,6 @@
     "We have emailed your password reset link.": "Nous vous avons envoyé un lien de réinitialisation de mot de passe.",
     "Send Reset Link": "Envoyer le lien",
     "Back to Login": "Retour à la connexion",
-    "Enter your new password below.": "Entrez votre nouveau mot de passe ci-dessous."
+    "Enter your new password below.": "Entrez votre nouveau mot de passe ci-dessous.",
+    "Remember me": "Se souvenir de moi"
 }

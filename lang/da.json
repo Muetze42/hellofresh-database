@@ -215,5 +215,6 @@
     "We have emailed your password reset link.": "Vi har sendt dig et link til at nulstille din adgangskode.",
     "Send Reset Link": "Send link",
     "Back to Login": "Tilbage til login",
-    "Enter your new password below.": "Indtast din nye adgangskode nedenfor."
+    "Enter your new password below.": "Indtast din nye adgangskode nedenfor.",
+    "Remember me": "Husk mig"
 }
