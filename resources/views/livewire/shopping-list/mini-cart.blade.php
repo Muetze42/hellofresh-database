@@ -1,5 +1,5 @@
 <div>
-    <flux:modal name="mini-cart-modal" class="md:w-xl">
+    <flux:modal name="mini-cart-modal" class="md:w-xl max-w-[90%]">
         <div class="space-y-section">
             <flux:heading size="lg">{{ __('Shopping List') }}</flux:heading>
 
