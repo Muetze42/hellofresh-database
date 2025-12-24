@@ -206,9 +206,9 @@
                 @endforeach
               </div>
             @endif
-            <div class="prose prose-sm dark:prose-invert max-w-none">
+            <flux:text>
               {!! $step['instructions'] !!}
-            </div>
+            </flux:text>
           </div>
         </div>
       @endforeach
