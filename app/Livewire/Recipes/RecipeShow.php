@@ -134,7 +134,18 @@ class RecipeShow extends AbstractComponent
         /** @var array<int|string, array<string, mixed>>|null $steps */
         $steps = $this->recipe->steps_primary;
 
-        return $steps !== null ? array_values($steps) : [];
+        if ($steps === null) {
+            return [];
+        }
+
+        return array_values(array_map(function (array $step): array {
+            if (isset($step['instructions']) && is_string($step['instructions'])) {
+                // Remove inline styles that break dark mode
+                $step['instructions'] = preg_replace('/\s*style="[^"]*"/i', '', $step['instructions']);
+            }
+
+            return $step;
+        }, $steps));
     }
 
     /**
