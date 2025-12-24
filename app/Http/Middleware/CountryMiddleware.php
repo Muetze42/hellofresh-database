@@ -28,6 +28,20 @@ class CountryMiddleware
 
         abort_if(! is_string($countryCode) || ! is_string($locale) || strlen($countryCode) !== 2, 404);
 
+        // Redirect legacy lowercase URLs to canonical uppercase format (e.g., /de-de → /de-DE)
+        $canonicalCountryCode = strtoupper($countryCode);
+        $canonicalLocale = strtolower($locale);
+
+        if ($countryCode !== $canonicalCountryCode || $locale !== $canonicalLocale) {
+            $path = preg_replace(
+                '#^/' . preg_quote($locale . '-' . $countryCode, '#') . '#i',
+                '/' . $canonicalLocale . '-' . $canonicalCountryCode,
+                $request->getPathInfo()
+            );
+
+            return redirect($path . ($request->getQueryString() ? '?' . $request->getQueryString() : ''), 301);
+        }
+
         $country = $this->requestedCountry($countryCode, $locale);
 
         $this->bindCountryContext($country, $locale);
