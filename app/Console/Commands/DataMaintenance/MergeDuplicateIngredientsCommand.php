@@ -134,12 +134,12 @@ class MergeDuplicateIngredientsCommand extends Command
             'duplicate_pivots_removed' => 0,
         ];
 
-        if ($dryRun) {
-            // Count what would be moved
-            $result['pivots_moved'] = DB::table('ingredient_recipe')
-                ->whereIn('ingredient_id', $deleteIds)
-                ->count();
+        // Count what would be moved (used for dry-run, overwritten in actual merge)
+        $result['pivots_moved'] = DB::table('ingredient_recipe')
+            ->whereIn('ingredient_id', $deleteIds)
+            ->count();
 
+        if ($dryRun) {
             return $result;
         }
 
@@ -249,7 +249,7 @@ class MergeDuplicateIngredientsCommand extends Command
             $removed += DB::table('ingredient_recipe')
                 ->where('ingredient_id', $keepId)
                 ->where('recipe_id', $duplicatePivot->recipe_id)
-                ->where('id', '!=', $duplicatePivot->keep_pivot_id)
+                ->whereNot('id', $duplicatePivot->keep_pivot_id)
                 ->delete();
         }
 
