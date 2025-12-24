@@ -37,6 +37,10 @@
   }
 }
 
+[data-flux-modal] > dialog[open]::backdrop {
+  @apply bg-black/70;
+}
+
 .ui-text-subtle {
   @apply text-zinc-400 dark:text-white/50;
 }
