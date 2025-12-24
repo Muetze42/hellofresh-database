@@ -7,8 +7,8 @@
                 <div class="max-h-80 overflow-y-auto -mx-2">
                     <ul class="divide-y divide-zinc-100 dark:divide-zinc-700">
                         @foreach($this->recipes as $recipe)
-                            <li wire:key="mini-cart-{{ $recipe->id }}" class="flex items-center justify-between gap-2 px-2 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-700/50 rounded">
-                                <span class="truncate text-sm">{{ $recipe->name }}</span>
+                            <li wire:key="mini-cart-{{ $recipe->id }}" class="flex items-start gap-ui px-2 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-700/50 rounded">
+                                <flux:text class="flex-1">{{ $recipe->name }}</flux:text>
                                 <button
                                     type="button"
                                     x-on:click="$store.shoppingList?.remove({{ $recipe->id }}); $wire.open($store.shoppingList?.items ?? [])"
