@@ -6,6 +6,7 @@ use App\Notifications\ResetPasswordNotification;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -92,5 +93,16 @@ class User extends Authenticatable
     public function shoppingLists(): HasMany
     {
         return $this->hasMany(ShoppingList::class);
+    }
+
+    /**
+     * Get the recipe lists shared with this user.
+     *
+     * @return BelongsToMany<RecipeList, $this>
+     */
+    public function sharedRecipeLists(): BelongsToMany
+    {
+        return $this->belongsToMany(RecipeList::class, 'recipe_list_shares')
+            ->withPivot('created_at');
     }
 }

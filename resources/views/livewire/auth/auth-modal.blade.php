@@ -23,8 +23,12 @@
           <flux:checkbox wire:model="remember" label="{{ __('Remember me') }}" />
         </flux:field>
 
-        <flux:button type="submit" variant="primary" class="w-full">
-          {{ __('Login') }}
+        <flux:button type="submit" variant="primary" class="w-full" wire:loading.attr="disabled">
+          <span wire:loading.remove wire:target="login">{{ __('Login') }}</span>
+          <span wire:loading wire:target="login" class="flex items-center gap-ui">
+            <flux:icon.loading class="size-4" />
+            {{ __('Login') }}
+          </span>
         </flux:button>
       </form>
 
@@ -84,8 +88,12 @@
           <flux:error name="acceptPrivacy" />
         </flux:field>
 
-        <flux:button type="submit" variant="primary" class="w-full">
-          {{ __('Register') }}
+        <flux:button type="submit" variant="primary" class="w-full" wire:loading.attr="disabled">
+          <span wire:loading.remove wire:target="register">{{ __('Register') }}</span>
+          <span wire:loading wire:target="register" class="flex items-center gap-ui">
+            <flux:icon.loading class="size-4" />
+            {{ __('Register') }}
+          </span>
         </flux:button>
       </form>
 
@@ -117,8 +125,12 @@
             <flux:error name="email" />
           </flux:field>
 
-          <flux:button type="submit" variant="primary" class="w-full">
-            {{ __('Send Reset Link') }}
+          <flux:button type="submit" variant="primary" class="w-full" wire:loading.attr="disabled">
+            <span wire:loading.remove wire:target="sendResetLink">{{ __('Send Reset Link') }}</span>
+            <span wire:loading wire:target="sendResetLink" class="flex items-center gap-ui">
+              <flux:icon.loading class="size-4" />
+              {{ __('Send Reset Link') }}
+            </span>
           </flux:button>
         </form>
       @endif

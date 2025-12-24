@@ -13,7 +13,7 @@
   </button>
 
   @auth
-    <flux:modal name="add-to-list-{{ $recipeId }}" class="max-w-sm flex flex-col gap-section" @close="$wire.closeModal()">
+    <flux:modal name="add-to-list-{{ $recipeId }}" class="max-w-sm flex flex-col gap-section" @close="closeModal">
       <flux:heading size="lg">{{ __('Add to List') }}</flux:heading>
 
       @if($isModalOpen)
@@ -23,7 +23,12 @@
           </x-slot>
 
           @foreach($this->lists as $list)
-            <flux:pillbox.option wire:key="list-{{ $list->id }}" :value="$list->id">{{ $list->name }}</flux:pillbox.option>
+            <flux:pillbox.option wire:key="list-{{ $list->id }}" :value="$list->id">
+              {{ $list->name }}
+              @if($list->user_id !== auth()->id())
+                <span class="text-zinc-400 text-xs">({{ $list->user->name }})</span>
+              @endif
+            </flux:pillbox.option>
           @endforeach
 
           <flux:pillbox.option.create wire:click="createList" min-length="2">

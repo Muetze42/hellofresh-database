@@ -497,6 +497,7 @@ class RecipeIndex extends AbstractComponent
             ->when($this->isTotalTimeFilterActive(), fn (Builder $query): Builder => $this->applyTotalTimeFilter($query))
             ->with(['country', 'label', 'tags'])
             ->orderBy($this->getSortEnum()->column(), $this->getSortEnum()->direction())
+            ->orderBy('id')
             ->paginate($this->perPage);
     }
 
