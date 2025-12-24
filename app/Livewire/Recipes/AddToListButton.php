@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Recipes;
 
+use App\Enums\RecipeListActionEnum;
 use App\Events\RecipeListUpdatedEvent;
 use App\Livewire\AbstractComponent;
 use App\Livewire\Concerns\WithLocalizedContextTrait;
 use App\Models\RecipeList;
+use App\Models\RecipeListActivity;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -89,15 +91,18 @@ class AddToListButton extends AbstractComponent
             return;
         }
 
-        $this->selectedLists = RecipeList::where('user_id', $user->id)
-            ->where('country_id', $this->countryId)
+        $this->selectedLists = RecipeList::where('country_id', $this->countryId)
+            ->where(fn (Builder $query): Builder => $query
+                ->where('user_id', $user->id)
+                ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
+            )
             ->whereHas('recipes', fn (Builder $query): Builder => $query->where('recipe_id', $this->recipeId))
             ->pluck('id')
             ->all();
     }
 
     /**
-     * Get the user's recipe lists.
+     * Get the user's recipe lists (owned and shared).
      *
      * @return Collection<int, RecipeList>
      */
@@ -110,8 +115,12 @@ class AddToListButton extends AbstractComponent
             return collect();
         }
 
-        return RecipeList::where('user_id', $user->id)
-            ->where('country_id', $this->countryId)
+        return RecipeList::where('country_id', $this->countryId)
+            ->where(fn (Builder $query): Builder => $query
+                ->where('user_id', $user->id)
+                ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
+            )
+            ->with('user')
             ->orderBy('name')
             ->get();
     }
@@ -136,8 +145,11 @@ class AddToListButton extends AbstractComponent
             return;
         }
 
-        $currentLists = RecipeList::where('user_id', $user->id)
-            ->where('country_id', $this->countryId)
+        $currentLists = RecipeList::where('country_id', $this->countryId)
+            ->where(fn (Builder $query): Builder => $query
+                ->where('user_id', $user->id)
+                ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
+            )
             ->whereHas('recipes', fn (Builder $query): Builder => $query->where('recipe_id', $this->recipeId))
             ->pluck('id')
             ->all();
@@ -148,16 +160,18 @@ class AddToListButton extends AbstractComponent
         foreach ($toAdd as $listId) {
             /** @var RecipeList|null $list */
             $list = RecipeList::find($listId);
-            if ($list instanceof RecipeList && $list->user_id === $user->id) {
+            if ($list instanceof RecipeList && $list->isAccessibleBy($user)) {
                 $list->recipes()->attach($this->recipeId, ['added_at' => now()]);
+                $this->logActivity($list, RecipeListActionEnum::Added);
             }
         }
 
         foreach ($toRemove as $listId) {
             /** @var RecipeList|null $list */
             $list = RecipeList::find($listId);
-            if ($list instanceof RecipeList && $list->user_id === $user->id) {
+            if ($list instanceof RecipeList && $list->isAccessibleBy($user)) {
                 $list->recipes()->detach($this->recipeId);
+                $this->logActivity($list, RecipeListActionEnum::Removed);
             }
         }
 
@@ -202,6 +216,7 @@ class AddToListButton extends AbstractComponent
         $list->save();
 
         $list->recipes()->attach($this->recipeId, ['added_at' => now()]);
+        $this->logActivity($list, RecipeListActionEnum::Added);
 
         $this->selectedLists[] = $list->id;
         $this->search = '';
@@ -249,6 +264,24 @@ class AddToListButton extends AbstractComponent
     {
         $this->loadSelectedLists();
         unset($this->lists, $this->isInAnyList);
+    }
+
+    /**
+     * Log an activity for a recipe list.
+     */
+    protected function logActivity(RecipeList $list, RecipeListActionEnum $action): void
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return;
+        }
+
+        $activity = new RecipeListActivity(['action' => $action]);
+        $activity->recipeList()->associate($list);
+        $activity->user()->associate($user);
+        $activity->recipe()->associate($this->recipeId);
+        $activity->save();
     }
 
     /**

@@ -2,15 +2,76 @@
   @if ($viewingListId && $this->viewingList)
     {{-- Viewing a specific list --}}
     <div class="space-y-section">
-      <div class="flex items-center gap-4">
-        <flux:button wire:click="backToLists" variant="ghost" icon="arrow-left" size="sm">
-          {{ __('Back to Lists') }}
-        </flux:button>
-        <flux:heading size="lg">{{ $this->viewingList->name }}</flux:heading>
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-4 min-w-0">
+          <flux:button wire:click="backToLists" variant="ghost" icon="arrow-left" size="sm">
+            {{ __('Back to Lists') }}
+          </flux:button>
+          <flux:heading size="lg" class="truncate">{{ $this->viewingList->name }}</flux:heading>
+        </div>
+
+        @if ($this->viewingList->isOwnedBy(auth()->user()))
+          <flux:button wire:click="startSharing({{ $this->viewingList->id }})" variant="ghost" icon="share" size="sm">
+            {{ __('Share') }}
+          </flux:button>
+        @else
+          <flux:badge color="sky" size="sm" icon="users">
+            {{ __('Shared by :name', ['name' => $this->viewingList->user->name]) }}
+          </flux:badge>
+        @endif
       </div>
 
       @if ($this->viewingList->description)
         <flux:text>{{ $this->viewingList->description }}</flux:text>
+      @endif
+
+      {{-- Shared with users --}}
+      @if ($this->viewingList->sharedWith->isNotEmpty() && $this->viewingList->isOwnedBy(auth()->user()))
+        <div class="flex flex-wrap items-center gap-ui">
+          <flux:text variant="subtle" size="sm">{{ __('Shared with:') }}</flux:text>
+          @foreach ($this->viewingList->sharedWith as $sharedUser)
+            <flux:badge wire:key="shared-{{ $sharedUser->id }}" size="sm" color="zinc">
+              {{ $sharedUser->name }}
+              <button
+                type="button"
+                wire:click="unshareList({{ $this->viewingList->id }}, {{ $sharedUser->id }})"
+                class="ml-1 hover:text-red-500"
+                title="{{ __('Remove') }}"
+              >
+                <flux:icon.x variant="micro" />
+              </button>
+            </flux:badge>
+          @endforeach
+        </div>
+      @endif
+
+      {{-- Recent Activity --}}
+      @if ($this->recentActivities->isNotEmpty())
+        <flux:accordion transition>
+          <flux:accordion.item>
+            <flux:accordion.heading>
+              <span class="flex items-center gap-ui">
+                <flux:icon.clock variant="mini" />
+                {{ __('Recent Activity') }}
+              </span>
+            </flux:accordion.heading>
+
+            <flux:accordion.content>
+              <div class="space-y-ui">
+                @foreach ($this->recentActivities as $activity)
+                  <div wire:key="activity-{{ $activity->id }}" class="flex items-center gap-ui text-sm">
+                    <flux:text variant="subtle">
+                      <strong>{{ $activity->user->name }}</strong>
+                      {{ $activity->action->label() }}
+                      <strong>{{ $activity->recipe?->name ?? __('Unknown recipe') }}</strong>
+                      <span class="text-zinc-400">{{ $activity->created_at->diffForHumans() }}</span>
+                    </flux:text>
+                  </div>
+                @endforeach
+              </div>
+            </flux:accordion.content>
+          </flux:accordion.item>
+        </flux:accordion>
       @endif
 
       @if ($this->viewingList->recipes->isEmpty())
@@ -107,15 +168,25 @@
                   @if ($list->description)
                     <flux:text class="mt-1 line-clamp-2">{{ $list->description }}</flux:text>
                   @endif
-                  <flux:badge class="mt-2" size="sm">
-                    {{ trans_choice(':count Recipe|:count Recipes', $list->recipes_count, ['count' => $list->recipes_count]) }}
-                  </flux:badge>
+                  <div class="flex flex-wrap gap-ui mt-2">
+                    <flux:badge size="sm">
+                      {{ trans_choice(':count Recipe|:count Recipes', $list->recipes_count, ['count' => $list->recipes_count]) }}
+                    </flux:badge>
+                    @if ($list->sharedWith->isNotEmpty())
+                      <flux:badge size="sm" color="sky" icon="users">
+                        {{ $list->sharedWith->count() }}
+                      </flux:badge>
+                    @endif
+                  </div>
                 </div>
 
                 <flux:dropdown>
                   <flux:button variant="ghost" size="sm" icon="ellipsis-vertical" x-on:click.stop />
 
                   <flux:menu>
+                    <flux:menu.item icon="share" wire:click.stop="startSharing({{ $list->id }})">
+                      {{ __('Share') }}
+                    </flux:menu.item>
                     <flux:menu.item icon="pencil" wire:click.stop="startEditing({{ $list->id }})">
                       {{ __('Edit') }}
                     </flux:menu.item>
@@ -138,10 +209,60 @@
           @endforeach
         </div>
       @endif
-    </div>
 
-    {{-- Create List Modal --}}
-    <flux:modal name="create-list" class="max-w-md space-y-section">
+      {{-- Shared Lists Section --}}
+      @if ($this->sharedLists->isNotEmpty())
+        <div class="mt-section pt-section border-t border-zinc-200 dark:border-zinc-700">
+          <flux:heading size="lg" class="mb-section">{{ __('Shared with me') }}</flux:heading>
+
+          <div class="grid grid-cols-1 gap-section sm:grid-cols-2 lg:grid-cols-3">
+            @foreach ($this->sharedLists as $list)
+              <flux:card wire:key="shared-list-{{ $list->id }}" class="cursor-pointer hover:shadow-lg transition-shadow" wire:click="viewList({{ $list->id }})">
+                <div class="flex items-start justify-between">
+                  <div class="flex-1 min-w-0">
+                    <flux:heading size="lg" class="truncate">{{ $list->name }}</flux:heading>
+                    <flux:text variant="subtle" size="sm" class="mt-1">
+                      {{ __('by :name', ['name' => $list->user->name]) }}
+                    </flux:text>
+                    @if ($list->description)
+                      <flux:text class="mt-1 line-clamp-2">{{ $list->description }}</flux:text>
+                    @endif
+                    <flux:badge class="mt-2" size="sm">
+                      {{ trans_choice(':count Recipe|:count Recipes', $list->recipes_count, ['count' => $list->recipes_count]) }}
+                    </flux:badge>
+                  </div>
+
+                  <flux:dropdown>
+                    <flux:button variant="ghost" size="sm" icon="ellipsis-vertical" x-on:click.stop />
+
+                    <flux:menu>
+                      <flux:menu.item
+                        icon="log-out"
+                        variant="danger"
+                        x-on:click.stop="$dispatch('confirm-action', {
+                                              title: '{{ __('Leave List') }}',
+                                              message: '{{ __('You will no longer have access to this list.') }}',
+                                              confirmText: '{{ __('Leave') }}',
+                                              onConfirm: () => $wire.leaveSharedList({{ $list->id }})
+                                          })"
+                      >
+                        {{ __('Leave List') }}
+                      </flux:menu.item>
+                    </flux:menu>
+                  </flux:dropdown>
+                </div>
+              </flux:card>
+            @endforeach
+          </div>
+        </div>
+      @endif
+    </div>
+  @endif
+
+  {{-- Modals (always rendered) --}}
+
+  {{-- Create List Modal --}}
+  <flux:modal name="create-list" class="max-w-md space-y-section">
       <flux:heading size="lg">{{ __('Create New List') }}</flux:heading>
 
       <form wire:submit="createList" class="space-y-section">
@@ -193,5 +314,26 @@
         </div>
       </form>
     </flux:modal>
-  @endif
+
+    {{-- Share List Modal --}}
+    <flux:modal name="share-list" class="max-w-md space-y-section">
+      <flux:heading size="lg">{{ __('Share List') }}</flux:heading>
+
+      <flux:text>{{ __('Enter the email address of the person you want to share this list with. They must have an account to access it.') }}</flux:text>
+
+      <form wire:submit="shareList" class="space-y-section">
+        <flux:field>
+          <flux:label>{{ __('Email Address') }}</flux:label>
+          <flux:input wire:model="shareEmail" type="email" :placeholder="__('friend@example.com')" required />
+          <flux:error name="shareEmail" />
+        </flux:field>
+
+        <div class="flex justify-end gap-ui">
+          <flux:modal.close>
+            <flux:button variant="ghost">{{ __('Cancel') }}</flux:button>
+          </flux:modal.close>
+          <flux:button type="submit" variant="primary" icon="share">{{ __('Share') }}</flux:button>
+        </div>
+      </form>
+  </flux:modal>
 </flux:main>

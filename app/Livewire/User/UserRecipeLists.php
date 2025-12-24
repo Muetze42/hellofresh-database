@@ -2,11 +2,15 @@
 
 namespace App\Livewire\User;
 
+use App\Enums\RecipeListActionEnum;
 use App\Livewire\AbstractComponent;
 use App\Livewire\Concerns\WithLocalizedContextTrait;
 use App\Models\RecipeList;
+use App\Models\RecipeListActivity;
+use App\Models\User;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View as ViewInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 
@@ -26,8 +30,12 @@ class UserRecipeLists extends AbstractComponent
 
     public ?int $viewingListId = null;
 
+    public ?int $sharingListId = null;
+
+    public string $shareEmail = '';
+
     /**
-     * Get the user's recipe lists.
+     * Get the user's own recipe lists.
      *
      * @return Collection<int, RecipeList>
      */
@@ -42,6 +50,29 @@ class UserRecipeLists extends AbstractComponent
 
         return RecipeList::where('user_id', $user->id)
             ->where('country_id', $this->countryId)
+            ->with('sharedWith')
+            ->withCount('recipes')
+            ->orderBy('name')
+            ->get();
+    }
+
+    /**
+     * Get recipe lists shared with the user.
+     *
+     * @return Collection<int, RecipeList>
+     */
+    #[Computed]
+    public function sharedLists(): Collection
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return collect();
+        }
+
+        return RecipeList::whereHas('sharedWith', fn (Builder $query): Builder => $query->where('users.id', $user->id))
+            ->where('country_id', $this->countryId)
+            ->with('user')
             ->withCount('recipes')
             ->orderBy('name')
             ->get();
@@ -58,8 +89,26 @@ class UserRecipeLists extends AbstractComponent
         }
 
         return RecipeList::query()
-            ->with('recipes')
+            ->with(['recipes', 'user', 'sharedWith'])
             ->find($this->viewingListId);
+    }
+
+    /**
+     * Get recent activities for the currently viewed list.
+     *
+     * @return Collection<int, RecipeListActivity>
+     */
+    #[Computed]
+    public function recentActivities(): Collection
+    {
+        if (! $this->viewingListId) {
+            return collect();
+        }
+
+        return RecipeListActivity::where('recipe_list_id', $this->viewingListId)
+            ->with(['user', 'recipe'])->latest()
+            ->limit(10)
+            ->get();
     }
 
     /**
@@ -179,16 +228,140 @@ class UserRecipeLists extends AbstractComponent
     public function removeRecipeFromList(int $recipeId): void
     {
         $list = $this->viewingList();
+        $user = auth()->user();
 
-        if (! $list instanceof RecipeList) {
+        if (! $list instanceof RecipeList || ! $user) {
+            return;
+        }
+
+        if (! $list->isAccessibleBy($user)) {
             return;
         }
 
         $list->recipes()->detach($recipeId);
 
+        $activity = new RecipeListActivity(['action' => RecipeListActionEnum::Removed]);
+        $activity->recipeList()->associate($list);
+        $activity->user()->associate($user);
+        $activity->recipe()->associate($recipeId);
+        $activity->save();
+
         unset($this->viewingList, $this->recipeLists);
 
         Flux::toastSuccess(__('Recipe removed from list.'));
+    }
+
+    /**
+     * Open the share modal for a list.
+     */
+    public function startSharing(int $listId): void
+    {
+        $this->sharingListId = $listId;
+        $this->shareEmail = '';
+        $this->resetValidation();
+        Flux::showModal('share-list');
+    }
+
+    /**
+     * Share a list with a user by email.
+     */
+    public function shareList(): void
+    {
+        $this->validate([
+            'shareEmail' => ['required', 'email'],
+        ]);
+
+        $user = auth()->user();
+        $list = RecipeList::find($this->sharingListId);
+
+        if (! $user || ! $list instanceof RecipeList) {
+            return;
+        }
+
+        if (! $list->isOwnedBy($user)) {
+            $this->addError('shareEmail', __('Only the owner can share this list.'));
+
+            return;
+        }
+
+        $targetUser = User::where('email', $this->shareEmail)->first();
+
+        if (! $targetUser) {
+            $this->addError('shareEmail', __('No user found with this email address.'));
+
+            return;
+        }
+
+        if ($targetUser->id === $user->id) {
+            $this->addError('shareEmail', __('You cannot share a list with yourself.'));
+
+            return;
+        }
+
+        if ($list->sharedWith()->where('users.id', $targetUser->id)->exists()) {
+            $this->addError('shareEmail', __('This list is already shared with this user.'));
+
+            return;
+        }
+
+        $list->sharedWith()->attach($targetUser->id);
+
+        $this->reset(['sharingListId', 'shareEmail']);
+        unset($this->recipeLists);
+
+        Flux::closeModal('share-list');
+        Flux::toastSuccess(__('List shared successfully.'));
+    }
+
+    /**
+     * Remove a user from a shared list.
+     */
+    public function unshareList(int $listId, int $userId): void
+    {
+        $user = auth()->user();
+        $list = RecipeList::find($listId);
+
+        if (! $user || ! $list instanceof RecipeList) {
+            return;
+        }
+
+        if (! $list->isOwnedBy($user)) {
+            return;
+        }
+
+        $list->sharedWith()->detach($userId);
+
+        unset($this->recipeLists);
+
+        Flux::toastSuccess(__('User removed from shared list.'));
+    }
+
+    /**
+     * Leave a shared list.
+     */
+    public function leaveSharedList(int $listId): void
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return;
+        }
+
+        $list = RecipeList::find($listId);
+
+        if (! $list instanceof RecipeList) {
+            return;
+        }
+
+        $list->sharedWith()->detach($user->id);
+
+        if ($this->viewingListId === $listId) {
+            $this->viewingListId = null;
+        }
+
+        unset($this->sharedLists);
+
+        Flux::toastSuccess(__('You have left the shared list.'));
     }
 
     /**
