@@ -19,6 +19,10 @@
           <flux:error name="password" />
         </flux:field>
 
+        <flux:field>
+          <flux:checkbox wire:model="remember" label="{{ __('Remember me') }}" />
+        </flux:field>
+
         <flux:button type="submit" variant="primary" class="w-full">
           {{ __('Login') }}
         </flux:button>

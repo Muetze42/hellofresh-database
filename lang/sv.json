@@ -215,5 +215,6 @@
     "We have emailed your password reset link.": "Vi har skickat dig en länk för att återställa ditt lösenord.",
     "Send Reset Link": "Skicka länk",
     "Back to Login": "Tillbaka till inloggning",
-    "Enter your new password below.": "Ange ditt nya lösenord nedan."
+    "Enter your new password below.": "Ange ditt nya lösenord nedan.",
+    "Remember me": "Kom ihåg mig"
 }

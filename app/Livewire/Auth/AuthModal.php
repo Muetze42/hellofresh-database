@@ -40,6 +40,8 @@ class AuthModal extends AbstractComponent
 
     public bool $acceptPrivacy = false;
 
+    public bool $remember = false;
+
     public bool $resetLinkSent = false;
 
     /**
@@ -109,7 +111,7 @@ class AuthModal extends AbstractComponent
         ]);
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], true)) {
+        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -175,7 +177,7 @@ class AuthModal extends AbstractComponent
     {
         $this->mode = 'login';
         $this->resetLinkSent = false;
-        $this->reset(['email', 'password', 'password_confirmation', 'name', 'acceptPrivacy']);
+        $this->reset(['email', 'password', 'password_confirmation', 'name', 'acceptPrivacy', 'remember']);
         $this->resetValidation();
         Flux::showModal('auth-modal');
     }
