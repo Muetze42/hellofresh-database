@@ -44,8 +44,8 @@
   </div>
 
   {{-- Mobile: Sort left, Filter+View right --}}
-  <div class="flex items-center gap-4 sm:hidden">
-    <flux:select wire:model.live="sortBy" variant="listbox" size="sm">
+  <div class="flex items-center gap-ui sm:hidden">
+    <flux:select wire:model.live="sortBy" variant="listbox" size="sm" class="min-w-0 flex-1">
       @foreach (\App\Enums\RecipeSortEnum::cases() as $sortOption)
         <flux:select.option wire:key="sort-mobile-{{ $sortOption->value }}" :value="$sortOption->value">
           {{ $sortOption->label() }}
