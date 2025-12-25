@@ -57,7 +57,9 @@
 
         <div class="p-4">
             <flux:heading size="lg" class="line-clamp-1">
-                <flux:link :href="localized_route('localized.recipes.show', ['recipe' => $recipe])">{{ $recipe->name }}</flux:link>
+                <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->name), 'recipe' => $recipe->hellofresh_id])">
+                  {{ $recipe->name }}
+                </flux:link>
             </flux:heading>
 
             @if ($recipe->headline)
@@ -108,7 +110,9 @@
         <div class="flex flex-1 flex-col justify-center py-2">
             <div class="flex items-center gap-2">
                 <flux:heading size="lg" class="line-clamp-1">
-                    <flux:link :href="localized_route('localized.recipes.show', ['recipe' => $recipe])">{{ $recipe->name }}</flux:link>
+                    <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->name), 'recipe' => $recipe->hellofresh_id])">
+                      {{ $recipe->name }}
+                    </flux:link>
                 </flux:heading>
                 @if ($recipe->label && $recipe->label->display_label)
                     <span

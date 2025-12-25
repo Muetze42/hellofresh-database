@@ -72,3 +72,13 @@ if (! function_exists('page_title')) {
         return implode($separator, $crumbs);
     }
 }
+
+if (! function_exists('slugify')) {
+    /**
+     * Generate a URL friendly 'slug' from a given string.
+     */
+    function slugify(string $title): string
+    {
+        return Str::slug($title, language: app()->getLocale());
+    }
+}

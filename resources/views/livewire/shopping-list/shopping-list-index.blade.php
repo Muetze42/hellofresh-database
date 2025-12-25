@@ -298,7 +298,7 @@
                 @endif
 
                 <div class="flex-1">
-                  <flux:link :href="localized_route('localized.recipes.show', ['recipe' => $recipe])" wire:navigate class="print:hidden">
+                  <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->name), 'recipe' => $recipe->hellofresh_id])" wire:navigate class="print:hidden">
                     {{ $recipe->name }}
                   </flux:link>
                   <flux:heading size="sm" class="not-print:hidden">{{ $recipe->name }}</flux:heading>
