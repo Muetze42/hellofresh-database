@@ -247,7 +247,9 @@
             @endif
             <div class="p-4">
               <flux:heading size="sm" class="line-clamp-2">
-                <flux:link :href="localized_route('localized.recipes.show', ['recipe' => $similarRecipe])">{{ $similarRecipe->name }}</flux:link>
+                <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($similarRecipe->name), 'recipe' => $similarRecipe->hellofresh_id])">
+                  {{ $similarRecipe->name }}
+                </flux:link>
               </flux:heading>
             </div>
           </flux:card>

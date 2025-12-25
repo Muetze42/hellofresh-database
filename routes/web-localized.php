@@ -13,8 +13,8 @@ use App\Livewire\User\UserShoppingLists;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', RecipeIndex::class)->name('recipes.index');
-Route::get('recipes/{recipe}', RecipeShow::class)
-    ->where('recipe', '[0-9]+')
+Route::get('recipes/{slug}-{recipe:hellofresh_id}', RecipeShow::class)
+    ->where(['slug' => '.*', 'recipe' => '[a-f0-9]{24}'])
     ->name('recipes.show');
 Route::get('shopping-list', ShoppingListIndex::class)->name('shopping-list.index');
 Route::get('shopping-list/print', ShoppingListIndex::class)->name('shopping-list.print');
