@@ -8,7 +8,6 @@ use App\Models\Country;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Log;
 use Throwable;
 
 /**
@@ -44,7 +43,6 @@ class SyncRecipesJob implements LauncherJobInterface, ShouldQueue
      */
     public function handle(): void
     {
-        Log::debug('Syncing HelloFresh recipes...');
         $countries = Country::orderBy('id')->get();
 
         $primaryJobs = [];
