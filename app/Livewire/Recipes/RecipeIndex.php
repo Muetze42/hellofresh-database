@@ -609,6 +609,7 @@ class RecipeIndex extends AbstractComponent
                 ->title($title)
                 ->layoutData([
                     'ogTitle' => sprintf(__('Menu Week %d/%d'), $week, $year),
+                    'ogDescription' => __('Discover all recipes from HelloFresh menu week :week/:year.', ['week' => $week, 'year' => $year]),
                     'ogImage' => route('og.menu', ['menu' => $this->menu, 'locale' => app()->getLocale()]),
                 ]);
         }
@@ -619,6 +620,7 @@ class RecipeIndex extends AbstractComponent
             ->title($title)
             ->layoutData([
                 'ogTitle' => __('Recipes'),
+                'ogDescription' => __('Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.'),
             ]);
     }
 }

@@ -243,5 +243,8 @@
     "Recipe removed from list.": "Opskrift fjernet fra listen.",
     "List created successfully.": "Liste oprettet.",
     "List updated successfully.": "Liste opdateret.",
-    "List deleted successfully.": "Liste slettet."
+    "List deleted successfully.": "Liste slettet.",
+    "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.": "Gennemse tusindvis af HelloFresh-opskrifter. Filtrer efter sværhedsgrad, kogetid, allergener og mere.",
+    "Discover all recipes from HelloFresh menu week :week/:year.": "Opdag alle opskrifter fra HelloFresh menuuge :week/:year.",
+    "Create your shopping list from HelloFresh recipes.": "Opret din indkøbsliste fra HelloFresh-opskrifter."
 }
