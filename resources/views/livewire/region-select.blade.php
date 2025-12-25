@@ -21,7 +21,7 @@
               :href="localized_route('localized.recipes.index', country: $country, locale: $locale)"
               variant="primary"
               size="sm"
-              :lang="$locale"
+              :lang="$locale . '-' . $country->code"
               wire:navigate
             >
               {{ __('language.' . $locale, [], $locale) }}
