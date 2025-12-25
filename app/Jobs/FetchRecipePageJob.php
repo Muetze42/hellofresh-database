@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
+use App\Jobs\Concerns\HandlesApiFailuresTrait;
 use App\Models\Country;
 use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +12,6 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Context;
-use Illuminate\Support\Facades\Log;
 
 /**
  * @method static void dispatch(Country $country, string $locale, int $skip = 0, bool $paginates = true)
@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 class FetchRecipePageJob implements ShouldQueue
 {
     use Batchable;
+    use HandlesApiFailuresTrait;
     use Queueable;
 
     /**
@@ -60,7 +61,7 @@ class FetchRecipePageJob implements ShouldQueue
             $response = $client->withOutThrow()
                 ->getRecipes($this->country, $this->locale, $this->skip);
         } catch (ConnectionException $connectionException) {
-            $this->handleFailure($connectionException);
+            $this->handleApiFailure($connectionException);
 
             return;
         }
@@ -69,7 +70,7 @@ class FetchRecipePageJob implements ShouldQueue
             $exception = $response->toException();
             assert($exception !== null);
 
-            $this->handleFailure($exception);
+            $this->handleApiFailure($exception);
 
             return;
         }
@@ -83,31 +84,5 @@ class FetchRecipePageJob implements ShouldQueue
         if ($this->paginates && $response->hasMorePages()) {
             $this->batch()?->add([new self($this->country, $this->locale, $response->nextSkip(), paginates: true)]);
         }
-    }
-
-    /**
-     * Handle a failed request with logging and retry logic.
-     *
-     * @throws ConnectionException
-     * @throws RequestException
-     */
-    protected function handleFailure(ConnectionException|RequestException $exception): void
-    {
-        $isLastAttempt = $this->attempts() >= $this->tries;
-
-        if ($isLastAttempt) {
-            Log::error('FetchRecipePageJob failed after all retries', [
-                'exception' => $exception->getMessage(),
-            ]);
-
-            throw $exception;
-        }
-
-        Log::warning('FetchRecipePageJob failed, retrying', [
-            'attempt' => $this->attempts(),
-            'exception' => $exception->getMessage(),
-        ]);
-
-        $this->release(30);
     }
 }

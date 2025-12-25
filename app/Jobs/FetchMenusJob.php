@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
+use App\Jobs\Concerns\HandlesApiFailuresTrait;
 use App\Models\Country;
 use App\Models\Recipe;
 use Illuminate\Bus\Batchable;
@@ -16,12 +17,13 @@ use Illuminate\Support\Facades\Context;
 class FetchMenusJob implements ShouldQueue
 {
     use Batchable;
+    use HandlesApiFailuresTrait;
     use Queueable;
 
     /**
      * The number of times the job may be attempted.
      */
-    public int $tries = 2;
+    public int $tries = 3;
 
     /**
      * Create a new job instance.
@@ -60,7 +62,23 @@ class FetchMenusJob implements ShouldQueue
             $week = now()->startOfWeek()->addWeeks($addWeeks);
             $weekString = sprintf('%d-W%02d', $week->format('o'), $week->format('W'));
 
-            $response = $client->getMenus($this->country, $locale, $weekString);
+            try {
+                $response = $client->withOutThrow()
+                    ->getMenus($this->country, $locale, $weekString);
+            } catch (ConnectionException $connectionException) {
+                $this->handleApiFailure($connectionException);
+
+                return;
+            }
+
+            if ($response->failed()) {
+                $exception = $response->toException();
+                assert($exception !== null);
+
+                $this->handleApiFailure($exception);
+
+                return;
+            }
 
             foreach ($response->menus() as $menuData) {
                 $this->importMenu($menuData);
