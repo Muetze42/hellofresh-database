@@ -243,5 +243,8 @@
     "Recipe removed from list.": "Recette supprimée de la liste.",
     "List created successfully.": "Liste créée avec succès.",
     "List updated successfully.": "Liste mise à jour avec succès.",
-    "List deleted successfully.": "Liste supprimée avec succès."
+    "List deleted successfully.": "Liste supprimée avec succès.",
+    "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.": "Parcourez des milliers de recettes HelloFresh. Filtrez par difficulté, temps de cuisson, allergènes et plus.",
+    "Discover all recipes from HelloFresh menu week :week/:year.": "Découvrez toutes les recettes du menu HelloFresh semaine :week/:year.",
+    "Create your shopping list from HelloFresh recipes.": "Créez votre liste de courses à partir des recettes HelloFresh."
 }

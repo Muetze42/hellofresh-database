@@ -10,6 +10,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ $title ?? config('app.name') }}</title>
+  @if($ogDescription)
+    <meta name="description" content="{{ $ogDescription }}">
+  @endif
 
   {{-- Open Graph / Social Media Meta Tags --}}
   <meta property="og:title" content="{{ $ogTitle ?? $title ?? config('app.name') }}">

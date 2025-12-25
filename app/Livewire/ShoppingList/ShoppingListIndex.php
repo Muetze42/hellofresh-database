@@ -260,6 +260,9 @@ class ShoppingListIndex extends AbstractComponent
     public function render(): ViewInterface
     {
         return view('livewire.shopping-list.shopping-list-index')
-            ->title(page_title(__('Shopping List')));
+            ->title(page_title(__('Shopping List')))
+            ->layoutData([
+                'ogDescription' => __('Create your shopping list from HelloFresh recipes.'),
+            ]);
     }
 }

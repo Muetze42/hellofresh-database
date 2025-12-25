@@ -243,5 +243,8 @@
     "Recipe removed from list.": "Recept verwijderd uit lijst.",
     "List created successfully.": "Lijst succesvol aangemaakt.",
     "List updated successfully.": "Lijst succesvol bijgewerkt.",
-    "List deleted successfully.": "Lijst succesvol verwijderd."
+    "List deleted successfully.": "Lijst succesvol verwijderd.",
+    "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.": "Blader door duizenden HelloFresh-recepten. Filter op moeilijkheidsgraad, kooktijd, allergenen en meer.",
+    "Discover all recipes from HelloFresh menu week :week/:year.": "Ontdek alle recepten van HelloFresh menuweek :week/:year.",
+    "Create your shopping list from HelloFresh recipes.": "Maak je boodschappenlijst van HelloFresh-recepten."
 }

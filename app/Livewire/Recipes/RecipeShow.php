@@ -192,11 +192,16 @@ class RecipeShow extends AbstractComponent
     {
         $title = page_title($this->recipe->name ?: $this->recipe->getFirstTranslation('name'));
 
+        $description = $this->recipe->description
+            ?: ($this->recipe->headline
+                ? $this->recipe->name . ' ' . $this->recipe->headline
+                : $this->recipe->name);
+
         return view('livewire.recipes.recipe-show')
             ->title($title)
             ->layoutData([
                 'ogTitle' => $this->recipe->name,
-                'ogDescription' => $this->recipe->headline,
+                'ogDescription' => $description,
                 'ogImage' => route('og.recipe', $this->recipe),
             ]);
     }
