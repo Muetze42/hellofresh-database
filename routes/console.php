@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\GenerateSitemapsJob;
 use App\Jobs\SyncMenusJob;
 use App\Jobs\SyncRecipesJob;
 use App\Jobs\UpdateCountryStatisticsJob;
@@ -30,3 +31,6 @@ Schedule::job(new SyncMenusJob())
 
 Schedule::job(new UpdateCountryStatisticsJob())
     ->twiceDaily(4, 16);
+
+Schedule::job(new GenerateSitemapsJob())
+    ->dailyAt(12);
