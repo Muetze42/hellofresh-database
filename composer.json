@@ -1,11 +1,21 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "norman-huth/laravel-starter-kit",
+    "name": "norman-huth/hellofresh-database",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Unofficial HelloFresh recipe database with weekly menus, shopping lists, ingredient tracking, and multi-language support.",
     "keywords": [
+        "hellofresh",
+        "recipes",
+        "recipe-database",
+        "weekly-menus",
+        "shopping-list",
+        "meal-planning",
+        "ingredients",
+        "cooking",
         "laravel",
-        "framework"
+        "livewire",
+        "flux-ui",
+        "tailwindcss"
     ],
     "license": "MIT",
     "repositories": [
