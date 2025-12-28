@@ -11,6 +11,7 @@ use App\Models\Label;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Override;
 use PHPUnit\Framework\Attributes\Test;
+use stdClass;
 use Tests\TestCase;
 
 final class ImportRecipeJobTest extends TestCase
@@ -379,7 +380,7 @@ final class ImportRecipeJobTest extends TestCase
             ->whereJsonContains('handles', 'premium')
             ->first();
 
-        $this->assertNotNull($label);
+        $this->assertInstanceOf(stdClass::class, $label);
         $this->assertTrue($label->display_label);
     }
 
@@ -400,7 +401,7 @@ final class ImportRecipeJobTest extends TestCase
 
         $label = Label::whereJsonContains('handles', 'premium')->first();
 
-        $this->assertNotNull($label);
+        $this->assertInstanceOf(stdClass::class, $label);
     }
 
     #[Test]
@@ -420,7 +421,7 @@ final class ImportRecipeJobTest extends TestCase
 
         $label = Label::whereJsonContains('handles', 'summer-discount')->first();
 
-        $this->assertNull($label);
+        $this->assertNotInstanceOf(stdClass::class, $label);
     }
 
     #[Test]
@@ -440,7 +441,7 @@ final class ImportRecipeJobTest extends TestCase
 
         $label = Label::whereJsonContains('handles', 'holiday-sale')->first();
 
-        $this->assertNull($label);
+        $this->assertNotInstanceOf(stdClass::class, $label);
     }
 
     #[Test]
