@@ -36,4 +36,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(function (Request $request): bool {
             return $request->expectsJson() || $request->is('api') || $request->is('api/*');
         });
+
+        $exceptions->context(fn (): array => ['user_id' => auth()->user()?->id]);
     })->create();
