@@ -102,9 +102,6 @@
                 >
             @endif
 
-            <div class="absolute top-1 right-1 flex flex-col gap-1">
-                <livewire:recipes.add-to-list-button :recipe-id="$recipe->id" :key="'list-list-img-'.$recipe->id" />
-            </div>
         </div>
 
         <div class="flex flex-1 flex-col justify-center py-2">
