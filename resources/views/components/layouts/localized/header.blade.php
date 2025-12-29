@@ -31,7 +31,7 @@
 
     <flux:navbar class="gap-ui">
         {{-- Dark Mode Toggle --}}
-        <flux:dropdown x-data align="end">
+        <flux:dropdown x-data align="end" class="max-lg:hidden">
             <flux:button variant="subtle" square class="group" aria-label="{{ __('Appearance') }}">
                 <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
                 <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
