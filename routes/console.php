@@ -5,13 +5,10 @@ use App\Jobs\SyncMenusJob;
 use App\Jobs\SyncRecipesJob;
 use App\Jobs\UpdateCountryStatisticsJob;
 use Illuminate\Console\Scheduling\Schedule as ConsoleSchedule;
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function (): void {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Schedule::command('prune-expired-email-verifications')
+    ->daily();
 
 Schedule::job(new SyncRecipesJob(true))
     ->weekly();

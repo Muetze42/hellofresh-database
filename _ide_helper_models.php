@@ -157,6 +157,25 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @mixin \Illuminate\Database\Eloquent\Builder<\App\Models\EmailVerification>
+ * @property int $id
+ * @property int $user_id
+ * @property string $email
+ * @property \Illuminate\Support\Carbon $verified_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification whereVerifiedAt($value)
+ */
+	class EmailVerification extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * @mixin Builder<Favorite>
  * @property int $id
  * @property int $user_id
@@ -389,9 +408,13 @@ namespace App\Models{
  * @property string|null $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeListActivity> $activities
+ * @property-read int|null $activities_count
  * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $sharedWith
+ * @property-read int|null $shared_with_count
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\RecipeListFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList newModelQuery()
@@ -406,6 +429,31 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList whereUserId($value)
  */
 	class RecipeList extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @mixin Builder<RecipeListActivity>
+ * @property int $id
+ * @property int $recipe_list_id
+ * @property int $user_id
+ * @property int $recipe_id
+ * @property \App\Enums\RecipeListActionEnum $action
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property-read \App\Models\Recipe $recipe
+ * @property-read \App\Models\RecipeList $recipeList
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity whereAction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity whereRecipeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity whereRecipeListId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity whereUserId($value)
+ */
+	class RecipeListActivity extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -484,12 +532,16 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $active_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailVerification> $emailVerifications
+ * @property-read int|null $email_verifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Favorite> $favorites
  * @property-read int|null $favorites_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeList> $recipeLists
  * @property-read int|null $recipe_lists_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeList> $sharedRecipeLists
+ * @property-read int|null $shared_recipe_lists_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ShoppingList> $shoppingLists
  * @property-read int|null $shopping_lists_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])

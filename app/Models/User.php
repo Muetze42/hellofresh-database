@@ -96,6 +96,29 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the email verifications of the user.
+     *
+     * @return HasMany<EmailVerification, $this>
+     */
+    public function emailVerifications(): HasMany
+    {
+        return $this->hasMany(EmailVerification::class);
+    }
+
+    /**
+     * Mark the given user's email as verified.
+     */
+    public function markEmailAsVerified(): bool
+    {
+        $this->emailVerifications()->updateOrCreate(
+            ['email' => $this->email],
+            ['verified_at' => now()]
+        );
+
+        return parent::markEmailAsVerified();
+    }
+
+    /**
      * Get the recipe lists shared with this user.
      *
      * @return BelongsToMany<RecipeList, $this>
