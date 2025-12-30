@@ -15,15 +15,19 @@ trait WithLocalizedContextTrait
     #[Locked]
     public string $locale;
 
+    #[Locked]
+    public bool $localizedContextInitialized = false;
+
     /**
      * Boot the localized context from the middleware.
      */
     public function bootWithLocalizedContextTrait(): void
     {
-        if (! isset($this->countryId)) {
+        if (! $this->localizedContextInitialized) {
             $country = current_country();
             $this->countryId = $country->id;
             $this->locale = app()->getLocale();
+            $this->localizedContextInitialized = true;
 
             return;
         }
