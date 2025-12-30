@@ -30,6 +30,11 @@
     <flux:spacer />
 
     <flux:navbar class="gap-ui">
+        {{-- Global Search --}}
+        <flux:modal.trigger name="global-search" shortcut="cmd.k" class="max-lg:hidden">
+            <flux:input as="button" :placeholder="__('Search recipes...')" icon="search" kbd="⌘K" class="w-48" />
+        </flux:modal.trigger>
+
         {{-- Dark Mode Toggle --}}
         <flux:dropdown x-data align="end" class="max-lg:hidden">
             <flux:button variant="subtle" square class="group" aria-label="{{ __('Appearance') }}">
@@ -89,6 +94,10 @@
     <flux:sidebar.nav>
         <flux:sidebar.item icon="earth" :href="route('region.select')">
             {{ __('Select your region') }}
+        </flux:sidebar.item>
+
+        <flux:sidebar.item icon="search" x-on:click="$flux.modal('global-search').show()">
+            {{ __('Search') }}
         </flux:sidebar.item>
 
         <flux:separator class="my-ui" />

@@ -42,6 +42,7 @@
 {{ $slot }}
 <x-layouts.localized.footer />
 <x-confirmation-modal />
+<livewire:global-search />
 <livewire:auth.auth-modal />
 @persist('toast')
 <flux:toast.group position="bottom end">

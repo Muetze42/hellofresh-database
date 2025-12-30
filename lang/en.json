@@ -256,5 +256,10 @@
     "List deleted successfully.": "List deleted successfully.",
     "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.": "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.",
     "Discover all recipes from HelloFresh menu week :week/:year.": "Discover all recipes from HelloFresh menu week :week/:year.",
-    "Create your shopping list from HelloFresh recipes.": "Create your shopping list from HelloFresh recipes."
+    "Create your shopping list from HelloFresh recipes.": "Create your shopping list from HelloFresh recipes.",
+    "Search": "Search",
+    "Search recipes...": "Search recipes...",
+    "Week": "Week",
+    "No results found.": "No results found.",
+    "Type to search for recipes...": "Type to search for recipes..."
 }
