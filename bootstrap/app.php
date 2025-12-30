@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Middleware\AuthenticateOrShowMessageMiddleware;
 use App\Http\Middleware\LocalizationMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -32,12 +32,13 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->redirectGuestsTo('/');
+        // $middleware->redirectGuestsTo('/');
         $middleware->replace(
             PreventRequestsDuringMaintenance::class,
             PreventRequestsDuringMaintenanceMiddleware::class
         );
         $middleware->alias([
+            'auth.or.message' => AuthenticateOrShowMessageMiddleware::class,
             'localized' => LocalizationMiddleware::class,
         ]);
     })
