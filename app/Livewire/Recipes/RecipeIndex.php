@@ -16,6 +16,7 @@ use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.localized')]
@@ -31,6 +32,7 @@ class RecipeIndex extends AbstractComponent
 
     public ?int $selectedMenuWeek = null;
 
+    #[Url]
     public string $search = '';
 
     public string $viewMode = '';
