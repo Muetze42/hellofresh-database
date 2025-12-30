@@ -33,7 +33,7 @@ Route::get('password/reset/{token}', ResetPassword::class)
     ->middleware('guest')
     ->name('password.reset');
 
-Route::middleware('auth')->group(function (): void {
+Route::middleware('auth.or.message')->group(function (): void {
     Route::get('settings', PasswordChange::class)->name('settings');
     Route::get('lists', UserRecipeLists::class)->name('lists');
     Route::get('saved-shopping-lists', UserShoppingLists::class)->name('saved-shopping-lists');
