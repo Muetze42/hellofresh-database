@@ -15,30 +15,32 @@ trait WithLocalizedContextTrait
     #[Locked]
     public string $locale;
 
-    #[Locked]
-    public bool $localizedContextInitialized = false;
-
     /**
-     * Boot the localized context from the middleware.
+     * Boot the localized context.
+     *
+     * On initial requests: Middleware has run, so we can get country from there.
+     * On subsequent requests: This runs before hydration, so countryId isn't available yet.
      */
     public function bootWithLocalizedContextTrait(): void
     {
-        if (! $this->localizedContextInitialized) {
+        // On initial request, middleware has run and binding exists
+        if (app()->bound('current.country')) {
             $country = current_country();
             $this->countryId = $country->id;
             $this->locale = app()->getLocale();
-            $this->localizedContextInitialized = true;
-
-            return;
         }
 
-        $this->restoreLocalizedContext();
+        // On subsequent requests, countryId will be hydrated later
+        // and hydrateWithLocalizedContextTrait will restore the binding
     }
 
     /**
-     * Restore the localized context for subsequent Livewire requests.
+     * Restore the localized context after hydration on subsequent requests.
+     *
+     * This runs AFTER properties are hydrated from the snapshot,
+     * so $this->countryId is now available.
      */
-    protected function restoreLocalizedContext(): void
+    public function hydrateWithLocalizedContextTrait(): void
     {
         if (app()->bound('current.country')) {
             return;

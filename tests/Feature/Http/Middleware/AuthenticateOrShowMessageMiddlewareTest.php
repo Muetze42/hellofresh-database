@@ -6,39 +6,35 @@ namespace Tests\Feature\Http\Middleware;
 
 use App\Models\Country;
 use App\Models\User;
+use Iterator;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 final class AuthenticateOrShowMessageMiddlewareTest extends TestCase
 {
-    private Country $country;
-
     #[Override]
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->country = Country::factory()->create([
+        $country = Country::factory()->create([
             'code' => 'US',
             'locales' => ['en'],
         ]);
 
-        app()->bind('current.country', fn (): Country => $this->country);
+        app()->bind('current.country', fn (): Country => $country);
     }
 
     /**
-     * @return array<string, array{string}>
+     * @return Iterator<string, array{string}>
      */
-    public static function protectedRoutesProvider(): array
+    public static function protectedRoutesProvider(): Iterator
     {
-        return [
-            'settings' => ['localized.settings'],
-            'lists' => ['localized.lists'],
-            'saved-shopping-lists' => ['localized.saved-shopping-lists'],
-        ];
+        yield 'settings' => ['localized.settings'];
+        yield 'lists' => ['localized.lists'];
+        yield 'saved-shopping-lists' => ['localized.saved-shopping-lists'];
     }
 
     #[Test]
@@ -47,7 +43,7 @@ final class AuthenticateOrShowMessageMiddlewareTest extends TestCase
     {
         $response = $this->get(localized_route($routeName));
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
         $response->assertViewIs('auth.require-login');
     }
 
@@ -67,7 +63,7 @@ final class AuthenticateOrShowMessageMiddlewareTest extends TestCase
     {
         $response = $this->get(localized_route('localized.settings'));
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
         $response->assertSee(__('Login Required'));
         $response->assertSee(__('Please log in to access this page.'));
     }
