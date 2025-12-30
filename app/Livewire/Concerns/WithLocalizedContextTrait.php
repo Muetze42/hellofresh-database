@@ -16,6 +16,15 @@ trait WithLocalizedContextTrait
     public string $locale;
 
     /**
+     * Deprecated: Kept for backwards compatibility with existing Livewire snapshots.
+     * Old snapshots contain this property and would fail to hydrate without it.
+     *
+     * @deprecated Remove after all user sessions have expired (typically 1-2 weeks)
+     */
+    #[Locked]
+    public bool $localizedContextInitialized = false;
+
+    /**
      * Boot the localized context.
      *
      * On initial requests: Middleware has run, so we can get country from there.
