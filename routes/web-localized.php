@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\BringExportController;
 use App\Http\Controllers\MenuRedirectController;
+use App\Livewire\Auth\PasswordChange;
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\PrivacyPolicy\PrivacyPolicyShow;
 use App\Livewire\Recipes\RecipeIndex;
 use App\Livewire\Recipes\RecipeShow;
 use App\Livewire\ShoppingList\ShoppingListIndex;
-use App\Livewire\User\UserAccount;
 use App\Livewire\User\UserRecipeLists;
 use App\Livewire\User\UserShoppingLists;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +34,7 @@ Route::get('password/reset/{token}', ResetPassword::class)
     ->name('password.reset');
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('settings', UserAccount::class)->name('settings');
+    Route::get('settings', PasswordChange::class)->name('settings');
     Route::get('lists', UserRecipeLists::class)->name('lists');
     Route::get('saved-shopping-lists', UserShoppingLists::class)->name('saved-shopping-lists');
 });

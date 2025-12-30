@@ -1,7 +1,10 @@
-<flux:card>
-  <flux:heading size="lg" class="mb-section">{{ __('Account Settings') }}</flux:heading>
+<flux:main container class="space-y-section">
+  <flux:heading size="xl">{{ __('Settings') }}</flux:heading>
 
-  <form wire:submit="updateAccount" class="space-y-section max-w-md">
+  <flux:card>
+    <flux:heading size="lg" class="mb-section">{{ __('Account Settings') }}</flux:heading>
+
+    <form wire:submit="updateAccount" class="space-y-section max-w-md">
     <flux:input
       wire:model="email"
       type="email"
@@ -38,4 +41,5 @@
       {{ __('Save Changes') }}
     </flux:button>
   </form>
-</flux:card>
+  </flux:card>
+</flux:main>
