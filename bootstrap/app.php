@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->redirectGuestsTo('/');
+        // $middleware->redirectGuestsTo('/');
         $middleware->replace(
             PreventRequestsDuringMaintenance::class,
             PreventRequestsDuringMaintenanceMiddleware::class
