@@ -49,8 +49,9 @@ class Country extends Model
      * @var list<string>
      */
     protected $hidden = [
-        'locales',
+        'active',
         'domain',
+        'locales',
         'prep_min',
         'prep_max',
         'total_min',
