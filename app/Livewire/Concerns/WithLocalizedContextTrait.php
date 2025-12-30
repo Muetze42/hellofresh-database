@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Concerns;
 
-use App\Http\Middleware\CountryMiddleware;
+use App\Http\Middleware\LocalizationMiddleware;
 use App\Models\Country;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -46,7 +46,7 @@ trait WithLocalizedContextTrait
 
         $country = Country::findOrFail($this->countryId);
 
-        resolve(CountryMiddleware::class)->bindCountryContext(
+        resolve(LocalizationMiddleware::class)->bindCountryContext(
             $country,
             $this->locale
         );

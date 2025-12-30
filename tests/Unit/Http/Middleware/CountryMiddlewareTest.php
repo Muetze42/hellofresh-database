@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Http\Middleware;
 
-use App\Http\Middleware\CountryMiddleware;
+use App\Http\Middleware\LocalizationMiddleware;
 use App\Models\Country;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,14 +22,14 @@ final class CountryMiddlewareTest extends TestCase
 {
     use RefreshDatabase;
 
-    private CountryMiddleware $countryMiddleware;
+    private LocalizationMiddleware $localizationMiddleware;
 
     #[Override]
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->countryMiddleware = new CountryMiddleware();
+        $this->localizationMiddleware = new LocalizationMiddleware();
     }
 
     #[Test]
@@ -39,7 +39,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request = Request::create('/test');
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
     }
 
     #[Test]
@@ -54,7 +54,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
     }
 
     #[Test]
@@ -69,7 +69,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
     }
 
     #[Test]
@@ -85,7 +85,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
     }
 
     #[Test]
@@ -101,7 +101,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
     }
 
     #[Test]
@@ -126,7 +126,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
     }
 
     #[Test]
@@ -147,7 +147,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
     }
 
     #[Test]
@@ -170,7 +170,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
 
         $this->assertSame('de', App::getLocale());
     }
@@ -195,7 +195,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
 
         $this->assertSame('fr', App::getFallbackLocale());
     }
@@ -220,7 +220,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
 
         $this->assertSame('en', App::getFallbackLocale());
     }
@@ -245,7 +245,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
 
         $this->assertTrue(app()->bound('current.country'));
         $this->assertTrue(resolve('current.country')->is($country));
@@ -271,7 +271,7 @@ final class CountryMiddlewareTest extends TestCase
 
         $request->setRouteResolver(fn (): Route => $route);
 
-        $this->countryMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
+        $this->localizationMiddleware->handle($request, fn ($r): ResponseFactory|Response => response('OK'));
 
         $this->assertFalse($route->hasParameter('country'));
         $this->assertFalse($route->hasParameter('locale'));
@@ -285,7 +285,7 @@ final class CountryMiddlewareTest extends TestCase
             'locales' => ['de'],
         ]);
 
-        $this->countryMiddleware->bindCountryContext($country, 'de');
+        $this->localizationMiddleware->bindCountryContext($country, 'de');
 
         $this->assertSame('de', Number::defaultLocale());
     }
@@ -298,7 +298,7 @@ final class CountryMiddlewareTest extends TestCase
             'locales' => ['fr', 'en'],
         ]);
 
-        $this->countryMiddleware->bindCountryContext($country, 'fr');
+        $this->localizationMiddleware->bindCountryContext($country, 'fr');
 
         $this->assertSame('fr', App::getLocale());
         $this->assertSame('en', App::getFallbackLocale());

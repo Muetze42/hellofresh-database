@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\CountryMiddleware;
+use App\Http\Middleware\LocalizationMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,8 +19,12 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('api')
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
+            Route::middleware(['api', 'localized'])
+                ->prefix('api')
+                ->name('api-localized.')
+                ->group(base_path('routes/api-localized.php'));
 
-            Route::middleware(['web', CountryMiddleware::class])
+            Route::middleware(['web', 'localized:true'])
                 ->name('localized.')
                 ->prefix('{locale}-{country:code}')
                 ->group(base_path('routes/web-localized.php'));
@@ -31,6 +35,9 @@ return Application::configure(basePath: dirname(__DIR__))
             PreventRequestsDuringMaintenance::class,
             PreventRequestsDuringMaintenanceMiddleware::class
         );
+        $middleware->alias([
+            'localized' => LocalizationMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(function (Request $request): bool {
