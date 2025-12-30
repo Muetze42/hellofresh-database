@@ -49,21 +49,32 @@ class LivewireSentryContextMiddleware
                 continue;
             }
 
-            $componentName = $snapshot['memo']['name'] ?? 'unknown';
+            $memo = $snapshot['memo'] ?? [];
             $calls = $component['calls'] ?? [];
-            $methods = array_column($calls, 'method');
+
+            // Detaillierte Child-Komponenten
+            $children = array_map(static function ($childData) {
+                return is_array($childData) ? ($childData[1] ?? $childData[0] ?? 'unknown') : $childData;
+            }, $memo['children'] ?? []);
 
             $livewireContext['component_' . $index] = [
-                'name' => $componentName,
-                'id' => $snapshot['memo']['id'] ?? null,
-                'path' => $snapshot['memo']['path'] ?? null,
-                'methods_called' => $methods,
-                'children_count' => count($snapshot['memo']['children'] ?? []),
+                'name' => $memo['name'] ?? 'unknown',
+                'id' => $memo['id'] ?? null,
+                'path' => $memo['path'] ?? null,
+                'method' => $memo['method'] ?? null,
+                'calls' => $calls,
+                'children' => $children,
+                'release' => $memo['release'] ?? null,
             ];
         }
 
-        configureScope(function (Scope $scope) use ($livewireContext): void {
+        configureScope(function (Scope $scope) use ($livewireContext, $request): void {
             $scope->setContext('livewire', $livewireContext);
+            $scope->setContext('livewire_request', [
+                'referer' => $request->header('Referer'),
+                'user_agent' => $request->userAgent(),
+                'origin' => $request->header('Origin'),
+            ]);
         });
     }
 
