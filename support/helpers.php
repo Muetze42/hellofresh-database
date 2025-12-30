@@ -2,9 +2,20 @@
 
 use App\Models\Country;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
+/**
+ * When to split this file?
+ *
+ * As soon as one of the following applies:
+ *
+ * - The file grows beyond ~150 lines.
+ * - You have 5 or more functions related to the same topic.
+ * - You want to test or document certain functions more specifically.
+ * - You prefer to organize functions by type, e.g., string.php for all string-related helpers.
+ */
 if (! function_exists('current_country')) {
     /**
      * Get the current country from the container.
@@ -80,5 +91,59 @@ if (! function_exists('slugify')) {
     function slugify(string $title): string
     {
         return Str::slug($title, language: app()->getLocale());
+    }
+}
+
+if (! function_exists('validated_per_page')) {
+    /**
+     * Retrieves the number of items per a page for pagination.
+     *
+     * @noinspection CallableParameterUseCaseInTypeContextInspection
+     */
+    function validated_per_page(?Request $request = null, int $default = 100, int $max = 1_000, int $min = 10): int
+    {
+        if (! $request instanceof Request) {
+            $request = resolve('request');
+        }
+
+        $perPage = $request->integer('perPage', $default);
+
+        if ($perPage >= $min && $perPage <= $max) {
+            return $perPage;
+        }
+
+        return nearest_allowed($perPage, [$min, $max]);
+    }
+}
+
+if (! function_exists('nearest_allowed')) {
+    /**
+     * Determine the nearest allowed value from a list of allowed values.
+     *
+     * @param  int[]  $allowed
+     */
+    function nearest_allowed(int $value, array $allowed): int
+    {
+        sort($allowed);
+
+        if (in_array($value, $allowed, true)) {
+            return $value;
+        }
+
+        if ($value < $allowed[0]) {
+            return $allowed[0];
+        }
+
+        if ($value > end($allowed)) {
+            return end($allowed);
+        }
+
+        foreach ($allowed as $key => $option) {
+            if ($option > $value) {
+                return $allowed[$key - 1];
+            }
+        }
+
+        return end($allowed);
     }
 }
