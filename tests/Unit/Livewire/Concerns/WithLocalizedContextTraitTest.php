@@ -62,17 +62,17 @@ final class WithLocalizedContextTraitTest extends TestCase
     }
 
     #[Test]
-    public function it_restores_context_on_subsequent_requests(): void
+    public function it_restores_context_on_hydrate(): void
     {
         // First request sets up the context
         $component = Livewire::test(TestComponent::class);
 
-        // Clear the binding to simulate a new request
+        // Clear the binding to simulate a new Livewire request
         app()->forgetInstance('current.country');
 
-        // Simulate subsequent Livewire request by calling boot again
+        // Simulate subsequent Livewire request by calling hydrate
         $instance = $component->instance();
-        $instance->bootWithLocalizedContextTrait();
+        $instance->hydrateWithLocalizedContextTrait();
 
         // Verify the context was restored
         $this->assertTrue(app()->bound('current.country'));
@@ -87,7 +87,7 @@ final class WithLocalizedContextTraitTest extends TestCase
         $instance = $component->instance();
 
         // This should not throw and should keep existing binding
-        $instance->bootWithLocalizedContextTrait();
+        $instance->hydrateWithLocalizedContextTrait();
 
         $this->assertTrue(app()->bound('current.country'));
     }
