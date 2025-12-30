@@ -1,4 +1,4 @@
-<div>
+<div wire:key="add-to-list-{{ $recipeId }}">
   <button
     type="button"
     wire:click="openModal"
