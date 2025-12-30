@@ -45,7 +45,7 @@ final class FetchMenusJobTest extends TestCase
         $country = Country::factory()->create();
         $job = new FetchMenusJob($country);
 
-        $this->assertSame(2, $job->tries);
+        $this->assertSame(3, $job->tries);
     }
 
     #[Test]
@@ -65,6 +65,7 @@ final class FetchMenusJobTest extends TestCase
         ]);
 
         $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('withOutThrow')->andReturnSelf();
         $client->shouldReceive('getMenus')
             ->times(8)
             ->andReturn($this->createMenusResponse([]));
@@ -103,6 +104,7 @@ final class FetchMenusJobTest extends TestCase
         ];
 
         $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('withOutThrow')->andReturnSelf();
         $client->shouldReceive('getMenus')
             ->times(8)
             ->andReturn($this->createMenusResponse($menuData));
@@ -144,6 +146,7 @@ final class FetchMenusJobTest extends TestCase
         ];
 
         $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('withOutThrow')->andReturnSelf();
         $client->shouldReceive('getMenus')
             ->times(8)
             ->andReturn($this->createMenusResponse($menuData));
@@ -165,6 +168,7 @@ final class FetchMenusJobTest extends TestCase
         ]);
 
         $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('withOutThrow')->andReturnSelf();
         $client->shouldReceive('getMenus')
             ->withArgs(function ($countryArg, $locale): bool {
                 return $locale === 'de';
@@ -186,6 +190,7 @@ final class FetchMenusJobTest extends TestCase
         ]);
 
         $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('withOutThrow')->andReturnSelf();
         $client->shouldReceive('getMenus')
             ->withArgs(function ($countryArg, $locale): bool {
                 return $locale === 'en';

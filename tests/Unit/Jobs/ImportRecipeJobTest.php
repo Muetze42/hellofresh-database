@@ -380,7 +380,7 @@ final class ImportRecipeJobTest extends TestCase
             ->whereJsonContains('handles', 'premium')
             ->first();
 
-        $this->assertInstanceOf(stdClass::class, $label);
+        $this->assertInstanceOf(Label::class, $label);
         $this->assertTrue($label->display_label);
     }
 
@@ -401,7 +401,7 @@ final class ImportRecipeJobTest extends TestCase
 
         $label = Label::whereJsonContains('handles', 'premium')->first();
 
-        $this->assertInstanceOf(stdClass::class, $label);
+        $this->assertInstanceOf(Label::class, $label);
     }
 
     #[Test]
