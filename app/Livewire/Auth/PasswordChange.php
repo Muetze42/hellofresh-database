@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use App\Livewire\AbstractComponent;
+use App\Livewire\Concerns\WithLocalizedContextTrait;
 use App\Rules\DisposableEmailRule;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View as ViewInterface;
@@ -12,6 +13,8 @@ use Illuminate\Validation\ValidationException;
 
 class PasswordChange extends AbstractComponent
 {
+    use WithLocalizedContextTrait;
+
     public string $email = '';
 
     public string $current_password = '';
