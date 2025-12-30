@@ -100,11 +100,16 @@ if (! function_exists('validated_per_page')) {
      *
      * @noinspection CallableParameterUseCaseInTypeContextInspection
      */
-    function validated_per_page(?Request $request = null, int $default = 100, int $max = 1_000, int $min = 10): int
+    function validated_per_page(?Request $request = null): int
     {
         if (! $request instanceof Request) {
             $request = resolve('request');
         }
+
+        $default = Config::integer('api.pagination.per_page_default');
+        $max = Config::integer('api.pagination.per_page_max');
+        $min = Config::integer('api.pagination.per_page_min');
+
 
         $perPage = $request->integer('perPage', $default);
 
