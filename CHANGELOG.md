@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.4.0] - 2025-12-30
+
+### Added
+
+- **Global Search** - Command palette accessible via ⌘K/Ctrl+K or search button in navbar; searches recipes and displays associated menu weeks
+- **Recipe Page Search** - Search field on recipes page that filters by name, headline, tags, ingredients, and labels
+
 ## [3.2.0] - 2025-12-25
 
 ### Added
