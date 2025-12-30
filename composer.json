@@ -31,6 +31,7 @@
         "laravel/framework": "^12.44",
         "laravel/horizon": "^5.41",
         "laravel/reverb": "^1.6",
+        "laravel/sanctum": "^4.2",
         "laravel/tinker": "^2.10",
         "livewire/flux-pro": "^2.10",
         "norman-huth/gd-text": "^1.0",
@@ -84,8 +85,7 @@
         ],
         "post-update-cmd": [
             "@php artisan system:check-requirements --ansi",
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@ai-mcp"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
