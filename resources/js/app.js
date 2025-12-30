@@ -45,3 +45,10 @@ function initShoppingListStore() {
 
 document.addEventListener('alpine:init', initShoppingListStore);
 document.addEventListener('livewire:navigated', initShoppingListStore);
+
+// Fix Safari bfcache issues with stale Livewire snapshots
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
