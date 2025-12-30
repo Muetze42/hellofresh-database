@@ -246,5 +246,10 @@
     "List deleted successfully.": "Liste slettet.",
     "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.": "Gennemse tusindvis af HelloFresh-opskrifter. Filtrer efter sværhedsgrad, kogetid, allergener og mere.",
     "Discover all recipes from HelloFresh menu week :week/:year.": "Opdag alle opskrifter fra HelloFresh menuuge :week/:year.",
-    "Create your shopping list from HelloFresh recipes.": "Opret din indkøbsliste fra HelloFresh-opskrifter."
+    "Create your shopping list from HelloFresh recipes.": "Opret din indkøbsliste fra HelloFresh-opskrifter.",
+    "Search": "Søg",
+    "Search recipes...": "Søg efter opskrifter...",
+    "Week": "Uge",
+    "No results found.": "Ingen resultater fundet.",
+    "Type to search for recipes...": "Skriv for at søge efter opskrifter..."
 }

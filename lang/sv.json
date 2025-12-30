@@ -246,5 +246,10 @@
     "List deleted successfully.": "Lista borttagen.",
     "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.": "Bläddra bland tusentals HelloFresh-recept. Filtrera efter svårighetsgrad, tillagningstid, allergener och mer.",
     "Discover all recipes from HelloFresh menu week :week/:year.": "Upptäck alla recept från HelloFresh menyvecka :week/:year.",
-    "Create your shopping list from HelloFresh recipes.": "Skapa din inköpslista från HelloFresh-recept."
+    "Create your shopping list from HelloFresh recipes.": "Skapa din inköpslista från HelloFresh-recept.",
+    "Search": "Sök",
+    "Search recipes...": "Sök recept...",
+    "Week": "Vecka",
+    "No results found.": "Inga resultat hittades.",
+    "Type to search for recipes...": "Skriv för att söka efter recept..."
 }

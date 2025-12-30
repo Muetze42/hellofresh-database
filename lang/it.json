@@ -246,5 +246,10 @@
     "List deleted successfully.": "Lista eliminata con successo.",
     "Browse thousands of HelloFresh recipes. Filter by difficulty, cooking time, allergens and more.": "Sfoglia migliaia di ricette HelloFresh. Filtra per difficoltà, tempo di cottura, allergeni e altro.",
     "Discover all recipes from HelloFresh menu week :week/:year.": "Scopri tutte le ricette del menu HelloFresh settimana :week/:year.",
-    "Create your shopping list from HelloFresh recipes.": "Crea la tua lista della spesa dalle ricette HelloFresh."
+    "Create your shopping list from HelloFresh recipes.": "Crea la tua lista della spesa dalle ricette HelloFresh.",
+    "Search": "Cerca",
+    "Search recipes...": "Cerca ricette...",
+    "Week": "Settimana",
+    "No results found.": "Nessun risultato trovato.",
+    "Type to search for recipes...": "Digita per cercare ricette..."
 }
