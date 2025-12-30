@@ -19,6 +19,15 @@
 
     {{-- Desktop: Controls --}}
     <div class="hidden sm:flex items-center gap-4">
+      <div class="w-64 shrink-0">
+        <flux:input
+          wire:model.live.debounce.300ms="search"
+          icon="search"
+          :placeholder="__('Search...')"
+          size="sm"
+          clearable
+        />
+      </div>
       <flux:select wire:model.live="sortBy" variant="listbox" size="sm" class="min-w-48">
         @foreach (\App\Enums\RecipeSortEnum::cases() as $sortOption)
           <flux:select.option wire:key="sort-desktop-{{ $sortOption->value }}" :value="$sortOption->value">
@@ -41,6 +50,17 @@
         <flux:tab :name="\App\Enums\ViewModeEnum::List->value" icon="list-bullet">{{ __('List') }}</flux:tab>
       </flux:tabs>
     </div>
+  </div>
+
+  {{-- Mobile: Search --}}
+  <div class="sm:hidden">
+    <flux:input
+      wire:model.live.debounce.300ms="search"
+      icon="search"
+      :placeholder="__('Search...')"
+      size="sm"
+      clearable
+    />
   </div>
 
   {{-- Mobile: Sort left, Filter+View right --}}
