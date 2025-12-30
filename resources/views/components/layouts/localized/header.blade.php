@@ -32,7 +32,7 @@
     <flux:navbar class="gap-ui">
         {{-- Global Search --}}
         <flux:modal.trigger name="global-search" shortcut="cmd.k" class="max-lg:hidden">
-            <flux:input as="button" :placeholder="__('Search recipes...')" icon="search" kbd="⌘K" class="w-48" />
+            <flux:input as="button" :placeholder="__('Search...')" icon="search" kbd="⌘K" class="w-48" />
         </flux:modal.trigger>
 
         {{-- Dark Mode Toggle --}}

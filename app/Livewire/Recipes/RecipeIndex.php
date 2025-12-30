@@ -34,6 +34,8 @@ class RecipeIndex extends AbstractComponent
 
     public ?int $selectedMenuWeek = null;
 
+    public string $search = '';
+
     public string $viewMode = '';
 
     public string $sortBy = '';
@@ -214,6 +216,12 @@ class RecipeIndex extends AbstractComponent
 
         if ($baseProperty === 'selectedMenuWeek' && $this->selectedMenuWeek !== null) {
             $this->redirect(localized_route('localized.menus.show', ['menu' => $this->selectedMenuWeek]));
+
+            return;
+        }
+
+        if ($baseProperty === 'search') {
+            $this->resetPage();
 
             return;
         }
@@ -430,6 +438,7 @@ class RecipeIndex extends AbstractComponent
      */
     public function clearFilters(): void
     {
+        $this->search = '';
         $this->filterHasPdf = false;
         $this->excludedAllergenIds = [];
         $this->ingredientIds = [];
@@ -472,6 +481,7 @@ class RecipeIndex extends AbstractComponent
 
         return Recipe::where('country_id', $this->countryId)
             ->when($menuRecipeIds !== [], fn (Builder $query) => $query->whereIn('id', $menuRecipeIds))
+            ->when($this->search !== '', fn (Builder $query): Builder => $this->applySearchFilter($query))
             ->when($this->filterHasPdf, fn (Builder $query) => $query->where('has_pdf', true))
             ->when($this->excludedAllergenIds !== [], fn (Builder $query) => $query->whereDoesntHave(
                 'allergens',
@@ -566,6 +576,26 @@ class RecipeIndex extends AbstractComponent
         return $query
             ->where('total_time', '>=', $this->totalTimeRange[0])
             ->where('total_time', '<=', $this->totalTimeRange[1]);
+    }
+
+    /**
+     * Apply search filter across name, headline, tags, ingredients, and labels.
+     *
+     * @param  Builder<Recipe>  $query
+     * @return Builder<Recipe>
+     */
+    protected function applySearchFilter(Builder $query): Builder
+    {
+        $searchTerm = sprintf('%%%s%%', $this->search);
+        $locale = $this->locale;
+
+        return $query->where(function (Builder $query) use ($searchTerm, $locale): void {
+            $query->whereLike('name->' . $locale, $searchTerm)
+                ->orWhereLike('headline->' . $locale, $searchTerm)
+                ->orWhereHas('tags', fn (Builder $tagQuery) => $tagQuery->whereLike('name', $searchTerm))
+                ->orWhereHas('ingredients', fn (Builder $ingredientQuery) => $ingredientQuery->whereLike('name', $searchTerm))
+                ->orWhereHas('label', fn (Builder $labelQuery) => $labelQuery->whereLike('name', $searchTerm));
+        });
     }
 
     /**

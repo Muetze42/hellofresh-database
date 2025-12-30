@@ -88,8 +88,7 @@ class UserRecipeLists extends AbstractComponent
             return null;
         }
 
-        return RecipeList::query()
-            ->with(['recipes', 'user', 'sharedWith'])
+        return RecipeList::with(['recipes', 'user', 'sharedWith'])
             ->find($this->viewingListId);
     }
 
