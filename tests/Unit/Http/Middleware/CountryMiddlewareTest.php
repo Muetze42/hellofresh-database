@@ -93,10 +93,10 @@ final class CountryMiddlewareTest extends TestCase
     {
         $this->expectException(NotFoundHttpException::class);
 
-        $request = Request::create('/xx/en');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/en-XX');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'xx');
+        $route->setParameter('country', 'XX');
         $route->setParameter('locale', 'en');
 
         $request->setRouteResolver(fn (): Route => $route);
@@ -110,7 +110,7 @@ final class CountryMiddlewareTest extends TestCase
         $this->expectException(NotFoundHttpException::class);
 
         Country::factory()->create([
-            'code' => 'us',
+            'code' => 'US',
             'locales' => ['en'],
             'active' => true,
             'prep_min' => 5,
@@ -118,10 +118,10 @@ final class CountryMiddlewareTest extends TestCase
             'ingredients_count' => 50,
         ]);
 
-        $request = Request::create('/us/de');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/de-US');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'us');
+        $route->setParameter('country', 'US');
         $route->setParameter('locale', 'de');
 
         $request->setRouteResolver(fn (): Route => $route);
@@ -135,14 +135,14 @@ final class CountryMiddlewareTest extends TestCase
         $this->expectException(NotFoundHttpException::class);
 
         Country::factory()->inactive()->create([
-            'code' => 'us',
+            'code' => 'US',
             'locales' => ['en'],
         ]);
 
-        $request = Request::create('/us/en');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/en-US');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'us');
+        $route->setParameter('country', 'US');
         $route->setParameter('locale', 'en');
 
         $request->setRouteResolver(fn (): Route => $route);
@@ -154,7 +154,7 @@ final class CountryMiddlewareTest extends TestCase
     public function it_sets_app_locale(): void
     {
         Country::factory()->create([
-            'code' => 'de',
+            'code' => 'DE',
             'locales' => ['de', 'en'],
             'active' => true,
             'prep_min' => 5,
@@ -162,10 +162,10 @@ final class CountryMiddlewareTest extends TestCase
             'ingredients_count' => 50,
         ]);
 
-        $request = Request::create('/de/de');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/de-DE');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'de');
+        $route->setParameter('country', 'DE');
         $route->setParameter('locale', 'de');
 
         $request->setRouteResolver(fn (): Route => $route);
@@ -179,7 +179,7 @@ final class CountryMiddlewareTest extends TestCase
     public function it_sets_fallback_locale(): void
     {
         Country::factory()->create([
-            'code' => 'ch',
+            'code' => 'CH',
             'locales' => ['de', 'fr', 'it'],
             'active' => true,
             'prep_min' => 5,
@@ -187,10 +187,10 @@ final class CountryMiddlewareTest extends TestCase
             'ingredients_count' => 50,
         ]);
 
-        $request = Request::create('/ch/de');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/de-CH');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'ch');
+        $route->setParameter('country', 'CH');
         $route->setParameter('locale', 'de');
 
         $request->setRouteResolver(fn (): Route => $route);
@@ -204,7 +204,7 @@ final class CountryMiddlewareTest extends TestCase
     public function it_sets_fallback_locale_to_en_when_no_other_locales(): void
     {
         Country::factory()->create([
-            'code' => 'us',
+            'code' => 'US',
             'locales' => ['en'],
             'active' => true,
             'prep_min' => 5,
@@ -212,10 +212,10 @@ final class CountryMiddlewareTest extends TestCase
             'ingredients_count' => 50,
         ]);
 
-        $request = Request::create('/us/en');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/en-US');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'us');
+        $route->setParameter('country', 'US');
         $route->setParameter('locale', 'en');
 
         $request->setRouteResolver(fn (): Route => $route);
@@ -229,7 +229,7 @@ final class CountryMiddlewareTest extends TestCase
     public function it_binds_country_to_container(): void
     {
         $country = Country::factory()->create([
-            'code' => 'us',
+            'code' => 'US',
             'locales' => ['en'],
             'active' => true,
             'prep_min' => 5,
@@ -237,10 +237,10 @@ final class CountryMiddlewareTest extends TestCase
             'ingredients_count' => 50,
         ]);
 
-        $request = Request::create('/us/en');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/en-US');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'us');
+        $route->setParameter('country', 'US');
         $route->setParameter('locale', 'en');
 
         $request->setRouteResolver(fn (): Route => $route);
@@ -255,7 +255,7 @@ final class CountryMiddlewareTest extends TestCase
     public function it_forgets_locale_and_country_parameters(): void
     {
         Country::factory()->create([
-            'code' => 'us',
+            'code' => 'US',
             'locales' => ['en'],
             'active' => true,
             'prep_min' => 5,
@@ -263,10 +263,10 @@ final class CountryMiddlewareTest extends TestCase
             'ingredients_count' => 50,
         ]);
 
-        $request = Request::create('/us/en');
-        $route = new Route('GET', '/{country}/{locale}', fn (): string => 'OK');
+        $request = Request::create('/en-US');
+        $route = new Route('GET', '/{locale}-{country}', fn (): string => 'OK');
         $route->bind($request);
-        $route->setParameter('country', 'us');
+        $route->setParameter('country', 'US');
         $route->setParameter('locale', 'en');
 
         $request->setRouteResolver(fn (): Route => $route);
