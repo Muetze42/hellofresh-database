@@ -110,7 +110,6 @@ if (! function_exists('validated_per_page')) {
         $max = Config::integer('api.pagination.per_page_max');
         $min = Config::integer('api.pagination.per_page_min');
 
-
         $perPage = $request->integer('perPage', $default);
 
         if ($perPage >= $min && $perPage <= $max) {

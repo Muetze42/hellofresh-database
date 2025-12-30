@@ -53,7 +53,7 @@ class LivewireSentryContextMiddleware
             $calls = $component['calls'] ?? [];
 
             // Detaillierte Child-Komponenten
-            $children = array_map(static function ($childData) {
+            $children = array_map(static function (array|string $childData): string {
                 return is_array($childData) ? ($childData[1] ?? $childData[0] ?? 'unknown') : $childData;
             }, $memo['children'] ?? []);
 
