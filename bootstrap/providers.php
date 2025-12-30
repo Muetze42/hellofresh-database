@@ -6,6 +6,7 @@ return [
     App\Providers\FrontendServiceProvider::class,
     App\Providers\HorizonServiceProvider::class,
     App\Providers\HttpClientProvider::class,
+    App\Providers\LivewireServiceProvider::class,
     App\Providers\MacroServiceProvider::class,
     App\Providers\MigrationServiceProvider::class,
 ];
