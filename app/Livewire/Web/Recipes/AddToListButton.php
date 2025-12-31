@@ -289,6 +289,6 @@ class AddToListButton extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.recipes.add-to-list-button');
+        return view('web::livewire.recipes.add-to-list-button');
     }
 }

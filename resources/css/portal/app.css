@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+/* Flux UI */
+@import '../../../vendor/livewire/flux/dist/flux.css';
+
+@import '../common.css';
+
+/* Fonts */
+@import '../../fonts/inter/web/inter.css';
+@import '../../fonts/jet-brains-mono/webfonts/jetbrains-mono.css';
+
+@source '../../../resources/components/*.blade.php';
+@source '../../../resources/common/*.blade.php';
+@source '../../../resources/portal/*.blade.php';
+@source '../../resources/js/portal/*.js';

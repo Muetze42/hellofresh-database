@@ -368,6 +368,6 @@ class UserRecipeLists extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.user.user-recipe-lists');
+        return view('web::livewire.user.user-recipe-lists');
     }
 }

@@ -13,6 +13,6 @@ class LivewireServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Livewire::addPersistentMiddleware(LivewireSentryContextMiddleware::class);
+        // Livewire::addPersistentMiddleware(LivewireSentryContextMiddleware::class);
     }
 }

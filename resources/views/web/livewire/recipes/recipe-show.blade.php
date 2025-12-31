@@ -75,7 +75,7 @@
           <flux:icon.file-text variant="mini" />
         </a>
       @endif
-      <livewire:recipes.add-to-list-button :recipe-id="$recipe->id" />
+      <livewire:web.recipes.add-to-list-button :recipe-id="$recipe->id" />
       <button
         type="button"
         x-data

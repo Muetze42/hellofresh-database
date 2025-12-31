@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ApiLocalizationMiddleware;
 use App\Http\Middleware\AuthenticateOrShowMessageMiddleware;
 use App\Http\Middleware\LocalizationMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
@@ -23,8 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware(['api', 'auth:sanctum'])
-                ->prefix('api')
+            Route::middleware(['api', 'auth:sanctum', ApiLocalizationMiddleware::class])
+                ->prefix('api/{locale}-{country}')
                 ->name('api-localized.')
                 ->group(base_path('routes/api-localized.php'));
 
