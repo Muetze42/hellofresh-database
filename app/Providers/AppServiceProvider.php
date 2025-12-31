@@ -4,11 +4,14 @@ namespace App\Providers;
 
 use App\Models\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -24,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDevAlwaysToMail();
         $this->configureModels();
         $this->configureEmailVerification();
+        $this->configureRateLimiting();
 
         $this->definingDefaultPasswordRules();
 
@@ -79,6 +83,17 @@ class AppServiceProvider extends ServiceProvider
                     'hash' => sha1($notifiable->email),
                 ]
             );
+        });
+    }
+
+    /**
+     * Configure the rate limiters for the application.
+     */
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('api', static function (Request $request): Limit {
+            return Limit::perMinute(Config::integer('api.rate_limit', 60))
+                ->by($request->user()?->id ?: $request->ip());
         });
     }
 
