@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'layout' => 'components.layouts.localized',
+    'layout' => 'nexus::components.layouts.localized',
 
     /*
     |---------------------------------------------------------------------------

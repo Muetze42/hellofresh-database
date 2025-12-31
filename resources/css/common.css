@@ -1,0 +1,54 @@
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --spacing-ui\/2: calc(var(--spacing) * 1);
+  --spacing-ui: calc(var(--spacing) * 2);
+  --spacing-mobile-section: calc(var(--spacing) * 4);
+  --spacing-section: calc(var(--spacing) * 6);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-accent: var(--color-green-600);
+  --color-accent-content: var(--color-green-600);
+  --color-accent-foreground: var(--color-white);
+}
+
+@layer theme {
+  .dark {
+    --color-accent: var(--color-green-600);
+    --color-accent-content: var(--color-green-400);
+    --color-accent-foreground: var(--color-white);
+  }
+}
+
+[data-flux-modal] > dialog[open]::backdrop {
+  @apply bg-black/70;
+}
+
+.ui-text-subtle {
+  @apply text-zinc-400 dark:text-white/50;
+}
+
+.ui-text-strong {
+  @apply text-sm text-zinc-800 dark:text-white;
+}
+
+.ui-text-default {
+  @apply text-sm text-zinc-500 dark:text-white/70;
+}
+
+.ui-text-link-default {
+  @apply text-sm text-zinc-500;
+  @apply dark:text-white/70 inline font-medium underline-offset-[6px] hover:decoration-current underline [[data-color]>&]:text-inherit [[data-color]>&]:decoration-current/20 dark:[[data-color]>&]:decoration-current/50 [[data-color]>&]:hover:decoration-current text-[var(--color-accent-content)] decoration-[color-mix(in_oklab,var(--color-accent-content),transparent_80%)];
+}
+[data-flux-modal] > dialog::backdrop {
+  @apply bg-black/50;
+}
+
+ui-option[disabled] {
+  [data-slot="avatar"] {
+    @apply opacity-50;
+  }
+}

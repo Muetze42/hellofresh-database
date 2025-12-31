@@ -22,6 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->domain(config('api.domain_name'))
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
+            Route::middleware(['web'])
+                ->domain(config('api.portal_domain_name'))
+                ->name('api.')
+                ->group(base_path('routes/portal.php'));
             Route::middleware(['api', 'localized'])
                 ->prefix('api')
                 ->name('api-localized.')

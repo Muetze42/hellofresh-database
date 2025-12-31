@@ -45,4 +45,6 @@ return [
         'per_page_min' => 10,
     ],
 
+    'portal_domain_name' => env('API_PORTAL_DOMAIN_NAME'),
+
 ];

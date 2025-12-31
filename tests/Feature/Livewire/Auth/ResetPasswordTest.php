@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire\Auth;
 
-use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Web\Auth\ResetPassword;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

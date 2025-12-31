@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire\Auth;
 
-use App\Livewire\Auth\AuthModal;
+use App\Livewire\Web\Auth\AuthModal;
 use App\Models\Country;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;

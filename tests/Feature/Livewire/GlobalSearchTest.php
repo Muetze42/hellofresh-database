@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire;
 
-use App\Livewire\GlobalSearch;
+use App\Livewire\Web\GlobalSearch;
 use App\Models\Country;
 use App\Models\Menu;
 use App\Models\Recipe;
