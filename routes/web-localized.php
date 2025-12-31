@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\BringExportController;
 use App\Http\Controllers\MenuRedirectController;
-use App\Livewire\Auth\PasswordChange;
-use App\Livewire\Auth\ResetPassword;
-use App\Livewire\PrivacyPolicy\PrivacyPolicyShow;
-use App\Livewire\Recipes\RecipeIndex;
-use App\Livewire\Recipes\RecipeShow;
-use App\Livewire\ShoppingList\ShoppingListIndex;
-use App\Livewire\User\UserRecipeLists;
-use App\Livewire\User\UserShoppingLists;
+use App\Livewire\Web\Auth\PasswordChange;
+use App\Livewire\Web\Auth\ResetPassword;
+use App\Livewire\Web\PrivacyPolicy\PrivacyPolicyShow;
+use App\Livewire\Web\Recipes\RecipeIndex;
+use App\Livewire\Web\Recipes\RecipeShow;
+use App\Livewire\Web\ShoppingList\ShoppingListIndex;
+use App\Livewire\Web\User\UserRecipeLists;
+use App\Livewire\Web\User\UserShoppingLists;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', RecipeIndex::class)->name('recipes.index');

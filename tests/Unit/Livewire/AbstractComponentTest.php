@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Livewire;
 
-use App\Livewire\AbstractComponent;
+use App\Livewire\Web\AbstractComponent;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;

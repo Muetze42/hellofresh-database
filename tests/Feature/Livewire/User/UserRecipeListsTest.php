@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire\User;
 
-use App\Livewire\User\UserRecipeLists;
+use App\Livewire\Web\User\UserRecipeLists;
 use App\Models\Country;
 use App\Models\Recipe;
 use App\Models\RecipeList;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Livewire\Concerns;
 
-use App\Livewire\Concerns\WithLocalizedContextTrait;
+use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Models\Country;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Component;

@@ -7,7 +7,7 @@ namespace Tests\Feature\Livewire\Recipes;
 use App\Enums\IngredientMatchModeEnum;
 use App\Enums\RecipeSortEnum;
 use App\Enums\ViewModeEnum;
-use App\Livewire\Recipes\RecipeIndex;
+use App\Livewire\Web\Recipes\RecipeIndex;
 use App\Models\Allergen;
 use App\Models\Country;
 use App\Models\Ingredient;

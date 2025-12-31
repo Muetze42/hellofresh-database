@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire\ShoppingList;
 
-use App\Livewire\ShoppingList\ShoppingListIndex;
+use App\Livewire\Web\ShoppingList\ShoppingListIndex;
 use App\Models\Country;
 use App\Models\Ingredient;
 use App\Models\Recipe;

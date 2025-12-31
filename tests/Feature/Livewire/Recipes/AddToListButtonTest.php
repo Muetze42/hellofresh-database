@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Livewire\Recipes;
 
 use App\Events\RecipeListUpdatedEvent;
-use App\Livewire\Recipes\AddToListButton;
+use App\Livewire\Web\Recipes\AddToListButton;
 use App\Models\Country;
 use App\Models\Recipe;
 use App\Models\RecipeList;

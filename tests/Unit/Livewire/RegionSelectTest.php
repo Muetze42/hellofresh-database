@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Livewire;
 
-use App\Livewire\RegionSelect;
+use App\Livewire\Web\RegionSelect;
 use App\Models\Country;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;

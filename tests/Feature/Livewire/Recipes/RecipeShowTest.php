@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire\Recipes;
 
-use App\Livewire\Recipes\RecipeShow;
+use App\Livewire\Web\Recipes\RecipeShow;
 use App\Models\Allergen;
 use App\Models\Country;
 use App\Models\Cuisine;

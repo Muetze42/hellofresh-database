@@ -3,7 +3,7 @@
 use App\Http\Controllers\OgImageController;
 use App\Http\Controllers\SitemapController;
 use App\Livewire\Actions\LogoutAction;
-use App\Livewire\RegionSelect;
+use App\Livewire\Web\RegionSelect;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', RegionSelect::class)->name('region.select');
