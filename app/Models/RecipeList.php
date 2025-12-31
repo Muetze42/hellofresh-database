@@ -84,8 +84,12 @@ class RecipeList extends Model
     /**
      * Check if a user can access this list.
      */
-    public function isAccessibleBy(User $user): bool
+    public function isAccessibleBy(?User $user): bool
     {
+        if (! $user instanceof User) {
+            return false;
+        }
+
         return $this->user_id === $user->id
             || $this->sharedWith()->where('users.id', $user->id)->exists();
     }
@@ -93,8 +97,12 @@ class RecipeList extends Model
     /**
      * Check if a user is the owner of this list.
      */
-    public function isOwnedBy(User $user): bool
+    public function isOwnedBy(?User $user): bool
     {
+        if (! $user instanceof User) {
+            return false;
+        }
+
         return $this->user_id === $user->id;
     }
 }
