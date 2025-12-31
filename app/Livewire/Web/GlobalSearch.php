@@ -61,6 +61,6 @@ class GlobalSearch extends AbstractComponent
 
     public function render(): ViewInterface
     {
-        return view('livewire.global-search');
+        return view('web::livewire.global-search');
     }
 }

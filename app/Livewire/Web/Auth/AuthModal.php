@@ -218,6 +218,6 @@ class AuthModal extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.auth.auth-modal');
+        return view('web::livewire.auth.auth-modal');
     }
 }

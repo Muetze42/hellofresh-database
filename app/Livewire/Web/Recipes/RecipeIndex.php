@@ -19,7 +19,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
-#[Layout('components.layouts.localized')]
+#[Layout('web::components.layouts.localized')]
 class RecipeIndex extends AbstractComponent
 {
     use WithLocalizedContextTrait;
@@ -520,7 +520,7 @@ class RecipeIndex extends AbstractComponent
             $year = intdiv($this->menu->year_week, 100);
             $week = $this->menu->year_week % 100;
 
-            return view('livewire.recipes.recipe-index')
+            return view('web::livewire.recipes.recipe-index')
                 ->title($title)
                 ->layoutData([
                     'ogTitle' => sprintf(__('Menu Week %d/%d'), $week, $year),
@@ -531,7 +531,7 @@ class RecipeIndex extends AbstractComponent
 
         $title = page_title(__('Recipes'));
 
-        return view('livewire.recipes.recipe-index')
+        return view('web::livewire.recipes.recipe-index')
             ->title($title)
             ->layoutData([
                 'ogTitle' => __('Recipes'),

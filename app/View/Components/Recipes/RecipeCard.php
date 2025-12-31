@@ -23,6 +23,6 @@ class RecipeCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.recipes.recipe-card');
+        return view('web::components.recipes.recipe-card');
     }
 }

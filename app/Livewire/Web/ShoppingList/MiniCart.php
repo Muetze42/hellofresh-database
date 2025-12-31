@@ -47,6 +47,6 @@ class MiniCart extends Component
 
     public function render(): View
     {
-        return view('livewire.shopping-list.mini-cart');
+        return view('web::livewire.shopping-list.mini-cart');
     }
 }

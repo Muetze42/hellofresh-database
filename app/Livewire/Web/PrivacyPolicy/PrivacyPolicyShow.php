@@ -72,6 +72,6 @@ class PrivacyPolicyShow extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.privacy-policy.privacy-policy-show');
+        return view('web::livewire.privacy-policy.privacy-policy-show');
     }
 }

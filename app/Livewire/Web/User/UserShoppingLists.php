@@ -65,6 +65,6 @@ class UserShoppingLists extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.user.user-shopping-lists');
+        return view('web::livewire.user.user-shopping-lists');
     }
 }

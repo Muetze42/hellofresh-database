@@ -27,7 +27,7 @@ class BringExportController extends Controller
 
         $ingredients = $this->aggregateIngredients($recipes, $servingsMap);
 
-        return view('bring-export', [
+        return view('web::bring-export', [
             'ingredients' => $ingredients,
             'recipes' => $recipes,
         ]);

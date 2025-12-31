@@ -32,7 +32,7 @@
                         <flux:icon.file-text variant="mini" />
                     </a>
                 @endif
-                <livewire:recipes.add-to-list-button :recipe-id="$recipe->id" :key="'list-grid-'.$recipe->id" />
+                <livewire:web.recipes.add-to-list-button :recipe-id="$recipe->id" :key="'list-grid-'.$recipe->id" />
                 <button
                     type="button"
                     x-data
@@ -173,7 +173,7 @@
                     <flux:icon.file-text variant="mini" />
                 </a>
             @endif
-            <livewire:recipes.add-to-list-button :recipe-id="$recipe->id" :key="'list-list-'.$recipe->id" />
+            <livewire:web.recipes.add-to-list-button :recipe-id="$recipe->id" :key="'list-list-'.$recipe->id" />
             <button
                 type="button"
                 x-data

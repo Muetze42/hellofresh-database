@@ -14,7 +14,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 
-#[Layout('components.layouts.localized')]
+#[Layout('web::components.layouts.localized')]
 class ShoppingListIndex extends AbstractComponent
 {
     use WithLocalizedContextTrait;
@@ -259,7 +259,7 @@ class ShoppingListIndex extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.shopping-list.shopping-list-index')
+        return view('web::livewire.shopping-list.shopping-list-index')
             ->title(page_title(__('Shopping List')))
             ->layoutData([
                 'ogDescription' => __('Create your shopping list from HelloFresh recipes.'),

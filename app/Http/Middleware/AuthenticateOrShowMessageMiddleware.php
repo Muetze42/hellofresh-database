@@ -21,6 +21,6 @@ class AuthenticateOrShowMessageMiddleware
             return $next($request);
         }
 
-        return response()->view('auth.require-login', [], Response::HTTP_UNAUTHORIZED);
+        return response()->view('web::auth.require-login', [], Response::HTTP_UNAUTHORIZED);
     }
 }

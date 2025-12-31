@@ -87,6 +87,6 @@ class ResetPassword extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.auth.reset-password');
+        return view('web::livewire.auth.reset-password');
     }
 }

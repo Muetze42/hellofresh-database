@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 
-#[Layout('components.layouts.app')]
+#[Layout('web::components.layouts.app')]
 class RegionSelect extends AbstractComponent
 {
     /**
@@ -40,7 +40,7 @@ class RegionSelect extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.region-select')
+        return view('web::livewire.region-select')
             ->title(config('app.name'));
     }
 }

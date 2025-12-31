@@ -79,6 +79,6 @@ class PasswordChange extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('livewire.auth.password-change');
+        return view('web::livewire.auth.password-change');
     }
 }

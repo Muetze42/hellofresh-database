@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 
-#[Layout('components.layouts.localized')]
+#[Layout('web::components.layouts.localized')]
 class RecipeShow extends AbstractComponent
 {
     use WithLocalizedContextTrait;
@@ -197,7 +197,7 @@ class RecipeShow extends AbstractComponent
                 ? $this->recipe->name . ' ' . $this->recipe->headline
                 : $this->recipe->name);
 
-        return view('livewire.recipes.recipe-show')
+        return view('web::livewire.recipes.recipe-show')
             ->title($title)
             ->layoutData([
                 'ogTitle' => $this->recipe->name,

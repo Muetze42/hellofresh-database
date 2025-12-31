@@ -42,8 +42,8 @@
 {{ $slot }}
 <x-layouts.localized.footer />
 <x-confirmation-modal />
-<livewire:global-search />
-<livewire:auth.auth-modal />
+<livewire:web.global-search />
+<livewire:web.auth.auth-modal />
 @persist('toast')
 <flux:toast.group position="bottom end">
   <flux:toast />
@@ -73,7 +73,7 @@
       <span x-text="$store.shoppingList.count"></span>
     </button>
   </div>
-  <livewire:shopping-list.mini-cart />
+  <livewire:web.shopping-list.mini-cart />
 @endunless
 @vite(['resources/js/web/app.js'])
 @livewireScripts
