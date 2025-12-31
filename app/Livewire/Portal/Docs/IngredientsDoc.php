@@ -42,7 +42,6 @@ class IngredientsDoc extends AbstractEndpointDoc
         return [
             ['name' => 'id', 'type' => 'integer', 'description' => 'Ingredient ID'],
             ['name' => 'name', 'type' => 'string', 'description' => 'Ingredient name (localized)'],
-            ['name' => 'image_path', 'type' => 'string', 'description' => 'Path to ingredient image'],
             ['name' => 'created_at', 'type' => 'datetime', 'description' => 'Creation timestamp'],
             ['name' => 'updated_at', 'type' => 'datetime', 'description' => 'Last update timestamp'],
         ];

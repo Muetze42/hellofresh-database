@@ -27,8 +27,6 @@ class LabelResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslationWithAnyFallback('name', ContentLocale::get()),
-            'foreground_color' => $this->foreground_color,
-            'background_color' => $this->background_color,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

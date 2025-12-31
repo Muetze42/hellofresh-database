@@ -27,7 +27,6 @@ class AllergenResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslationWithAnyFallback('name', ContentLocale::get()),
-            'icon_path' => $this->icon_path,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
