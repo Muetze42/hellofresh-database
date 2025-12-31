@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\Api\Localized;
 
-use App\Http\Resources\Api\RecipeCollectionResource;
+use App\Http\Resources\Api\RecipeCollection;
 use App\Http\Resources\Api\RecipeResource;
 use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Throwable;
 
 class RecipeController extends AbstractLocalizedController
 {
     /**
      * Display a listing of the resource.
+     *
+     * @throws Throwable
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): RecipeCollection
     {
-        return RecipeCollectionResource::collection(
+        return new RecipeCollection(
             Recipe::where('country_id', $this->country()->id)
                 ->with(['label', 'tags'])
                 ->when($request->filled('search'), function (Builder $query) use ($request): void {
