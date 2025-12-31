@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\ActivatableTrait;
 use Carbon\Carbon;
 use Database\Factories\MenuFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -74,5 +75,16 @@ class Menu extends Model
     public function recipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class);
+    }
+
+    /**
+     * Scope a query to only selectable menus.
+     *
+     * @param  Builder<Menu>  $query
+     */
+    #[Scope]
+    protected function selectable(Builder $query): void
+    {
+        $query->where('start', '>=', now()->subWeeks(2));
     }
 }

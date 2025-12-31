@@ -16,8 +16,8 @@ Route::apiResource('menus', MenuController::class)
     ->only(['index', 'show'])
     ->where(['menu' => '[0-9]+']);
 
-Route::get('menus/current', [MenuController::class, 'current'])
-    ->name('menus.current');
+// Route::get('menus/current', [MenuController::class, 'current'])
+//     ->name('menus.current');
 
 Route::apiResource('tags', TagController::class)
     ->only(['index']);

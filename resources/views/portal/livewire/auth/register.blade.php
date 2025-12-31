@@ -1,0 +1,47 @@
+<div class="space-y-section">
+    <div class="text-center">
+        <flux:heading size="lg">Create your account</flux:heading>
+        <flux:text class="mt-ui">
+            Already have an account? <flux:link href="{{ route('portal.login') }}" wire:navigate>Sign in</flux:link>
+        </flux:text>
+    </div>
+
+    <form wire:submit="register" class="space-y-section">
+        <flux:input
+            wire:model="name"
+            type="text"
+            label="Name"
+            placeholder="Your name"
+            required
+            autofocus
+        />
+
+        <flux:input
+            wire:model="email"
+            type="email"
+            label="Email"
+            placeholder="you@example.com"
+            required
+        />
+
+        <flux:input
+            wire:model="password"
+            type="password"
+            label="Password"
+            placeholder="Create a password"
+            required
+        />
+
+        <flux:input
+            wire:model="password_confirmation"
+            type="password"
+            label="Confirm Password"
+            placeholder="Confirm your password"
+            required
+        />
+
+        <flux:button type="submit" variant="primary" class="w-full">
+            Create account
+        </flux:button>
+    </form>
+</div>
