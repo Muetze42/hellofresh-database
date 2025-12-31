@@ -4,7 +4,10 @@ namespace App\Http\Resources\Api;
 
 use App\Http\Resources\Api\Concerns\HasTranslationFallbackTrait;
 use App\Models\Recipe;
+use App\Models\RecipeList;
+use App\Models\User;
 use App\Support\Api\ContentLocale;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
@@ -26,6 +29,7 @@ class RecipeResource extends JsonResource
     {
         $locale = ContentLocale::get();
         $isSecondaryLocale = $this->isSecondaryLocale($locale);
+        $user = auth()->user();
 
         return [
             'id' => $this->id,
@@ -45,6 +49,11 @@ class RecipeResource extends JsonResource
             'ingredients' => IngredientResource::collection($this->whenLoaded('ingredients')),
             'cuisines' => CuisineResource::collection($this->whenLoaded('cuisines')),
             'utensils' => UtensilResource::collection($this->whenLoaded('utensils')),
+            'saved_in_lists' => $this->when($user instanceof User, function () use ($user): array {
+                assert($user instanceof User);
+
+                return $this->getSavedInLists($user);
+            }),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
@@ -58,5 +67,22 @@ class RecipeResource extends JsonResource
         $locales = $this->country->locales ?? [];
 
         return isset($locales[1]) && $locales[1] === $locale;
+    }
+
+    /**
+     * Get the lists this recipe is saved in for the given user.
+     *
+     * @return array<int, array{id: int, name: string}>
+     */
+    protected function getSavedInLists(User $user): array
+    {
+        return $user->recipeLists()
+            ->whereHas('recipes', fn (Builder $query) => $query->where('recipes.id', $this->id))
+            ->get(['id', 'name'])
+            ->map(fn (RecipeList $list): array => [
+                'id' => $list->id,
+                'name' => $list->name,
+            ])
+            ->all();
     }
 }

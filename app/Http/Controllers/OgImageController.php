@@ -88,6 +88,11 @@ class OgImageController extends Controller
     public function generic(Request $request): StreamedResponse
     {
         $title = $request->string('title', config('app.name'))->toString();
+        $font = $request->string('font')->toString();
+
+        if ($font === 'mono') {
+            $this->fontPath = resource_path('fonts/jet-brains-mono/ttf/JetBrainsMono-Medium.ttf');
+        }
 
         return $this->streamImage(function () use ($title): void {
             $canvas = $this->createCanvas();

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api;
 
 use App\Models\Menu;
+use App\Support\Api\ContentLocale;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
@@ -20,8 +21,11 @@ class MenuResource extends JsonResource
     #[Override]
     public function toArray(Request $request): array
     {
+        $locale = ContentLocale::get();
+
         return [
             'id' => $this->id,
+            'url' => config('app.url') . '/' . $locale . '-' . resolve('current.country')->code . '/menus/' . $this->year_week,
             'year_week' => $this->year_week,
             'start' => $this->start->toDateString(),
             'recipes' => RecipeCollectionResource::collection($this->whenLoaded('recipes')),

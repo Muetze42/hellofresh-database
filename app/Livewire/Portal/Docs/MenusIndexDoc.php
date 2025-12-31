@@ -41,6 +41,7 @@ class MenusIndexDoc extends AbstractEndpointDoc
     {
         return [
             ['name' => 'id', 'type' => 'integer', 'description' => 'Menu ID'],
+            ['name' => 'url', 'type' => 'string', 'description' => 'URL to menu on website'],
             ['name' => 'year_week', 'type' => 'integer', 'description' => 'Year and week number (YYYYWW format)'],
             ['name' => 'start', 'type' => 'date', 'description' => 'Menu start date'],
             ['name' => 'recipes', 'type' => 'array', 'description' => 'Array of recipe objects (when include_recipes=true)'],

@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.5.0] - 2026-01-01
+
+### Added
+
+- **Public REST API** - Full-featured API for accessing recipe data programmatically
+    - Bearer token authentication via Laravel Sanctum
+    - Configurable rate limiting (default: 60 requests/minute)
+    - Localized endpoints (`/{locale}-{country}/...`)
+    - Unified pagination on all list endpoints
+- **API Portal** - Developer portal for API access
+    - Token management (create, view, revoke API tokens)
+    - Interactive API documentation
+    - Get Started guide with authentication, localization, and pagination info
+- **API Endpoints**
+    - Recipes (list, show with saved lists info for authenticated users)
+    - Menus (list, show with recipes)
+    - Ingredients, Countries, Tags, Labels, Allergens
+- **Response Enhancements**
+    - Website URLs in Recipe and Menu responses
+    - `saved_in_lists` field for authenticated users on Recipe show
+
 ## [3.4.0] - 2025-12-30
 
 ### Added

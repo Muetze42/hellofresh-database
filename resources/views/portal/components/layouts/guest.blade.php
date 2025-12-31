@@ -1,12 +1,28 @@
 @props([
     'title' => null,
 ])
-  <!DOCTYPE html>
+@php
+    $pageTitle = $title ? $title . ' - ' . config('app.name') . ' API' : config('app.name') . ' API Portal';
+@endphp
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $title ? $title . ' - ' . config('app.name') . ' API' : config('app.name') . ' API Portal' }}</title>
+  <title>{{ $pageTitle }}</title>
+
+  {{-- Open Graph / Social Media Meta Tags --}}
+  <meta property="og:title" content="{{ $pageTitle }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ url()->current() }}">
+  <meta property="og:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
+  <meta property="og:site_name" content="{{ config('app.name') }}">
+
+  {{-- Twitter Card --}}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ $pageTitle }}">
+  <meta name="twitter:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
+
   <x-web::layouts.partials.favicon />
   @vite(['resources/css/portal/app.css'], 'build-portal')
   @livewireStyles

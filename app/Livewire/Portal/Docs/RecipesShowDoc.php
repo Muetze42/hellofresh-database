@@ -44,6 +44,7 @@ class RecipesShowDoc extends AbstractEndpointDoc
             ['name' => 'ingredients', 'type' => 'array', 'description' => 'Recipe ingredients'],
             ['name' => 'cuisines', 'type' => 'array', 'description' => 'Cuisine types'],
             ['name' => 'utensils', 'type' => 'array', 'description' => 'Required utensils'],
+            ['name' => 'saved_in_lists', 'type' => 'array', 'description' => 'Lists where user saved this recipe'],
             ['name' => 'created_at', 'type' => 'datetime', 'description' => 'Creation timestamp'],
             ['name' => 'updated_at', 'type' => 'datetime', 'description' => 'Last update timestamp'],
         ];

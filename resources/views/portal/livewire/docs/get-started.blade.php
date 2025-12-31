@@ -49,6 +49,9 @@
         </flux:text>
         <pre class="mt-ui p-section bg-zinc-900 text-zinc-100 rounded-lg text-sm overflow-x-auto"><code>X-RateLimit-Limit: {{ $rateLimit }}
 X-RateLimit-Remaining: {{ $rateLimit - 1 }}</code></pre>
+        <flux:text class="mt-section text-sm text-zinc-500 dark:text-zinc-400">
+            Note: The rate limit may be adjusted in the future. Always check the <code class="bg-zinc-100 dark:bg-zinc-700 px-1 rounded">X-RateLimit-Limit</code> header for the current limit.
+        </flux:text>
     </flux:card>
 
     <flux:card>
@@ -92,4 +95,13 @@ X-RateLimit-Remaining: {{ $rateLimit - 1 }}</code></pre>
   -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Accept: application/json"</code></pre>
     </flux:card>
+
+    @if($isPreRelease)
+        <flux:callout icon="triangle-alert" color="amber">
+            <flux:callout.heading>Pre-Release API (v{{ $version }})</flux:callout.heading>
+            <flux:callout.text>
+                This API is currently in pre-release. Endpoints, response formats, and features may change without notice until version 1.0.0 is released. Use in production at your own risk.
+            </flux:callout.text>
+        </flux:callout>
+    @endif
 </div>
