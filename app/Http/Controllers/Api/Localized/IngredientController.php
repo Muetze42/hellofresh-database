@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Api\Localized;
 
-use App\Http\Resources\Api\IngredientResource;
+use App\Http\Resources\Api\IngredientCollection;
 use App\Models\Ingredient;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class IngredientController extends AbstractLocalizedController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): IngredientCollection
     {
-        return IngredientResource::collection(
+        return new IngredientCollection(
             Ingredient::where('country_id', $this->country()->id)
                 ->when($request->filled('search'), function (Builder $query) use ($request): void {
                     $query->whereLike('name', '%' . $request->string('search') . '%');
