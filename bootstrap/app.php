@@ -14,10 +14,12 @@ use Sentry\Laravel\Integration;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
         channels: __DIR__ . '/../routes/channels.php',
         then: function (): void {
+            Route::middleware(['web'])
+                ->domain((string) parse_url((string) config('app.url'), PHP_URL_HOST))
+                ->group(base_path('routes/web.php'));
             Route::middleware(['api'])
                 ->prefix(config('api.path'))
                 ->domain(config('api.domain_name'))
@@ -25,23 +27,30 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(base_path('routes/api.php'));
 
             Route::middleware(['api', 'auth:sanctum', ApiLocalizationMiddleware::class])
-                ->prefix('api/{locale}-{country}')
+                ->domain(config('api.domain_name'))
+                ->prefix('{locale}-{country}')
                 ->name('api-localized.')
                 ->group(base_path('routes/api-localized.php'));
-
-            Route::middleware(['web'])
-                ->domain(config('api.portal_domain_name'))
-                ->name('portal.')
-                ->group(base_path('routes/portal.php'));
 
             Route::middleware(['web', LocalizationMiddleware::class])
                 ->name('localized.')
                 ->prefix('{locale}-{country:code}')
                 ->group(base_path('routes/web-localized.php'));
+
+            Route::middleware(['web'])
+                ->domain(config('api.portal_domain_name'))
+                ->name('portal.')
+                ->group(base_path('routes/portal.php'));
         }
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // $middleware->redirectGuestsTo('/');
+        $middleware->redirectGuestsTo(function (Request $request): ?string {
+            if ($request->getHost() === config('api.portal_domain_name')) {
+                return route('portal.login');
+            }
+
+            return null;
+        });
         $middleware->replace(
             PreventRequestsDuringMaintenance::class,
             PreventRequestsDuringMaintenanceMiddleware::class
@@ -57,7 +66,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return true;
             }
 
-            $apiDomain = config('api');
+            $apiDomain = config('api.domain_name');
 
             if ($apiDomain !== null && $request->getHost() === $apiDomain) {
                 return true;

@@ -88,6 +88,7 @@ class Recipe extends Model
         'yields_secondary',
         'hellofresh_created_at',
         'hellofresh_updated_at',
+        'steps',
     ];
 
     /**
