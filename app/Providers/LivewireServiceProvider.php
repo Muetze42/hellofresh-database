@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Middleware\LivewireSentryContextMiddleware;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
 
 class LivewireServiceProvider extends ServiceProvider
 {

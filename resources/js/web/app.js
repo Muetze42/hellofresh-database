@@ -1,4 +1,4 @@
-import './bootstrap';
+import './../bootstrap';
 import shoppingListStore from './stores/shopping-list';
 
 let currentCountryCode = null;

@@ -2,9 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -18,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configureCommands();
         $this->configureDevAlwaysToMail();
         $this->configureModels();
+        $this->configureEmailVerification();
 
         $this->definingDefaultPasswordRules();
 
@@ -57,6 +63,23 @@ class AppServiceProvider extends ServiceProvider
     {
         // Model::automaticallyEagerLoadRelationships();
         Model::shouldBeStrict(! $this->app->isProduction());
+    }
+
+    /**
+     * Configure the email verification URL to use the portal route.
+     */
+    protected function configureEmailVerification(): void
+    {
+        VerifyEmail::createUrlUsing(function (User $notifiable): string {
+            return URL::temporarySignedRoute(
+                'portal.verification.verify',
+                Date::now()->addMinutes(Config::integer('auth.verification.expire', 60)),
+                [
+                    'id' => $notifiable->getKey(),
+                    'hash' => sha1($notifiable->email),
+                ]
+            );
+        });
     }
 
     /**

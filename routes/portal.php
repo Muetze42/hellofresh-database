@@ -7,9 +7,12 @@ use App\Livewire\Portal\Dashboard;
 use App\Livewire\Portal\Docs\AllergensDoc;
 use App\Livewire\Portal\Docs\IngredientsDoc;
 use App\Livewire\Portal\Docs\LabelsDoc;
-use App\Livewire\Portal\Docs\MenusDoc;
-use App\Livewire\Portal\Docs\RecipesDoc;
+use App\Livewire\Portal\Docs\MenusIndexDoc;
+use App\Livewire\Portal\Docs\MenusShowDoc;
+use App\Livewire\Portal\Docs\RecipesIndexDoc;
+use App\Livewire\Portal\Docs\RecipesShowDoc;
 use App\Livewire\Portal\Docs\TagsDoc;
+use App\Livewire\Portal\Profile;
 use App\Livewire\Portal\Tokens\TokenIndex;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
@@ -37,8 +40,10 @@ Route::get('/', Dashboard::class)->name('dashboard');
 
 // API Documentation (public, no authentication required)
 Route::prefix('docs')->name('docs.')->group(function (): void {
-    Route::get('/recipes', RecipesDoc::class)->name('recipes');
-    Route::get('/menus', MenusDoc::class)->name('menus');
+    Route::get('/recipes', RecipesIndexDoc::class)->name('recipes');
+    Route::get('/recipes-show', RecipesShowDoc::class)->name('recipes-show');
+    Route::get('/menus', MenusIndexDoc::class)->name('menus');
+    Route::get('/menus-show', MenusShowDoc::class)->name('menus-show');
     Route::get('/tags', TagsDoc::class)->name('tags');
     Route::get('/labels', LabelsDoc::class)->name('labels');
     Route::get('/allergens', AllergensDoc::class)->name('allergens');
@@ -47,6 +52,9 @@ Route::prefix('docs')->name('docs.')->group(function (): void {
 
 // Authenticated routes (require login)
 Route::middleware('auth')->group(function (): void {
+    // Profile
+    Route::get('/profile', Profile::class)->name('profile');
+
     // Email verification
     Route::get('/email/verify', VerifyEmail::class)->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request): RedirectResponse {
