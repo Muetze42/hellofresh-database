@@ -18,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
         channels: __DIR__ . '/../routes/channels.php',
         then: function (): void {
             Route::middleware(['api'])
-                ->prefix('api')
+                ->prefix(config('api.path'))
+                ->domain(config('api.domain_name'))
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
             Route::middleware(['api', 'localized'])
