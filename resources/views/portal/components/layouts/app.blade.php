@@ -107,6 +107,18 @@
     {{ $slot }}
 </flux:main>
 
+<flux:footer class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700 !py-3 text-sm flex justify-end gap-4">
+  <flux:text variant="subtle">
+    API Version: {{ config('api.version') }}
+  </flux:text>
+  <div>
+    {{ __('Made with') }} <span class="text-red-500">&hearts;</span> {{ __('by') }}
+    <flux:link href="https://huth.it" target="_blank" class="font-medium hover:text-zinc-700 dark:hover:text-zinc-200">
+      Norman Huth
+    </flux:link>
+  </div>
+</flux:footer>
+
 <flux:toast.group position="bottom end">
     <flux:toast />
 </flux:toast.group>
