@@ -40,8 +40,6 @@ class LabelsDoc extends AbstractEndpointDoc
         return [
             ['name' => 'id', 'type' => 'integer', 'description' => 'Label ID'],
             ['name' => 'name', 'type' => 'string', 'description' => 'Label name (localized)'],
-            ['name' => 'foreground_color', 'type' => 'string', 'description' => 'Text color (hex format)'],
-            ['name' => 'background_color', 'type' => 'string', 'description' => 'Background color (hex format)'],
             ['name' => 'created_at', 'type' => 'datetime', 'description' => 'Creation timestamp'],
             ['name' => 'updated_at', 'type' => 'datetime', 'description' => 'Last update timestamp'],
         ];

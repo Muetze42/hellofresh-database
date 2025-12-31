@@ -50,7 +50,6 @@ class RecipesIndexDoc extends AbstractEndpointDoc
             ['name' => 'difficulty', 'type' => 'integer', 'description' => 'Difficulty level (1-3)'],
             ['name' => 'prep_time', 'type' => 'integer', 'description' => 'Preparation time in minutes'],
             ['name' => 'total_time', 'type' => 'integer', 'description' => 'Total cooking time in minutes'],
-            ['name' => 'image_url', 'type' => 'string', 'description' => 'URL to recipe card image'],
             ['name' => 'has_pdf', 'type' => 'boolean', 'description' => 'Whether recipe has a PDF card'],
             ['name' => 'label', 'type' => 'object|null', 'description' => 'Recipe label'],
             ['name' => 'tags', 'type' => 'array', 'description' => 'Recipe tags'],

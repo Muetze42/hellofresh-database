@@ -40,7 +40,6 @@ class AllergensDoc extends AbstractEndpointDoc
         return [
             ['name' => 'id', 'type' => 'integer', 'description' => 'Allergen ID'],
             ['name' => 'name', 'type' => 'string', 'description' => 'Allergen name (localized)'],
-            ['name' => 'icon_path', 'type' => 'string', 'description' => 'Path to allergen icon'],
             ['name' => 'created_at', 'type' => 'datetime', 'description' => 'Creation timestamp'],
             ['name' => 'updated_at', 'type' => 'datetime', 'description' => 'Last update timestamp'],
         ];

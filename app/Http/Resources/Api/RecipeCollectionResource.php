@@ -34,7 +34,6 @@ class RecipeCollectionResource extends JsonResource
             'difficulty' => $this->difficulty,
             'prep_time' => $this->prep_time,
             'total_time' => $this->total_time,
-            'image_url' => $this->card_image_url,
             'has_pdf' => $this->has_pdf,
             'label' => new LabelResource($this->whenLoaded('label')),
             'tags' => TagResource::collection($this->whenLoaded('tags')),
