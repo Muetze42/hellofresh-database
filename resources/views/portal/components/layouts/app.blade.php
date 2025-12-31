@@ -64,6 +64,7 @@
 
             <flux:menu>
                 <flux:menu.item icon="user" href="{{ route('portal.profile') }}">Profile</flux:menu.item>
+                <flux:menu.item icon="home" href="{{ config('app.url') }}">{{ config('app.name') }}</flux:menu.item>
                 <flux:menu.separator />
                 <flux:menu.item icon="log-out" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Logout
