@@ -22,14 +22,16 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->domain(config('api.domain_name'))
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
-            Route::middleware(['web'])
-                ->domain(config('api.portal_domain_name'))
-                ->name('api.')
-                ->group(base_path('routes/portal.php'));
-            Route::middleware(['api'])
+
+            Route::middleware(['api', 'auth:sanctum'])
                 ->prefix('api')
                 ->name('api-localized.')
                 ->group(base_path('routes/api-localized.php'));
+
+            Route::middleware(['web'])
+                ->domain(config('api.portal_domain_name'))
+                ->name('portal.')
+                ->group(base_path('routes/portal.php'));
 
             Route::middleware(['web', LocalizationMiddleware::class])
                 ->name('localized.')
