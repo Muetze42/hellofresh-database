@@ -47,6 +47,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | API Rate Limiting
+    |--------------------------------------------------------------------------
+    |
+    | This value defines the maximum number of API requests a user can make
+    | per minute. Rate limiting helps protect the API from abuse and ensures
+    | fair usage across all consumers.
+    |
+    */
+
+    'rate_limit' => env('API_RATE_LIMIT', 60),
+
+    /*
+    |--------------------------------------------------------------------------
     | API Portal Domain Name
     |--------------------------------------------------------------------------
     |

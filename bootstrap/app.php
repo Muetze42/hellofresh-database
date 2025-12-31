@@ -20,13 +20,13 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['web'])
                 ->domain((string) parse_url((string) config('app.url'), PHP_URL_HOST))
                 ->group(base_path('routes/web.php'));
-            Route::middleware(['api'])
+            Route::middleware(['api', 'throttle:api'])
                 ->prefix(config('api.path'))
                 ->domain(config('api.domain_name'))
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware(['api', 'auth:sanctum', ApiLocalizationMiddleware::class])
+            Route::middleware(['api', 'throttle:api', 'auth:sanctum', ApiLocalizationMiddleware::class])
                 ->domain(config('api.domain_name'))
                 ->prefix('{locale}-{country}')
                 ->name('api-localized.')
