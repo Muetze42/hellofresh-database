@@ -17,7 +17,7 @@ class LocalizationMiddleware
      *
      * @param  Closure(Request):Response  $next
      */
-    public function handle(Request $request, Closure $next, string $legacyRedirect = ''): Response
+    public function handle(Request $request, Closure $next): Response
     {
         $route = $request->route();
 
@@ -29,19 +29,17 @@ class LocalizationMiddleware
         abort_if(! is_string($countryCode) || ! is_string($locale) || strlen($countryCode) !== 2, 404);
 
         // Redirect legacy lowercase URLs to canonical uppercase format (e.g., /de-de → /de-DE)
-        if ($legacyRedirect !== '') {
-            $canonicalCountryCode = strtoupper($countryCode);
-            $canonicalLocale = strtolower($locale);
+        $canonicalCountryCode = strtoupper($countryCode);
+        $canonicalLocale = strtolower($locale);
 
-            if ($countryCode !== $canonicalCountryCode || $locale !== $canonicalLocale) {
-                $path = preg_replace(
-                    '#^/' . preg_quote($locale . '-' . $countryCode, '#') . '#i',
-                    '/' . $canonicalLocale . '-' . $canonicalCountryCode,
-                    $request->getPathInfo()
-                );
+        if ($countryCode !== $canonicalCountryCode || $locale !== $canonicalLocale) {
+            $path = preg_replace(
+                '#^/' . preg_quote($locale . '-' . $countryCode, '#') . '#i',
+                '/' . $canonicalLocale . '-' . $canonicalCountryCode,
+                $request->getPathInfo()
+            );
 
-                return redirect($path . ($request->getQueryString() ? '?' . $request->getQueryString() : ''), 301);
-            }
+            return redirect($path . ($request->getQueryString() ? '?' . $request->getQueryString() : ''), 301);
         }
 
         $country = $this->requestedCountry($countryCode, $locale);

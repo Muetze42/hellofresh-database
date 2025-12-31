@@ -26,12 +26,12 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->domain(config('api.portal_domain_name'))
                 ->name('api.')
                 ->group(base_path('routes/portal.php'));
-            Route::middleware(['api', 'localized'])
+            Route::middleware(['api'])
                 ->prefix('api')
                 ->name('api-localized.')
                 ->group(base_path('routes/api-localized.php'));
 
-            Route::middleware(['web', 'localized:true'])
+            Route::middleware(['web', LocalizationMiddleware::class])
                 ->name('localized.')
                 ->prefix('{locale}-{country:code}')
                 ->group(base_path('routes/web-localized.php'));
@@ -45,7 +45,6 @@ return Application::configure(basePath: dirname(__DIR__))
         );
         $middleware->alias([
             'auth.or.message' => AuthenticateOrShowMessageMiddleware::class,
-            'localized' => LocalizationMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
