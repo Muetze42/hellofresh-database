@@ -26,6 +26,9 @@
         @endauth
 
         <flux:navlist.group expandable heading="API Reference" class="mt-4">
+            <flux:navlist.item href="{{ route('portal.docs.get-started') }}" :current="request()->routeIs('portal.docs.get-started')">
+                Get Started
+            </flux:navlist.item>
             <flux:navlist.item href="{{ route('portal.docs.countries') }}" :current="request()->routeIs('portal.docs.countries')">
                 Countries
             </flux:navlist.item>

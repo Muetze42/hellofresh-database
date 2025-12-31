@@ -31,6 +31,7 @@ class LabelsDoc extends AbstractEndpointDoc
     protected function queryParams(): array
     {
         return [
+            ['name' => 'per_page', 'type' => 'integer', 'description' => 'Results per page (' . config('api.pagination.per_page_min') . '-' . config('api.pagination.per_page_max') . ', default ' . config('api.pagination.per_page_default') . ')'],
             ['name' => 'sort', 'type' => 'string', 'description' => 'Sort by: created_at (default) or updated_at, always descending'],
         ];
     }
