@@ -409,8 +409,8 @@ class RecipeIndex extends AbstractComponent
         }
 
         /** @var list<array{value: int, start: string, end: string}> $list */
-        $list = Menu::where('country_id', $this->countryId)
-            ->where('start', '>=', now()->subWeeks(2))
+        $list = Menu::selectable()
+            ->where('country_id', $this->countryId)
             ->orderBy('year_week')
             ->get()
             ->map(fn (Menu $menu): array => [

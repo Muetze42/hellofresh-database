@@ -5,6 +5,7 @@ use App\Livewire\Portal\Auth\Register;
 use App\Livewire\Portal\Auth\VerifyEmail;
 use App\Livewire\Portal\Dashboard;
 use App\Livewire\Portal\Docs\AllergensDoc;
+use App\Livewire\Portal\Docs\CountriesDoc;
 use App\Livewire\Portal\Docs\IngredientsDoc;
 use App\Livewire\Portal\Docs\LabelsDoc;
 use App\Livewire\Portal\Docs\MenusIndexDoc;
@@ -40,6 +41,7 @@ Route::get('/', Dashboard::class)->name('dashboard');
 
 // API Documentation (public, no authentication required)
 Route::prefix('docs')->name('docs.')->group(function (): void {
+    Route::get('/countries', CountriesDoc::class)->name('countries');
     Route::get('/recipes', RecipesIndexDoc::class)->name('recipes');
     Route::get('/recipes-show', RecipesShowDoc::class)->name('recipes-show');
     Route::get('/menus', MenusIndexDoc::class)->name('menus');

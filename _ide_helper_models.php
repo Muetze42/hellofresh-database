@@ -157,7 +157,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * @mixin \Illuminate\Database\Eloquent\Builder<\App\Models\EmailVerification>
+ * @mixin Builder<EmailVerification>
  * @property int $id
  * @property int $user_id
  * @property string $email
@@ -297,6 +297,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu selectable()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereId($value)
@@ -544,6 +545,8 @@ namespace App\Models{
  * @property-read int|null $shared_recipe_lists_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ShoppingList> $shoppingLists
  * @property-read int|null $shopping_lists_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
+ * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
