@@ -45,6 +45,30 @@ return [
         'per_page_min' => 10,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | API Portal Domain Name
+    |--------------------------------------------------------------------------
+    |
+    | This value specifies the domain name for the API Portal. The portal
+    | provides API documentation, token management, and authentication
+    | for API consumers on a dedicated subdomain.
+    |
+    */
+
     'portal_domain_name' => env('API_PORTAL_DOMAIN_NAME'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Version
+    |--------------------------------------------------------------------------
+    |
+    | This value represents the current version of the API. It is displayed
+    | in the API Portal footer and can be used to track API releases and
+    | communicate version information to API consumers.
+    |
+    */
+
+    'version' => env('API_VERSION', 'unknown'),
 
 ];
