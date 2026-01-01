@@ -1,8 +1,8 @@
 <?php
 
 use App\Jobs\GenerateSitemapsJob;
-use App\Jobs\SyncMenusJob;
-use App\Jobs\SyncRecipesJob;
+use App\Jobs\Menu\SyncMenusJob;
+use App\Jobs\Recipe\SyncRecipesJob;
 use App\Jobs\UpdateCountryStatisticsJob;
 use Illuminate\Console\Scheduling\Schedule as ConsoleSchedule;
 use Illuminate\Support\Facades\Schedule;

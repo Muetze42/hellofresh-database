@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Menu;
 
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
