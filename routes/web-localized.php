@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BringExportController;
 use App\Http\Controllers\MenuRedirectController;
+use App\Http\Controllers\RecipeRedirectController;
 use App\Livewire\Web\Auth\PasswordChange;
 use App\Livewire\Web\Auth\ResetPassword;
 use App\Livewire\Web\PrivacyPolicy\PrivacyPolicyShow;
@@ -13,9 +14,16 @@ use App\Livewire\Web\User\UserShoppingLists;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', RecipeIndex::class)->name('recipes.index');
+
+// Legacy redirects
+Route::get('recipes/{slug}-{uuid}', RecipeRedirectController::class)
+    ->where(['slug' => '.*', 'uuid' => '[a-f0-9]{24}'])
+    ->name('recipes.redirect');
+
 Route::get('recipes/{slug}-{recipe}', RecipeShow::class)
     ->where(['slug' => '.*', 'recipe' => '[0-9]+'])
     ->name('recipes.show');
+
 Route::get('shopping-list', ShoppingListIndex::class)->name('shopping-list.index');
 Route::get('shopping-list/print', ShoppingListIndex::class)->name('shopping-list.print');
 Route::get('shopping-list/bring', BringExportController::class)->name('shopping-list.bring');
