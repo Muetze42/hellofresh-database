@@ -15,7 +15,7 @@ Unofficial HelloFresh recipe database for 16 countries with features like filter
 ## Links
 
 * [hfresh.info](https://hfresh.info) - Live website
-* [API Portal](https://api.hfresh.info) - Developer portal for API access
+* [API Portal](https://console.hfresh.info) - For API and statistics
 * [Reddit Post](https://www.reddit.com/r/hellofresh/comments/1b37z4x/hellofresh_recipes_database_relaunched/) - Active community
 * [Ko-Fi](https://ko-fi.com/post/HelloFresh-Recipes-Database-Relaunched-D1D8V2OF7)
 * [LinkedIn](https://www.linkedin.com/posts/normanhuth_hellofresh-database-activity-7169039554446901248-CrKH)
@@ -30,8 +30,6 @@ A REST API is available for registered users. Features include:
 
 * Access to recipes, menus, ingredients, tags, labels, and allergens
 * Filter and search capabilities
-* Free API tokens
-* Full documentation in the developer portal
 
 ## Tech Stack
 
