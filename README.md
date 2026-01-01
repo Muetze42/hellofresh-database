@@ -1,8 +1,15 @@
 # HelloFresh Database
 
-HelloFresh recipe database for 16 countries with features like filtering by ingredients, allergens, tags, shopping lists, and more.
+Unofficial HelloFresh recipe database for 16 countries with features like filtering by ingredients, allergens, tags, shopping lists, and a REST API.
 
-[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F73c8366b-1d79-4a0d-b540-214c968135b3%3Fdate%3D1%26label%3D1%26commit%3D1&style=plastic&cacheSeconds=300)](https://forge.laravel.com/norman-huth/hetzner-dr-01/2975182)
+## API
+
+A REST API is available at [api.hfresh.info](https://api.hfresh.info). Features include:
+
+* Access to recipes, menus, ingredients, tags, labels, and allergens
+* Filter and search capabilities
+* Free API tokens for registered users
+* Full API documentation in the portal
 
 ## Tech Stack
 
@@ -51,15 +58,3 @@ Ideas for future development:
 * **Similar Recipes** - Recommendations based on ingredients/tags
 * **Recently Viewed** - Quick access to recently visited recipes
 * **Seasonal Recipes** - Highlight what's currently in season
-
-### Technical
-* **PWA / Offline Mode** - Access recipes without internet
-* **Push Notifications** - Get notified about new menu recipes
-
-## Development
-
-Translations can be found in the `/lang` directory.
-
-### Deployment
-
-Staging server update when merging into the main branch and production server update with every release.
