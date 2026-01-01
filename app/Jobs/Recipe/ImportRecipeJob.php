@@ -385,6 +385,14 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
             return false;
         }
 
+        if (! is_string($this->recipe['name'])) {
+            return false;
+        }
+
+        if (trim($this->recipe['name']) === '') {
+            return false;
+        }
+
         // Skip recipes without proper serving sizes (2, 3 & 4 portions = 3 yields)
         if (count($this->recipe['yields']) < 3) {
             return false;
