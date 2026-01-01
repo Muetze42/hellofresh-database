@@ -84,7 +84,7 @@ class GenerateSitemapJob implements ShouldQueue
                     $slug = Str::slug($name, language: $this->locale);
                     $url = localized_route(
                         'localized.recipes.show',
-                        ['slug' => $slug, 'recipe' => $recipe->hellofresh_id],
+                        ['slug' => $slug, 'recipe' => $recipe->id],
                         true,
                         $this->country,
                         $this->locale
