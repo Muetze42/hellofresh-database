@@ -48,16 +48,18 @@
     <flux:card>
         <flux:table>
             <flux:table.columns>
-                <flux:table.column>User</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'id'" :direction="$sortDirection" wire:click="sort('id')">ID</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection" wire:click="sort('name')">User</flux:table.column>
                 <flux:table.column>Status</flux:table.column>
-                <flux:table.column>Tokens</flux:table.column>
-                <flux:table.column>Last Active</flux:table.column>
-                <flux:table.column>Registered</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'tokens_count'" :direction="$sortDirection" wire:click="sort('tokens_count')">Tokens</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'active_at'" :direction="$sortDirection" wire:click="sort('active_at')">Last Active</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'created_at'" :direction="$sortDirection" wire:click="sort('created_at')">Registered</flux:table.column>
                 <flux:table.column class="w-16"></flux:table.column>
             </flux:table.columns>
             <flux:table.rows>
                 @forelse($this->users as $user)
                     <flux:table.row wire:key="user-{{ $user->id }}">
+                        <flux:table.cell variant="strong">{{ $user->id }}</flux:table.cell>
                         <flux:table.cell>
                             <div class="flex items-center gap-ui">
                                 <flux:avatar name="{{ $user->name }}" size="sm" />
@@ -100,7 +102,7 @@
                     </flux:table.row>
                 @empty
                     <flux:table.row>
-                        <flux:table.cell colspan="6" class="text-center py-section">
+                        <flux:table.cell colspan="7" class="text-center py-section">
                             <flux:text variant="subtle">No users found.</flux:text>
                         </flux:table.cell>
                     </flux:table.row>
