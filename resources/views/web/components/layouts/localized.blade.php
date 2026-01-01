@@ -31,16 +31,15 @@
     <meta name="twitter:description" content="{{ $ogDescription }}">
   @endif
   <meta name="twitter:image" content="{{ $ogImage ?? route('og.generic', ['title' => $ogTitle ?? $title ?? config('app.name')]) }}">
-
-  <x-layouts.partials.favicon />
+  <x-partials.favicon />
   @vite(['resources/css/web/app.css'])
   @livewireStyles
   @fluxAppearance
 </head>
 <body class="min-h-screen bg-white dark:bg-zinc-800 antialiased print:bg-white" data-country="{{ resolve('current.country')->code }}">
-<x-layouts.localized.header />
+<x-web::layouts.localized.header />
 {{ $slot }}
-<x-layouts.localized.footer />
+<x-web::layouts.localized.footer />
 <x-confirmation-modal />
 <livewire:web.global-search />
 <livewire:web.auth.auth-modal />

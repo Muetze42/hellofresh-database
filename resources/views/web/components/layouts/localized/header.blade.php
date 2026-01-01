@@ -145,7 +145,7 @@
     <flux:sidebar.nav>
         {{-- Dark Mode Toggle for Mobile --}}
         <div class="px-3 py-2">
-            <flux:radio.group x-data variant="segmented" x-model="$flux.appearance" class="w-full">
+            <flux:radio.group x-data variant="segmented" x-model="$flux.appearance" class="w-full" size="sm">
                 <flux:radio value="light" icon="sun" />
                 <flux:radio value="dark" icon="moon" />
                 <flux:radio value="system" icon="computer-desktop" />

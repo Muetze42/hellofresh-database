@@ -23,7 +23,7 @@
   <meta name="twitter:title" content="{{ $pageTitle }}">
   <meta name="twitter:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
 
-  <x-web::layouts.partials.favicon />
+  <x-partials.favicon />
   @vite(['resources/css/portal/app.css'], 'build-portal')
   @livewireStyles
   @fluxAppearance
@@ -95,6 +95,9 @@
     <flux:sidebar.item icon="chart-pie" :href="route('portal.stats')" :current="request()->routeIs('portal.stats')" wire:navigate>
       Statistics
     </flux:sidebar.item>
+    <flux:sidebar.item icon="home" href="{{ config('app.url') }}" :current="false">
+      {{ config('app.name') }}
+    </flux:sidebar.item>
   </flux:sidebar.nav>
 
   @auth
@@ -121,6 +124,13 @@
       </flux:sidebar.item>
     </flux:sidebar.nav>
   @endauth
+  <div>
+    <flux:radio.group x-data variant="segmented" x-model="$flux.appearance" class="w-full" size="sm">
+      <flux:radio value="light" icon="sun" />
+      <flux:radio value="dark" icon="moon" />
+      <flux:radio value="system" icon="computer-desktop" />
+    </flux:radio.group>
+  </div>
 </flux:sidebar>
 
 <flux:header class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
@@ -134,7 +144,6 @@
 
       <flux:menu>
         <flux:menu.item icon="user" href="{{ route('portal.profile') }}">Profile</flux:menu.item>
-        <flux:menu.item icon="home" href="{{ config('app.url') }}">{{ config('app.name') }}</flux:menu.item>
         <flux:menu.separator />
         <flux:menu.item icon="log-out" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
           Logout
