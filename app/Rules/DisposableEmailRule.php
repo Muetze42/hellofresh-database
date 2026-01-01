@@ -4,10 +4,9 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Translation\PotentiallyTranslatedString;
+use JsonException;
 
 class DisposableEmailRule implements ValidationRule
 {
@@ -15,14 +14,24 @@ class DisposableEmailRule implements ValidationRule
      * Run the validation rule.
      *
      * @param  Closure(string, ?string=):PotentiallyTranslatedString  $fail
+     *
+     * @throws JsonException
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $path = 'disposable-email-domains.json';
+        $file = config('filesystems.files.disposable_emails');
 
-        if (Storage::missing($path)) {
-            Log::error('Disposable email domains file not found: ' . $path);
+        if (! is_string($file)) {
+            return;
+        }
 
+        if (! is_file($file)) {
+            return;
+        }
+
+        $contents = file_get_contents($file);
+
+        if ($contents === false) {
             return;
         }
 
@@ -30,13 +39,7 @@ class DisposableEmailRule implements ValidationRule
             $fail('validation.custom.disposable_email')->translate(['attribute' => $value]);
         }
 
-        $domains = Storage::json($path);
-
-        if ($domains === null) {
-            Log::error('Failed to parse disposable email domains file: ' . $path);
-
-            return;
-        }
+        $domains = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
 
         $value = Str::lower(trim((string) $value));
         $parts = explode('@', $value);
