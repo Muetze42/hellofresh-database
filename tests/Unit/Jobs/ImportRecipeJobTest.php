@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Jobs;
 
 use App\Enums\QueueEnum;
-use App\Jobs\ImportRecipeJob;
+use App\Jobs\Recipe\ImportRecipeJob;
 use App\Models\Country;
 use App\Models\Label;
 use Illuminate\Foundation\Testing\RefreshDatabase;

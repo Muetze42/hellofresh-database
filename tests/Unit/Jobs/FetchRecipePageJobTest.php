@@ -7,7 +7,7 @@ namespace Tests\Unit\Jobs;
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
 use App\Http\Clients\HelloFresh\Responses\RecipesResponse;
-use App\Jobs\FetchRecipePageJob;
+use App\Jobs\Recipe\FetchRecipePageJob;
 use App\Models\Country;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;

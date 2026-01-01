@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Menu;
 
 use App\Contracts\LauncherJobInterface;
 use App\Enums\QueueEnum;

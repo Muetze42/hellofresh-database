@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Jobs;
 
 use App\Enums\QueueEnum;
-use App\Jobs\FetchMenusJob;
-use App\Jobs\SyncMenusJob;
+use App\Jobs\Menu\FetchMenusJob;
+use App\Jobs\Menu\SyncMenusJob;
 use App\Models\Country;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;

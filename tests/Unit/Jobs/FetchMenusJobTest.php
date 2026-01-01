@@ -7,7 +7,7 @@ namespace Tests\Unit\Jobs;
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
 use App\Http\Clients\HelloFresh\Responses\MenusResponse;
-use App\Jobs\FetchMenusJob;
+use App\Jobs\Menu\FetchMenusJob;
 use App\Models\Country;
 use App\Models\Menu;
 use App\Models\Recipe;
