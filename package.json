@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
+        "build:portal": "vite build --config vite.config.portal.js",
         "dev": "vite",
         "dev:portal": "vite --config vite.config.portal.js"
     },
