@@ -82,7 +82,7 @@
             <flux:checkbox wire:model="acceptPrivacy" id="accept-privacy" />
             <flux:label for="accept-privacy" class="text-sm gap-1">
               {{ __('I accept the') }}
-              <flux:link :href="localized_route('localized.privacy-policy')" target="_blank">{{ __('Privacy Policy') }}</flux:link>
+              <flux:link :href="localized_route('localized.privacy-policy')" target="_blank" wire:navigate>{{ __('Privacy Policy') }}</flux:link>
             </flux:label>
           </div>
           <flux:error name="acceptPrivacy" />

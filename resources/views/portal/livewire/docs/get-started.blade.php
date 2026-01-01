@@ -18,9 +18,9 @@
         <pre class="mt-section p-section bg-zinc-900 text-zinc-100 rounded-lg text-sm overflow-x-auto"><code>Authorization: Bearer YOUR_API_TOKEN</code></pre>
         <flux:text class="mt-section text-sm">
             @auth
-                You can manage your API tokens in the <flux:link href="{{ route('portal.tokens.index') }}">Token Management</flux:link> section.
+                You can manage your API tokens in the <flux:link href="{{ route('portal.tokens.index') }}" wire:navigate>Token Management</flux:link> section.
             @else
-                <flux:link href="{{ route('portal.login') }}">Sign in</flux:link> to create and manage your API tokens.
+                <flux:link href="{{ route('portal.login') }}" wire:navigate>Sign in</flux:link> to create and manage your API tokens.
             @endauth
         </flux:text>
     </flux:card>
@@ -35,7 +35,7 @@
             Example: <code class="bg-zinc-100 dark:bg-zinc-700 px-1 rounded">de-DE</code> for German (Germany), <code class="bg-zinc-100 dark:bg-zinc-700 px-1 rounded">en-GB</code> for English (Great Britain).
         </flux:text>
         <flux:text class="mt-ui text-sm">
-            Use the <flux:link href="{{ route('portal.docs.countries') }}">Countries endpoint</flux:link> to get a list of available countries.
+            Use the <flux:link href="{{ route('portal.docs.countries') }}" wire:navigate>Countries endpoint</flux:link> to get a list of available countries.
         </flux:text>
     </flux:card>
 

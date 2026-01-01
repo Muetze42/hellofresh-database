@@ -44,7 +44,7 @@ final class AuthenticateOrShowMessageMiddlewareTest extends TestCase
         $response = $this->get(localized_route($routeName));
 
         $response->assertUnauthorized();
-        $response->assertViewIs('auth.require-login');
+        $response->assertViewIs('web::auth.require-login');
     }
 
     #[Test]
