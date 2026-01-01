@@ -7,6 +7,7 @@ use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
@@ -63,17 +64,21 @@ class Profile extends Component
             'email' => $this->email,
         ]);
 
-        if ($emailChanged) {
-            $user->email_verified_at = null;
-            $user->save();
+        if ($emailChanged && ! $user->hasVerifiedEmail()) {
             $user->sendEmailVerificationNotification();
 
-            Flux::toastSuccess('Profile updated. Please verify your new email address.');
+            Flux::toast('Profile updated. Please verify your new email address.');
+
+            $this->redirect(route('portal.profile'), navigate: true);
 
             return;
         }
 
         Flux::toastSuccess('Profile updated successfully.');
+
+        if ($emailChanged) {
+            $this->redirect(route('portal.profile'), navigate: true);
+        }
     }
 
     /**
@@ -133,8 +138,8 @@ class Profile extends Component
 
         // Logout
         Auth::logout();
-        session()->invalidate();
-        session()->regenerateToken();
+        Session::invalidate();
+        Session::regenerateToken();
 
         // Delete the user
         $user->delete();

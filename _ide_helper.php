@@ -25258,6 +25258,10 @@ namespace App\Livewire\Portal {
 namespace App\Livewire\Portal\Docs {
     /**
      */
+    class GetStartedDoc extends \Livewire\Component {
+            }
+    /**
+     */
     class CountriesDoc extends \App\Livewire\Portal\Docs\AbstractEndpointDoc {
             }
     /**

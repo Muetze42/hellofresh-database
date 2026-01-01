@@ -2,7 +2,9 @@
 
 use App\Http\Middleware\ApiLocalizationMiddleware;
 use App\Http\Middleware\AuthenticateOrShowMessageMiddleware;
+use App\Http\Middleware\EnsureEmailIsVerifiedMiddleware;
 use App\Http\Middleware\LocalizationMiddleware;
+use App\Http\Middleware\LogUserActivityMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,24 +22,38 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['web'])
                 ->domain((string) parse_url((string) config('app.url'), PHP_URL_HOST))
                 ->group(base_path('routes/web.php'));
-            Route::middleware(['api', 'throttle:api'])
+
+            Route::middleware([
+                'api',
+                'throttle:api',
+                'auth:sanctum',
+                EnsureEmailIsVerifiedMiddleware::class,
+                LogUserActivityMiddleware::class,
+            ])
                 ->prefix(config('api.path'))
                 ->domain(config('api.domain_name'))
                 ->name('api.')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware(['api', 'throttle:api', 'auth:sanctum', ApiLocalizationMiddleware::class])
+            Route::middleware([
+                'api',
+                'throttle:api',
+                'auth:sanctum',
+                EnsureEmailIsVerifiedMiddleware::class,
+                ApiLocalizationMiddleware::class,
+                LogUserActivityMiddleware::class,
+            ])
                 ->domain(config('api.domain_name'))
                 ->prefix('{locale}-{country}')
                 ->name('api-localized.')
                 ->group(base_path('routes/api-localized.php'));
 
-            Route::middleware(['web', LocalizationMiddleware::class])
+            Route::middleware(['web', LocalizationMiddleware::class, LogUserActivityMiddleware::class])
                 ->name('localized.')
                 ->prefix('{locale}-{country:code}')
                 ->group(base_path('routes/web-localized.php'));
 
-            Route::middleware(['web'])
+            Route::middleware(['web', LogUserActivityMiddleware::class])
                 ->domain(config('api.portal_domain_name'))
                 ->name('portal.')
                 ->group(base_path('routes/portal.php'));
