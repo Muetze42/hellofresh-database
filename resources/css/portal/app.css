@@ -10,6 +10,6 @@
 @import '../../fonts/jet-brains-mono/webfonts/jetbrains-mono.css';
 
 @source '../../../resources/components/*.blade.php';
-@source '../../../resources/common/*.blade.php';
+/*@source '../../../resources/common!*.blade.php';*/
 @source '../../../resources/portal/*.blade.php';
 @source '../../resources/js/portal/*.js';
