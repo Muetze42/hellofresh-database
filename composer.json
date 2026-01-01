@@ -80,7 +80,6 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi",
-            "@php artisan data-maintenance:update-disposable-email-domains --ansi",
             "@php artisan development:ai-background-update --ansi"
         ],
         "post-install-cmd": [
