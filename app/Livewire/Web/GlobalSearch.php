@@ -52,7 +52,7 @@ class GlobalSearch extends AbstractComponent
 
         $this->redirect(
             localized_route('localized.recipes.show', [
-                'recipe' => $recipe->hellofresh_id,
+                'recipe' => $recipe->id,
                 'slug' => slugify($recipe->name),
             ]),
             navigate: true

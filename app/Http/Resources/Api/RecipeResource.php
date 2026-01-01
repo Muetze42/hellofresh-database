@@ -33,7 +33,8 @@ class RecipeResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'url' => config('app.url') . '/' . $locale . '-' . resolve('current.country')->code . '/recipes/' . slugify($this->getTranslationWithAnyFallback('name', $locale)) . '-' . $this->hellofresh_id,
+            'url' => config('app.url') . '/' . $locale . '-' . resolve('current.country')->code .
+                '/recipes/' . slugify($this->getTranslationWithAnyFallback('name', $locale)) . '-' . $this->id,
             'name' => $this->getTranslationWithAnyFallback('name', $locale),
             'headline' => $this->getTranslationWithAnyFallback('headline', $locale),
             'description' => $this->getTranslationWithAnyFallback('description', $locale),

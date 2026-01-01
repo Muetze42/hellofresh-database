@@ -123,7 +123,7 @@
 
               <div class="p-4">
                 <flux:heading size="lg" class="line-clamp-1">
-                  <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->name), 'recipe' => $recipe->hellofresh_id])">
+                  <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->name), 'recipe' => $recipe->id])">
                     {{ $recipe->name }}
                   </flux:link>
                 </flux:heading>
