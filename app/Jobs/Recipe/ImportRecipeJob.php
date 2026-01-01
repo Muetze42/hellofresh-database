@@ -385,10 +385,6 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
             return false;
         }
 
-        if (! is_string($this->recipe['name'])) {
-            return false;
-        }
-
         if (trim($this->recipe['name']) === '') {
             return false;
         }

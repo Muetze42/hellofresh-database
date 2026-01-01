@@ -23,6 +23,7 @@ use App\Livewire\Portal\Tokens\TokenIndex;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,36 +37,36 @@ use Illuminate\Support\Facades\Route;
 
 // Guest routes (only for unauthenticated users)
 Route::middleware('guest')->group(function (): void {
-    Route::get('/login', Login::class)->name('login');
-    Route::get('/register', Register::class)->name('register');
+    Route::get('login', Login::class)->name('login');
+    Route::get('register', Register::class)->name('register');
 });
 
 // Public routes (accessible to everyone)
 Route::get('/', Dashboard::class)->name('dashboard');
-Route::get('/stats', Statistic::class)->name('stats');
+Route::get('stats', Statistic::class)->name('stats');
 
 // API Documentation (public, no authentication required)
 Route::prefix('docs')->name('docs.')->group(function (): void {
-    Route::get('/get-started', GetStartedDoc::class)->name('get-started');
-    Route::get('/countries', CountriesDoc::class)->name('countries');
-    Route::get('/recipes', RecipesIndexDoc::class)->name('recipes');
-    Route::get('/recipes-show', RecipesShowDoc::class)->name('recipes-show');
-    Route::get('/menus', MenusIndexDoc::class)->name('menus');
-    Route::get('/menus-show', MenusShowDoc::class)->name('menus-show');
-    Route::get('/tags', TagsDoc::class)->name('tags');
-    Route::get('/labels', LabelsDoc::class)->name('labels');
-    Route::get('/allergens', AllergensDoc::class)->name('allergens');
-    Route::get('/ingredients', IngredientsDoc::class)->name('ingredients');
+    Route::get('get-started', GetStartedDoc::class)->name('get-started');
+    Route::get('countries', CountriesDoc::class)->name('countries');
+    Route::get('recipes', RecipesIndexDoc::class)->name('recipes');
+    Route::get('recipes-show', RecipesShowDoc::class)->name('recipes-show');
+    Route::get('menus', MenusIndexDoc::class)->name('menus');
+    Route::get('menus-show', MenusShowDoc::class)->name('menus-show');
+    Route::get('tags', TagsDoc::class)->name('tags');
+    Route::get('labels', LabelsDoc::class)->name('labels');
+    Route::get('allergens', AllergensDoc::class)->name('allergens');
+    Route::get('ingredients', IngredientsDoc::class)->name('ingredients');
 });
 
 // Authenticated routes (require login)
 Route::middleware('auth')->group(function (): void {
     // Profile
-    Route::get('/profile', Profile::class)->name('profile');
+    Route::get('profile', Profile::class)->name('profile');
 
     // Email verification
-    Route::get('/email/verify', VerifyEmail::class)->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request): RedirectResponse {
+    Route::get('email/verify', VerifyEmail::class)->name('verification.notice');
+    Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request): RedirectResponse {
         $request->fulfill();
 
         return to_route('portal.dashboard')
@@ -75,21 +76,21 @@ Route::middleware('auth')->group(function (): void {
     // Logout
     Route::post('/logout', function (): RedirectResponse {
         auth()->logout();
-        session()->invalidate();
-        session()->regenerateToken();
+        Session::invalidate();
+        Session::regenerateToken();
 
         return to_route('portal.login');
     })->name('logout');
 
     // API Tokens
     Route::prefix('tokens')->name('tokens.')->group(function (): void {
-        Route::get('/', TokenIndex::class)->name('index');
+        Route::get('', TokenIndex::class)->name('index');
     });
 
     // Admin routes
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
-        Route::get('/users', UserIndex::class)->name('users');
-        Route::get('/users/{user}', UserShow::class)->name('users.show')->where('user', '[0-9]+');
-        Route::get('/api-usage', ApiUsage::class)->name('api-usage');
+        Route::get('users', UserIndex::class)->name('users');
+        Route::get('users/{user}', UserShow::class)->name('users.show')->where('user', '[0-9]+');
+        Route::get('api-usage', ApiUsage::class)->name('api-usage');
     });
 });

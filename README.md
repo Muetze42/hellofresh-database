@@ -46,7 +46,7 @@ Ideas for future development:
 ### User Experience
 * **Week Planner** - Drag & drop recipes onto weekdays for meal planning
 * **Cooking Mode** - Step-by-step view with large text for cooking
-* **Random Recipe** - "What should I cook today?" button
+* ~~**Random Recipe** - "What should I cook today?" button~~ ✅
 * **Personal Notes** - Save your own notes on recipes
 
 ### Shopping List

@@ -16,6 +16,10 @@
             {{ __('Menu') }}
         </flux:navbar.item>
 
+        <flux:navbar.item icon="shuffle" :href="localized_route('localized.recipes.random')" wire:navigate>
+            {{ __('Random') }}
+        </flux:navbar.item>
+
         <flux:navbar.item icon="shopping-basket" :href="localized_route('localized.shopping-list.index')" wire:navigate>
             {{ __('Shopping List') }}
             <span
@@ -107,6 +111,9 @@
         </flux:sidebar.item>
         <flux:sidebar.item icon="calendar" :href="localized_route('localized.menus.index')" wire:navigate>
             {{ __('Menu') }}
+        </flux:sidebar.item>
+        <flux:sidebar.item icon="shuffle" :href="localized_route('localized.recipes.random')" wire:navigate>
+            {{ __('Random') }}
         </flux:sidebar.item>
         <flux:sidebar.item icon="shopping-basket" :href="localized_route('localized.shopping-list.index')" wire:navigate>
             {{ __('Shopping List') }}

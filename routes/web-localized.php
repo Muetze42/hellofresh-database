@@ -7,6 +7,7 @@ use App\Livewire\Web\Auth\PasswordChange;
 use App\Livewire\Web\Auth\ResetPassword;
 use App\Livewire\Web\PrivacyPolicy\PrivacyPolicyShow;
 use App\Livewire\Web\Recipes\RecipeIndex;
+use App\Livewire\Web\Recipes\RecipeRandom;
 use App\Livewire\Web\Recipes\RecipeShow;
 use App\Livewire\Web\ShoppingList\ShoppingListIndex;
 use App\Livewire\Web\User\UserRecipeLists;
@@ -14,6 +15,7 @@ use App\Livewire\Web\User\UserShoppingLists;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', RecipeIndex::class)->name('recipes.index');
+Route::get('random', RecipeRandom::class)->name('recipes.random');
 
 // Legacy redirects
 Route::get('recipes/{slug}-{uuid}', RecipeRedirectController::class)

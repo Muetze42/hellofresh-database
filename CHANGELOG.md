@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.6.0] - 2026-01-01
+
+### Added
+
+- **Random Recipes** - Discover random recipes with a shuffle button; supports all existing filters (allergens, ingredients, tags, difficulty, cooking time)
+
 ## [3.5.0] - 2026-01-01
 
 ### Added
