@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
-use App\Support\Api\ContentLocale;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class RecipeRedirectController extends Controller
@@ -11,7 +11,7 @@ class RecipeRedirectController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, string $slug, string $uuid)
+    public function __invoke(Request $request, string $slug, string $uuid): RedirectResponse
     {
         $country = current_country();
 
