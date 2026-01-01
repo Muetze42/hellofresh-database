@@ -108,10 +108,6 @@
             </flux:table.rows>
         </flux:table>
 
-        @if($this->users->hasPages())
-            <div class="mt-section">
-                {{ $this->users->links() }}
-            </div>
-        @endif
+        <flux:pagination :paginator="$this->users" class="mt-section" />
     </flux:card>
 </div>
