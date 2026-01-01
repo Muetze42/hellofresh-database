@@ -15,10 +15,10 @@ use App\Livewire\Portal\Docs\RecipesIndexDoc;
 use App\Livewire\Portal\Docs\RecipesShowDoc;
 use App\Livewire\Portal\Docs\TagsDoc;
 use App\Livewire\Portal\Profile;
+use App\Livewire\Portal\Statistic;
 use App\Livewire\Portal\Tokens\TokenIndex;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +39,7 @@ Route::middleware('guest')->group(function (): void {
 
 // Public routes (accessible to everyone)
 Route::get('/', Dashboard::class)->name('dashboard');
+Route::get('/stats', Statistic::class)->name('stats');
 
 // API Documentation (public, no authentication required)
 Route::prefix('docs')->name('docs.')->group(function (): void {
@@ -69,7 +70,7 @@ Route::middleware('auth')->group(function (): void {
     })->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
     // Logout
-    Route::post('/logout', function (): Redirector|RedirectResponse {
+    Route::post('/logout', function (): RedirectResponse {
         auth()->logout();
         session()->invalidate();
         session()->regenerateToken();

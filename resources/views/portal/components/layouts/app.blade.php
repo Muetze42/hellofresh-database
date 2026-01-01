@@ -35,6 +35,10 @@
   <flux:brand href="{{ route('portal.dashboard') }}" logo="earth" name="{{ config('app.name') }} API" class="px-2" />
 
   <flux:navlist variant="outline">
+    <flux:navlist.item icon="chart-pie" href="{{ route('portal.stats') }}" :current="request()->routeIs('portal.stats')" wire:navigate>
+      Statistics
+    </flux:navlist.item>
+
     @auth
       <flux:navlist.item icon="key" href="{{ route('portal.tokens.index') }}" :current="request()->routeIs('portal.tokens.*')">
         API Tokens
