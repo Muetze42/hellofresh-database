@@ -7,7 +7,7 @@
     alt="Laravel Forge Site Deployment Status"
   />
 
-  <div class="grid gap-section md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-section md:grid-cols-2 xl:grid-cols-3">
     @if($isAuthenticated)
       <flux:card>
         <flux:heading size="lg">API Tokens</flux:heading>
