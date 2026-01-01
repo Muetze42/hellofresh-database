@@ -2,6 +2,11 @@
   <flux:heading size="xl">{{ config('app.name') }} API</flux:heading>
   <flux:text>Access recipe data, menus, ingredients, and more through our REST API.</flux:text>
 
+  <img
+    src="https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F73c8366b-1d79-4a0d-b540-214c968135b3%3Fdate%3D1%26commit%3D1&style=plastic?t={{ now()->timestamp }}"
+    alt="Laravel Forge Site Deployment Status"
+  />
+
   <div class="grid gap-section md:grid-cols-2 lg:grid-cols-3">
     @if($isAuthenticated)
       <flux:card>
