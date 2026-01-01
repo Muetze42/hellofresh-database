@@ -310,6 +310,72 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property string $tokenable_type
+ * @property int $tokenable_id
+ * @property string $name
+ * @property string $token
+ * @property array<array-key, mixed>|null $abilities
+ * @property \Illuminate\Support\Carbon|null $last_used_at
+ * @property \Illuminate\Support\Carbon|null $expires_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $tokenable
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PersonalAccessTokenUsage> $usages
+ * @property-read int|null $usages_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereAbilities($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereLastUsedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereTokenableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereTokenableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessToken withoutTrashed()
+ */
+	class PersonalAccessToken extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @mixin \Illuminate\Database\Eloquent\Builder<\App\Models\PersonalAccessTokenUsage>
+ * @property int $id
+ * @property int $user_id
+ * @property int|null $token_id
+ * @property string $host
+ * @property string $path
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\PersonalAccessToken|null $token
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage whereHost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage whereTokenId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage withoutTrashed()
+ */
+	class PersonalAccessTokenUsage extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * @mixin Builder<Recipe>
  * @property int $id
  * @property string $hellofresh_id
@@ -545,7 +611,7 @@ namespace App\Models{
  * @property-read int|null $shared_recipe_lists_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ShoppingList> $shoppingLists
  * @property-read int|null $shopping_lists_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()

@@ -2,146 +2,153 @@
     'title' => null,
 ])
 @php
-    $pageTitle = $title ? $title . ' - ' . config('app.name') . ' API' : config('app.name') . ' API Portal';
+  $pageTitle = $title ? $title . ' - ' . config('app.name') . ' API' : config('app.name') . ' API Portal';
 @endphp
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $pageTitle }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ $pageTitle }}</title>
 
-    {{-- Open Graph / Social Media Meta Tags --}}
-    <meta property="og:title" content="{{ $pageTitle }}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
-    <meta property="og:site_name" content="{{ config('app.name') }}">
+  {{-- Open Graph / Social Media Meta Tags --}}
+  <meta property="og:title" content="{{ $pageTitle }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ url()->current() }}">
+  <meta property="og:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
+  <meta property="og:site_name" content="{{ config('app.name') }}">
 
-    {{-- Twitter Card --}}
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $pageTitle }}">
-    <meta name="twitter:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
+  {{-- Twitter Card --}}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ $pageTitle }}">
+  <meta name="twitter:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
 
-    <x-web::layouts.partials.favicon />
-    @vite(['resources/css/portal/app.css'], 'build-portal')
-    @livewireStyles
-    @fluxAppearance
+  <x-web::layouts.partials.favicon />
+  @vite(['resources/css/portal/app.css'], 'build-portal')
+  @livewireStyles
+  @fluxAppearance
 </head>
 <body class="min-h-screen bg-white dark:bg-zinc-800 antialiased">
 <flux:sidebar sticky stashable class="bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-700">
-    <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
+  <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-    <flux:brand href="{{ route('portal.dashboard') }}" logo="earth" name="{{ config('app.name') }} API" class="px-2" />
+  <flux:brand href="{{ route('portal.dashboard') }}" logo="earth" name="{{ config('app.name') }} API" class="px-2" />
 
-    <flux:navlist variant="outline">
-        @auth
-            <flux:navlist.item icon="key" href="{{ route('portal.tokens.index') }}" :current="request()->routeIs('portal.tokens.*')">
-                API Tokens
-            </flux:navlist.item>
-        @endauth
-
-        <flux:navlist.group expandable heading="API Reference" class="mt-4">
-            <flux:navlist.item href="{{ route('portal.docs.get-started') }}" :current="request()->routeIs('portal.docs.get-started')">
-                Get Started
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.countries') }}" :current="request()->routeIs('portal.docs.countries')">
-                Countries
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.recipes') }}" :current="request()->routeIs('portal.docs.recipes')">
-                List Recipes
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.recipes-show') }}" :current="request()->routeIs('portal.docs.recipes-show')">
-                Get Recipe
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.menus') }}" :current="request()->routeIs('portal.docs.menus')">
-                List Menus
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.menus-show') }}" :current="request()->routeIs('portal.docs.menus-show')">
-                Get Menu
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.tags') }}" :current="request()->routeIs('portal.docs.tags')">
-                Tags
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.labels') }}" :current="request()->routeIs('portal.docs.labels')">
-                Labels
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.allergens') }}" :current="request()->routeIs('portal.docs.allergens')">
-                Allergens
-            </flux:navlist.item>
-            <flux:navlist.item href="{{ route('portal.docs.ingredients') }}" :current="request()->routeIs('portal.docs.ingredients')">
-                Ingredients
-            </flux:navlist.item>
-        </flux:navlist.group>
-    </flux:navlist>
-
-    <flux:spacer />
-
+  <flux:navlist variant="outline">
     @auth
-        <flux:dropdown position="top" align="start" class="w-full">
-            <flux:profile name="{{ auth()->user()->name }}" class="w-full cursor-pointer" />
-
-            <flux:menu>
-                <flux:menu.item icon="user" href="{{ route('portal.profile') }}">Profile</flux:menu.item>
-                <flux:menu.item icon="home" href="{{ config('app.url') }}">{{ config('app.name') }}</flux:menu.item>
-                <flux:menu.separator />
-                <flux:menu.item icon="log-out" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </flux:menu.item>
-            </flux:menu>
-        </flux:dropdown>
-
-        <form id="logout-form" action="{{ route('portal.logout') }}" method="POST" class="hidden">
-            @csrf
-        </form>
-    @else
-        <flux:navlist variant="outline">
-            <flux:navlist.item icon="log-in" href="{{ route('portal.login') }}">
-                Sign In
-            </flux:navlist.item>
-        </flux:navlist>
+      <flux:navlist.item icon="key" href="{{ route('portal.tokens.index') }}" :current="request()->routeIs('portal.tokens.*')">
+        API Tokens
+      </flux:navlist.item>
     @endauth
+
+    <flux:navlist.group expandable heading="API Reference" class="mt-4">
+      <flux:navlist.item href="{{ route('portal.docs.get-started') }}" :current="request()->routeIs('portal.docs.get-started')">
+        Get Started
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.countries') }}" :current="request()->routeIs('portal.docs.countries')">
+        Countries
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.recipes') }}" :current="request()->routeIs('portal.docs.recipes')">
+        List Recipes
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.recipes-show') }}" :current="request()->routeIs('portal.docs.recipes-show')">
+        Get Recipe
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.menus') }}" :current="request()->routeIs('portal.docs.menus')">
+        List Menus
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.menus-show') }}" :current="request()->routeIs('portal.docs.menus-show')">
+        Get Menu
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.tags') }}" :current="request()->routeIs('portal.docs.tags')">
+        Tags
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.labels') }}" :current="request()->routeIs('portal.docs.labels')">
+        Labels
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.allergens') }}" :current="request()->routeIs('portal.docs.allergens')">
+        Allergens
+      </flux:navlist.item>
+      <flux:navlist.item href="{{ route('portal.docs.ingredients') }}" :current="request()->routeIs('portal.docs.ingredients')">
+        Ingredients
+      </flux:navlist.item>
+    </flux:navlist.group>
+  </flux:navlist>
+
+  <flux:spacer />
+
+  @auth
+    <flux:dropdown position="top" align="start" class="w-full">
+      <flux:profile name="{{ auth()->user()->name }}" class="w-full cursor-pointer" />
+
+      <flux:menu>
+        <flux:menu.item icon="user" href="{{ route('portal.profile') }}">Profile</flux:menu.item>
+        <flux:menu.item icon="home" href="{{ config('app.url') }}">{{ config('app.name') }}</flux:menu.item>
+        <flux:menu.separator />
+        <flux:menu.item icon="log-out" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+          Logout
+        </flux:menu.item>
+      </flux:menu>
+    </flux:dropdown>
+
+    <form id="logout-form" action="{{ route('portal.logout') }}" method="POST" class="hidden">
+      @csrf
+    </form>
+  @else
+    <flux:navlist variant="outline">
+      <flux:navlist.item icon="log-in" href="{{ route('portal.login') }}">
+        Sign In
+      </flux:navlist.item>
+    </flux:navlist>
+  @endauth
 </flux:sidebar>
 
 <flux:header sticky class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
-    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+  <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
-    <flux:spacer />
+  <flux:spacer />
 
-    <flux:brand href="{{ route('portal.dashboard') }}" logo="earth" name="{{ config('app.name') }} API" />
+  <flux:brand href="{{ route('portal.dashboard') }}" logo="earth" name="{{ config('app.name') }} API" />
 </flux:header>
 
-<flux:main class="space-y-section" container>
-    @auth
-        @if(!auth()->user()->hasVerifiedEmail())
-            <flux:callout icon="triangle-alert" color="amber">
-                <flux:callout.heading>Email Not Verified</flux:callout.heading>
-                <flux:callout.text>
-                    Please verify your email address to access all API features.
-                    <flux:link href="{{ route('portal.verification.notice') }}">Resend verification email</flux:link>
-                </flux:callout.text>
-            </flux:callout>
-        @endif
-    @endauth
+<flux:main class="space-y-section sm:mb-16" container>
+  @auth
+    @if(!auth()->user()->hasVerifiedEmail())
+      <flux:callout icon="triangle-alert" color="amber">
+        <flux:callout.heading>Email Not Verified</flux:callout.heading>
+        <flux:callout.text>
+          Please verify your email address to access all API features.
+          <flux:link href="{{ route('portal.verification.notice') }}">Resend verification email</flux:link>
+        </flux:callout.text>
+      </flux:callout>
+    @endif
+  @endauth
 
-    {{ $slot }}
+  {{ $slot }}
 </flux:main>
-
-<flux:footer class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700 !py-3 text-sm flex justify-end gap-4">
-  <flux:text variant="subtle">
+<flux:footer class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700 !py-3 text-sm flex max-sm:flex-col justify-end gap-y-ui gap-x-4 sm:fixed w-full bottom-0">
+  <flux:text variant="subtle" class="max-sm:text-center">
     API Version: {{ config('api.version') }}
   </flux:text>
-  <div>
-    {{ __('Made with') }} <span class="text-red-500">&hearts;</span> {{ __('by') }}
-    <flux:link href="https://huth.it" target="_blank" class="font-medium hover:text-zinc-700 dark:hover:text-zinc-200">
-      Norman Huth
+  <div class="flex max-sm:flex-col items-center gap-y-ui gap-x-4">
+    <flux:link href="https://github.com/Muetze42/hellofresh-database" target="_blank" class="inline-flex items-center gap-1 hover:text-zinc-700 dark:hover:text-zinc-200">
+      <flux:icon.github variant="micro" />
+      <span>GitHub</span>
     </flux:link>
+    <div>
+      {{ __('Made with') }} <span class="text-red-500">&hearts;</span> {{ __('by') }}
+      <flux:link href="https://huth.it" target="_blank" class="font-medium hover:text-zinc-700 dark:hover:text-zinc-200">
+        Norman Huth
+      </flux:link>
+    </div>
   </div>
 </flux:footer>
 
+@persist('toast')
 <flux:toast.group position="bottom end">
-    <flux:toast />
+  <flux:toast />
 </flux:toast.group>
+@endpersist
 
 @vite(['resources/js/portal/app.js'], 'build-portal')
 @livewireScripts

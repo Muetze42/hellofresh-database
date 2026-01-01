@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
+use App\Observers\UserObserver;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,6 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @mixin Builder<User>
  */
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
     use HasApiTokens;
