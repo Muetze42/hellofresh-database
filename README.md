@@ -2,23 +2,6 @@
 
 Unofficial HelloFresh recipe database for 16 countries with features like filtering by ingredients, allergens, tags, shopping lists, and a REST API.
 
-## API
-
-A REST API is available at [api.hfresh.info](https://api.hfresh.info). Features include:
-
-* Access to recipes, menus, ingredients, tags, labels, and allergens
-* Filter and search capabilities
-* Free API tokens for registered users
-* Full API documentation in the portal
-
-## Tech Stack
-
-* [Laravel 12](https://laravel.com/)
-* [Livewire 3](https://livewire.laravel.com/)
-* [Flux UI](https://fluxui.dev/)
-* [Tailwind CSS 4](https://tailwindcss.com/)
-* [Sentry](https://sentry.io/) for error tracking
-
 ## Features
 
 * Browse recipes from 16 HelloFresh countries
@@ -31,13 +14,32 @@ A REST API is available at [api.hfresh.info](https://api.hfresh.info). Features 
 
 ## Links
 
-* [Reddit Post (Active community)](https://www.reddit.com/r/hellofresh/comments/1b37z4x/hellofresh_recipes_database_relaunched/)
-* [Ko-Fi Post](https://ko-fi.com/post/HelloFresh-Recipes-Database-Relaunched-D1D8V2OF7)
-* [LinkedIn Post](https://www.linkedin.com/posts/normanhuth_hellofresh-database-activity-7169039554446901248-CrKH)
+* [hfresh.info](https://hfresh.info) - Live website
+* [API Portal](https://api.hfresh.info) - Developer portal for API access
+* [Reddit Post](https://www.reddit.com/r/hellofresh/comments/1b37z4x/hellofresh_recipes_database_relaunched/) - Active community
+* [Ko-Fi](https://ko-fi.com/post/HelloFresh-Recipes-Database-Relaunched-D1D8V2OF7)
+* [LinkedIn](https://www.linkedin.com/posts/normanhuth_hellofresh-database-activity-7169039554446901248-CrKH)
 
 For wishes, suggestions and ideas, simply write a comment on Reddit, Ko-Fi, LinkedIn or create an
 [issue](https://github.com/Muetze42/hellofresh-database/issues) or use the
 [discussions area](https://github.com/Muetze42/hellofresh-database/discussions).
+
+## API
+
+A REST API is available for registered users. Features include:
+
+* Access to recipes, menus, ingredients, tags, labels, and allergens
+* Filter and search capabilities
+* Free API tokens
+* Full documentation in the developer portal
+
+## Tech Stack
+
+* [Laravel 12](https://laravel.com/)
+* [Livewire 3](https://livewire.laravel.com/)
+* [Flux UI Pro](https://fluxui.dev/)
+* [Tailwind CSS 4](https://tailwindcss.com/)
+* [Sentry](https://sentry.io/) for error tracking
 
 ## Feature Ideas
 
