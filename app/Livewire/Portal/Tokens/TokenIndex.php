@@ -17,8 +17,6 @@ class TokenIndex extends Component
 
     public ?string $newToken = null;
 
-    public ?int $tokenToDelete = null;
-
     /**
      * Get available expiration options.
      *
@@ -63,22 +61,6 @@ class TokenIndex extends Component
     }
 
     /**
-     * Confirm token deletion.
-     */
-    public function confirmDelete(int $tokenId): void
-    {
-        $this->tokenToDelete = $tokenId;
-    }
-
-    /**
-     * Cancel token deletion.
-     */
-    public function cancelDelete(): void
-    {
-        $this->tokenToDelete = null;
-    }
-
-    /**
      * Delete an API token.
      */
     public function deleteToken(int $tokenId): void
@@ -95,8 +77,6 @@ class TokenIndex extends Component
             $token->delete();
             Flux::toastSuccess('API token deleted successfully.');
         }
-
-        $this->tokenToDelete = null;
     }
 
     /**

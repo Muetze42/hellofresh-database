@@ -32,58 +32,74 @@
 <flux:sidebar sticky stashable class="bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-700">
   <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-  <flux:brand href="{{ route('portal.dashboard') }}" logo="earth" name="{{ config('app.name') }} API" class="px-2" />
+  <flux:sidebar.brand
+    :href="route('portal.dashboard')"
+    :logo="asset('assets/favicons/' . app()->environment() . '.png')"
+    name="{{ config('app.name') }} API"
+  />
 
-  <flux:navlist variant="outline">
-    <flux:navlist.item icon="chart-pie" href="{{ route('portal.stats') }}" :current="request()->routeIs('portal.stats')" wire:navigate>
-      Statistics
-    </flux:navlist.item>
-
+  <flux:sidebar.nav>
     @auth
-      <flux:navlist.item icon="key" href="{{ route('portal.tokens.index') }}" :current="request()->routeIs('portal.tokens.*')">
+      <flux:sidebar.item icon="key" :href="route('portal.tokens.index')" :current="request()->routeIs('portal.tokens.*')">
         API Tokens
-      </flux:navlist.item>
+      </flux:sidebar.item>
     @endauth
 
-    <flux:navlist.group expandable heading="API Reference" class="mt-4">
-      <flux:navlist.item href="{{ route('portal.docs.get-started') }}" :current="request()->routeIs('portal.docs.get-started')" wire:navigate>
+    <flux:sidebar.group expandable heading="API Reference">
+      <flux:sidebar.item :href="route('portal.docs.get-started')" :current="request()->routeIs('portal.docs.get-started')" wire:navigate>
         Get Started
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.countries') }}" :current="request()->routeIs('portal.docs.countries')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.countries')" :current="request()->routeIs('portal.docs.countries')" wire:navigate>
         Countries
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.recipes') }}" :current="request()->routeIs('portal.docs.recipes')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.recipes')" :current="request()->routeIs('portal.docs.recipes')" wire:navigate>
         List Recipes
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.recipes-show') }}" :current="request()->routeIs('portal.docs.recipes-show')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.recipes-show')" :current="request()->routeIs('portal.docs.recipes-show')" wire:navigate>
         Get Recipe
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.menus') }}" :current="request()->routeIs('portal.docs.menus')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.menus')" :current="request()->routeIs('portal.docs.menus')" wire:navigate>
         List Menus
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.menus-show') }}" :current="request()->routeIs('portal.docs.menus-show')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.menus-show')" :current="request()->routeIs('portal.docs.menus-show')" wire:navigate>
         Get Menu
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.tags') }}" :current="request()->routeIs('portal.docs.tags')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.tags')" :current="request()->routeIs('portal.docs.tags')" wire:navigate>
         Tags
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.labels') }}" :current="request()->routeIs('portal.docs.labels')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.labels')" :current="request()->routeIs('portal.docs.labels')" wire:navigate>
         Labels
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.allergens') }}" :current="request()->routeIs('portal.docs.allergens')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.allergens')" :current="request()->routeIs('portal.docs.allergens')" wire:navigate>
         Allergens
-      </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.ingredients') }}" :current="request()->routeIs('portal.docs.ingredients')" wire:navigate>
+      </flux:sidebar.item>
+      <flux:sidebar.item :href="route('portal.docs.ingredients')" :current="request()->routeIs('portal.docs.ingredients')" wire:navigate>
         Ingredients
-      </flux:navlist.item>
-    </flux:navlist.group>
-  </flux:navlist>
+      </flux:sidebar.item>
+    </flux:sidebar.group>
+      @if(auth()->user()?->admin)
+        <flux:sidebar.group expandable heading="Admin" class="grid">
+          <flux:sidebar.item icon="users" :href="route('portal.admin.users')" :current="request()->routeIs('portal.admin.users')" wire:navigate>
+            Users
+          </flux:sidebar.item>
+          <flux:sidebar.item icon="activity" :href="route('portal.admin.api-usage')" :current="request()->routeIs('portal.admin.api-usage')" wire:navigate>
+            API Usage
+          </flux:sidebar.item>
+        </flux:sidebar.group>
+      @endif
+  </flux:sidebar.nav>
 
   <flux:spacer />
 
+  <flux:sidebar.nav>
+    <flux:sidebar.item icon="chart-pie" :href="route('portal.stats')" :current="request()->routeIs('portal.stats')" wire:navigate>
+      Statistics
+    </flux:sidebar.item>
+  </flux:sidebar.nav>
+
   @auth
-    <flux:dropdown position="top" align="start" class="w-full">
-      <flux:profile name="{{ auth()->user()->name }}" class="w-full cursor-pointer" />
+    <flux:dropdown position="top" align="start" class="max-lg:hidden">
+      <flux:sidebar.profile name="{{ auth()->user()->name }}" />
 
       <flux:menu>
         <flux:menu.item icon="user" href="{{ route('portal.profile') }}">Profile</flux:menu.item>
@@ -99,20 +115,35 @@
       @csrf
     </form>
   @else
-    <flux:navlist variant="outline">
-      <flux:navlist.item icon="log-in" href="{{ route('portal.login') }}">
+    <flux:sidebar.nav>
+      <flux:sidebar.item icon="log-in" :href="route('portal.login')">
         Sign In
-      </flux:navlist.item>
-    </flux:navlist>
+      </flux:sidebar.item>
+    </flux:sidebar.nav>
   @endauth
 </flux:sidebar>
 
-<flux:header sticky class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+<flux:header class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
   <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
   <flux:spacer />
 
-  <flux:brand href="{{ route('portal.dashboard') }}" logo="earth" name="{{ config('app.name') }} API" />
+  @auth
+    <flux:dropdown position="top" align="end">
+      <flux:profile name="{{ auth()->user()->name }}" />
+
+      <flux:menu>
+        <flux:menu.item icon="user" href="{{ route('portal.profile') }}">Profile</flux:menu.item>
+        <flux:menu.item icon="home" href="{{ config('app.url') }}">{{ config('app.name') }}</flux:menu.item>
+        <flux:menu.separator />
+        <flux:menu.item icon="log-out" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+          Logout
+        </flux:menu.item>
+      </flux:menu>
+    </flux:dropdown>
+  @else
+    <flux:button icon="log-in" variant="ghost" :href="route('portal.login')">Sign In</flux:button>
+  @endauth
 </flux:header>
 
 <flux:main class="space-y-section sm:mb-16" container>
@@ -122,7 +153,7 @@
         <flux:callout.heading>Email Not Verified</flux:callout.heading>
         <flux:callout.text>
           Please verify your email address to access all API features.
-          <flux:link href="{{ route('portal.verification.notice') }}" wire:navigate>Resend verification email</flux:link>
+          <flux:link :href="route('portal.verification.notice')" wire:navigate>Resend verification email</flux:link>
         </flux:callout.text>
       </flux:callout>
     @endif
@@ -153,6 +184,8 @@
   <flux:toast />
 </flux:toast.group>
 @endpersist
+
+<x-confirmation-modal />
 
 @vite(['resources/js/portal/app.js'], 'build-portal')
 @livewireScripts

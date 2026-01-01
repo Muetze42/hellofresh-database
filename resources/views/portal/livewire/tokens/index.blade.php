@@ -66,30 +66,17 @@
                             </flux:table.cell>
                             <flux:table.cell>{{ $token->last_used_at?->diffForHumans() ?? 'Never' }}</flux:table.cell>
                             <flux:table.cell>
-                                @if($tokenToDelete === $token->id)
-                                    <div class="flex items-center gap-ui">
-                                        <flux:button
-                                            variant="danger"
-                                            size="xs"
-                                            wire:click="deleteToken({{ $token->id }})"
-                                        >
-                                            Confirm
-                                        </flux:button>
-                                        <flux:button
-                                            size="xs"
-                                            wire:click="cancelDelete"
-                                        >
-                                            Cancel
-                                        </flux:button>
-                                    </div>
-                                @else
-                                    <flux:button
-                                        variant="ghost"
-                                        size="sm"
-                                        icon="trash-2"
-                                        wire:click="confirmDelete({{ $token->id }})"
-                                    />
-                                @endif
+                                <flux:button
+                                    variant="ghost"
+                                    size="sm"
+                                    icon="trash-2"
+                                    x-on:click="$dispatch('confirm-action', {
+                                        title: '{{ __('Delete Token') }}',
+                                        message: '{{ __('Are you sure you want to delete this API token? Any applications using this token will no longer have access.') }}',
+                                        confirmText: '{{ __('Delete') }}',
+                                        onConfirm: () => $wire.deleteToken({{ $token->id }})
+                                    })"
+                                />
                             </flux:table.cell>
                         </flux:table.row>
                     @endforeach
