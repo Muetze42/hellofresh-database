@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\Portal\Admin\ApiUsage;
+use App\Livewire\Portal\Admin\UserIndex;
+use App\Livewire\Portal\Admin\UserShow;
 use App\Livewire\Portal\Auth\Login;
 use App\Livewire\Portal\Auth\Register;
 use App\Livewire\Portal\Auth\VerifyEmail;
@@ -81,5 +84,12 @@ Route::middleware('auth')->group(function (): void {
     // API Tokens
     Route::prefix('tokens')->name('tokens.')->group(function (): void {
         Route::get('/', TokenIndex::class)->name('index');
+    });
+
+    // Admin routes
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
+        Route::get('/users', UserIndex::class)->name('users');
+        Route::get('/users/{user}', UserShow::class)->name('users.show')->where('user', '[0-9]+');
+        Route::get('/api-usage', ApiUsage::class)->name('api-usage');
     });
 });

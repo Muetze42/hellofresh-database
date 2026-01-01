@@ -3,6 +3,7 @@
 use App\Http\Middleware\ApiLocalizationMiddleware;
 use App\Http\Middleware\AuthenticateOrShowMessageMiddleware;
 use App\Http\Middleware\EnsureEmailIsVerifiedMiddleware;
+use App\Http\Middleware\EnsureUserIsAdminMiddleware;
 use App\Http\Middleware\LocalizationMiddleware;
 use App\Http\Middleware\LogUserActivityMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
@@ -74,6 +75,7 @@ return Application::configure(basePath: dirname(__DIR__))
         );
         $middleware->alias([
             'auth.or.message' => AuthenticateOrShowMessageMiddleware::class,
+            'admin' => EnsureUserIsAdminMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
