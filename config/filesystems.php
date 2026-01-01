@@ -77,4 +77,18 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | External Files
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the paths to external files that are used by the
+    | application but stored outside of the codebase.
+    |
+    */
+
+    'files' => [
+        'disposable_emails' => env('DISPOSABLE_EMAILS_FILE'),
+    ],
+
 ];
