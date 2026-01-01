@@ -49,6 +49,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(base_path('routes/api-localized.php'));
 
             Route::middleware(['web', LocalizationMiddleware::class, LogUserActivityMiddleware::class])
+                ->domain((string) parse_url((string) config('app.url'), PHP_URL_HOST))
                 ->name('localized.')
                 ->prefix('{locale}-{country:code}')
                 ->group(base_path('routes/web-localized.php'));

@@ -37,7 +37,7 @@ final class ShoppingListIndexTest extends TestCase
     {
         Livewire::test(ShoppingListIndex::class)
             ->assertOk()
-            ->assertViewIs('livewire.shopping-list.shopping-list-index');
+            ->assertViewIs('web::livewire.shopping-list.shopping-list-index');
     }
 
     #[Test]

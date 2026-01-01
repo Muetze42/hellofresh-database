@@ -43,7 +43,7 @@
         Learn how to authenticate and make your first API request.
       </flux:text>
       <div class="mt-section">
-        <flux:button href="{{ route('portal.docs.recipes') }}" wire:navigate>
+        <flux:button href="{{ route('portal.docs.get-started') }}" wire:navigate>
           View API Docs
         </flux:button>
       </div>

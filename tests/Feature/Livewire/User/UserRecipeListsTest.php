@@ -42,7 +42,7 @@ final class UserRecipeListsTest extends TestCase
 
         Livewire::test(UserRecipeLists::class)
             ->assertOk()
-            ->assertViewIs('livewire.user.user-recipe-lists');
+            ->assertViewIs('web::livewire.user.user-recipe-lists');
     }
 
     #[Test]

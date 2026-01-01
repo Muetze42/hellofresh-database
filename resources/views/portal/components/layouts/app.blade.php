@@ -42,34 +42,34 @@
     @endauth
 
     <flux:navlist.group expandable heading="API Reference" class="mt-4">
-      <flux:navlist.item href="{{ route('portal.docs.get-started') }}" :current="request()->routeIs('portal.docs.get-started')">
+      <flux:navlist.item href="{{ route('portal.docs.get-started') }}" :current="request()->routeIs('portal.docs.get-started')" wire:navigate>
         Get Started
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.countries') }}" :current="request()->routeIs('portal.docs.countries')">
+      <flux:navlist.item href="{{ route('portal.docs.countries') }}" :current="request()->routeIs('portal.docs.countries')" wire:navigate>
         Countries
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.recipes') }}" :current="request()->routeIs('portal.docs.recipes')">
+      <flux:navlist.item href="{{ route('portal.docs.recipes') }}" :current="request()->routeIs('portal.docs.recipes')" wire:navigate>
         List Recipes
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.recipes-show') }}" :current="request()->routeIs('portal.docs.recipes-show')">
+      <flux:navlist.item href="{{ route('portal.docs.recipes-show') }}" :current="request()->routeIs('portal.docs.recipes-show')" wire:navigate>
         Get Recipe
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.menus') }}" :current="request()->routeIs('portal.docs.menus')">
+      <flux:navlist.item href="{{ route('portal.docs.menus') }}" :current="request()->routeIs('portal.docs.menus')" wire:navigate>
         List Menus
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.menus-show') }}" :current="request()->routeIs('portal.docs.menus-show')">
+      <flux:navlist.item href="{{ route('portal.docs.menus-show') }}" :current="request()->routeIs('portal.docs.menus-show')" wire:navigate>
         Get Menu
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.tags') }}" :current="request()->routeIs('portal.docs.tags')">
+      <flux:navlist.item href="{{ route('portal.docs.tags') }}" :current="request()->routeIs('portal.docs.tags')" wire:navigate>
         Tags
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.labels') }}" :current="request()->routeIs('portal.docs.labels')">
+      <flux:navlist.item href="{{ route('portal.docs.labels') }}" :current="request()->routeIs('portal.docs.labels')" wire:navigate>
         Labels
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.allergens') }}" :current="request()->routeIs('portal.docs.allergens')">
+      <flux:navlist.item href="{{ route('portal.docs.allergens') }}" :current="request()->routeIs('portal.docs.allergens')" wire:navigate>
         Allergens
       </flux:navlist.item>
-      <flux:navlist.item href="{{ route('portal.docs.ingredients') }}" :current="request()->routeIs('portal.docs.ingredients')">
+      <flux:navlist.item href="{{ route('portal.docs.ingredients') }}" :current="request()->routeIs('portal.docs.ingredients')" wire:navigate>
         Ingredients
       </flux:navlist.item>
     </flux:navlist.group>
@@ -118,7 +118,7 @@
         <flux:callout.heading>Email Not Verified</flux:callout.heading>
         <flux:callout.text>
           Please verify your email address to access all API features.
-          <flux:link href="{{ route('portal.verification.notice') }}">Resend verification email</flux:link>
+          <flux:link href="{{ route('portal.verification.notice') }}" wire:navigate>Resend verification email</flux:link>
         </flux:callout.text>
       </flux:callout>
     @endif
