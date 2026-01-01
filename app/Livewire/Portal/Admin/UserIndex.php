@@ -23,6 +23,12 @@ class UserIndex extends Component
     #[Url]
     public string $filter = 'all';
 
+    #[Url]
+    public string $sortBy = 'id';
+
+    #[Url]
+    public string $sortDirection = 'desc';
+
     public function updatedSearch(): void
     {
         $this->resetPage();
@@ -30,6 +36,23 @@ class UserIndex extends Component
 
     public function updatedFilter(): void
     {
+        $this->resetPage();
+    }
+
+    /**
+     * Sort by the given column.
+     */
+    public function sort(string $column): void
+    {
+        if ($this->sortBy === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+            $this->resetPage();
+
+            return;
+        }
+
+        $this->sortBy = $column;
+        $this->sortDirection = 'asc';
         $this->resetPage();
     }
 
@@ -59,7 +82,6 @@ class UserIndex extends Component
     public function users(): LengthAwarePaginator
     {
         return User::withCount('tokens')
-            ->latest('created_at')
             ->when($this->search !== '', function (Builder $query): void {
                 $query->where(function (Builder $query): void {
                     $query->whereLike('name', sprintf('%%%s%%', $this->search))
@@ -70,6 +92,7 @@ class UserIndex extends Component
             ->when($this->filter === 'unverified', fn (Builder $query): Builder => $query->whereNull('email_verified_at'))
             ->when($this->filter === 'admins', fn (Builder $query): Builder => $query->where('admin', true))
             ->when($this->filter === 'with_tokens', fn (Builder $query): Builder => $query->has('tokens'))
+            ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(15);
     }
 
