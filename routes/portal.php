@@ -24,6 +24,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +87,23 @@ Route::middleware('auth')->group(function (): void {
     // API Tokens
     Route::prefix('tokens')->name('tokens.')->group(function (): void {
         Route::get('', TokenIndex::class)->name('index');
+    });
+
+    // API Specs Downloads
+    Route::prefix('docs/download')->name('docs.download.')->group(function (): void {
+        Route::get('openapi', static function (): StreamedResponse {
+            return Storage::disk('local')->download(
+                'api-docs/openapi/openapi.json',
+                'hfresh-openapi.json'
+            );
+        })->name('openapi');
+
+        Route::get('postman', static function (): StreamedResponse {
+            return Storage::disk('local')->download(
+                'api-docs/postman/collection.json',
+                'hfresh-postman-collection.json'
+            );
+        })->name('postman');
     });
 
     // Admin routes

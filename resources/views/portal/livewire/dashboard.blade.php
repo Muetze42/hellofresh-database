@@ -60,6 +60,8 @@
     </flux:card>
   </div>
 
+  <x-portal::api-specs-download />
+
   @if($isAuthenticated && $usageStats && $usageStats['total'] > 0)
     <flux:card>
       <flux:heading size="lg">API Usage</flux:heading>
