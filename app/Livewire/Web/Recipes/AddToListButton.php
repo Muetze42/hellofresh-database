@@ -91,11 +91,10 @@ class AddToListButton extends AbstractComponent
             return;
         }
 
-        $this->selectedLists = RecipeList::where('country_id', $this->countryId)
-            ->where(fn (Builder $query): Builder => $query
-                ->where('user_id', $user->id)
-                ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
-            )
+        $this->selectedLists = RecipeList::where(fn (Builder $query): Builder => $query
+            ->where('user_id', $user->id)
+            ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
+        )
             ->whereHas('recipes', fn (Builder $query): Builder => $query->where('recipe_id', $this->recipeId))
             ->pluck('id')
             ->all();
@@ -115,11 +114,10 @@ class AddToListButton extends AbstractComponent
             return collect();
         }
 
-        return RecipeList::where('country_id', $this->countryId)
-            ->where(fn (Builder $query): Builder => $query
-                ->where('user_id', $user->id)
-                ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
-            )
+        return RecipeList::where(fn (Builder $query): Builder => $query
+            ->where('user_id', $user->id)
+            ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
+        )
             ->with('user')
             ->orderBy('name')
             ->get();
@@ -145,11 +143,10 @@ class AddToListButton extends AbstractComponent
             return;
         }
 
-        $currentLists = RecipeList::where('country_id', $this->countryId)
-            ->where(fn (Builder $query): Builder => $query
-                ->where('user_id', $user->id)
-                ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
-            )
+        $currentLists = RecipeList::where(fn (Builder $query): Builder => $query
+            ->where('user_id', $user->id)
+            ->orWhereHas('sharedWith', fn (Builder $sub): Builder => $sub->where('users.id', $user->id))
+        )
             ->whereHas('recipes', fn (Builder $query): Builder => $query->where('recipe_id', $this->recipeId))
             ->pluck('id')
             ->all();
@@ -161,7 +158,10 @@ class AddToListButton extends AbstractComponent
             /** @var RecipeList|null $list */
             $list = RecipeList::find($listId);
             if ($list instanceof RecipeList && $list->isAccessibleBy($user)) {
-                $list->recipes()->attach($this->recipeId, ['added_at' => now()]);
+                $list->recipes()->attach($this->recipeId, [
+                    'added_at' => now(),
+                    'country_id' => $this->countryId,
+                ]);
                 $this->logActivity($list, RecipeListActionEnum::Added);
             }
         }
@@ -212,10 +212,12 @@ class AddToListButton extends AbstractComponent
         ]);
 
         $list->user()->associate($user);
-        $list->country()->associate($this->countryId);
         $list->save();
 
-        $list->recipes()->attach($this->recipeId, ['added_at' => now()]);
+        $list->recipes()->attach($this->recipeId, [
+            'added_at' => now(),
+            'country_id' => $this->countryId,
+        ]);
         $this->logActivity($list, RecipeListActionEnum::Added);
 
         $this->selectedLists[] = $list->id;

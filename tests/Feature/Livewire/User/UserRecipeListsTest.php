@@ -60,7 +60,6 @@ final class UserRecipeListsTest extends TestCase
 
         RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->count(3)
             ->create();
 
@@ -70,24 +69,19 @@ final class UserRecipeListsTest extends TestCase
     }
 
     #[Test]
-    public function it_only_returns_lists_for_current_country(): void
+    public function it_returns_all_lists_regardless_of_country(): void
     {
         $this->actingAs($this->user);
 
+        // Create lists (no longer bound to a country)
         RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
-            ->create();
-
-        $otherCountry = Country::factory()->create(['code' => 'DE', 'locales' => ['de']]);
-        RecipeList::factory()
-            ->forUser($this->user)
-            ->forCountry($otherCountry)
+            ->count(2)
             ->create();
 
         $component = Livewire::test(UserRecipeLists::class);
 
-        $this->assertCount(1, $component->instance()->recipeLists());
+        $this->assertCount(2, $component->instance()->recipeLists());
     }
 
     #[Test]
@@ -95,9 +89,9 @@ final class UserRecipeListsTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        RecipeList::factory()->forUser($this->user)->forCountry($this->country)->create(['name' => 'Zebra']);
-        RecipeList::factory()->forUser($this->user)->forCountry($this->country)->create(['name' => 'Apple']);
-        RecipeList::factory()->forUser($this->user)->forCountry($this->country)->create(['name' => 'Mango']);
+        RecipeList::factory()->forUser($this->user)->create(['name' => 'Zebra']);
+        RecipeList::factory()->forUser($this->user)->create(['name' => 'Apple']);
+        RecipeList::factory()->forUser($this->user)->create(['name' => 'Mango']);
 
         $component = Livewire::test(UserRecipeLists::class);
         $lists = $component->instance()->recipeLists();
@@ -112,9 +106,15 @@ final class UserRecipeListsTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $list = RecipeList::factory()->forUser($this->user)->forCountry($this->country)->create();
+        $list = RecipeList::factory()->forUser($this->user)->create();
         $recipes = Recipe::factory()->for($this->country)->count(5)->create();
-        $list->recipes()->attach($recipes->pluck('id'));
+
+        foreach ($recipes as $recipe) {
+            $list->recipes()->attach($recipe->id, [
+                'added_at' => now(),
+                'country_id' => $this->country->id,
+            ]);
+        }
 
         $component = Livewire::test(UserRecipeLists::class);
         $lists = $component->instance()->recipeLists();
@@ -134,7 +134,6 @@ final class UserRecipeListsTest extends TestCase
 
         $this->assertDatabaseHas('recipe_lists', [
             'user_id' => $this->user->id,
-            'country_id' => $this->country->id,
             'name' => 'My New List',
             'description' => 'Description here',
         ]);
@@ -215,7 +214,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create([
                 'name' => 'Original Name',
                 'description' => 'Original Description',
@@ -245,7 +243,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->withoutDescription()
             ->create();
 
@@ -261,7 +258,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -284,7 +280,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -304,7 +299,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -333,7 +327,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -349,7 +342,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -363,8 +355,8 @@ final class UserRecipeListsTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $list1 = RecipeList::factory()->forUser($this->user)->forCountry($this->country)->create();
-        $list2 = RecipeList::factory()->forUser($this->user)->forCountry($this->country)->create();
+        $list1 = RecipeList::factory()->forUser($this->user)->create();
+        $list2 = RecipeList::factory()->forUser($this->user)->create();
 
         Livewire::test(UserRecipeLists::class)
             ->set('viewingListId', $list1->id)
@@ -379,7 +371,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -394,7 +385,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -414,16 +404,27 @@ final class UserRecipeListsTest extends TestCase
     }
 
     #[Test]
-    public function it_returns_viewing_list_with_recipes(): void
+    public function it_returns_viewing_list_with_recipes_filtered_by_current_country(): void
     {
         $this->actingAs($this->user);
 
+        $otherCountry = Country::factory()->create(['code' => 'DE']);
+
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
-        $recipe = Recipe::factory()->for($this->country)->create();
-        $list->recipes()->attach($recipe);
+
+        $recipeUS = Recipe::factory()->for($this->country)->create();
+        $recipeDE = Recipe::factory()->for($otherCountry)->create();
+
+        $list->recipes()->attach($recipeUS, [
+            'added_at' => now(),
+            'country_id' => $this->country->id,
+        ]);
+        $list->recipes()->attach($recipeDE, [
+            'added_at' => now(),
+            'country_id' => $otherCountry->id,
+        ]);
 
         $component = Livewire::test(UserRecipeLists::class)
             ->set('viewingListId', $list->id);
@@ -432,6 +433,40 @@ final class UserRecipeListsTest extends TestCase
 
         $this->assertEquals($list->id, $viewingList->id);
         $this->assertTrue($viewingList->relationLoaded('recipes'));
+        $this->assertCount(1, $viewingList->recipes);
+        $this->assertEquals($recipeUS->id, $viewingList->recipes->first()->id);
+    }
+
+    #[Test]
+    public function it_returns_other_countries_recipe_count(): void
+    {
+        $this->actingAs($this->user);
+
+        $otherCountry = Country::factory()->create(['code' => 'DE']);
+
+        $list = RecipeList::factory()
+            ->forUser($this->user)
+            ->create();
+
+        $recipeUS = Recipe::factory()->for($this->country)->create();
+        $recipesDE = Recipe::factory()->for($otherCountry)->count(3)->create();
+
+        $list->recipes()->attach($recipeUS, [
+            'added_at' => now(),
+            'country_id' => $this->country->id,
+        ]);
+
+        foreach ($recipesDE as $recipe) {
+            $list->recipes()->attach($recipe, [
+                'added_at' => now(),
+                'country_id' => $otherCountry->id,
+            ]);
+        }
+
+        $component = Livewire::test(UserRecipeLists::class)
+            ->set('viewingListId', $list->id);
+
+        $this->assertEquals(3, $component->instance()->otherCountriesRecipeCount());
     }
 
     #[Test]
@@ -441,10 +476,12 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
         $recipe = Recipe::factory()->for($this->country)->create();
-        $list->recipes()->attach($recipe);
+        $list->recipes()->attach($recipe, [
+            'added_at' => now(),
+            'country_id' => $this->country->id,
+        ]);
 
         Livewire::test(UserRecipeLists::class)
             ->set('viewingListId', $list->id)
@@ -463,10 +500,12 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
         $recipe = Recipe::factory()->for($this->country)->create();
-        $list->recipes()->attach($recipe);
+        $list->recipes()->attach($recipe, [
+            'added_at' => now(),
+            'country_id' => $this->country->id,
+        ]);
 
         Livewire::test(UserRecipeLists::class)
             ->call('removeRecipeFromList', $recipe->id);
@@ -484,7 +523,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -501,7 +539,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -518,7 +555,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create();
 
         Livewire::test(UserRecipeLists::class)
@@ -552,7 +588,6 @@ final class UserRecipeListsTest extends TestCase
 
         $list = RecipeList::factory()
             ->forUser($this->user)
-            ->forCountry($this->country)
             ->create(['description' => 'Original']);
 
         Livewire::test(UserRecipeLists::class)

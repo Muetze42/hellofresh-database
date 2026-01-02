@@ -39,16 +39,6 @@ class RecipeList extends Model
     }
 
     /**
-     * Get the country for this recipe list.
-     *
-     * @return BelongsTo<Country, $this>
-     */
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
-
-    /**
      * Get the recipes in this list.
      *
      * @return BelongsToMany<Recipe, $this>
@@ -56,7 +46,7 @@ class RecipeList extends Model
     public function recipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class)
-            ->withPivot('added_at')
+            ->withPivot(['added_at', 'country_id'])
             ->orderByPivot('added_at', 'desc');
     }
 

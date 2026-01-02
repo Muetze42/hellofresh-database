@@ -74,10 +74,16 @@
         </flux:accordion>
       @endif
 
+      @if ($this->otherCountriesRecipeCount > 0)
+        <flux:callout icon="globe" color="sky">
+          {{ trans_choice('This list also contains :count recipe from other countries.|This list also contains :count recipes from other countries.', $this->otherCountriesRecipeCount, ['count' => $this->otherCountriesRecipeCount]) }}
+        </flux:callout>
+      @endif
+
       @if ($this->viewingList->recipes->isEmpty())
         <flux:card class="text-center py-12">
           <flux:icon.list class="mx-auto size-16 text-zinc-300 dark:text-zinc-600" />
-          <flux:heading size="lg" class="mt-4">{{ __('This list is empty') }}</flux:heading>
+          <flux:heading size="lg" class="mt-4">{{ __('No recipes from this country') }}</flux:heading>
           <flux:text class="mt-2">{{ __('Add recipes to this list from the recipe pages.') }}</flux:text>
         </flux:card>
       @else
