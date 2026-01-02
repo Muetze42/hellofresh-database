@@ -124,18 +124,20 @@
       <flux:field>
         <flux:label>
           {{ __('Prep Time') }}
-          @if ($this->isPrepTimeFilterActive())
-            <span class="text-zinc-500 font-normal">
-              ({{ $prepTimeRange[0] }} - {{ $prepTimeRange[1] }} {{ __('min') }})
-            </span>
-          @endif
+
+          <x-slot name="trailing">
+            {{ $prepTimeRange[0] }}
+            &ndash;
+            {{ $prepTimeRange[1] }} {{ __('min') }}
+          </x-slot>
         </flux:label>
 
         <flux:slider
           wire:model.live="prepTimeRange"
           range
-          :min="$this->country()->prep_min"
-          :max="$this->country()->prep_max"
+          :min="0"
+          :max="ceil($this->country()->prep_max / 10) * 10"
+          step="10"
         />
       </flux:field>
     @endif
@@ -144,18 +146,20 @@
       <flux:field>
         <flux:label>
           {{ __('Total Time') }}
-          @if ($this->isTotalTimeFilterActive())
-            <span class="text-zinc-500 font-normal">
-              ({{ $totalTimeRange[0] }} - {{ $totalTimeRange[1] }} {{ __('min') }})
-            </span>
-          @endif
+
+          <x-slot name="trailing">
+            {{ $totalTimeRange[0] }}
+            &ndash;
+            {{ $totalTimeRange[1] }} {{ __('min') }}
+          </x-slot>
         </flux:label>
 
         <flux:slider
           wire:model.live="totalTimeRange"
           range
-          :min="$this->country()->total_min"
-          :max="$this->country()->total_max"
+          step="10"
+          :min="0"
+          :max="ceil($this->country()->total_max / 10) * 10"
         />
       </flux:field>
     @endif

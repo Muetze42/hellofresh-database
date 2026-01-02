@@ -115,7 +115,7 @@ class RecipeIndex extends AbstractComponent
     }
 
     /**
-     * Get the default prep time range from country settings.
+     * Get the default prep time range (matching slider min/max).
      *
      * @return array{0: int, 1: int}|null
      */
@@ -127,11 +127,11 @@ class RecipeIndex extends AbstractComponent
             return null;
         }
 
-        return [$country->prep_min, $country->prep_max];
+        return [0, (int) ceil($country->prep_max / 10) * 10];
     }
 
     /**
-     * Get the default total time range from country settings.
+     * Get the default total time range (matching slider min/max).
      *
      * @return array{0: int, 1: int}|null
      */
@@ -143,13 +143,13 @@ class RecipeIndex extends AbstractComponent
             return null;
         }
 
-        return [$country->total_min, $country->total_max];
+        return [0, (int) ceil($country->total_max / 10) * 10];
     }
 
     /**
      * Check if prep time filter is active (different from full range).
      */
-    protected function isPrepTimeFilterActive(): bool
+    public function isPrepTimeFilterActive(): bool
     {
         if ($this->prepTimeRange === null) {
             return false;
@@ -167,7 +167,7 @@ class RecipeIndex extends AbstractComponent
     /**
      * Check if total time filter is active (different from full range).
      */
-    protected function isTotalTimeFilterActive(): bool
+    public function isTotalTimeFilterActive(): bool
     {
         if ($this->totalTimeRange === null) {
             return false;
