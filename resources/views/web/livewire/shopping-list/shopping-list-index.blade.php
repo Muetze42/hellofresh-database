@@ -2,6 +2,15 @@
   container
   class="space-y-section"
   x-data="{
+        translations: {
+            removeRecipe: @js(__('Remove Recipe')),
+            removeFromList: @js(__('Remove :name from shopping list?', ['name' => ''])),
+            remove: @js(__('Remove')),
+            clearShoppingList: @js(__('Clear Shopping List')),
+            removeAllRecipes: @js(__('Remove all recipes from your shopping list?')),
+            clearAll: @js(__('Clear All')),
+        },
+        bringUrl: @js(localized_route('localized.shopping-list.bring')),
         initialized: false,
         init() {
             this.$nextTick(() => {
@@ -24,9 +33,9 @@
         confirmRemoveRecipe(recipeId, recipeName) {
             window.dispatchEvent(new CustomEvent('confirm-action', {
                 detail: {
-                    title: '{{ __('Remove Recipe') }}',
-                    message: '{{ __('Remove :name from shopping list?', ['name' => '']) }}' + recipeName,
-                    confirmText: '{{ __('Remove') }}',
+                    title: this.translations.removeRecipe,
+                    message: this.translations.removeFromList + recipeName,
+                    confirmText: this.translations.remove,
                     onConfirm: () => $store.shoppingList.remove(recipeId)
                 }
             }));
@@ -34,9 +43,9 @@
         confirmClearAll() {
             window.dispatchEvent(new CustomEvent('confirm-action', {
                 detail: {
-                    title: '{{ __('Clear Shopping List') }}',
-                    message: '{{ __('Remove all recipes from your shopping list?') }}',
-                    confirmText: '{{ __('Clear All') }}',
+                    title: this.translations.clearShoppingList,
+                    message: this.translations.removeAllRecipes,
+                    confirmText: this.translations.clearAll,
                     onConfirm: () => $store.shoppingList.clear()
                 }
             }));
@@ -55,12 +64,8 @@
             const recipesParam = items.join(',');
             const servingsParam = items.map(id => id + ':' + (servings[id] || 2)).join(',');
 
-            const bringUrl = '{{ localized_route('localized.shopping-list.bring') }}'
-                + '?recipes=' + encodeURIComponent(recipesParam)
-                + '&servings=' + encodeURIComponent(servingsParam);
-
             const url = 'https://api.getbring.com/rest/bringrecipes/deeplink'
-                + '?url=' + encodeURIComponent(bringUrl)
+                + '?url=' + encodeURIComponent(this.bringUrl + '?recipes=' + encodeURIComponent(recipesParam) + '&servings=' + encodeURIComponent(servingsParam))
                 + '&source=web';
 
             window.open(url, '_blank');
