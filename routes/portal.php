@@ -21,6 +21,7 @@ use App\Livewire\Portal\Docs\RecipesIndexDoc;
 use App\Livewire\Portal\Docs\RecipesShowDoc;
 use App\Livewire\Portal\Docs\TagsDoc;
 use App\Livewire\Portal\Profile;
+use App\Livewire\Portal\RecipeLists;
 use App\Livewire\Portal\Statistic;
 use App\Livewire\Portal\Tokens\TokenIndex;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,7 @@ Route::prefix('docs')->name('docs.')->group(function (): void {
 // Authenticated routes (require login)
 Route::middleware('auth')->group(function (): void {
     Route::get('profile', Profile::class)->name('profile');
+    Route::get('recipe-lists', RecipeLists::class)->name('recipe-lists');
     Route::post('logout', LogoutAction::class)->name('logout');
 
     // Email verification
