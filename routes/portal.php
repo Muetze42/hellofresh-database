@@ -9,6 +9,7 @@ use App\Livewire\Portal\Admin\UserShow;
 use App\Livewire\Portal\Auth\Login;
 use App\Livewire\Portal\Auth\Register;
 use App\Livewire\Portal\Auth\VerifyEmail;
+use App\Livewire\Portal\Changelog;
 use App\Livewire\Portal\Dashboard;
 use App\Livewire\Portal\Docs\AllergensDoc;
 use App\Livewire\Portal\Docs\CountriesDoc;
@@ -46,6 +47,7 @@ Route::middleware('guest')->group(function (): void {
 // Public routes (accessible to everyone)
 Route::get('/', Dashboard::class)->name('dashboard');
 Route::get('stats', Statistic::class)->name('stats');
+Route::get('changelog', Changelog::class)->name('changelog');
 
 // API Documentation (public, no authentication required)
 Route::prefix('docs')->name('docs.')->group(function (): void {

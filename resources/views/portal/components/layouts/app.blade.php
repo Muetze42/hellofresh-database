@@ -98,6 +98,9 @@
     <flux:sidebar.item icon="chart-pie" :href="route('portal.stats')" :current="request()->routeIs('portal.stats')" wire:navigate>
       Statistics
     </flux:sidebar.item>
+    <flux:sidebar.item icon="scroll-text" :href="route('portal.changelog')" :current="request()->routeIs('portal.changelog')" wire:navigate>
+      Changelog
+    </flux:sidebar.item>
     <flux:sidebar.item icon="home" :href="config('app.url')" :current="false">
       {{ config('app.name') }}
     </flux:sidebar.item>
