@@ -1,47 +1,72 @@
 <flux:main container class="space-y-section">
-  <flux:heading size="xl">{{ __('Settings') }}</flux:heading>
+    <flux:heading size="xl">{{ __('Settings') }}</flux:heading>
 
-  <flux:card>
-    <flux:heading size="lg" class="mb-section">{{ __('Account Settings') }}</flux:heading>
+    {{-- Profile Information --}}
+    <flux:card>
+        <flux:heading size="lg">{{ __('Profile Information') }}</flux:heading>
+        <flux:text class="mt-ui">{{ __("Update your account's profile information and email address.") }}</flux:text>
 
-    <form wire:submit="updateAccount" class="space-y-section max-w-md">
-    <flux:input
-      wire:model="email"
-      type="email"
-      :label="__('Email')"
-      required
-    />
+        <form wire:submit="updateProfile" class="mt-section space-y-section max-w-md">
+            <flux:input
+                wire:model="name"
+                :label="__('Name')"
+                :placeholder="__('Your name')"
+                required
+            />
 
-    <x-country-select wire:model="country_code" />
+            <flux:input
+                wire:model="email"
+                type="email"
+                :label="__('Email')"
+                placeholder="you@example.com"
+                required
+            />
 
-    <flux:separator />
+            <x-country-select wire:model="country_code" />
 
-    <flux:input
-      wire:model="password"
-      type="password"
-      :label="__('New Password')"
-      :description="__('Leave empty to keep current password')"
-    />
+            <div class="flex justify-end">
+                <flux:button type="submit" variant="primary">
+                    {{ __('Save') }}
+                </flux:button>
+            </div>
+        </form>
+    </flux:card>
 
-    <flux:input
-      wire:model="password_confirmation"
-      type="password"
-      :label="__('Confirm New Password')"
-    />
+    {{-- Update Password --}}
+    <flux:card>
+        <flux:heading size="lg">{{ __('Update Password') }}</flux:heading>
+        <flux:text class="mt-ui">{{ __('Ensure your account is using a long, random password to stay secure.') }}</flux:text>
 
-    <flux:separator />
+        <form wire:submit="updatePassword" class="mt-section space-y-section max-w-md">
+            <flux:input
+                wire:model="current_password"
+                type="password"
+                :label="__('Current Password')"
+                :placeholder="__('Your current password')"
+                required
+            />
 
-    <flux:input
-      wire:model="current_password"
-      type="password"
-      :label="__('Current Password')"
-      :description="__('Required to save changes')"
-      required
-    />
+            <flux:input
+                wire:model="password"
+                type="password"
+                :label="__('New Password')"
+                :placeholder="__('Your new password')"
+                required
+            />
 
-    <flux:button type="submit" variant="primary">
-      {{ __('Save Changes') }}
-    </flux:button>
-  </form>
-  </flux:card>
+            <flux:input
+                wire:model="password_confirmation"
+                type="password"
+                :label="__('Confirm Password')"
+                :placeholder="__('Confirm your new password')"
+                required
+            />
+
+            <div class="flex justify-end">
+                <flux:button type="submit" variant="primary">
+                    {{ __('Update Password') }}
+                </flux:button>
+            </div>
+        </form>
+    </flux:card>
 </flux:main>

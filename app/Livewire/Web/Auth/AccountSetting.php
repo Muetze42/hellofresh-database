@@ -15,6 +15,8 @@ class AccountSetting extends AbstractComponent
 {
     use WithLocalizedContextTrait;
 
+    public string $name = '';
+
     public string $email = '';
 
     public ?string $country_code = null;
@@ -25,23 +27,21 @@ class AccountSetting extends AbstractComponent
 
     public string $password_confirmation = '';
 
-    /**
-     * Mount the component.
-     */
     public function mount(): void
     {
         $user = auth()->user();
 
+        $this->name = $user->name ?? '';
         $this->email = $user->email ?? '';
         $this->country_code = $user?->country_code;
     }
 
     /**
-     * Update the user's account settings.
+     * Update the user's profile information.
      *
      * @throws ValidationException
      */
-    public function updateAccount(): void
+    public function updateProfile(): void
     {
         $user = auth()->user();
 
@@ -49,17 +49,38 @@ class AccountSetting extends AbstractComponent
             return;
         }
 
-        $rules = [
-            'current_password' => ['required'],
+        $this->validate([
+            'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email:rfc', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
             'country_code' => ['nullable', 'string', 'size:2'],
-        ];
+        ]);
 
-        if ($this->password !== '') {
-            $rules['password'] = ['confirmed', Password::defaults()];
+        $user->update([
+            'name' => $this->name,
+            'email' => $this->email,
+            'country_code' => $this->country_code,
+        ]);
+
+        Flux::toastSuccess(__('Profile updated successfully.'));
+    }
+
+    /**
+     * Update the user's password.
+     *
+     * @throws ValidationException
+     */
+    public function updatePassword(): void
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return;
         }
 
-        $this->validate($rules);
+        $this->validate([
+            'current_password' => ['required'],
+            'password' => ['required', 'confirmed', Password::defaults()],
+        ]);
 
         if (! Hash::check($this->current_password, $user->password)) {
             throw ValidationException::withMessages([
@@ -67,25 +88,15 @@ class AccountSetting extends AbstractComponent
             ]);
         }
 
-        $data = [
-            'email' => $this->email,
-            'country_code' => $this->country_code,
-        ];
-
-        if ($this->password !== '') {
-            $data['password'] = Hash::make($this->password);
-        }
-
-        $user->update($data);
+        $user->update([
+            'password' => Hash::make($this->password),
+        ]);
 
         $this->reset(['current_password', 'password', 'password_confirmation']);
 
-        Flux::toastSuccess(__('Account updated successfully.'));
+        Flux::toastSuccess(__('Password updated successfully.'));
     }
 
-    /**
-     * Get the view / view contents that represent the component.
-     */
     public function render(): ViewInterface
     {
         return view('web::livewire.auth.settings');
