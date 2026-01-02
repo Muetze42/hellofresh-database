@@ -1,13 +1,14 @@
+@php
+    $defaults = [
+        'title' => __('Confirm Action'),
+        'message' => __('Are you sure?'),
+        'confirm' => __('Confirm'),
+    ];
+@endphp
 <flux:modal
     name="confirm-action"
     class="min-w-[22rem]"
-    x-data="{
-        defaults: {
-            title: @js(__('Confirm Action')),
-            message: @js(__('Are you sure?')),
-            confirm: @js(__('Confirm')),
-        }
-    }"
+    x-data="{ defaults: {{ Js::from($defaults) }} }"
     x-on:confirm-action.window="
         $el.querySelector('[data-confirm-title]').textContent = $event.detail.title || defaults.title;
         $el.querySelector('[data-confirm-message]').textContent = $event.detail.message || defaults.message;

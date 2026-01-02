@@ -1,16 +1,21 @@
+@php
+    $jsConfig = [
+        'translations' => [
+            'removeRecipe' => __('Remove Recipe'),
+            'removeFromList' => __('Remove :name from shopping list?', ['name' => '']),
+            'remove' => __('Remove'),
+            'clearShoppingList' => __('Clear Shopping List'),
+            'removeAllRecipes' => __('Remove all recipes from your shopping list?'),
+            'clearAll' => __('Clear All'),
+        ],
+        'bringUrl' => localized_route('localized.shopping-list.bring'),
+    ];
+@endphp
 <flux:main
   container
   class="space-y-section"
   x-data="{
-        translations: {
-            removeRecipe: @js(__('Remove Recipe')),
-            removeFromList: @js(__('Remove :name from shopping list?', ['name' => ''])),
-            remove: @js(__('Remove')),
-            clearShoppingList: @js(__('Clear Shopping List')),
-            removeAllRecipes: @js(__('Remove all recipes from your shopping list?')),
-            clearAll: @js(__('Clear All')),
-        },
-        bringUrl: @js(localized_route('localized.shopping-list.bring')),
+        ...{{ Js::from($jsConfig) }},
         initialized: false,
         init() {
             this.$nextTick(() => {
