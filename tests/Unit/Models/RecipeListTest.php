@@ -28,15 +28,6 @@ final class RecipeListTest extends TestCase
     }
 
     #[Test]
-    public function it_has_country_relationship(): void
-    {
-        $recipeList = RecipeList::factory()->create();
-
-        $this->assertInstanceOf(BelongsTo::class, $recipeList->country());
-        $this->assertInstanceOf(Country::class, $recipeList->country);
-    }
-
-    #[Test]
     public function it_has_recipes_relationship(): void
     {
         $recipeList = RecipeList::factory()->create();
@@ -48,11 +39,14 @@ final class RecipeListTest extends TestCase
     public function it_can_have_many_recipes(): void
     {
         $country = Country::factory()->create();
-        $recipeList = RecipeList::factory()->forCountry($country)->create();
+        $recipeList = RecipeList::factory()->create();
         $recipes = Recipe::factory()->count(3)->for($country)->create();
 
         foreach ($recipes as $recipe) {
-            $recipeList->recipes()->attach($recipe, ['added_at' => now()]);
+            $recipeList->recipes()->attach($recipe, [
+                'added_at' => now(),
+                'country_id' => $country->id,
+            ]);
         }
 
         $this->assertCount(3, $recipeList->recipes);
@@ -62,12 +56,21 @@ final class RecipeListTest extends TestCase
     public function recipes_are_ordered_by_added_at_descending(): void
     {
         $country = Country::factory()->create();
-        $recipeList = RecipeList::factory()->forCountry($country)->create();
+        $recipeList = RecipeList::factory()->create();
         $recipes = Recipe::factory()->count(3)->for($country)->create();
 
-        $recipeList->recipes()->attach($recipes[0], ['added_at' => now()->subDays(2)]);
-        $recipeList->recipes()->attach($recipes[1], ['added_at' => now()->subDay()]);
-        $recipeList->recipes()->attach($recipes[2], ['added_at' => now()]);
+        $recipeList->recipes()->attach($recipes[0], [
+            'added_at' => now()->subDays(2),
+            'country_id' => $country->id,
+        ]);
+        $recipeList->recipes()->attach($recipes[1], [
+            'added_at' => now()->subDay(),
+            'country_id' => $country->id,
+        ]);
+        $recipeList->recipes()->attach($recipes[2], [
+            'added_at' => now(),
+            'country_id' => $country->id,
+        ]);
 
         $orderedRecipes = $recipeList->recipes;
 
@@ -76,16 +79,20 @@ final class RecipeListTest extends TestCase
     }
 
     #[Test]
-    public function recipes_pivot_includes_added_at(): void
+    public function recipes_pivot_includes_added_at_and_country_id(): void
     {
         $country = Country::factory()->create();
-        $recipeList = RecipeList::factory()->forCountry($country)->create();
+        $recipeList = RecipeList::factory()->create();
         $recipe = Recipe::factory()->for($country)->create();
 
-        $recipeList->recipes()->attach($recipe, ['added_at' => now()]);
+        $recipeList->recipes()->attach($recipe, [
+            'added_at' => now(),
+            'country_id' => $country->id,
+        ]);
 
         $attachedRecipe = $recipeList->recipes->first();
         $this->assertNotNull($attachedRecipe->pivot->added_at);
+        $this->assertEquals($country->id, $attachedRecipe->pivot->country_id);
     }
 
     #[Test]
@@ -122,19 +129,32 @@ final class RecipeListTest extends TestCase
     }
 
     #[Test]
-    public function it_can_be_created_for_specific_country(): void
-    {
-        $country = Country::factory()->create();
-        $recipeList = RecipeList::factory()->forCountry($country)->create();
-
-        $this->assertTrue($recipeList->country->is($country));
-    }
-
-    #[Test]
     public function it_can_be_created_without_description(): void
     {
         $recipeList = RecipeList::factory()->withoutDescription()->create();
 
         $this->assertNull($recipeList->description);
+    }
+
+    #[Test]
+    public function it_can_have_recipes_from_multiple_countries(): void
+    {
+        $countryUS = Country::factory()->create(['code' => 'US']);
+        $countryDE = Country::factory()->create(['code' => 'DE']);
+        $recipeList = RecipeList::factory()->create();
+
+        $recipeUS = Recipe::factory()->for($countryUS)->create();
+        $recipeDE = Recipe::factory()->for($countryDE)->create();
+
+        $recipeList->recipes()->attach($recipeUS, [
+            'added_at' => now(),
+            'country_id' => $countryUS->id,
+        ]);
+        $recipeList->recipes()->attach($recipeDE, [
+            'added_at' => now(),
+            'country_id' => $countryDE->id,
+        ]);
+
+        $this->assertCount(2, $recipeList->recipes);
     }
 }

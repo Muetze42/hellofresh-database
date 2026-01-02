@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 
@@ -49,7 +50,6 @@ class UserRecipeLists extends AbstractComponent
         }
 
         return RecipeList::where('user_id', $user->id)
-            ->where('country_id', $this->countryId)
             ->with('sharedWith')
             ->withCount('recipes')
             ->orderBy('name')
@@ -71,7 +71,6 @@ class UserRecipeLists extends AbstractComponent
         }
 
         return RecipeList::whereHas('sharedWith', fn (Builder $query): Builder => $query->where('users.id', $user->id))
-            ->where('country_id', $this->countryId)
             ->with('user')
             ->withCount('recipes')
             ->orderBy('name')
@@ -79,7 +78,7 @@ class UserRecipeLists extends AbstractComponent
     }
 
     /**
-     * Get the currently viewed list.
+     * Get the currently viewed list with recipes filtered by current country.
      */
     #[Computed]
     public function viewingList(): ?RecipeList
@@ -88,8 +87,28 @@ class UserRecipeLists extends AbstractComponent
             return null;
         }
 
-        return RecipeList::with(['recipes', 'user', 'sharedWith'])
+        return RecipeList::with([
+            'recipes' => fn (BelongsToMany $query): BelongsToMany => $query->wherePivot('country_id', $this->countryId),
+            'user',
+            'sharedWith',
+        ])
             ->find($this->viewingListId);
+    }
+
+    /**
+     * Get the count of recipes from other countries in the currently viewed list.
+     */
+    #[Computed]
+    public function otherCountriesRecipeCount(): int
+    {
+        if (! $this->viewingListId) {
+            return 0;
+        }
+
+        return RecipeList::find($this->viewingListId)
+            ?->recipes()
+            ->wherePivot('country_id', '!=', $this->countryId)
+            ->count() ?? 0;
     }
 
     /**
@@ -105,7 +124,7 @@ class UserRecipeLists extends AbstractComponent
         }
 
         return RecipeListActivity::where('recipe_list_id', $this->viewingListId)
-            ->with(['user', 'recipe'])->latest()
+            ->with(['user', 'recipe.country'])->latest()
             ->limit(10)
             ->get();
     }
@@ -132,7 +151,6 @@ class UserRecipeLists extends AbstractComponent
         ]);
 
         $list->user()->associate($user);
-        $list->country()->associate($this->countryId);
         $list->save();
 
         $this->reset(['newListName', 'newListDescription']);
@@ -210,7 +228,7 @@ class UserRecipeLists extends AbstractComponent
     public function viewList(int $listId): void
     {
         $this->viewingListId = $listId;
-        unset($this->viewingList);
+        unset($this->viewingList, $this->otherCountriesRecipeCount);
     }
 
     /**
@@ -245,7 +263,7 @@ class UserRecipeLists extends AbstractComponent
         $activity->recipe()->associate($recipeId);
         $activity->save();
 
-        unset($this->viewingList, $this->recipeLists);
+        unset($this->viewingList, $this->recipeLists, $this->otherCountriesRecipeCount);
 
         Flux::toastSuccess(__('Recipe removed from list.'));
     }

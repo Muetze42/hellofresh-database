@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.8.0] - 2026-01-02
+
+### Added
+
+- **Mixed-Country Recipe Lists** - Recipe lists can now contain recipes from different countries ([#144](https://github.com/Muetze42/hellofresh-database/issues/144))
+    - Portal shows all recipes grouped by country with flag indicators
+    - Main site shows only recipes from the current country with a count of recipes from other countries
+
 ## [3.7.0] - 2026-01-02
 
 ### Added

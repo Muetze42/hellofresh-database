@@ -43,6 +43,9 @@
       <flux:sidebar.item icon="key" :href="route('portal.tokens.index')" :current="request()->routeIs('portal.tokens.*')">
         API Tokens
       </flux:sidebar.item>
+      <flux:sidebar.item icon="list" :href="route('portal.recipe-lists.index')" :current="request()->routeIs('portal.recipe-lists.*')">
+        {{ __('Recipe Lists') }}
+      </flux:sidebar.item>
     @endauth
 
     <flux:sidebar.group expandable heading="API Reference">
