@@ -18,7 +18,7 @@
     </flux:button>
 
     <div class="text-center">
-        <flux:link href="{{ route('portal.dashboard') }}" variant="subtle" wire:navigate>
+        <flux:link :href="route('portal.dashboard')" variant="subtle" wire:navigate>
             Skip for now
         </flux:link>
     </div>

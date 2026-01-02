@@ -201,7 +201,7 @@ class ApiSpecsCommand extends Command
 
         Storage::disk('local')->put(
             'api-docs/openapi/openapi.json',
-            (string) json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+            (string) json_encode($spec, JSON_UNESCAPED_SLASHES)
         );
 
         $this->components->twoColumnDetail('OpenAPI spec', Storage::disk('local')->path('api-docs/openapi/openapi.json'));
@@ -282,7 +282,7 @@ class ApiSpecsCommand extends Command
 
         Storage::disk('local')->put(
             'api-docs/postman/collection.json',
-            (string) json_encode($collection, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+            (string) json_encode($collection, JSON_UNESCAPED_SLASHES)
         );
 
         $this->components->twoColumnDetail('Postman collection', Storage::disk('local')->path('api-docs/postman/collection.json'));

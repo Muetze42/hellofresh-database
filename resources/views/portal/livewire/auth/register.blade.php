@@ -2,7 +2,7 @@
     <div class="text-center">
         <flux:heading size="lg">Create your account</flux:heading>
         <flux:text class="mt-ui">
-            Already have an account? <flux:link href="{{ route('portal.login') }}" wire:navigate>Sign in</flux:link>
+            Already have an account? <flux:link :href="route('portal.login')" wire:navigate>Sign in</flux:link>
         </flux:text>
     </div>
 

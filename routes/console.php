@@ -1,9 +1,10 @@
 <?php
 
+use App\Jobs\Country\CountryResourcesOrchestrationJob;
+use App\Jobs\Country\UpdateCountryStatisticsJob;
 use App\Jobs\GenerateSitemapsJob;
 use App\Jobs\Menu\SyncMenusJob;
 use App\Jobs\Recipe\SyncRecipesJob;
-use App\Jobs\UpdateCountryStatisticsJob;
 use Illuminate\Console\Scheduling\Schedule as ConsoleSchedule;
 use Illuminate\Support\Facades\Schedule;
 
@@ -24,6 +25,9 @@ Schedule::job(new SyncRecipesJob())
     ]);
 
 Schedule::job(new SyncMenusJob())
+    ->twiceDaily();
+
+Schedule::job(new CountryResourcesOrchestrationJob())
     ->twiceDaily();
 
 Schedule::job(new UpdateCountryStatisticsJob())
