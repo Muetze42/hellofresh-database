@@ -25,6 +25,10 @@ class Register extends Component
 
     public string $password_confirmation = '';
 
+    public ?string $country_code = null;
+
+    public bool $acceptPrivacy = false;
+
     /**
      * Handle user registration.
      */
@@ -34,11 +38,16 @@ class Register extends Component
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email:rfc', 'unique:users,email', new DisposableEmailRule()],
             'password' => ['required', 'confirmed', Password::defaults()],
+            'country_code' => ['nullable', 'string', 'size:2'],
+            'acceptPrivacy' => ['accepted'],
+        ], [
+            'acceptPrivacy.accepted' => __('You must accept the privacy policy.'),
         ]);
 
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
+            'country_code' => $this->country_code,
             'password' => Hash::make($this->password),
         ]);
 

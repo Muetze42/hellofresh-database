@@ -35,6 +35,8 @@ abstract class AbstractEndpointDoc extends Component
 
     public function render(): View
     {
+        $version = config('api.version');
+
         return view('portal::livewire.docs.endpoint', [
             'title' => $this->title(),
             'description' => $this->description(),
@@ -42,6 +44,8 @@ abstract class AbstractEndpointDoc extends Component
             'queryParams' => $this->queryParams(),
             'responseFields' => $this->responseFields(),
             'exampleRequest' => $this->exampleRequest(),
+            'version' => $version,
+            'isPreRelease' => version_compare($version, '1.0.0', '<'),
         ])->title($this->title());
     }
 }

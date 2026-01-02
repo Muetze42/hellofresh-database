@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.7.0] - 2026-01-02
+
+### Added
+
+- **Country Selection** - Users can select their country in profile settings and during registration
+
 ## [3.6.0] - 2026-01-01
 
 ### Added

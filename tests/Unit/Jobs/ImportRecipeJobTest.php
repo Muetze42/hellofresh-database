@@ -217,7 +217,23 @@ final class ImportRecipeJobTest extends TestCase
     }
 
     #[Test]
-    public function it_skips_recipes_with_less_than_3_yields(): void
+    public function it_skips_recipes_with_less_than_2_yields(): void
+    {
+        $recipeData = $this->validRecipeData;
+        $recipeData['yields'] = [
+            ['yields' => 2, 'ingredients' => []],
+        ];
+
+        $job = new ImportRecipeJob($this->country, 'en', $recipeData);
+        $job->handle();
+
+        $this->assertDatabaseMissing('recipes', [
+            'hellofresh_id' => 'hf-recipe-123',
+        ]);
+    }
+
+    #[Test]
+    public function it_imports_recipes_with_2_yields(): void
     {
         $recipeData = $this->validRecipeData;
         $recipeData['yields'] = [
@@ -228,7 +244,7 @@ final class ImportRecipeJobTest extends TestCase
         $job = new ImportRecipeJob($this->country, 'en', $recipeData);
         $job->handle();
 
-        $this->assertDatabaseMissing('recipes', [
+        $this->assertDatabaseHas('recipes', [
             'hellofresh_id' => 'hf-recipe-123',
         ]);
     }

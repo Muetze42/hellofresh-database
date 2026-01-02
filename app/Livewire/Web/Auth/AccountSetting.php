@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
-class PasswordChange extends AbstractComponent
+class AccountSetting extends AbstractComponent
 {
     use WithLocalizedContextTrait;
 
     public string $email = '';
+
+    public ?string $country_code = null;
 
     public string $current_password = '';
 
@@ -28,7 +30,10 @@ class PasswordChange extends AbstractComponent
      */
     public function mount(): void
     {
-        $this->email = auth()->user()->email ?? '';
+        $user = auth()->user();
+
+        $this->email = $user->email ?? '';
+        $this->country_code = $user?->country_code;
     }
 
     /**
@@ -47,6 +52,7 @@ class PasswordChange extends AbstractComponent
         $rules = [
             'current_password' => ['required'],
             'email' => ['required', 'email:rfc', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
+            'country_code' => ['nullable', 'string', 'size:2'],
         ];
 
         if ($this->password !== '') {
@@ -61,7 +67,10 @@ class PasswordChange extends AbstractComponent
             ]);
         }
 
-        $data = ['email' => $this->email];
+        $data = [
+            'email' => $this->email,
+            'country_code' => $this->country_code,
+        ];
 
         if ($this->password !== '') {
             $data['password'] = Hash::make($this->password);
@@ -79,6 +88,6 @@ class PasswordChange extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('web::livewire.auth.password-change');
+        return view('web::livewire.auth.settings');
     }
 }

@@ -22,6 +22,8 @@
                 required
             />
 
+            <x-country-select wire:model="country_code" />
+
             <div class="flex justify-end">
                 <flux:button type="submit" variant="primary">
                     Save

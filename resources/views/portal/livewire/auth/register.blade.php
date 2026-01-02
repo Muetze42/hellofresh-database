@@ -24,6 +24,8 @@
             required
         />
 
+        <x-country-select wire:model="country_code" />
+
         <flux:input
             wire:model="password"
             type="password"
@@ -39,6 +41,17 @@
             placeholder="Confirm your password"
             required
         />
+
+        <flux:field>
+            <div class="flex items-start gap-ui">
+                <flux:checkbox wire:model="acceptPrivacy" id="accept-privacy" />
+                <flux:label for="accept-privacy" class="text-sm inline-flex gap-1">
+                    {{ __('I accept the') }}
+                    <flux:link href="{{ config('app.url') }}/en-US/privacy-policy" target="_blank">{{ __('Privacy Policy') }}</flux:link>
+                </flux:label>
+            </div>
+            <flux:error name="acceptPrivacy" />
+        </flux:field>
 
         <flux:button type="submit" variant="primary" class="w-full">
             Create account

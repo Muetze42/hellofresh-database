@@ -12,6 +12,8 @@
       required
     />
 
+    <x-country-select wire:model="country_code" />
+
     <flux:separator />
 
     <flux:input

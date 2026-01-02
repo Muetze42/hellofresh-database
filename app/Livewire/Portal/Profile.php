@@ -20,6 +20,8 @@ class Profile extends Component
 
     public string $email = '';
 
+    public ?string $country_code = null;
+
     public string $current_password = '';
 
     public string $password = '';
@@ -37,6 +39,7 @@ class Profile extends Component
 
         $this->name = $user->name ?? '';
         $this->email = $user->email ?? '';
+        $this->country_code = $user?->country_code;
     }
 
     /**
@@ -55,6 +58,7 @@ class Profile extends Component
         $this->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email:rfc', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
+            'country_code' => ['nullable', 'string', 'size:2'],
         ]);
 
         $emailChanged = $user->email !== $this->email;
@@ -62,6 +66,7 @@ class Profile extends Component
         $user->update([
             'name' => $this->name,
             'email' => $this->email,
+            'country_code' => $this->country_code,
         ]);
 
         if ($emailChanged && ! $user->hasVerifiedEmail()) {

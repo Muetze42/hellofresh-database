@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -35,6 +36,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'country_code',
         'password',
     ];
 
@@ -133,5 +135,29 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(RecipeList::class, 'recipe_list_shares')
             ->withPivot('created_at');
+    }
+
+    /**
+     * Get the user's country flag emoji.
+     */
+    public function countryFlag(): ?string
+    {
+        if ($this->country_code === null) {
+            return null;
+        }
+
+        return Str::countryFlag($this->country_code);
+    }
+
+    /**
+     * Get the user's country name.
+     */
+    public function countryName(): ?string
+    {
+        if ($this->country_code === null) {
+            return null;
+        }
+
+        return __('country.' . $this->country_code);
     }
 }

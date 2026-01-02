@@ -347,7 +347,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * @mixin \Illuminate\Database\Eloquent\Builder<\App\Models\PersonalAccessTokenUsage>
+ * @mixin Builder<PersonalAccessTokenUsage>
  * @property int $id
  * @property int $user_id
  * @property int|null $token_id
@@ -599,6 +599,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $active_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $country_code
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailVerification> $emailVerifications
  * @property-read int|null $email_verifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Favorite> $favorites
@@ -619,6 +620,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereActiveAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCountryCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)

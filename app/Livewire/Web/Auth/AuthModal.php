@@ -38,6 +38,8 @@ class AuthModal extends AbstractComponent
     #[Validate('required|min:2')]
     public string $name = '';
 
+    public ?string $country_code = null;
+
     public bool $acceptPrivacy = false;
 
     public bool $remember = false;
@@ -134,6 +136,7 @@ class AuthModal extends AbstractComponent
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email:rfc', 'unique:users,email', new DisposableEmailRule()],
             'password' => ['required', 'confirmed', Password::defaults()],
+            'country_code' => ['nullable', 'string', 'size:2'],
             'acceptPrivacy' => ['accepted'],
         ], [
             'acceptPrivacy.accepted' => __('You must accept the privacy policy.'),
@@ -142,6 +145,7 @@ class AuthModal extends AbstractComponent
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
+            'country_code' => $this->country_code,
             'password' => Hash::make($this->password),
         ]);
 
@@ -177,7 +181,7 @@ class AuthModal extends AbstractComponent
     {
         $this->mode = 'login';
         $this->resetLinkSent = false;
-        $this->reset(['email', 'password', 'password_confirmation', 'name', 'acceptPrivacy', 'remember']);
+        $this->reset(['email', 'password', 'password_confirmation', 'name', 'country_code', 'acceptPrivacy', 'remember']);
         $this->resetValidation();
         Flux::showModal('auth-modal');
     }
