@@ -95,9 +95,14 @@
     <flux:sidebar.item icon="chart-pie" :href="route('portal.stats')" :current="request()->routeIs('portal.stats')" wire:navigate>
       Statistics
     </flux:sidebar.item>
-    <flux:sidebar.item icon="home" href="{{ config('app.url') }}" :current="false">
+    <flux:sidebar.item icon="home" :href="config('app.url')" :current="false">
       {{ config('app.name') }}
     </flux:sidebar.item>
+    @if(auth()->user()?->admin)
+      <flux:sidebar.item icon="laravel-horizon" :href="config('app.url').'/'.config('horizon.path')" :current="false">
+        Horizon
+      </flux:sidebar.item>
+    @endif
   </flux:sidebar.nav>
 
   @auth
@@ -155,7 +160,7 @@
   @endauth
 </flux:header>
 
-<flux:main class="space-y-section sm:mb-16" container>
+<flux:main class="space-y-section sm:mb-18" container>
   @auth
     @if(!auth()->user()->hasVerifiedEmail())
       <flux:callout icon="triangle-alert" color="amber">

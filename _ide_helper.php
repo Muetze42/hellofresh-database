@@ -24852,6 +24852,17 @@ namespace Illuminate\Support {
             return \Illuminate\Support\Str::normalizeNameStrict($value);
         }
 
+        /**
+         * @see \App\Providers\MacroServiceProvider::configureStrMacros()
+         * @param string $countryCode
+         * @return string
+         * @static
+         */
+        public static function countryFlag($countryCode)
+        {
+            return \Illuminate\Support\Str::countryFlag($countryCode);
+        }
+
             }
     /**
      */
@@ -25189,6 +25200,10 @@ namespace App\Livewire\Web\Recipes {
             }
     /**
      */
+    class RecipeRandom extends \App\Livewire\Web\Recipes\RecipeIndex {
+            }
+    /**
+     */
     class RecipeShow extends \App\Livewire\Web\AbstractComponent {
             }
     }
@@ -25251,6 +25266,10 @@ namespace App\Livewire\Portal {
             }
     /**
      */
+    class Statistic extends \Livewire\Component {
+            }
+    /**
+     */
     class Profile extends \Livewire\Component {
             }
     }
@@ -25306,6 +25325,21 @@ namespace App\Livewire\Portal\Tokens {
     /**
      */
     class TokenIndex extends \Livewire\Component {
+            }
+    }
+
+namespace App\Livewire\Portal\Admin {
+    /**
+     */
+    class UserIndex extends \Livewire\Component {
+            }
+    /**
+     */
+    class UserShow extends \Livewire\Component {
+            }
+    /**
+     */
+    class ApiUsage extends \Livewire\Component {
             }
     }
 
@@ -30201,6 +30235,11 @@ namespace  {
 }
 
 
+namespace Facades\Livewire\Features\SupportFileUploads {
+    /**
+     * @mixin \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl     */
+    class GenerateSignedUploadUrl extends \Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl {}
+}
 
 
 

@@ -66,4 +66,13 @@
         <flux:heading size="lg">Example Request</flux:heading>
         <pre class="mt-section p-section bg-zinc-900 text-zinc-100 rounded-lg text-sm overflow-x-auto"><code>{{ $exampleRequest }}</code></pre>
     </flux:card>
+
+    @if($isPreRelease)
+        <flux:callout icon="triangle-alert" color="amber">
+            <flux:callout.heading>Pre-Release API (v{{ $version }})</flux:callout.heading>
+            <flux:callout.text>
+                This API is currently in pre-release. Endpoints, response formats, and features may change without notice until version 1.0.0 is released. Use in production at your own risk.
+            </flux:callout.text>
+        </flux:callout>
+    @endif
 </div>

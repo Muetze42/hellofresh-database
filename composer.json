@@ -32,7 +32,6 @@
         "ext-pdo": "*",
         "laravel/framework": "^12.44",
         "laravel/horizon": "^5.41",
-        "laravel/nightwatch": "^1.21",
         "laravel/reverb": "^1.6",
         "laravel/sanctum": "^4.2",
         "laravel/tinker": "^2.10",

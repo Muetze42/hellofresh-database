@@ -65,6 +65,8 @@
           <flux:error name="email" />
         </flux:field>
 
+        <x-country-select wire:model="country_code" />
+
         <flux:field>
           <flux:label>{{ __('Password') }}</flux:label>
           <flux:input wire:model="password" name="register_password" type="password" />

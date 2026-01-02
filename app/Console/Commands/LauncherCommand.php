@@ -2,24 +2,29 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Concerns\DiscoversClassesTrait;
 use App\Contracts\LauncherCommandInterface;
 use App\Contracts\LauncherJobInterface;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use ReflectionClass;
 use ReflectionException;
+use ReflectionNamedType;
+use ReflectionParameter;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Finder\Finder;
-use Throwable;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\search;
 use function Laravel\Prompts\select;
+use function Laravel\Prompts\text;
 
 #[AsCommand(name: 'app:launcher')]
 class LauncherCommand extends Command implements PromptsForMissingInput
 {
+    use DiscoversClassesTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -159,6 +164,16 @@ class LauncherCommand extends Command implements PromptsForMissingInput
             return;
         }
 
+        // Collect constructor arguments
+        $arguments = $this->collectJobArguments($jobClass);
+
+        if ($arguments === null) {
+            // User cancelled during argument collection
+            $this->launcherMainMenu();
+
+            return;
+        }
+
         $action = select(
             label: 'How do you want to execute this job?',
             options: [
@@ -172,28 +187,272 @@ class LauncherCommand extends Command implements PromptsForMissingInput
 
         /* @var Dispatchable $jobClass */
         match ($action) {
-            'dispatch' => $jobClass::dispatch(),
-            'dispatchSync' => $this->dispatchJobSync($jobClass),
+            'dispatch' => $jobClass::dispatch(...$arguments),
+            'dispatchSync' => $this->dispatchJobSync($jobClass, $arguments),
             default => $this->launcherMainMenu(),
         };
+    }
+
+    /**
+     * Collect constructor arguments for a job using prompts.
+     *
+     * @param  class-string  $jobClass
+     * @return array<mixed>|null Returns null if user cancelled
+     */
+    protected function collectJobArguments(string $jobClass): ?array
+    {
+        try {
+            $reflection = new ReflectionClass($jobClass);
+            $constructor = $reflection->getConstructor();
+
+            if ($constructor === null) {
+                return [];
+            }
+
+            $parameters = $constructor->getParameters();
+            $arguments = [];
+
+            foreach ($parameters as $parameter) {
+                $value = $this->promptForParameter($parameter);
+
+                if ($value === '__CANCEL__') {
+                    return null;
+                }
+
+                $arguments[] = $value;
+            }
+
+            return $arguments;
+        } catch (ReflectionException) {
+            return [];
+        }
+    }
+
+    /**
+     * Prompt the user for a parameter value based on its type.
+     */
+    protected function promptForParameter(ReflectionParameter $parameter): mixed
+    {
+        $name = $parameter->getName();
+        $type = $parameter->getType();
+        $isOptional = $parameter->isOptional();
+        $defaultValue = $isOptional ? $parameter->getDefaultValue() : null;
+
+        // Handle typed parameters
+        if ($type instanceof ReflectionNamedType) {
+            $typeName = $type->getName();
+
+            // Boolean type
+            if ($typeName === 'bool') {
+                return $this->promptForBoolean($name, $defaultValue, $isOptional);
+            }
+
+            // Integer type
+            if ($typeName === 'int') {
+                return $this->promptForInteger($name, $defaultValue, $isOptional);
+            }
+
+            // String type
+            if ($typeName === 'string') {
+                return $this->promptForString($name, $defaultValue, $isOptional);
+            }
+
+            // Eloquent Model type
+            if (class_exists($typeName) && is_subclass_of($typeName, Model::class)) {
+                return $this->promptForModel($typeName, $name, $type->allowsNull(), $isOptional);
+            }
+        }
+
+        // For unhandled types, return default or null
+        return $defaultValue;
+    }
+
+    /**
+     * Prompt for a boolean parameter.
+     */
+    protected function promptForBoolean(string $name, mixed $defaultValue, bool $isOptional): bool
+    {
+        $label = $this->formatParameterLabel($name);
+        $default = is_bool($defaultValue) && $defaultValue;
+
+        return confirm(
+            label: $label,
+            default: $default,
+            hint: $isOptional ? 'Optional, default: ' . ($default ? 'Yes' : 'No') : ''
+        );
+    }
+
+    /**
+     * Prompt for an integer parameter.
+     */
+    protected function promptForInteger(string $name, mixed $defaultValue, bool $isOptional): ?int
+    {
+        $label = $this->formatParameterLabel($name);
+        $default = is_int($defaultValue) ? (string) $defaultValue : '';
+
+        $value = text(
+            label: $label,
+            default: $default,
+            hint: $isOptional ? 'Optional, press Enter for default' : 'Required'
+        );
+
+        if ($value === '' && $isOptional) {
+            return $defaultValue;
+        }
+
+        return (int) $value;
+    }
+
+    /**
+     * Prompt for a string parameter.
+     */
+    protected function promptForString(string $name, mixed $defaultValue, bool $isOptional): ?string
+    {
+        $label = $this->formatParameterLabel($name);
+        $default = is_string($defaultValue) ? $defaultValue : '';
+
+        $value = text(
+            label: $label,
+            default: $default,
+            hint: $isOptional ? 'Optional, press Enter for default' : 'Required'
+        );
+
+        if ($value === '' && $isOptional) {
+            return $defaultValue;
+        }
+
+        return $value;
+    }
+
+    /**
+     * Prompt for an Eloquent Model parameter.
+     *
+     * @param  class-string<Model>  $modelClass
+     */
+    protected function promptForModel(string $modelClass, string $name, bool $allowsNull, bool $isOptional): ?Model
+    {
+        $label = $this->formatParameterLabel($name);
+        $shortName = class_basename($modelClass);
+
+        // Build options from database
+        $options = $this->getModelOptions($modelClass);
+
+        if ($options === []) {
+            $this->components->warn(sprintf('No %s records found in database.', $shortName));
+
+            return null;
+        }
+
+        // Add "None" option for nullable/optional parameters
+        if ($allowsNull || $isOptional) {
+            $options = ['__NONE__' => sprintf('None (skip %s)', $shortName)] + $options;
+        }
+
+        $selected = select(
+            label: $label,
+            options: $options,
+            hint: 'Select a ' . $shortName
+        );
+
+        if ($selected === '__NONE__') {
+            return null;
+        }
+
+        return $modelClass::find($selected);
+    }
+
+    /**
+     * Get options for a model select.
+     *
+     * @param  class-string<Model>  $modelClass
+     * @return array<int|string, string>
+     */
+    protected function getModelOptions(string $modelClass): array
+    {
+        $models = $modelClass::query()->orderBy('id')->limit(100)->get();
+        $options = [];
+
+        foreach ($models as $model) {
+            $label = $this->getModelLabel($model);
+            $options[$model->getKey()] = $label;
+        }
+
+        return $options;
+    }
+
+    /**
+     * Get a human-readable label for a model.
+     */
+    protected function getModelLabel(Model $model): string
+    {
+        // Try common name attributes
+        foreach (['name', 'title', 'code', 'email', 'slug'] as $attribute) {
+            if (isset($model->{$attribute}) && $model->{$attribute} !== null) {
+                return $model->{$attribute} . ' (#' . $model->getKey() . ')';
+            }
+        }
+
+        return class_basename($model) . ' #' . $model->getKey();
+    }
+
+    /**
+     * Format a parameter name into a human-readable label.
+     */
+    protected function formatParameterLabel(string $name): string
+    {
+        return ucfirst(str_replace('_', ' ', $name));
     }
 
     /**
      * Dispatch a job synchronously and measure duration.
      *
      * @param  class-string  $jobClass
+     * @param  array<mixed>  $arguments
      */
-    protected function dispatchJobSync(string $jobClass): void
+    protected function dispatchJobSync(string $jobClass, array $arguments = []): void
     {
         $this->components->info('Running job: ' . $jobClass);
 
+        if ($arguments !== []) {
+            $this->displayJobArguments($arguments);
+        }
+
         $startTime = microtime(true);
 
-        $jobClass::dispatchSync();
+        $jobClass::dispatchSync(...$arguments);
 
         $duration = microtime(true) - $startTime;
 
         $this->components->twoColumnDetail('Duration', $this->formatDuration($duration));
+    }
+
+    /**
+     * Display the arguments that will be passed to the job.
+     *
+     * @param  array<mixed>  $arguments
+     */
+    protected function displayJobArguments(array $arguments): void
+    {
+        $this->components->bulletList(
+            array_map(
+                static function (mixed $value): string {
+                    if ($value instanceof Model) {
+                        return class_basename($value) . ' #' . $value->getKey();
+                    }
+
+                    if (is_bool($value)) {
+                        return $value ? 'Yes' : 'No';
+                    }
+
+                    if ($value === null) {
+                        return 'null';
+                    }
+
+                    return (string) $value;
+                },
+                $arguments
+            )
+        );
     }
 
     /**
@@ -253,139 +512,5 @@ class LauncherCommand extends Command implements PromptsForMissingInput
             null,
             Command::class
         );
-    }
-
-    /**
-     * Get all classes in a directory that implement a specific interface.
-     *
-     * @template T of object
-     *
-     * @param  string  $path  The directory path to search
-     * @param  string  $namespace  The base namespace for the classes
-     * @param  class-string<T>  $interface  The interface to filter by
-     * @param  array<string>  $excludeDirs  Directories to exclude from search
-     * @param  class-string|null  $requiredTrait  Optional trait that classes must use
-     * @param  class-string|null  $requiredParentClass  Optional parent class that classes must extend
-     * @return class-string<T>[]
-     */
-    protected function getClassesByInterface(
-        string $path,
-        string $namespace,
-        string $interface,
-        array $excludeDirs = ['Contracts'],
-        ?string $requiredTrait = null,
-        ?string $requiredParentClass = null
-    ): array {
-        if (! is_dir($path)) {
-            return [];
-        }
-
-        $finder = Finder::create()
-            ->files()
-            ->name('*.php')
-            ->in($path);
-
-        foreach ($excludeDirs as $excludeDir) {
-            $finder->exclude($excludeDir);
-        }
-
-        $classes = [];
-
-        foreach ($finder as $file) {
-            $className = $this->getClassNameFromPath(
-                $file->getRelativePathname(),
-                $namespace
-            );
-            if ($className === null) {
-                continue;
-            }
-
-            if (! class_exists($className)) {
-                continue;
-            }
-
-            if (! $this->hasInterface($className, $interface)) {
-                continue;
-            }
-
-            if ($requiredTrait !== null && ! $this->hasTrait($className, $requiredTrait)) {
-                continue;
-            }
-
-            if ($requiredParentClass !== null && ! $this->hasParentClass($className, $requiredParentClass)) {
-                continue;
-            }
-
-            /** @var class-string<T> $className */
-            $classes[] = $className;
-        }
-
-        return $classes;
-    }
-
-    /**
-     * Get the fully qualified class name from relative path and namespace.
-     *
-     * @return class-string|null
-     */
-    protected function getClassNameFromPath(string $relativePath, string $baseNamespace): ?string
-    {
-        $className = $baseNamespace . '\\' . str_replace(
-            ['/', '.php'],
-            ['\\', ''],
-            $relativePath
-        );
-
-        return class_exists($className) ? $className : null;
-    }
-
-    /**
-     * Check if class implements a specific interface.
-     *
-     * @param  class-string  $className
-     * @param  class-string  $interface
-     */
-    protected function hasInterface(string $className, string $interface): bool
-    {
-        try {
-            $reflection = new ReflectionClass($className);
-
-            return $reflection->implementsInterface($interface)
-                && $reflection->isInstantiable();
-        } catch (ReflectionException) {
-            return false;
-        }
-    }
-
-    /**
-     * Check if class uses a specific trait (recursively).
-     *
-     * @param  class-string  $className
-     * @param  class-string  $trait
-     */
-    protected function hasTrait(string $className, string $trait): bool
-    {
-        try {
-            $traits = class_uses_recursive($className);
-
-            return in_array($trait, $traits, true);
-        } catch (Throwable) {
-            return false;
-        }
-    }
-
-    /**
-     * Check if class extends a specific parent class.
-     *
-     * @param  class-string  $className
-     * @param  class-string  $parentClass
-     */
-    protected function hasParentClass(string $className, string $parentClass): bool
-    {
-        try {
-            return is_subclass_of($className, $parentClass);
-        } catch (Throwable) {
-            return false;
-        }
     }
 }
