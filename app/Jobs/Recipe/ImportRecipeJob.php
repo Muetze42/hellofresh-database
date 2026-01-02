@@ -33,7 +33,7 @@ use Illuminate\Support\Str;
  * @phpstan-import-type RecipeCuisine from RecipesResponse
  * @phpstan-import-type RecipeUtensil from RecipesResponse
  */
-class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
+class ImportRecipeJob implements ShouldQueue
 {
     use Batchable;
     use Queueable;
@@ -62,6 +62,11 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
     {
         return $this->country->id . '-' . $this->locale . '-' . $this->recipe['id'];
     }
+
+    /**
+     * The number of seconds after which the job's unique lock will be released.
+     */
+    public int $uniqueFor = 900;
 
     /**
      * Execute the job.

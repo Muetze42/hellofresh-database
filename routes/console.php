@@ -8,6 +8,9 @@ use App\Jobs\Recipe\SyncRecipesJob;
 use Illuminate\Console\Scheduling\Schedule as ConsoleSchedule;
 use Illuminate\Support\Facades\Schedule;
 
+Schedule::command('horizon:snapshot')
+    ->everyFiveMinutes();
+
 Schedule::command('prune-expired-email-verifications')
     ->daily();
 
