@@ -33,7 +33,7 @@ use Illuminate\Support\Str;
  * @phpstan-import-type RecipeCuisine from RecipesResponse
  * @phpstan-import-type RecipeUtensil from RecipesResponse
  */
-class ImportRecipeJob implements ShouldQueue
+class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
 {
     use Batchable;
     use Queueable;
@@ -49,6 +49,7 @@ class ImportRecipeJob implements ShouldQueue
         public Country $country,
         public string $locale,
         public array $recipe,
+        public bool $ignoreActive = false,
     ) {
         $this->onQueue(QueueEnum::Import->value);
     }
@@ -60,13 +61,15 @@ class ImportRecipeJob implements ShouldQueue
      */
     public function uniqueId(): string
     {
-        return $this->country->id . '-' . $this->locale . '-' . $this->recipe['id'];
+        $ignoreActive = $this->ignoreActive ? '1' : '0';
+
+        return $this->country->id . '-' . $this->locale . '-' . $this->recipe['id'] . '-' . $ignoreActive;
     }
 
     /**
      * The number of seconds after which the job's unique lock will be released.
      */
-    public int $uniqueFor = 900;
+    public int $uniqueFor = 120;
 
     /**
      * Execute the job.
@@ -366,7 +369,7 @@ class ImportRecipeJob implements ShouldQueue
      */
     protected function shouldImport(): bool
     {
-        if (! $this->recipe['active']) {
+        if (! $this->ignoreActive && ! $this->recipe['active']) {
             return false;
         }
 
