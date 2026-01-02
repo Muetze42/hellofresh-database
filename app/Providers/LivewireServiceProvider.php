@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\LivewireContextMiddleware;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class LivewireServiceProvider extends ServiceProvider
 {
@@ -11,6 +14,12 @@ class LivewireServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Livewire::addPersistentMiddleware(LivewireSentryContextMiddleware::class);
+        Livewire::setUpdateRoute(static function (array $handle) {
+            return Route::post('livewire/update', $handle)
+                ->middleware([
+                    'web',
+                    LivewireContextMiddleware::class,
+                ]);
+        });
     }
 }
