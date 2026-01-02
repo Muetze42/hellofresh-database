@@ -47,7 +47,7 @@
 
       {{-- Recent Activity --}}
       @if ($this->recentActivities->isNotEmpty())
-        <flux:accordion transition>
+        <flux:accordion transition class="border rounded p-ui border-zinc-200 dark:border-zinc-700">
           <flux:accordion.item>
             <flux:accordion.heading>
               <span class="flex items-center gap-ui">
@@ -63,7 +63,13 @@
                     <flux:text variant="subtle">
                       <strong>{{ $activity->user->name }}</strong>
                       {{ $activity->action->label() }}
-                      <strong>{{ $activity->recipe?->name ?? __('Unknown recipe') }}</strong>
+                      @if ($activity->recipe->country_id === $this->countryId)
+                        <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($activity->recipe->name), 'recipe' => $activity->recipe->id])" wire:navigate>
+                          {{ $activity->recipe->name }}
+                        </flux:link>
+                      @else
+                        <strong>{{ Str::countryFlag($activity->recipe->country->code) }} {{ $activity->recipe?->getFirstTranslation('name') }}</strong>
+                      @endif
                       <span class="text-zinc-400">{{ $activity->created_at->diffForHumans() }}</span>
                     </flux:text>
                   </div>
@@ -189,7 +195,7 @@
                 </div>
 
                 <flux:dropdown>
-                  <flux:button variant="ghost" size="sm" icon="ellipsis-vertical" x-on:click.stop />
+                  <flux:button variant="ghost" size="sm" icon="ellipsis-vertical" x-on:click.stop="" />
 
                   <flux:menu>
                     <flux:menu.item icon="share" wire:click.stop="startSharing({{ $list->id }})">
@@ -241,7 +247,7 @@
                   </div>
 
                   <flux:dropdown>
-                    <flux:button variant="ghost" size="sm" icon="ellipsis-vertical" x-on:click.stop />
+                    <flux:button variant="ghost" size="sm" icon="ellipsis-vertical" x-on:click.stop="" />
 
                     <flux:menu>
                       <flux:menu.item

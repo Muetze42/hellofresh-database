@@ -124,7 +124,7 @@ class UserRecipeLists extends AbstractComponent
         }
 
         return RecipeListActivity::where('recipe_list_id', $this->viewingListId)
-            ->with(['user', 'recipe'])->latest()
+            ->with(['user', 'recipe.country'])->latest()
             ->limit(10)
             ->get();
     }
