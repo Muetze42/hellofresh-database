@@ -32,6 +32,13 @@
         </form>
     </flux:card>
 
+    {{-- Support --}}
+    <flux:card>
+        <flux:heading size="lg">Support</flux:heading>
+        <flux:text class="mt-ui">Your user ID for support requests:</flux:text>
+        <flux:badge class="mt-ui font-mono" size="lg">{{ auth()->id() }}</flux:badge>
+    </flux:card>
+
     {{-- Update Password --}}
     <flux:card>
         <flux:heading size="lg">Update Password</flux:heading>
