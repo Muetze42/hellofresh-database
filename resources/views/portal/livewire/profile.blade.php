@@ -4,7 +4,7 @@
     {{-- Profile Information --}}
     <flux:card>
         <flux:heading size="lg">Profile Information</flux:heading>
-        <flux:text class="mt-ui">Update your account's profile information and email address.</flux:text>
+        <flux:text class="mt-ui">{{ __("Update your account's profile information and email address.") }}</flux:text>
 
         <form wire:submit="updateProfile" class="mt-section space-y-section">
             <flux:input
@@ -35,14 +35,14 @@
     {{-- Update Password --}}
     <flux:card>
         <flux:heading size="lg">Update Password</flux:heading>
-        <flux:text class="mt-ui">Ensure your account is using a long, random password to stay secure.</flux:text>
+        <flux:text class="mt-ui">{{ __('Ensure your account is using a long, random password to stay secure.') }}</flux:text>
 
         <form wire:submit="updatePassword" class="mt-section space-y-section">
             <flux:input
                 wire:model="current_password"
                 type="password"
                 label="Current Password"
-                placeholder="Your current password"
+                :placeholder="__('Your current password')"
                 required
             />
 
@@ -50,7 +50,7 @@
                 wire:model="password"
                 type="password"
                 label="New Password"
-                placeholder="Your new password"
+                :placeholder="__('Your new password')"
                 required
             />
 
@@ -58,7 +58,7 @@
                 wire:model="password_confirmation"
                 type="password"
                 label="Confirm Password"
-                placeholder="Confirm your new password"
+                :placeholder="__('Confirm your new password')"
                 required
             />
 

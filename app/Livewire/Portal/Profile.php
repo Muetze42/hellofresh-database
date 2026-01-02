@@ -61,6 +61,7 @@ class Profile extends Component
             'country_code' => ['nullable', 'string', 'size:2'],
         ]);
 
+        $emailWasVerified = $user->hasVerifiedEmail();
         $emailChanged = $user->email !== $this->email;
 
         $user->update([
@@ -69,7 +70,7 @@ class Profile extends Component
             'country_code' => $this->country_code,
         ]);
 
-        if ($emailChanged && ! $user->hasVerifiedEmail()) {
+        if ($emailChanged && $emailWasVerified && ! $user->hasVerifiedEmail()) {
             $user->sendEmailVerificationNotification();
 
             Flux::toast('Profile updated. Please verify your new email address.');
