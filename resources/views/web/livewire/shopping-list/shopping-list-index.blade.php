@@ -7,6 +7,8 @@
             'clearShoppingList' => __('Clear Shopping List'),
             'removeAllRecipes' => __('Remove all recipes from your shopping list?'),
             'clearAll' => __('Clear All'),
+            'recipe' => __('Recipe'),
+            'recipes' => __('Recipes'),
         ],
         'bringUrl' => localized_route('localized.shopping-list.bring'),
     ];
@@ -203,7 +205,7 @@
 
       {{-- Mobile: Badge left, Buttons right --}}
       <div x-show="$store.shoppingList.count > 0" class="flex items-center gap-4 sm:hidden w-full">
-        <flux:badge color="green" x-text="$store.shoppingList.count + ' ' + ($store.shoppingList.count === 1 ? '{{ __('Recipe') }}' : '{{ __('Recipes') }}')"></flux:badge>
+        <flux:badge color="green" x-text="$store.shoppingList.count + ' ' + ($store.shoppingList.count === 1 ? translations.recipe : translations.recipes)"></flux:badge>
 
         <div class="flex items-center gap-ui ml-auto">
           <flux:dropdown>
@@ -237,7 +239,7 @@
 
       {{-- Desktop: All buttons with text --}}
       <div x-show="$store.shoppingList.count > 0" class="hidden sm:flex items-center gap-ui">
-        <flux:badge color="green" x-text="$store.shoppingList.count + ' ' + ($store.shoppingList.count === 1 ? '{{ __('Recipe') }}' : '{{ __('Recipes') }}')"></flux:badge>
+        <flux:badge color="green" x-text="$store.shoppingList.count + ' ' + ($store.shoppingList.count === 1 ? translations.recipe : translations.recipes)"></flux:badge>
 
         <flux:dropdown>
           <flux:button variant="subtle" size="sm" icon="printer">
