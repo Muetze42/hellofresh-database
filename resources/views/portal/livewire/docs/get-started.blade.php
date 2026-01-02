@@ -96,6 +96,8 @@ X-RateLimit-Remaining: {{ $rateLimit - 1 }}</code></pre>
   -H "Accept: application/json"</code></pre>
     </flux:card>
 
+    <x-portal::api-specs-download />
+
     @if($isPreRelease)
         <flux:callout icon="triangle-alert" color="amber">
             <flux:callout.heading>Pre-Release API (v{{ $version }})</flux:callout.heading>
