@@ -1,11 +1,17 @@
 <flux:modal
     name="confirm-action"
     class="min-w-[22rem]"
-    x-data
+    x-data="{
+        defaults: {
+            title: @js(__('Confirm Action')),
+            message: @js(__('Are you sure?')),
+            confirm: @js(__('Confirm')),
+        }
+    }"
     x-on:confirm-action.window="
-        $el.querySelector('[data-confirm-title]').textContent = $event.detail.title || '{{ __('Confirm Action') }}';
-        $el.querySelector('[data-confirm-message]').textContent = $event.detail.message || '{{ __('Are you sure?') }}';
-        $el.querySelector('[data-confirm-button]').textContent = $event.detail.confirmText || '{{ __('Confirm') }}';
+        $el.querySelector('[data-confirm-title]').textContent = $event.detail.title || defaults.title;
+        $el.querySelector('[data-confirm-message]').textContent = $event.detail.message || defaults.message;
+        $el.querySelector('[data-confirm-button]').textContent = $event.detail.confirmText || defaults.confirm;
         window._confirmAction = $event.detail.onConfirm;
         $flux.modal('confirm-action').show();
     "
