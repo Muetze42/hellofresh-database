@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Jobs;
 
 use App\Enums\QueueEnum;
-use App\Jobs\UpdateCountryStatisticsJob;
+use App\Jobs\Country\UpdateCountryStatisticsJob;
 use App\Models\Allergen;
 use App\Models\Country;
 use App\Models\Cuisine;

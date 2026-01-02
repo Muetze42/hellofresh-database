@@ -15,7 +15,7 @@
           You have <strong>{{ $tokenCount }}</strong> active API {{ Str::plural('token', $tokenCount) }}.
         </flux:text>
         <div class="mt-section">
-          <flux:button href="{{ route('portal.tokens.index') }}" variant="primary" wire:navigate>
+          <flux:button :href="route('portal.tokens.index')" variant="primary" wire:navigate>
             Manage Tokens
           </flux:button>
         </div>
@@ -27,10 +27,10 @@
           Create an account to get your API tokens and start integrating with our API.
         </flux:text>
         <div class="mt-section flex gap-ui">
-          <flux:button href="{{ route('portal.register') }}" variant="primary" wire:navigate>
+          <flux:button :href="route('portal.register')" variant="primary" wire:navigate>
             Sign Up
           </flux:button>
-          <flux:button href="{{ route('portal.login') }}" wire:navigate>
+          <flux:button :href="route('portal.login')" wire:navigate>
             Sign In
           </flux:button>
         </div>
@@ -43,7 +43,7 @@
         Learn how to authenticate and make your first API request.
       </flux:text>
       <div class="mt-section">
-        <flux:button href="{{ route('portal.docs.get-started') }}" wire:navigate>
+        <flux:button :href="route('portal.docs.get-started')" wire:navigate>
           View API Docs
         </flux:button>
       </div>

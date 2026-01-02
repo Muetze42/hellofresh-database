@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Portal\ApiSpecDownloadController;
+use App\Http\Controllers\Portal\VerifyEmailController;
+use App\Livewire\Actions\Portal\LogoutAction;
 use App\Livewire\Portal\Admin\ApiUsage;
 use App\Livewire\Portal\Admin\UserIndex;
 use App\Livewire\Portal\Admin\UserShow;
@@ -20,12 +23,7 @@ use App\Livewire\Portal\Docs\TagsDoc;
 use App\Livewire\Portal\Profile;
 use App\Livewire\Portal\Statistic;
 use App\Livewire\Portal\Tokens\TokenIndex;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,52 +57,25 @@ Route::prefix('docs')->name('docs.')->group(function (): void {
     Route::get('labels', LabelsDoc::class)->name('labels');
     Route::get('allergens', AllergensDoc::class)->name('allergens');
     Route::get('ingredients', IngredientsDoc::class)->name('ingredients');
+
+    // API Specs Downloads
+    Route::get('download/openapi', [ApiSpecDownloadController::class, 'openapi'])->name('download.openapi');
+    Route::get('download/postman', [ApiSpecDownloadController::class, 'postman'])->name('download.postman');
 });
 
 // Authenticated routes (require login)
 Route::middleware('auth')->group(function (): void {
-    // Profile
     Route::get('profile', Profile::class)->name('profile');
+    Route::post('logout', LogoutAction::class)->name('logout');
 
     // Email verification
     Route::get('email/verify', VerifyEmail::class)->name('verification.notice');
-    Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request): RedirectResponse {
-        $request->fulfill();
-
-        return to_route('portal.dashboard')
-            ->with('success', 'Your email has been verified successfully.');
-    })->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-
-    // Logout
-    Route::post('logout', static function (): RedirectResponse {
-        auth()->logout();
-        Session::invalidate();
-        Session::regenerateToken();
-
-        return to_route('portal.dashboard');
-    })->name('logout');
+    Route::get('email/verify/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
 
     // API Tokens
-    Route::prefix('tokens')->name('tokens.')->group(function (): void {
-        Route::get('', TokenIndex::class)->name('index');
-    });
-
-    // API Specs Downloads
-    Route::prefix('docs/download')->name('docs.download.')->group(function (): void {
-        Route::get('openapi', static function (): StreamedResponse {
-            return Storage::disk('local')->download(
-                'api-docs/openapi/openapi.json',
-                'hfresh-openapi.json'
-            );
-        })->name('openapi');
-
-        Route::get('postman', static function (): StreamedResponse {
-            return Storage::disk('local')->download(
-                'api-docs/postman/collection.json',
-                'hfresh-postman-collection.json'
-            );
-        })->name('postman');
-    });
+    Route::get('tokens', TokenIndex::class)->name('tokens.index');
 
     // Admin routes
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
