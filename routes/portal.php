@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function (): void {
     })->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
     // Logout
-    Route::post('/logout', function (): RedirectResponse {
+    Route::post('logout', static function (): RedirectResponse {
         auth()->logout();
         Session::invalidate();
         Session::regenerateToken();

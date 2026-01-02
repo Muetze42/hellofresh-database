@@ -23,7 +23,7 @@
   <meta name="twitter:title" content="{{ $pageTitle }}">
   <meta name="twitter:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
 
-  <x-web::layouts.partials.favicon />
+  <x-partials.favicon />
   @vite(['resources/css/portal/app.css'], 'build-portal')
   @livewireStyles
   @fluxAppearance

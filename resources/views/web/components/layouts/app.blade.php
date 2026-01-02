@@ -32,7 +32,7 @@
   @endif
   <meta name="twitter:image" content="{{ $ogImage ?? route('og.generic', ['title' => $ogTitle ?? $title ?? config('app.name')]) }}">
 
-  <x-layouts.partials.favicon />
+  <x-partials.favicon />
   @vite(['resources/css/web/app.css'])
   @livewireStyles
   @fluxAppearance
