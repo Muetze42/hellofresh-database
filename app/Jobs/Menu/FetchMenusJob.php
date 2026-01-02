@@ -140,10 +140,15 @@ class FetchMenusJob implements ShouldQueue
             );
         }
 
+        // Extract primitive values for serializable closure
+        $menuId = $menu->id;
+        $countryId = $this->country->id;
+        $recipeIds = $menuData['recipe_ids'];
+
         Bus::batch($jobs)
             ->name(sprintf('Fetch missing recipes for menu %d', $menu->year_week))
             ->onQueue(QueueEnum::HelloFresh->value)
-            ->then(fn () => SyncMenuRecipesJob::dispatch($menu, $this->country->id, $menuData['recipe_ids']))
+            ->then(fn () => SyncMenuRecipesJob::dispatch($menuId, $countryId, $recipeIds))
             ->dispatch();
     }
 }

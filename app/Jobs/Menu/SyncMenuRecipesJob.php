@@ -18,7 +18,7 @@ class SyncMenuRecipesJob implements ShouldQueue
      * @param  list<string>  $hellofreshIds
      */
     public function __construct(
-        public Menu $menu,
+        public int $menuId,
         public int $countryId,
         public array $hellofreshIds,
     ) {
@@ -30,6 +30,12 @@ class SyncMenuRecipesJob implements ShouldQueue
      */
     public function handle(): void
     {
+        $menu = Menu::find($this->menuId);
+
+        if ($menu === null) {
+            return;
+        }
+
         $recipeIds = Recipe::where('country_id', $this->countryId)
             ->whereIn('hellofresh_id', $this->hellofreshIds)
             ->pluck('id')
@@ -39,6 +45,6 @@ class SyncMenuRecipesJob implements ShouldQueue
             return;
         }
 
-        $this->menu->recipes()->sync($recipeIds);
+        $menu->recipes()->sync($recipeIds);
     }
 }
