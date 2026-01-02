@@ -80,7 +80,7 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        RecipeList::factory()->for($user)->for($this->country)->create(['name' => 'My List']);
+        RecipeList::factory()->for($user)->create(['name' => 'My List']);
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
@@ -96,8 +96,8 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        RecipeList::factory()->for($user)->for($this->country)->create(['name' => 'Zebra']);
-        RecipeList::factory()->for($user)->for($this->country)->create(['name' => 'Apple']);
+        RecipeList::factory()->for($user)->create(['name' => 'Zebra']);
+        RecipeList::factory()->for($user)->create(['name' => 'Apple']);
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
@@ -108,32 +108,13 @@ final class AddToListButtonTest extends TestCase
     }
 
     #[Test]
-    public function it_only_returns_lists_for_current_country(): void
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $otherCountry = Country::factory()->create(['code' => 'DE']);
-
-        RecipeList::factory()->for($user)->for($this->country)->create(['name' => 'US List']);
-        RecipeList::factory()->for($user)->for($otherCountry)->create(['name' => 'DE List']);
-
-        $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
-
-        $lists = $component->instance()->lists();
-
-        $this->assertCount(1, $lists);
-        $this->assertSame('US List', $lists->first()->name);
-    }
-
-    #[Test]
     public function it_loads_selected_lists_on_mount(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
-        $list->recipes()->attach($this->recipe->id, ['added_at' => now()]);
+        $list = RecipeList::factory()->for($user)->create();
+        $list->recipes()->attach($this->recipe->id, ['added_at' => now(), 'country_id' => $this->country->id]);
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
@@ -146,8 +127,8 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
-        $list->recipes()->attach($this->recipe->id, ['added_at' => now()]);
+        $list = RecipeList::factory()->for($user)->create();
+        $list->recipes()->attach($this->recipe->id, ['added_at' => now(), 'country_id' => $this->country->id]);
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
@@ -160,7 +141,7 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        RecipeList::factory()->for($user)->for($this->country)->create();
+        RecipeList::factory()->for($user)->create();
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
@@ -173,7 +154,7 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
+        $list = RecipeList::factory()->for($user)->create();
 
         Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id])
             ->set('selectedLists', [$list->id])
@@ -188,8 +169,8 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
-        $list->recipes()->attach($this->recipe->id, ['added_at' => now()]);
+        $list = RecipeList::factory()->for($user)->create();
+        $list->recipes()->attach($this->recipe->id, ['added_at' => now(), 'country_id' => $this->country->id]);
 
         Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id])
             ->set('selectedLists', [])
@@ -219,7 +200,6 @@ final class AddToListButtonTest extends TestCase
 
         $this->assertDatabaseHas('recipe_lists', [
             'user_id' => $user->id,
-            'country_id' => $this->country->id,
             'name' => 'New List Name',
         ]);
     }
@@ -288,13 +268,13 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
+        $list = RecipeList::factory()->for($user)->create();
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
         $this->assertSame([], $component->get('selectedLists'));
 
-        $list->recipes()->attach($this->recipe->id, ['added_at' => now()]);
+        $list->recipes()->attach($this->recipe->id, ['added_at' => now(), 'country_id' => $this->country->id]);
 
         $component->dispatch('user-authenticated');
 
@@ -309,7 +289,7 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
+        $list = RecipeList::factory()->for($user)->create();
 
         Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id])
             ->set('selectedLists', [$list->id])
@@ -349,7 +329,7 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        RecipeList::factory()->for($user)->for($this->country)->create();
+        RecipeList::factory()->for($user)->create();
 
         Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id])
             ->call('saveLists');
@@ -363,13 +343,13 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
+        $list = RecipeList::factory()->for($user)->create();
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
         $this->assertSame([], $component->get('selectedLists'));
 
-        $list->recipes()->attach($this->recipe->id, ['added_at' => now()]);
+        $list->recipes()->attach($this->recipe->id, ['added_at' => now(), 'country_id' => $this->country->id]);
 
         $component->call('handleRecipeListUpdated', [
             'recipeId' => $this->recipe->id,
@@ -385,11 +365,11 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
+        $list = RecipeList::factory()->for($user)->create();
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
-        $list->recipes()->attach($this->recipe->id, ['added_at' => now()]);
+        $list->recipes()->attach($this->recipe->id, ['added_at' => now(), 'country_id' => $this->country->id]);
 
         $otherRecipe = Recipe::factory()->for($this->country)->create();
 
@@ -407,11 +387,11 @@ final class AddToListButtonTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $list = RecipeList::factory()->for($user)->for($this->country)->create();
+        $list = RecipeList::factory()->for($user)->create();
 
         $component = Livewire::test(AddToListButton::class, ['recipeId' => $this->recipe->id]);
 
-        $list->recipes()->attach($this->recipe->id, ['added_at' => now()]);
+        $list->recipes()->attach($this->recipe->id, ['added_at' => now(), 'country_id' => $this->country->id]);
 
         $otherCountry = Country::factory()->create(['code' => 'DE']);
 
