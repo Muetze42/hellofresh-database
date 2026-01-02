@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function (): void {
         Session::invalidate();
         Session::regenerateToken();
 
-        return to_route('portal.login');
+        return to_route('portal.dashboard');
     })->name('logout');
 
     // API Tokens
