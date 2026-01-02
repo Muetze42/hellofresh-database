@@ -5,7 +5,7 @@ namespace App\Jobs\Menu;
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
 use App\Jobs\Concerns\HandlesApiFailuresTrait;
-use App\Jobs\Recipe\ImportRecipeJob;
+use App\Jobs\Recipe\FetchRecipeJob;
 use App\Models\Country;
 use App\Models\Menu;
 use App\Models\Recipe;
@@ -14,7 +14,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Context;
+use Throwable;
 
 class FetchMenusJob implements ShouldQueue
 {
@@ -26,8 +28,6 @@ class FetchMenusJob implements ShouldQueue
      * The number of times the job may be attempted.
      */
     public int $tries = 3;
-
-    protected HelloFreshClient $client;
 
     protected string $locale;
 
@@ -52,7 +52,6 @@ class FetchMenusJob implements ShouldQueue
             return;
         }
 
-        $this->client = $client;
         $this->locale = $this->country->locales[0] ?? 'en';
 
         Context::add([
@@ -97,30 +96,19 @@ class FetchMenusJob implements ShouldQueue
      * Import a single menu with its recipes.
      *
      * @param  array{week: string, year_week: int, start: string, recipe_ids: list<string>}  $menuData
+     *
+     * @throws Throwable
      */
     protected function importMenu(array $menuData): void
     {
         // Find existing recipes in the database
-        $existingRecipes = Recipe::where('country_id', $this->country->id)
+        $existingHellofreshIds = Recipe::where('country_id', $this->country->id)
             ->whereIn('hellofresh_id', $menuData['recipe_ids'])
-            ->pluck('id', 'hellofresh_id')
+            ->pluck('hellofresh_id')
             ->toArray();
 
         // Find missing recipe IDs
-        $missingHellofreshIds = array_values(array_diff($menuData['recipe_ids'], array_keys($existingRecipes)));
-
-        // Fetch and import missing recipes
-        $this->importMissingRecipes($missingHellofreshIds);
-
-        // Re-fetch recipe IDs after importing missing ones
-        $recipeIds = Recipe::where('country_id', $this->country->id)
-            ->whereIn('hellofresh_id', $menuData['recipe_ids'])
-            ->pluck('id')
-            ->toArray();
-
-        if ($recipeIds === []) {
-            return;
-        }
+        $missingHellofreshIds = array_values(array_diff($menuData['recipe_ids'], $existingHellofreshIds));
 
         /** @var Menu $menu */
         $menu = $this->country->menus()->updateOrCreate(
@@ -128,30 +116,34 @@ class FetchMenusJob implements ShouldQueue
             ['start' => $menuData['start']]
         );
 
-        $menu->recipes()->sync($recipeIds);
-    }
+        // No missing recipes - sync directly
+        if ($missingHellofreshIds === []) {
+            $recipeIds = Recipe::where('country_id', $this->country->id)
+                ->whereIn('hellofresh_id', $menuData['recipe_ids'])
+                ->pluck('id')
+                ->toArray();
 
-    /**
-     * Fetch and import missing recipes from the API.
-     *
-     * @param  list<string>  $hellofreshIds
-     */
-    protected function importMissingRecipes(array $hellofreshIds): void
-    {
-        foreach ($hellofreshIds as $hellofreshId) {
-            try {
-                $recipeData = $this->client->getRecipe($this->country, $this->locale, $hellofreshId)->array();
-
-                ImportRecipeJob::dispatchSync(
-                    country: $this->country,
-                    locale: $this->locale,
-                    recipe: $recipeData,
-                    ignoreActive: true,
-                );
-            } catch (ConnectionException|RequestException) {
-                // Skip recipes that can't be fetched
-                continue;
+            if ($recipeIds !== []) {
+                $menu->recipes()->sync($recipeIds);
             }
+
+            return;
         }
+
+        // Dispatch batch to fetch missing recipes, then sync menu
+        $jobs = [];
+        foreach ($missingHellofreshIds as $missingHellofreshId) {
+            $jobs[] = new FetchRecipeJob(
+                country: $this->country,
+                locale: $this->locale,
+                hellofreshId: $missingHellofreshId,
+            );
+        }
+
+        Bus::batch($jobs)
+            ->name(sprintf('Fetch missing recipes for menu %d', $menu->year_week))
+            ->onQueue(QueueEnum::HelloFresh->value)
+            ->then(fn () => SyncMenuRecipesJob::dispatch($menu, $this->country->id, $menuData['recipe_ids']))
+            ->dispatch();
     }
 }
