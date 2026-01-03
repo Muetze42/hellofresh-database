@@ -1,5 +1,6 @@
 import './../bootstrap';
 import shoppingListStore from './stores/shopping-list';
+import settingsStore from './stores/settings';
 
 let currentCountryCode = null;
 
@@ -13,11 +14,16 @@ const emptyStore = {
     loadFromStorage: () => {},
 };
 
-function initShoppingListStore() {
+function initStores() {
     const countryCode = document.body.dataset.country;
 
     if (!window.Alpine) {
         return;
+    }
+
+    // Initialize settings store if not exists
+    if (!Alpine.store('settings')) {
+        Alpine.store('settings', settingsStore());
     }
 
     // No country code - set empty placeholder store
@@ -43,8 +49,8 @@ function initShoppingListStore() {
     Alpine.store('shoppingList', shoppingListStore(countryCode));
 }
 
-document.addEventListener('alpine:init', initShoppingListStore);
-document.addEventListener('livewire:navigated', initShoppingListStore);
+document.addEventListener('alpine:init', initStores);
+document.addEventListener('livewire:navigated', initStores);
 
 // Fix Safari bfcache issues with stale Livewire snapshots
 window.addEventListener('pageshow', (event) => {

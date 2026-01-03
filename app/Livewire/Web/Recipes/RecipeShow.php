@@ -44,6 +44,40 @@ class RecipeShow extends AbstractComponent
     }
 
     /**
+     * Toggle a tag filter and redirect to recipe index.
+     */
+    public function toggleTagFilter(int $tagId): void
+    {
+        $sessionKey = sprintf('recipe_filter_%d_tags', $this->recipe->country_id);
+        /** @var array<int> $tagIds */
+        $tagIds = session($sessionKey, []);
+
+        if (in_array($tagId, $tagIds, true)) {
+            $tagIds = array_values(array_filter($tagIds, fn (int $id): bool => $id !== $tagId));
+            session([$sessionKey => $tagIds]);
+            $this->redirect(localized_route('localized.recipes.index'));
+
+            return;
+        }
+
+        $tagIds[] = $tagId;
+        session([$sessionKey => $tagIds]);
+        $this->redirect(localized_route('localized.recipes.index'));
+    }
+
+    /**
+     * Check if a tag is currently active in the filter.
+     */
+    public function isTagActive(int $tagId): bool
+    {
+        $sessionKey = sprintf('recipe_filter_%d_tags', $this->recipe->country_id);
+        /** @var array<int> $tagIds */
+        $tagIds = session($sessionKey, []);
+
+        return in_array($tagId, $tagIds, true);
+    }
+
+    /**
      * Get yields array from recipe.
      *
      * @return list<array<string, mixed>>

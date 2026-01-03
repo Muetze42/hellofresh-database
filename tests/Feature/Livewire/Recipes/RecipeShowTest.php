@@ -371,4 +371,71 @@ final class RecipeShowTest extends TestCase
             ->set('selectedYield', 4)
             ->assertSet('selectedYield', 4);
     }
+
+    #[Test]
+    public function toggle_tag_filter_adds_tag_to_session(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+        $recipe = Recipe::factory()->for($this->country)->create([
+            'steps_primary' => null,
+        ]);
+        $recipe->tags()->attach($tag);
+
+        Livewire::test(RecipeShow::class, ['recipe' => $recipe])
+            ->call('toggleTagFilter', $tag->id)
+            ->assertRedirect(localized_route('localized.recipes.index'));
+
+        $sessionKey = 'recipe_filter_' . $this->country->id . '_tags';
+        $this->assertContains($tag->id, session($sessionKey));
+    }
+
+    #[Test]
+    public function toggle_tag_filter_removes_existing_tag_from_session(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+        $recipe = Recipe::factory()->for($this->country)->create([
+            'steps_primary' => null,
+        ]);
+        $recipe->tags()->attach($tag);
+
+        $sessionKey = 'recipe_filter_' . $this->country->id . '_tags';
+        session([$sessionKey => [$tag->id]]);
+
+        Livewire::test(RecipeShow::class, ['recipe' => $recipe])
+            ->call('toggleTagFilter', $tag->id)
+            ->assertRedirect(localized_route('localized.recipes.index'));
+
+        $this->assertNotContains($tag->id, session($sessionKey, []));
+    }
+
+    #[Test]
+    public function is_tag_active_returns_true_for_active_tag(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+        $recipe = Recipe::factory()->for($this->country)->create([
+            'steps_primary' => null,
+        ]);
+        $recipe->tags()->attach($tag);
+
+        $sessionKey = 'recipe_filter_' . $this->country->id . '_tags';
+        session([$sessionKey => [$tag->id]]);
+
+        $component = Livewire::test(RecipeShow::class, ['recipe' => $recipe]);
+
+        $this->assertTrue($component->instance()->isTagActive($tag->id));
+    }
+
+    #[Test]
+    public function is_tag_active_returns_false_for_inactive_tag(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+        $recipe = Recipe::factory()->for($this->country)->create([
+            'steps_primary' => null,
+        ]);
+        $recipe->tags()->attach($tag);
+
+        $component = Livewire::test(RecipeShow::class, ['recipe' => $recipe]);
+
+        $this->assertFalse($component->instance()->isTagActive($tag->id));
+    }
 }

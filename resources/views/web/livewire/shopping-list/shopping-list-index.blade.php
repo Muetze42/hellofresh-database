@@ -71,8 +71,11 @@
             const recipesParam = items.join(',');
             const servingsParam = items.map(id => id + ':' + (servings[id] || 2)).join(',');
 
+            // Build the target URL without inner encoding (only outer encoding needed)
+            const targetUrl = this.bringUrl + '?recipes=' + recipesParam + '&servings=' + servingsParam;
+
             const url = 'https://api.getbring.com/rest/bringrecipes/deeplink'
-                + '?url=' + encodeURIComponent(this.bringUrl + '?recipes=' + encodeURIComponent(recipesParam) + '&servings=' + encodeURIComponent(servingsParam))
+                + '?url=' + encodeURIComponent(targetUrl)
                 + '&source=web';
 
             window.open(url, '_blank');

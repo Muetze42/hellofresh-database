@@ -121,13 +121,13 @@
     @if ($viewMode === \App\Enums\ViewModeEnum::Grid->value)
       <div class="grid grid-cols-1 gap-section sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         @foreach ($this->recipes as $recipe)
-          <x-recipes.recipe-card wire:key="recipe-{{ $recipe->id }}" :recipe="$recipe" :view-mode="\App\Enums\ViewModeEnum::Grid" />
+          <x-recipes.recipe-card wire:key="recipe-{{ $recipe->id }}" :recipe="$recipe" :view-mode="\App\Enums\ViewModeEnum::Grid" :tag-ids="$tagIds" />
         @endforeach
       </div>
     @else
       <div class="flex flex-col gap-4">
         @foreach ($this->recipes as $recipe)
-          <x-recipes.recipe-card wire:key="recipe-{{ $recipe->id }}" :recipe="$recipe" :view-mode="\App\Enums\ViewModeEnum::List" />
+          <x-recipes.recipe-card wire:key="recipe-{{ $recipe->id }}" :recipe="$recipe" :view-mode="\App\Enums\ViewModeEnum::List" :tag-ids="$tagIds" />
         @endforeach
       </div>
     @endif

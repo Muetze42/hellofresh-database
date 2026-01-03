@@ -319,6 +319,32 @@ class RecipeIndex extends AbstractComponent
     }
 
     /**
+     * Toggle a tag filter (add or remove).
+     */
+    public function toggleTag(int $id): void
+    {
+        if (in_array($id, $this->tagIds, true)) {
+            $this->tagIds = array_values(array_filter($this->tagIds, fn (int $tagId): bool => $tagId !== $id));
+            session([$this->filterSessionKey('tags') => $this->tagIds]);
+            $this->resetPage();
+
+            return;
+        }
+
+        $this->tagIds[] = $id;
+        session([$this->filterSessionKey('tags') => $this->tagIds]);
+        $this->resetPage();
+    }
+
+    /**
+     * Check if a tag filter is active.
+     */
+    public function isTagActive(int $tagId): bool
+    {
+        return in_array($tagId, $this->tagIds, true);
+    }
+
+    /**
      * Clear all filters.
      */
     public function clearFilters(): void

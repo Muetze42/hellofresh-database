@@ -61,6 +61,16 @@ class RecipeRandom extends RecipeIndex
     }
 
     /**
+     * Toggle a tag filter and refresh random recipes.
+     */
+    #[Override]
+    public function toggleTag(int $id): void
+    {
+        parent::toggleTag($id);
+        unset($this->randomRecipes);
+    }
+
+    /**
      * Get the view / view contents that represent the component.
      */
     #[Override]

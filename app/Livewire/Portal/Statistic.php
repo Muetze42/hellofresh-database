@@ -20,7 +20,7 @@ class Statistic extends Component
 
     protected function statistics(): StatisticsService
     {
-        return app(StatisticsService::class);
+        return resolve(StatisticsService::class);
     }
 
     /**
