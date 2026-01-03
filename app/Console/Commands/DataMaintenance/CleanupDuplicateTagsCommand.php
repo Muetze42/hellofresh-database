@@ -9,15 +9,15 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Attribute\AsCommand;
 
-#[AsCommand(name: 'data-maintenance:cleanup-duplicate-allergens')]
-class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanceCommandInterface
+#[AsCommand(name: 'data-maintenance:cleanup-duplicate-tags')]
+class CleanupDuplicateTagsCommand extends Command implements DataMaintenanceCommandInterface
 {
     /**
      * Get the order in which this command should run.
      */
     public function getExecutionOrder(): int
     {
-        return 30;
+        return 40;
     }
 
     /**
@@ -25,7 +25,7 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
      *
      * @var string
      */
-    protected $signature = 'data-maintenance:cleanup-duplicate-allergens
+    protected $signature = 'data-maintenance:cleanup-duplicate-tags
                             {--dry-run : Show what would be done without making changes}';
 
     /**
@@ -33,7 +33,7 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
      *
      * @var string
      */
-    protected $description = 'Merge duplicate allergens by name and country_id, preserving icon_path';
+    protected $description = 'Merge duplicate tags by name and country_id, preserving active and display_label flags';
 
     /**
      * Execute the console command.
@@ -49,7 +49,7 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
         $duplicates = $this->findDuplicates();
 
         if ($duplicates === []) {
-            $this->components->info('No duplicate allergens found.');
+            $this->components->info('No duplicate tags found.');
 
             return self::SUCCESS;
         }
@@ -73,7 +73,7 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
             ['Metric', 'Count'],
             [
                 ['Duplicate groups merged', $totalMerged],
-                ['Allergens deleted', $totalDeleted],
+                ['Tags deleted', $totalDeleted],
                 ['Pivot entries moved', $totalPivotsMoved],
             ]
         );
@@ -87,13 +87,13 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
     }
 
     /**
-     * Find all duplicate allergen groups.
+     * Find all duplicate tag groups.
      *
      * @return array<int, array{name: string, country_id: int, ids: non-empty-list<int>, count: int}>
      */
     protected function findDuplicates(): array
     {
-        return DB::table('allergens')
+        return DB::table('tags')
             ->select([
                 'name',
                 'country_id',
@@ -126,7 +126,7 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
      */
     protected function mergeDuplicateGroup(array $duplicate, bool $dryRun): array
     {
-        $keepId = $this->selectBestAllergen($duplicate['ids']);
+        $keepId = $this->selectBestTag($duplicate['ids']);
         $deleteIds = array_values(array_filter($duplicate['ids'], fn (int $id): bool => $id !== $keepId));
 
         // Get name for display
@@ -144,8 +144,8 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
         ];
 
         // Count what would be moved
-        $result['pivots_moved'] = DB::table('allergen_recipe')
-            ->whereIn('allergen_id', $deleteIds)
+        $result['pivots_moved'] = DB::table('recipe_tag')
+            ->whereIn('tag_id', $deleteIds)
             ->count();
 
         if ($dryRun) {
@@ -156,34 +156,55 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
             // 1. Merge hellofresh_ids from all duplicates into the keeper
             $this->mergeHelloFreshIds($keepId, $deleteIds);
 
-            // 2. Merge icon_path if keeper doesn't have one
-            $this->mergeIconPath($keepId, $deleteIds);
+            // 2. Merge active and display_label flags (preserve true values)
+            $this->mergeFlags($keepId, $deleteIds);
 
             // 3. Move pivot entries
             $result['pivots_moved'] = $this->movePivotEntries($keepId, $deleteIds);
 
-            // 4. Delete the duplicate allergens
-            DB::table('allergens')->whereIn('id', $deleteIds)->delete();
+            // 4. Delete the duplicate tags
+            DB::table('tags')->whereIn('id', $deleteIds)->delete();
         });
 
         return $result;
     }
 
     /**
-     * Select the best allergen to keep (prefer one with icon_path).
+     * Select the best tag to keep (prefer one with active=true and display_label=true).
      *
      * @param  non-empty-list<int>  $ids
      */
-    protected function selectBestAllergen(array $ids): int
+    protected function selectBestTag(array $ids): int
     {
-        // Find the one with icon_path
-        $withIcon = DB::table('allergens')
+        // Find one with both active and display_label true
+        $withBothFlags = DB::table('tags')
             ->whereIn('id', $ids)
-            ->whereNotNull('icon_path')
+            ->where('active', true)
+            ->where('display_label', true)
             ->value('id');
 
-        if ($withIcon !== null) {
-            return (int) $withIcon;
+        if ($withBothFlags !== null) {
+            return (int) $withBothFlags;
+        }
+
+        // Find one with active true
+        $withActive = DB::table('tags')
+            ->whereIn('id', $ids)
+            ->where('active', true)
+            ->value('id');
+
+        if ($withActive !== null) {
+            return (int) $withActive;
+        }
+
+        // Find one with display_label true
+        $withDisplayLabel = DB::table('tags')
+            ->whereIn('id', $ids)
+            ->where('display_label', true)
+            ->value('id');
+
+        if ($withDisplayLabel !== null) {
+            return (int) $withDisplayLabel;
         }
 
         // Fallback to lowest ID
@@ -200,7 +221,7 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
         $allIds = array_merge([$keepId], $deleteIds);
 
         // Get all hellofresh_ids from all duplicates
-        $allHelloFreshIds = DB::table('allergens')
+        $allHelloFreshIds = DB::table('tags')
             ->whereIn('id', $allIds)
             ->pluck('hellofresh_ids')
             ->flatMap(function (?string $ids): array {
@@ -217,40 +238,40 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
             ->all();
 
         // Update the keeper with merged IDs
-        DB::table('allergens')
+        DB::table('tags')
             ->where('id', $keepId)
             ->update(['hellofresh_ids' => json_encode($allHelloFreshIds)]);
     }
 
     /**
-     * Merge icon_path from duplicates into the keeper if keeper doesn't have one.
+     * Merge active and display_label flags from duplicates into the keeper.
+     * If any duplicate has true, the keeper should have true.
      *
      * @param  list<int>  $deleteIds
      */
-    protected function mergeIconPath(int $keepId, array $deleteIds): void
+    protected function mergeFlags(int $keepId, array $deleteIds): void
     {
-        // Check if keeper already has icon_path
-        $keeperIconPath = DB::table('allergens')
+        $allIds = array_merge([$keepId], $deleteIds);
+
+        // Check if any tag has active=true
+        $hasActive = DB::table('tags')
+            ->whereIn('id', $allIds)
+            ->where('active', true)
+            ->exists();
+
+        // Check if any tag has display_label=true
+        $hasDisplayLabel = DB::table('tags')
+            ->whereIn('id', $allIds)
+            ->where('display_label', true)
+            ->exists();
+
+        // Update keeper with merged flags
+        DB::table('tags')
             ->where('id', $keepId)
-            ->value('icon_path');
-
-        if ($keeperIconPath !== null) {
-            return;
-        }
-
-        // Find icon_path from duplicates
-        $iconPath = DB::table('allergens')
-            ->whereIn('id', $deleteIds)
-            ->whereNotNull('icon_path')
-            ->value('icon_path');
-
-        if ($iconPath === null) {
-            return;
-        }
-
-        DB::table('allergens')
-            ->where('id', $keepId)
-            ->update(['icon_path' => $iconPath]);
+            ->update([
+                'active' => $hasActive,
+                'display_label' => $hasDisplayLabel,
+            ]);
     }
 
     /**
@@ -261,32 +282,32 @@ class CleanupDuplicateAllergensCommand extends Command implements DataMaintenanc
     protected function movePivotEntries(int $keepId, array $deleteIds): int
     {
         // Get existing recipe_ids for the keeper to avoid duplicates
-        $existingRecipeIds = DB::table('allergen_recipe')
-            ->where('allergen_id', $keepId)
+        $existingRecipeIds = DB::table('recipe_tag')
+            ->where('tag_id', $keepId)
             ->pluck('recipe_id')
             ->all();
 
         // Get unique recipe_ids from duplicates that don't exist in keeper
-        $newRecipeIds = DB::table('allergen_recipe')
-            ->whereIn('allergen_id', $deleteIds)
+        $newRecipeIds = DB::table('recipe_tag')
+            ->whereIn('tag_id', $deleteIds)
             ->whereNotIn('recipe_id', $existingRecipeIds)
             ->distinct()
             ->pluck('recipe_id')
             ->all();
 
         // Delete ALL pivot entries from duplicates first
-        DB::table('allergen_recipe')
-            ->whereIn('allergen_id', $deleteIds)
+        DB::table('recipe_tag')
+            ->whereIn('tag_id', $deleteIds)
             ->delete();
 
         // Insert new unique entries for the keeper
         $insertData = array_map(fn (int $recipeId): array => [
-            'allergen_id' => $keepId,
+            'tag_id' => $keepId,
             'recipe_id' => $recipeId,
         ], $newRecipeIds);
 
         if ($insertData !== []) {
-            DB::table('allergen_recipe')->insert($insertData);
+            DB::table('recipe_tag')->insert($insertData);
         }
 
         return count($newRecipeIds);
