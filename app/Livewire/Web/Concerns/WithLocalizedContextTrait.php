@@ -69,6 +69,6 @@ trait WithLocalizedContextTrait
     #[Computed]
     public function country(): Country
     {
-        return Country::findOrFail($this->countryId);
+        return current_country();
     }
 }
