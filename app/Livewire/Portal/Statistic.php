@@ -160,15 +160,16 @@ class Statistic extends Component
     /**
      * Get top tags by recipe count.
      *
-     * @return Collection<int, object{name: string, recipes_count: int}>
+     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
      */
     #[Computed]
     public function topTags(): Collection
     {
         return Cache::remember('portal_top_tags', 3600, static fn (): Collection => DB::table('tags')
             ->join('recipe_tag', 'tags.id', '=', 'recipe_tag.tag_id')
-            ->select('tags.name', DB::raw('COUNT(recipe_tag.recipe_id) as recipes_count'))
-            ->groupBy('tags.id', 'tags.name')
+            ->join('countries', 'tags.country_id', '=', 'countries.id')
+            ->select('tags.name', 'countries.code as country_code', DB::raw('COUNT(recipe_tag.recipe_id) as recipes_count'))
+            ->groupBy('tags.id', 'tags.name', 'countries.code')
             ->orderByDesc('recipes_count')
             ->limit(10)
             ->get());
@@ -177,15 +178,16 @@ class Statistic extends Component
     /**
      * Get top cuisines by recipe count.
      *
-     * @return Collection<int, object{name: string, recipes_count: int}>
+     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
      */
     #[Computed]
     public function topCuisines(): Collection
     {
         return Cache::remember('portal_top_cuisines', 3600, static fn (): Collection => DB::table('cuisines')
             ->join('cuisine_recipe', 'cuisines.id', '=', 'cuisine_recipe.cuisine_id')
-            ->select('cuisines.name', DB::raw('COUNT(cuisine_recipe.recipe_id) as recipes_count'))
-            ->groupBy('cuisines.id', 'cuisines.name')
+            ->join('countries', 'cuisines.country_id', '=', 'countries.id')
+            ->select('cuisines.name', 'countries.code as country_code', DB::raw('COUNT(cuisine_recipe.recipe_id) as recipes_count'))
+            ->groupBy('cuisines.id', 'cuisines.name', 'countries.code')
             ->orderByDesc('recipes_count')
             ->limit(10)
             ->get());

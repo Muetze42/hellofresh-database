@@ -31,7 +31,10 @@
       <flux:table.rows>
         @foreach($this->topTags as $tag)
           <flux:table.row wire:key="tag-{{ $loop->index }}">
-            <flux:table.cell class="truncate max-w-48">{{ json_decode($tag->name)->en ?? $tag->name }}</flux:table.cell>
+            <flux:table.cell class="truncate max-w-48">
+              <span title="{{ $tag->country_code }}">{{ Str::countryFlag($tag->country_code) }}</span>
+              {{ json_decode($tag->name)->en ?? $tag->name }}
+            </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">{{ number_format($tag->recipes_count) }}</flux:table.cell>
           </flux:table.row>
         @endforeach
@@ -49,7 +52,10 @@
       <flux:table.rows>
         @foreach($this->topCuisines as $cuisine)
           <flux:table.row wire:key="cuisine-{{ $loop->index }}">
-            <flux:table.cell class="truncate max-w-48">{{ json_decode($cuisine->name)->en ?? $cuisine->name }}</flux:table.cell>
+            <flux:table.cell class="truncate max-w-48">
+              <span title="{{ $cuisine->country_code }}">{{ Str::countryFlag($cuisine->country_code) }}</span>
+              {{ json_decode($cuisine->name)->en ?? $cuisine->name }}
+            </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">{{ number_format($cuisine->recipes_count) }}</flux:table.cell>
           </flux:table.row>
         @endforeach
