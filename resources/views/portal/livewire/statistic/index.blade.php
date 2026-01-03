@@ -7,6 +7,7 @@
   @include('portal::livewire.statistic.partials.global-stats')
   @include('portal::livewire.statistic.partials.quality-health')
   @include('portal::livewire.statistic.partials.user-engagement')
+  @include('portal::livewire.statistic.partials.users-by-country')
   @include('portal::livewire.statistic.partials.country-stats')
   @include('portal::livewire.statistic.partials.top-lists')
   @include('portal::livewire.statistic.partials.recipes-per-month')

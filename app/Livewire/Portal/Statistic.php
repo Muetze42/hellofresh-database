@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use stdClass;
 
 #[Layout('portal::components.layouts.app')]
 class Statistic extends Component
@@ -150,6 +151,17 @@ class Statistic extends Component
     public function userEngagement(): array
     {
         return $this->statistics()->userEngagement();
+    }
+
+    /**
+     * Get user counts grouped by country.
+     *
+     * @return Collection<int, stdClass>
+     */
+    #[Computed]
+    public function usersByCountry(): Collection
+    {
+        return $this->statistics()->usersByCountry();
     }
 
     /**
