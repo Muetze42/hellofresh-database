@@ -44,7 +44,7 @@
                   <flux:icon.calendar class="size-5 text-green-600 dark:text-green-400" />
                 </div>
                 <div class="flex flex-col min-w-0 flex-1">
-                  <span>{{ __('Week') }} {{ substr((string) $menu->year_week, -2) }}</span>
+                  <span>{{ substr((string) $menu->year_week, 0, 4) }} · {{ __('Week') }} {{ substr((string) $menu->year_week, -2) }}</span>
                   <span class="text-sm text-zinc-500 dark:text-zinc-400 truncate">{{ $recipe->name }}</span>
                 </div>
               </a>

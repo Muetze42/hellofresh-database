@@ -37,7 +37,8 @@ class GlobalSearch extends AbstractComponent
             ->where('country_id', $this->countryId)
             ->where(function (Builder $query) use ($searchTerm): void {
                 $query->whereLike('name->' . $this->locale, $searchTerm)
-                    ->orWhereLike('headline->' . $this->locale, $searchTerm);
+                    ->orWhereLike('headline->' . $this->locale, $searchTerm)
+                    ->orWhereLike('hellofresh_id', trim($this->search));
             })
             ->orderBy('name->' . $this->locale)
             ->limit(10)
