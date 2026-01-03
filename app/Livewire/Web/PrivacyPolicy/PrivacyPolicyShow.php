@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Web\PrivacyPolicy;
 
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Support\Markdown\FluxRenderer;
 use Illuminate\Contracts\View\View as ViewInterface;

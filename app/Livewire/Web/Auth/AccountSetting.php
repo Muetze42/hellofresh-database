@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Web\Auth;
 
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
+use App\Rules\CountryCodeRule;
 use App\Rules\DisposableEmailRule;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View as ViewInterface;
@@ -49,16 +50,16 @@ class AccountSetting extends AbstractComponent
             return;
         }
 
-        $this->validate([
+        $validated = $this->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email:rfc', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
-            'country_code' => ['nullable', 'string', 'size:2'],
+            'country_code' => ['nullable', 'string', 'size:2', new CountryCodeRule()],
         ]);
 
         $user->update([
-            'name' => $this->name,
-            'email' => $this->email,
-            'country_code' => $this->country_code,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'country_code' => $validated['country_code'],
         ]);
 
         Flux::toastSuccess(__('Profile updated successfully.'));

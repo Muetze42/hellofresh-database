@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Web\Auth;
 
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;

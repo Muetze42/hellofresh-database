@@ -177,6 +177,8 @@ return [
         'disposable_email' => 'Wegwerf-E-Mail-Adressen sind nicht erlaubt.',
     ],
 
+    'country_code' => 'Das ausgewählte Land ist ungültig.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
