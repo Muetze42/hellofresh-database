@@ -10,7 +10,10 @@
       <flux:table.rows>
         @foreach($this->topIngredients as $ingredient)
           <flux:table.row wire:key="ingredient-{{ $loop->index }}">
-            <flux:table.cell class="truncate max-w-48">{{ json_decode($ingredient->name)->en ?? $ingredient->name }}</flux:table.cell>
+            <flux:table.cell class="truncate max-w-48">
+              <span title="{{ $ingredient->country_code }}">{{ Str::countryFlag($ingredient->country_code) }}</span>
+              {{ json_decode($ingredient->name)->en ?? $ingredient->name }}
+            </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">{{ number_format($ingredient->recipes_count) }}</flux:table.cell>
           </flux:table.row>
         @endforeach

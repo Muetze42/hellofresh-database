@@ -142,15 +142,16 @@ class Statistic extends Component
     /**
      * Get top ingredients by recipe count.
      *
-     * @return Collection<int, object{name: string, recipes_count: int}>
+     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
      */
     #[Computed]
     public function topIngredients(): Collection
     {
         return Cache::remember('portal_top_ingredients', 3600, static fn (): Collection => DB::table('ingredients')
             ->join('ingredient_recipe', 'ingredients.id', '=', 'ingredient_recipe.ingredient_id')
-            ->select('ingredients.name', DB::raw('COUNT(ingredient_recipe.recipe_id) as recipes_count'))
-            ->groupBy('ingredients.id', 'ingredients.name')
+            ->join('countries', 'ingredients.country_id', '=', 'countries.id')
+            ->select('ingredients.name', 'countries.code as country_code', DB::raw('COUNT(ingredient_recipe.recipe_id) as recipes_count'))
+            ->groupBy('ingredients.id', 'ingredients.name', 'countries.code')
             ->orderByDesc('recipes_count')
             ->limit(10)
             ->get());
