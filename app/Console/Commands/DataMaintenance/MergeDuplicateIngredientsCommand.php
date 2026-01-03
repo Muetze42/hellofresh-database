@@ -4,13 +4,22 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\DataMaintenance;
 
+use App\Console\Commands\DataMaintenance\Contracts\DataMaintenanceCommandInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'data-maintenance:merge-duplicate-ingredients')]
-class MergeDuplicateIngredientsCommand extends Command
+class MergeDuplicateIngredientsCommand extends Command implements DataMaintenanceCommandInterface
 {
+    /**
+     * Get the order in which this command should run.
+     */
+    public function getExecutionOrder(): int
+    {
+        return 20; // Run after name cleanup
+    }
+
     /**
      * The name and signature of the console command.
      *

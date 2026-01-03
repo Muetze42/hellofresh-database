@@ -1,14 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\DataMaintenance;
 
+use App\Console\Commands\DataMaintenance\Contracts\DataMaintenanceCommandInterface;
 use App\Models\Ingredient;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'data-maintenance:cleanup-ingredient-names')]
-class CleanupIngredientNamesCommand extends Command
+class CleanupIngredientNamesCommand extends Command implements DataMaintenanceCommandInterface
 {
+    /**
+     * Get the order in which this command should run.
+     */
+    public function getExecutionOrder(): int
+    {
+        return 10; // Run early - clean names before merging
+    }
+
     /**
      * The name and signature of the console command.
      *
