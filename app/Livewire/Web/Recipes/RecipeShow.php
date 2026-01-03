@@ -210,9 +210,17 @@ class RecipeShow extends AbstractComponent
             return new Collection();
         }
 
+        $sessionKey = sprintf('recipe_filter_%d_excluded_allergens', $this->recipe->country_id);
+        /** @var array<int> $excludedAllergenIds */
+        $excludedAllergenIds = session($sessionKey, []);
+
         return Recipe::where('country_id', $this->recipe->country_id)
             ->whereNot('id', $this->recipe->id)
             ->whereHas('tags', fn (Builder $query): Builder => $query->whereIn('tags.id', $tagIds))
+            ->when($excludedAllergenIds !== [], fn (Builder $query) => $query->whereDoesntHave(
+                'allergens',
+                fn (Builder $allergenQuery) => $allergenQuery->whereIn('allergens.id', $excludedAllergenIds)
+            ))
             ->withCount(['tags' => fn (Builder $query): Builder => $query->whereIn('tags.id', $tagIds)])
             ->orderByDesc('tags_count')
             ->limit(4)
