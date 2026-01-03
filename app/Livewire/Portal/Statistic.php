@@ -18,9 +18,10 @@ class Statistic extends Component
 
     public string $sortDirection = 'desc';
 
-    public function __construct(
-        protected StatisticsService $statistics,
-    ) {}
+    protected function statistics(): StatisticsService
+    {
+        return app(StatisticsService::class);
+    }
 
     /**
      * Sort the country stats by a given column.
@@ -45,7 +46,7 @@ class Statistic extends Component
     #[Computed]
     public function globalStats(): array
     {
-        return $this->statistics->globalStats();
+        return $this->statistics()->globalStats();
     }
 
     /**
@@ -56,7 +57,7 @@ class Statistic extends Component
     #[Computed]
     public function countryStats(): Collection
     {
-        $countries = $this->statistics->countryStats();
+        $countries = $this->statistics()->countryStats();
 
         return $this->sortDirection === 'asc'
             ? $countries->sortBy($this->sortBy)
@@ -71,7 +72,7 @@ class Statistic extends Component
     #[Computed]
     public function newestRecipes(): Collection
     {
-        return $this->statistics->newestRecipes();
+        return $this->statistics()->newestRecipes();
     }
 
     /**
@@ -82,7 +83,7 @@ class Statistic extends Component
     #[Computed]
     public function difficultyDistribution(): array
     {
-        return $this->statistics->difficultyDistribution();
+        return $this->statistics()->difficultyDistribution();
     }
 
     /**
@@ -93,7 +94,7 @@ class Statistic extends Component
     #[Computed]
     public function recipeQuality(): array
     {
-        return $this->statistics->recipeQuality();
+        return $this->statistics()->recipeQuality();
     }
 
     /**
@@ -104,7 +105,7 @@ class Statistic extends Component
     #[Computed]
     public function topIngredients(): Collection
     {
-        return $this->statistics->topIngredients();
+        return $this->statistics()->topIngredients();
     }
 
     /**
@@ -115,7 +116,7 @@ class Statistic extends Component
     #[Computed]
     public function topTags(): Collection
     {
-        return $this->statistics->topTags();
+        return $this->statistics()->topTags();
     }
 
     /**
@@ -126,7 +127,7 @@ class Statistic extends Component
     #[Computed]
     public function topCuisines(): Collection
     {
-        return $this->statistics->topCuisines();
+        return $this->statistics()->topCuisines();
     }
 
     /**
@@ -137,7 +138,7 @@ class Statistic extends Component
     #[Computed]
     public function recipesPerMonth(): Collection
     {
-        return $this->statistics->recipesPerMonth();
+        return $this->statistics()->recipesPerMonth();
     }
 
     /**
@@ -148,7 +149,7 @@ class Statistic extends Component
     #[Computed]
     public function userEngagement(): array
     {
-        return $this->statistics->userEngagement();
+        return $this->statistics()->userEngagement();
     }
 
     /**
@@ -159,7 +160,7 @@ class Statistic extends Component
     #[Computed]
     public function avgPrepTimesByCountry(): Collection
     {
-        return $this->statistics->avgPrepTimesByCountry();
+        return $this->statistics()->avgPrepTimesByCountry();
     }
 
     /**
@@ -170,7 +171,7 @@ class Statistic extends Component
     #[Computed]
     public function dataHealth(): array
     {
-        return $this->statistics->dataHealth();
+        return $this->statistics()->dataHealth();
     }
 
     public function render(): View
