@@ -34,6 +34,14 @@ class ClearStatisticsCacheCommand extends Command implements LauncherCommandInte
         'portal_country_stats',
         'portal_newest_recipes',
         'portal_difficulty_distribution',
+        'portal_recipe_quality',
+        'portal_top_ingredients',
+        'portal_top_tags',
+        'portal_top_cuisines',
+        'portal_recipes_per_month',
+        'portal_user_engagement',
+        'portal_avg_prep_times',
+        'portal_data_health',
     ];
 
     /**
