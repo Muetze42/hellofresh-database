@@ -39,6 +39,7 @@ class StatisticsService
         'portal_top_cuisines',
         'portal_recipes_per_month',
         'portal_user_engagement',
+        'portal_users_by_country',
         'portal_avg_prep_times',
         'portal_data_health',
     ];
@@ -70,6 +71,7 @@ class StatisticsService
         $this->topCuisines();
         $this->recipesPerMonth();
         $this->userEngagement();
+        $this->usersByCountry();
         $this->avgPrepTimesByCountry();
         $this->dataHealth();
     }
@@ -249,6 +251,20 @@ class StatisticsService
                 'total_recipes_in_lists' => $totalRecipesInLists,
             ];
         });
+    }
+
+    /**
+     * Get user counts grouped by country.
+     *
+     * @return Collection<int, stdClass>
+     */
+    public function usersByCountry(): Collection
+    {
+        return Cache::remember('portal_users_by_country', $this->cacheTtl, static fn (): Collection => DB::table('users')
+            ->select('country_code', DB::raw('COUNT(*) as count'))
+            ->groupBy('country_code')
+            ->orderByDesc('count')
+            ->get());
     }
 
     /**
