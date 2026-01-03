@@ -105,7 +105,7 @@
       {{ config('app.name') }}
     </flux:sidebar.item>
     @if(auth()->user()?->admin)
-      <flux:sidebar.item icon="laravel-horizon" :href="config('app.url').'/'.config('horizon.path')" :current="false">
+      <flux:sidebar.item icon="laravel-horizon" :href="config('app.url').'/'.config('horizon.path')" :current="false" target="_blank">
         Horizon
       </flux:sidebar.item>
     @endif

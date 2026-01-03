@@ -1,19 +1,21 @@
 <div class="space-y-section">
+    <flux:breadcrumbs>
+        <flux:breadcrumbs.item :href="route('portal.admin.users')" wire:navigate>Users</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item>{{ $user->name }}</flux:breadcrumbs.item>
+    </flux:breadcrumbs>
+
     {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-section">
-        <div class="flex items-center gap-section">
-            <flux:button icon="arrow-left" variant="ghost" :href="route('portal.admin.users')" wire:navigate />
-            <div class="flex items-center gap-ui">
-                <flux:avatar name="{{ $user->name }}" size="lg" />
-                <div>
-                    <flux:heading size="xl" class="flex items-center gap-ui">
-                        {{ $user->name }}
-                        @if($user->admin)
-                            <flux:badge color="blue" size="sm">Admin</flux:badge>
-                        @endif
-                    </flux:heading>
-                    <flux:text variant="subtle">{{ $user->email }}</flux:text>
-                </div>
+        <div class="flex items-center gap-ui">
+            <flux:avatar name="{{ $user->name }}" size="lg" />
+            <div>
+                <flux:heading size="xl" class="flex items-center gap-ui">
+                    {{ $user->name }}
+                    @if($user->admin)
+                        <flux:badge color="blue" size="sm">Admin</flux:badge>
+                    @endif
+                </flux:heading>
+                <flux:text variant="subtle">{{ $user->email }}</flux:text>
             </div>
         </div>
         <flux:select wire:model.live="period" variant="listbox" class="w-full sm:w-40">
