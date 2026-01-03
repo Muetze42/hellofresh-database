@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.9.0] - 2026-01-03
+
+### Added
+
+- **Portal Statistics** - Comprehensive database statistics dashboard
+    - Global stats: Total recipes, ingredients, menus, and countries
+    - Recipe quality metrics: PDFs available, missing images, missing nutrition info
+    - User engagement: Registered users, recipe lists, saved recipes
+    - Top 10 lists: Most used ingredients, tags, and cuisines
+    - Monthly recipe trend: Recipes added per month over the last 12 months
+    - Average prep times by country
+    - Difficulty distribution with visual progress bars
+    - Recently added recipes overview
+- **Enhanced Country Statistics** - Sortable table with country flags, localized names, supported locales, and PDF recipe counts
+
 ## [3.8.0] - 2026-01-02
 
 ### Added

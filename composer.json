@@ -3,6 +3,13 @@
     "name": "norman-huth/hellofresh-database",
     "type": "project",
     "description": "Unofficial HelloFresh recipe database with weekly menus, shopping lists, ingredient tracking, multi-language support, and a REST API.",
+    "authors": [
+        {
+            "name": "Norman Huth",
+            "role": "Lead Developer",
+            "homepage": "https://huth.it"
+        }
+    ],
     "keywords": [
         "hellofresh",
         "recipes",
