@@ -3,16 +3,11 @@
 namespace App\Livewire\Portal\Auth;
 
 use App\Livewire\AbstractComponent;
-use App\Models\User;
-use App\Rules\CountryCodeRule;
-use App\Rules\DisposableEmailRule;
+use App\Livewire\Actions\RegisterUserAction;
 use App\Support\Facades\Flux;
-use Illuminate\Auth\Events\Registered as RegisteredEvent;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 
 #[Layout('portal::components.layouts.guest')]
@@ -33,26 +28,14 @@ class Register extends AbstractComponent
     /**
      * Handle user registration.
      */
-    public function register(): void
+    public function register(RegisterUserAction $registerUser): void
     {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'min:2', 'max:255'],
-            'email' => ['required', 'email:rfc', 'unique:users,email', new DisposableEmailRule()],
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'country_code' => ['nullable', 'string', 'size:2', new CountryCodeRule()],
-            'acceptPrivacy' => ['accepted'],
-        ], [
-            'acceptPrivacy.accepted' => __('You must accept the privacy policy.'),
-        ]);
+        $validated = $this->validate(
+            RegisterUserAction::rules(),
+            RegisterUserAction::messages(),
+        );
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'country_code' => $validated['country_code'],
-            'password' => Hash::make($validated['password']),
-        ]);
-
-        event(new RegisteredEvent($user));
+        $user = $registerUser($validated);
 
         Auth::login($user, true);
 
