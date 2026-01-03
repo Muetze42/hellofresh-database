@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Portal\Auth;
 
+use App\Livewire\AbstractComponent;
 use App\Models\User;
+use App\Rules\CountryCodeRule;
 use App\Rules\DisposableEmailRule;
 use App\Support\Facades\Flux;
 use Illuminate\Auth\Events\Registered as RegisteredEvent;
@@ -12,10 +14,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.guest')]
-class Register extends Component
+class Register extends AbstractComponent
 {
     public string $name = '';
 
@@ -34,21 +35,21 @@ class Register extends Component
      */
     public function register(): void
     {
-        $this->validate([
+        $validated = $this->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email:rfc', 'unique:users,email', new DisposableEmailRule()],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'country_code' => ['nullable', 'string', 'size:2'],
+            'country_code' => ['nullable', 'string', 'size:2', new CountryCodeRule()],
             'acceptPrivacy' => ['accepted'],
         ], [
             'acceptPrivacy.accepted' => __('You must accept the privacy policy.'),
         ]);
 
         $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'country_code' => $this->country_code,
-            'password' => Hash::make($this->password),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'country_code' => $validated['country_code'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         event(new RegisteredEvent($user));
@@ -57,7 +58,7 @@ class Register extends Component
 
         Session::regenerate();
 
-        Flux::toastSuccess('Welcome! Please verify your email address.');
+        Flux::toastSuccess('Welcome!');
 
         $this->redirect(route('portal.dashboard'), navigate: true);
     }
