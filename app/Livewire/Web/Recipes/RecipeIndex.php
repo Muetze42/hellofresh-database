@@ -349,7 +349,6 @@ class RecipeIndex extends AbstractComponent
      */
     public function clearFilters(): void
     {
-        $this->search = '';
         $this->filterHasPdf = false;
         $this->excludedAllergenIds = [];
         $this->ingredientIds = [];
