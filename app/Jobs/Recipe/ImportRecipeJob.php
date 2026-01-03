@@ -373,6 +373,10 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
             return false;
         }
 
+        if (! in_array((int) $this->recipe['difficulty'], [1, 2, 3])) {
+            return false;
+        }
+
         if (! $this->recipe['isPublished']) {
             return false;
         }
