@@ -86,7 +86,7 @@
         <div class="mt-2 flex flex-wrap gap-1">
           @foreach ($recipe->tags->where('display_label', true) as $tag)
             @php $isActive = in_array($tag->id, $tagIds ?? []); @endphp
-            {{-- Clickable disabled: always zinc --}}
+            {{-- Clickable disabled: zinc --}}
             <flux:badge
               x-data
               x-show="!$store.settings?.clickableTags"
@@ -94,21 +94,18 @@
               color="zinc"
               size="sm"
             >{{ $tag->name }}</flux:badge>
-            {{-- Clickable enabled: lime if active, zinc if not --}}
+            {{-- Clickable enabled: lime if active, zinc with plus icon if not --}}
             <flux:badge
               x-data
               x-show="$store.settings?.clickableTags"
               x-cloak
               x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
-              class="cursor-pointer hover:opacity-80"
+              as="button"
               :color="$isActive ? 'lime' : 'zinc'"
+              :icon="$isActive ? 'check' : 'plus'"
+              icon:variant="micro"
               size="sm"
-            >
-              {{ $tag->name }}
-              @if ($isActive)
-                <flux:icon.check variant="micro" class="ml-0.5" />
-              @endif
-            </flux:badge>
+            >{{ $tag->name }}</flux:badge>
           @endforeach
         </div>
       @endif
@@ -168,7 +165,7 @@
         <div class="mt-2 flex flex-wrap gap-1">
           @foreach ($recipe->tags->where('display_label', true) as $tag)
             @php $isActive = in_array($tag->id, $tagIds ?? []); @endphp
-            {{-- Clickable disabled: always zinc --}}
+            {{-- Clickable disabled: zinc --}}
             <flux:badge
               x-data
               x-show="!$store.settings?.clickableTags"
@@ -176,21 +173,18 @@
               color="zinc"
               size="sm"
             >{{ $tag->name }}</flux:badge>
-            {{-- Clickable enabled: lime if active, zinc if not --}}
+            {{-- Clickable enabled: lime if active, zinc with plus icon if not --}}
             <flux:badge
               x-data
               x-show="$store.settings?.clickableTags"
               x-cloak
               x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
-              class="cursor-pointer hover:opacity-80"
+              as="button"
               :color="$isActive ? 'lime' : 'zinc'"
+              :icon="$isActive ? 'check' : 'plus'"
+              icon:variant="micro"
               size="sm"
-            >
-              {{ $tag->name }}
-              @if ($isActive)
-                <flux:icon.check variant="micro" class="ml-0.5" />
-              @endif
-            </flux:badge>
+            >{{ $tag->name }}</flux:badge>
           @endforeach
         </div>
       @endif
