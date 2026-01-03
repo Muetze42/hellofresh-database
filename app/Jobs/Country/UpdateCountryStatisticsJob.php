@@ -54,9 +54,6 @@ class UpdateCountryStatisticsJob implements LauncherJobInterface, ShouldQueue
         $prepRecipes = (clone $recipes)->where('prep_time', '>', 0);
         $totalRecipes = (clone $recipes)->where('total_time', '>', 0);
 
-        $recipesCount = $recipes->count();
-        $ingredientsCount = $country->ingredients()->count();
-
         $prepMin = $prepRecipes->min('prep_time');
         $prepMax = $prepRecipes->max('prep_time');
         $totalMin = $totalRecipes->min('total_time');
@@ -67,8 +64,9 @@ class UpdateCountryStatisticsJob implements LauncherJobInterface, ShouldQueue
             'prep_max' => $prepMax > 0 ? $prepMax : null,
             'total_min' => $totalMin > 0 ? $totalMin : null,
             'total_max' => $totalMax > 0 ? $totalMax : null,
-            'recipes_count' => $recipesCount > 0 ? $recipesCount : null,
-            'ingredients_count' => $ingredientsCount > 0 ? $ingredientsCount : null,
+            'recipes_count' => $recipes->count(),
+            'recipes_with_pdf_count' => (clone $recipes)->where('has_pdf', true)->count(),
+            'ingredients_count' => $country->ingredients()->count(),
             'has_allergens' => $country->allergens()->where('active', true)->count() > 3,
             'has_cuisines' => $country->cuisines()->where('active', true)->count() > 3,
             'has_labels' => $country->labels()->where('active', true)->count() > 3,

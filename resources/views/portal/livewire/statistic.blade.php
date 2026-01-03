@@ -102,6 +102,7 @@
         <flux:table.columns>
           <flux:table.column>Country</flux:table.column>
           <flux:table.column class="text-right">Recipes</flux:table.column>
+          <flux:table.column class="text-right">with PDF</flux:table.column>
           <flux:table.column class="text-right">Ingredients</flux:table.column>
           <flux:table.column class="text-right">Menus</flux:table.column>
         </flux:table.columns>
@@ -113,6 +114,9 @@
               </flux:table.cell>
               <flux:table.cell class="text-right tabular-nums">
                 {{ number_format($country->recipes_count ?? 0) }}
+              </flux:table.cell>
+              <flux:table.cell class="text-right tabular-nums">
+                {{ number_format($country->recipes_with_pdf_count ?? 0) }}
               </flux:table.cell>
               <flux:table.cell class="text-right tabular-nums">
                 {{ number_format($country->ingredients_count ?? 0) }}
