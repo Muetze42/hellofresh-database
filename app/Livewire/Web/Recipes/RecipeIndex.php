@@ -425,7 +425,7 @@ class RecipeIndex extends AbstractComponent
     /**
      * Get menu data for the current menu and available menus.
      *
-     * @return array{current: int, list: list<array{value: int, start: string, end: string}>}|null
+     * @return array{current: int, list: list<array{value: int, year: int, start: string, end: string}>}|null
      */
     #[Computed]
     public function menuData(): ?array
@@ -434,19 +434,27 @@ class RecipeIndex extends AbstractComponent
             return null;
         }
 
-        /** @var list<array{value: int, start: string, end: string}> $list */
+        /** @var list<array{value: int, year: int, start: string, end: string}> $list */
         $list = Menu::selectable()
             ->where('country_id', $this->countryId)
             ->orderBy('year_week')
             ->get()
             ->map(fn (Menu $menu): array => [
                 'value' => $menu->year_week,
+                'year' => (int) substr((string) $menu->year_week, 0, 4),
                 'start' => $menu->start->startOfWeek(CarbonInterface::SATURDAY)->translatedFormat('j. M'),
                 'end' => $menu->start->endOfWeek(CarbonInterface::FRIDAY)->translatedFormat('j. M'),
             ])->values()->all();
 
-        if ($list === []) {
-            return null;
+        $currentInList = collect($list)->contains('value', $this->menu->year_week);
+
+        if (! $currentInList) {
+            array_unshift($list, [
+                'value' => $this->menu->year_week,
+                'year' => (int) substr((string) $this->menu->year_week, 0, 4),
+                'start' => $this->menu->start->startOfWeek(CarbonInterface::SATURDAY)->translatedFormat('j. M'),
+                'end' => $this->menu->start->endOfWeek(CarbonInterface::FRIDAY)->translatedFormat('j. M'),
+            ]);
         }
 
         return [
@@ -503,6 +511,7 @@ class RecipeIndex extends AbstractComponent
         return $query->where(function (Builder $query) use ($searchTerm, $locale): void {
             $query->whereLike('name->' . $locale, $searchTerm)
                 ->orWhereLike('headline->' . $locale, $searchTerm)
+                ->orWhereLike('hellofresh_id', trim($this->search))
                 ->orWhereHas('tags', fn (Builder $tagQuery) => $tagQuery->whereLike('name', $searchTerm))
                 ->orWhereHas('ingredients', fn (Builder $ingredientQuery) => $ingredientQuery->whereLike('name', $searchTerm))
                 ->orWhereHas('label', fn (Builder $labelQuery) => $labelQuery->whereLike('name', $searchTerm));

@@ -8,7 +8,7 @@
         <flux:select wire:model.live="selectedMenuWeek" variant="listbox" size="sm">
           @foreach ($this->menuData['list'] as $menuItem)
             <flux:select.option wire:key="menu-desktop-{{ $menuItem['value'] }}" :value="$menuItem['value']">
-              {{ $menuItem['start'] }} - {{ $menuItem['end'] }}
+              {{ $menuItem['start'] }} - {{ $menuItem['end'] }} {{ $menuItem['year'] }}
             </flux:select.option>
           @endforeach
         </flux:select>
@@ -96,7 +96,7 @@
       <flux:select wire:model.live="selectedMenuWeek" variant="listbox" size="sm" class="w-full">
         @foreach ($this->menuData['list'] as $menuItem)
           <flux:select.option wire:key="menu-mobile-{{ $menuItem['value'] }}" :value="$menuItem['value']">
-            {{ $menuItem['start'] }} - {{ $menuItem['end'] }}
+            {{ $menuItem['start'] }} - {{ $menuItem['end'] }} · {{ $menuItem['year'] }}
           </flux:select.option>
         @endforeach
       </flux:select>
