@@ -102,10 +102,16 @@
               x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
               as="button"
               :color="$isActive ? 'lime' : 'zinc'"
-              :icon="$isActive ? 'check' : 'plus'"
               icon:variant="micro"
               size="sm"
-            >{{ $tag->name }}</flux:badge>
+              wire:loading.attr="disabled"
+              wire:target="toggleTag({{ $tag->id }})"
+            >
+              <flux:icon.loader-circle variant="micro" class="animate-spin" wire:loading wire:target="toggleTag({{ $tag->id }})" />
+              <flux:icon.check variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => !$isActive]) />
+              <flux:icon.plus variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => $isActive]) />
+              {{ $tag->name }}
+            </flux:badge>
           @endforeach
         </div>
       @endif
@@ -181,10 +187,16 @@
               x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
               as="button"
               :color="$isActive ? 'lime' : 'zinc'"
-              :icon="$isActive ? 'check' : 'plus'"
               icon:variant="micro"
               size="sm"
-            >{{ $tag->name }}</flux:badge>
+              wire:loading.attr="disabled"
+              wire:target="toggleTag({{ $tag->id }})"
+            >
+              <flux:icon.loader-circle variant="micro" class="animate-spin" wire:loading wire:target="toggleTag({{ $tag->id }})" />
+              <flux:icon.check variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => !$isActive]) />
+              <flux:icon.plus variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => $isActive]) />
+              {{ $tag->name }}
+            </flux:badge>
           @endforeach
         </div>
       @endif
