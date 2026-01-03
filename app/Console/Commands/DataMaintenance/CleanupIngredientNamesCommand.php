@@ -35,9 +35,7 @@ class CleanupIngredientNamesCommand extends Command
             $this->components->info('Running in dry-run mode. No changes will be made.');
         }
 
-        $ingredients = Ingredient::query()
-            ->whereRaw("name::text LIKE '%*%'")
-            ->get();
+        $ingredients = Ingredient::whereRaw("name::text LIKE '%*%'")->get();
 
         if ($ingredients->isEmpty()) {
             $this->components->info('No ingredients with asterisks found.');
@@ -45,7 +43,7 @@ class CleanupIngredientNamesCommand extends Command
             return self::SUCCESS;
         }
 
-        $this->components->info("Found {$ingredients->count()} ingredients with asterisks.");
+        $this->components->info(sprintf('Found %d ingredients with asterisks.', $ingredients->count()));
 
         $updated = 0;
 
@@ -54,14 +52,14 @@ class CleanupIngredientNamesCommand extends Command
             $changed = false;
 
             foreach ($names as $locale => $name) {
-                $cleaned = rtrim($name, '*');
+                $cleaned = rtrim((string) $name, '*');
 
                 if ($cleaned !== $name) {
                     $names[$locale] = $cleaned;
                     $changed = true;
 
                     $this->components->twoColumnDetail(
-                        "<fg=yellow>{$locale}</>: {$name}",
+                        sprintf('<fg=yellow>%s</>: %s', $locale, $name),
                         $cleaned
                     );
                 }
@@ -71,12 +69,13 @@ class CleanupIngredientNamesCommand extends Command
                 if (! $dryRun) {
                     $ingredient->setTranslations('name', $names)->save();
                 }
+
                 $updated++;
             }
         }
 
         $action = $dryRun ? 'Would update' : 'Updated';
-        $this->components->info("{$action} {$updated} ingredients.");
+        $this->components->info(sprintf('%s %d ingredients.', $action, $updated));
 
         return self::SUCCESS;
     }
