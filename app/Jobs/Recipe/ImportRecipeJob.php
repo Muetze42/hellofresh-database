@@ -201,10 +201,10 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
                 relation: $this->country->allergens(),
                 hellofreshId: $allergenData['id'],
                 locale: $this->getLanguage(),
-                attributes: [
+                attributes: array_filter([
                     'name' => Str::normalizeName($allergenData['name']),
                     'icon_path' => $allergenData['iconPath'],
-                ],
+                ]),
             );
 
             $allergenIds[] = $allergen->getKey();
