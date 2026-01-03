@@ -29,7 +29,7 @@ class MacroServiceProvider extends ServiceProvider
 
         Str::macro(
             'normalizeNameStrict',
-            fn (string $value): string => Str::ucfirst(Str::squish(Str::before($value, ' (')))
+            fn (string $value): string => Str::ucfirst(Str::squish(rtrim(Str::before($value, ' ('), '*')))
         );
 
         Str::macro(
