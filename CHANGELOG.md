@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.10.0] - 2026-01-03
+
+### Added
+
+- **Clickable Tags** - Tags on recipe cards can now be clicked to filter recipes
+    - Toggle setting in header menu under "Display Settings"
+    - Active tags are highlighted in green with a checkmark
+    - Works on Recipes, Random Recipes, and Menu pages
+    - Setting is stored in browser localStorage
+
 ## [3.9.0] - 2026-01-03
 
 ### Added

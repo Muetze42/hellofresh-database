@@ -12,10 +12,13 @@ class RecipeCard extends Component
 {
     /**
      * Create a new component instance.
+     *
+     * @param  array<int>  $tagIds
      */
     public function __construct(
         public Recipe $recipe,
         public ViewModeEnum $viewMode = ViewModeEnum::Grid,
+        public array $tagIds = [],
     ) {}
 
     /**

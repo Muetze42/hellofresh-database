@@ -409,4 +409,51 @@ final class RecipeIndexTest extends TestCase
         $labels = $component->instance()->labels;
         $this->assertCount(1, $labels);
     }
+
+    #[Test]
+    public function toggle_tag_adds_tag_to_filter(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+
+        Livewire::test(RecipeIndex::class)
+            ->assertSet('tagIds', [])
+            ->call('toggleTag', $tag->id)
+            ->assertSet('tagIds', [$tag->id]);
+
+        $key = sprintf('recipe_filter_%d_tags', $this->country->id);
+        $this->assertSame([$tag->id], session($key));
+    }
+
+    #[Test]
+    public function toggle_tag_removes_existing_tag_from_filter(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+
+        Livewire::test(RecipeIndex::class)
+            ->set('tagIds', [$tag->id])
+            ->call('toggleTag', $tag->id)
+            ->assertSet('tagIds', []);
+    }
+
+    #[Test]
+    public function is_tag_active_returns_true_for_active_tag(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+
+        $component = Livewire::test(RecipeIndex::class)
+            ->set('tagIds', [$tag->id]);
+
+        $this->assertTrue($component->instance()->isTagActive($tag->id));
+    }
+
+    #[Test]
+    public function is_tag_active_returns_false_for_inactive_tag(): void
+    {
+        $tag = Tag::factory()->for($this->country)->create();
+
+        $component = Livewire::test(RecipeIndex::class)
+            ->set('tagIds', []);
+
+        $this->assertFalse($component->instance()->isTagActive($tag->id));
+    }
 }
