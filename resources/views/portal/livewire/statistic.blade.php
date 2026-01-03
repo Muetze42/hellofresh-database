@@ -100,11 +100,11 @@
       <flux:heading size="lg">Statistics by Country</flux:heading>
       <flux:table class="mt-section">
         <flux:table.columns>
-          <flux:table.column>Country</flux:table.column>
-          <flux:table.column class="text-right">Recipes</flux:table.column>
-          <flux:table.column class="text-right">with PDF</flux:table.column>
-          <flux:table.column class="text-right">Ingredients</flux:table.column>
-          <flux:table.column class="text-right">Menus</flux:table.column>
+          <flux:table.column sortable :sorted="$sortBy === 'code'" :direction="$sortDirection" wire:click="sort('code')">Country</flux:table.column>
+          <flux:table.column sortable :sorted="$sortBy === 'recipes_count'" :direction="$sortDirection" wire:click="sort('recipes_count')" align="end">Recipes</flux:table.column>
+          <flux:table.column sortable :sorted="$sortBy === 'recipes_with_pdf_count'" :direction="$sortDirection" wire:click="sort('recipes_with_pdf_count')" align="end">with PDF</flux:table.column>
+          <flux:table.column sortable :sorted="$sortBy === 'ingredients_count'" :direction="$sortDirection" wire:click="sort('ingredients_count')" align="end">Ingredients</flux:table.column>
+          <flux:table.column sortable :sorted="$sortBy === 'menus_count'" :direction="$sortDirection" wire:click="sort('menus_count')" align="end">Menus</flux:table.column>
         </flux:table.columns>
         <flux:table.rows>
           @foreach($this->countryStats as $country)
@@ -112,16 +112,16 @@
               <flux:table.cell>
                 <span class="font-medium">{{ $country->code }}</span>
               </flux:table.cell>
-              <flux:table.cell class="text-right tabular-nums">
+              <flux:table.cell align="end" class="tabular-nums">
                 {{ number_format($country->recipes_count ?? 0) }}
               </flux:table.cell>
-              <flux:table.cell class="text-right tabular-nums">
+              <flux:table.cell align="end" class="tabular-nums">
                 {{ number_format($country->recipes_with_pdf_count ?? 0) }}
               </flux:table.cell>
-              <flux:table.cell class="text-right tabular-nums">
+              <flux:table.cell align="end" class="tabular-nums">
                 {{ number_format($country->ingredients_count ?? 0) }}
               </flux:table.cell>
-              <flux:table.cell class="text-right tabular-nums">
+              <flux:table.cell align="end" class="tabular-nums">
                 {{ number_format($country->menus_count) }}
               </flux:table.cell>
             </flux:table.row>

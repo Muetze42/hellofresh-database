@@ -21,6 +21,25 @@ use stdClass;
 #[Layout('portal::components.layouts.app')]
 class Statistic extends Component
 {
+    public string $sortBy = 'recipes_count';
+
+    public string $sortDirection = 'desc';
+
+    /**
+     * Sort the country stats by a given column.
+     */
+    public function sort(string $column): void
+    {
+        if ($this->sortBy === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+
+            return;
+        }
+
+        $this->sortBy = $column;
+        $this->sortDirection = 'asc';
+    }
+
     /**
      * Get global statistics.
      *
@@ -48,10 +67,13 @@ class Statistic extends Component
     #[Computed]
     public function countryStats(): Collection
     {
-        return Cache::remember('portal_country_stats', 3600, fn (): Collection => Country::where('active', true)
+        $countries = Cache::remember('portal_country_stats', 3600, fn (): Collection => Country::where('active', true)
             ->withCount('menus')
-            ->orderByDesc('recipes_count')
             ->get());
+
+        return $this->sortDirection === 'asc'
+            ? $countries->sortBy($this->sortBy)
+            : $countries->sortByDesc($this->sortBy);
     }
 
     /**
