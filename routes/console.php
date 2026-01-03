@@ -2,9 +2,9 @@
 
 use App\Jobs\Country\CountryResourcesOrchestrationJob;
 use App\Jobs\Country\UpdateCountryStatisticsJob;
-use App\Jobs\GenerateSitemapsJob;
 use App\Jobs\Menu\SyncMenusJob;
 use App\Jobs\Recipe\SyncRecipesJob;
+use App\Jobs\Seo\GenerateSitemapsJob;
 use Illuminate\Console\Scheduling\Schedule as ConsoleSchedule;
 use Illuminate\Support\Facades\Schedule;
 

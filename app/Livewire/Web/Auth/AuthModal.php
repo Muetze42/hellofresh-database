@@ -3,20 +3,14 @@
 namespace App\Livewire\Web\Auth;
 
 use App\Livewire\AbstractComponent;
+use App\Livewire\Actions\LoginUserAction;
+use App\Livewire\Actions\RegisterUserAction;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
-use App\Models\User;
-use App\Rules\DisposableEmailRule;
 use App\Support\Facades\Flux;
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Auth\Events\Registered as RegisteredEvent;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password as PasswordBroker;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -105,24 +99,11 @@ class AuthModal extends AbstractComponent
      *
      * @throws ValidationException
      */
-    public function login(): void
+    public function login(LoginUserAction $loginUser): void
     {
-        $this->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-        $this->ensureIsNotRateLimited();
+        $this->validate(LoginUserAction::rules());
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
-
-        RateLimiter::clear($this->throttleKey());
-        Session::regenerate();
+        $loginUser($this->email, $this->password, $this->remember);
 
         $this->js('window.location.reload()');
     }
@@ -130,26 +111,14 @@ class AuthModal extends AbstractComponent
     /**
      * Handle user registration.
      */
-    public function register(): void
+    public function register(RegisterUserAction $registerUser): void
     {
-        $this->validate([
-            'name' => ['required', 'string', 'min:2', 'max:255'],
-            'email' => ['required', 'email:rfc', 'unique:users,email', new DisposableEmailRule()],
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'country_code' => ['nullable', 'string', 'size:2'],
-            'acceptPrivacy' => ['accepted'],
-        ], [
-            'acceptPrivacy.accepted' => __('You must accept the privacy policy.'),
-        ]);
+        $validated = $this->validate(
+            RegisterUserAction::rules(),
+            RegisterUserAction::messages(),
+        );
 
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'country_code' => $this->country_code,
-            'password' => Hash::make($this->password),
-        ]);
-
-        event(new RegisteredEvent($user));
+        $user = $registerUser($validated);
 
         Auth::login($user, true);
 
@@ -184,37 +153,6 @@ class AuthModal extends AbstractComponent
         $this->reset(['email', 'password', 'password_confirmation', 'name', 'country_code', 'acceptPrivacy', 'remember']);
         $this->resetValidation();
         Flux::showModal('auth-modal');
-    }
-
-    /**
-     * Ensure the authentication request is not rate limited.
-     *
-     * @throws ValidationException
-     */
-    protected function ensureIsNotRateLimited(): void
-    {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
-            return;
-        }
-
-        event(new Lockout(request()));
-
-        $seconds = RateLimiter::availableIn($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
-    }
-
-    /**
-     * Get the authentication rate limiting throttle key.
-     */
-    protected function throttleKey(): string
-    {
-        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }
 
     /**

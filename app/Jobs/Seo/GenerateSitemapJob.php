@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Seo;
 
 use App\Enums\QueueEnum;
 use App\Models\Country;
