@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Web\Auth;
 
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Rules\DisposableEmailRule;
 use App\Support\Facades\Flux;

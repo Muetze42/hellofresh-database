@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Web;
+namespace App\Livewire;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

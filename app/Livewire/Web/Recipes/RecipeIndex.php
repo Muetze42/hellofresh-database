@@ -5,7 +5,7 @@ namespace App\Livewire\Web\Recipes;
 use App\Enums\IngredientMatchModeEnum;
 use App\Enums\RecipeSortEnum;
 use App\Enums\ViewModeEnum;
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Livewire\Web\Recipes\Concerns\WithRecipeFilterOptionsTrait;
 use App\Models\Menu;

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Web;
 
+use App\Livewire\AbstractComponent;
 use App\Models\Country;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Database\Eloquent\Collection;

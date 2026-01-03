@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Web\ShoppingList;
 
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Models\Ingredient;
 use App\Models\Recipe;

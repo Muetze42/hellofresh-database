@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Web;
 
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Models\Recipe;
 use Illuminate\Contracts\View\View as ViewInterface;

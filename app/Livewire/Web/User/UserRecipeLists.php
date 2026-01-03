@@ -3,7 +3,7 @@
 namespace App\Livewire\Web\User;
 
 use App\Enums\RecipeListActionEnum;
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Models\RecipeList;
 use App\Models\RecipeListActivity;

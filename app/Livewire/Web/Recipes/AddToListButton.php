@@ -4,7 +4,7 @@ namespace App\Livewire\Web\Recipes;
 
 use App\Enums\RecipeListActionEnum;
 use App\Events\RecipeListUpdatedEvent;
-use App\Livewire\Web\AbstractComponent;
+use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Models\RecipeList;
 use App\Models\RecipeListActivity;
