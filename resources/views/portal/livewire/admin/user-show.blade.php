@@ -177,10 +177,10 @@
         <flux:heading size="lg" class="mb-section">Recent API Requests</flux:heading>
         <flux:table>
             <flux:table.columns>
-                <flux:table.column>Time</flux:table.column>
-                <flux:table.column>Token</flux:table.column>
-                <flux:table.column>Path</flux:table.column>
-                <flux:table.column>Host</flux:table.column>
+                <flux:table.column class="ui-text-subtle">Time</flux:table.column>
+                <flux:table.column class="ui-text-subtle">Token</flux:table.column>
+                <flux:table.column class="ui-text-subtle">Path</flux:table.column>
+                <flux:table.column class="ui-text-subtle">Host</flux:table.column>
             </flux:table.columns>
             <flux:table.rows>
                 @forelse($this->usageLogs as $log)

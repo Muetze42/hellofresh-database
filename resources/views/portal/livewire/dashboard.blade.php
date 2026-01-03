@@ -123,9 +123,9 @@
       <flux:heading size="lg">Recent Tokens</flux:heading>
       <flux:table class="mt-section">
         <flux:table.columns>
-          <flux:table.column>Name</flux:table.column>
-          <flux:table.column>Created</flux:table.column>
-          <flux:table.column>Last Used</flux:table.column>
+          <flux:table.column class="ui-text-subtle">Name</flux:table.column>
+          <flux:table.column class="ui-text-subtle">Created</flux:table.column>
+          <flux:table.column class="ui-text-subtle">Last Used</flux:table.column>
         </flux:table.columns>
         <flux:table.rows>
           @foreach($tokens as $token)
