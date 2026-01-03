@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Portal;
 
+use App\Livewire\AbstractComponent;
+use App\Rules\CountryCodeRule;
 use App\Rules\DisposableEmailRule;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View;
@@ -11,10 +13,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class Profile extends Component
+class Profile extends AbstractComponent
 {
     public string $name = '';
 
@@ -55,19 +56,19 @@ class Profile extends Component
             return;
         }
 
-        $this->validate([
+        $validated = $this->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'email' => ['required', 'email:rfc', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
-            'country_code' => ['nullable', 'string', 'size:2'],
+            'country_code' => ['nullable', 'string', 'size:2', new CountryCodeRule()],
         ]);
 
         $emailWasVerified = $user->hasVerifiedEmail();
-        $emailChanged = $user->email !== $this->email;
+        $emailChanged = $user->email !== $validated['email'];
 
         $user->update([
-            'name' => $this->name,
-            'email' => $this->email,
-            'country_code' => $this->country_code,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'country_code' => $validated['country_code'],
         ]);
 
         if ($emailChanged && $emailWasVerified && ! $user->hasVerifiedEmail()) {

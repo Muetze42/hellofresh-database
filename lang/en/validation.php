@@ -181,6 +181,8 @@ return [
         'disposable_email' => 'Disposable email addresses are not allowed.',
     ],
 
+    'country_code' => 'The selected country is invalid.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
