@@ -164,9 +164,22 @@ class FluxRenderer
         $url = $link->getUrl();
         $content = $this->renderChildren($link);
         $external = $this->isExternalUrl($url);
-        $externalAttr = $external ? ' external' : '';
+        $externalAttrs = $external ? ' target="_blank"' : '';
 
-        return sprintf('<flux:link href="%s"%s>%s</flux:link>', e($url), $externalAttr, $content);
+        // Match flux:link styling
+        $classes = implode(' ', [
+            'inline font-medium',
+            'underline underline-offset-[6px] hover:decoration-current',
+            'text-[var(--color-accent-content)] decoration-[color-mix(in_oklab,var(--color-accent-content),transparent_80%)]',
+        ]);
+
+        return sprintf(
+            '<a href="%s" class="%s" data-flux-link%s>%s</a>',
+            e($url),
+            $classes,
+            $externalAttrs,
+            $content
+        );
     }
 
     /**
