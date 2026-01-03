@@ -334,4 +334,33 @@ final class UpdateCountryStatisticsJobTest extends TestCase
         $this->assertNull($country->recipes_count);
         $this->assertNull($country->ingredients_count);
     }
+
+    #[Test]
+    public function it_counts_recipes_with_pdf(): void
+    {
+        $country = Country::factory()->create();
+        Recipe::factory()->for($country)->count(3)->create(['has_pdf' => false]);
+        Recipe::factory()->for($country)->withPdf()->count(2)->create();
+
+        $job = new UpdateCountryStatisticsJob($country);
+        $job->handle();
+
+        $country->refresh();
+        $this->assertSame(5, $country->recipes_count);
+        $this->assertSame(2, $country->recipes_with_pdf_count);
+    }
+
+    #[Test]
+    public function it_sets_recipes_with_pdf_count_to_null_when_zero(): void
+    {
+        $country = Country::factory()->create(['recipes_with_pdf_count' => 10]);
+        Recipe::factory()->for($country)->count(3)->create(['has_pdf' => false]);
+
+        $job = new UpdateCountryStatisticsJob($country);
+        $job->handle();
+
+        $country->refresh();
+        $this->assertSame(3, $country->recipes_count);
+        $this->assertNull($country->recipes_with_pdf_count);
+    }
 }
