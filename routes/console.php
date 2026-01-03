@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Schedule;
 Schedule::command('horizon:snapshot')
     ->everyFiveMinutes();
 
+Schedule::command('app:stats:clear-cache')
+    ->hourly();
+
 Schedule::command('prune-expired-email-verifications')
     ->daily();
 
