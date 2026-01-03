@@ -94,85 +94,93 @@
     </flux:card>
   </div>
 
-  <div class="grid gap-section lg:grid-cols-2">
-    {{-- Country Stats --}}
-    <flux:card>
-      <flux:heading size="lg">Statistics by Country</flux:heading>
-      <flux:table class="mt-section">
-        <flux:table.columns>
-          <flux:table.column sortable :sorted="$sortBy === 'code'" :direction="$sortDirection" wire:click="sort('code')">Country</flux:table.column>
-          <flux:table.column sortable :sorted="$sortBy === 'recipes_count'" :direction="$sortDirection" wire:click="sort('recipes_count')" align="end">Recipes</flux:table.column>
-          <flux:table.column sortable :sorted="$sortBy === 'recipes_with_pdf_count'" :direction="$sortDirection" wire:click="sort('recipes_with_pdf_count')" align="end">with PDF</flux:table.column>
-          <flux:table.column sortable :sorted="$sortBy === 'ingredients_count'" :direction="$sortDirection" wire:click="sort('ingredients_count')" align="end">Ingredients</flux:table.column>
-          <flux:table.column sortable :sorted="$sortBy === 'menus_count'" :direction="$sortDirection" wire:click="sort('menus_count')" align="end">Menus</flux:table.column>
-        </flux:table.columns>
-        <flux:table.rows>
-          @foreach($this->countryStats as $country)
-            <flux:table.row wire:key="country-{{ $country->id }}">
-              <flux:table.cell>
-                <span class="font-medium">{{ $country->code }}</span>
-              </flux:table.cell>
-              <flux:table.cell align="end" class="tabular-nums">
-                {{ number_format($country->recipes_count ?? 0) }}
-              </flux:table.cell>
-              <flux:table.cell align="end" class="tabular-nums">
-                {{ number_format($country->recipes_with_pdf_count ?? 0) }}
-              </flux:table.cell>
-              <flux:table.cell align="end" class="tabular-nums">
-                {{ number_format($country->ingredients_count ?? 0) }}
-              </flux:table.cell>
-              <flux:table.cell align="end" class="tabular-nums">
-                {{ number_format($country->menus_count) }}
-              </flux:table.cell>
-            </flux:table.row>
-          @endforeach
-        </flux:table.rows>
-      </flux:table>
-    </flux:card>
-
-    {{-- Difficulty Distribution --}}
-    <flux:card>
-      <flux:heading size="lg">Recipe Difficulty Distribution</flux:heading>
-      <div class="mt-section space-y-4">
-        @php
-          $totalRecipes = array_sum(array_column($this->difficultyDistribution, 'count'));
-          $difficultyLabels = [1 => 'Easy', 2 => 'Medium', 3 => 'Hard'];
-          $difficultyColors = [1 => 'bg-green-500', 2 => 'bg-amber-500', 3 => 'bg-red-500'];
-        @endphp
-        @foreach($this->difficultyDistribution as $item)
-          @php
-            $percentage = $totalRecipes > 0 ? ($item['count'] / $totalRecipes) * 100 : 0;
-          @endphp
-          <div wire:key="difficulty-{{ $item['difficulty'] }}">
-            <div class="flex justify-between mb-1">
-              <flux:text class="text-sm font-medium">
-                {{ $difficultyLabels[$item['difficulty']] ?? 'Level ' . $item['difficulty'] }}
-              </flux:text>
-              <flux:text class="text-sm text-zinc-500">
-                {{ number_format($item['count']) }} ({{ number_format($percentage, 1) }}%)
-              </flux:text>
-            </div>
-            <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
-              <div
-                class="{{ $difficultyColors[$item['difficulty']] ?? 'bg-zinc-500' }} h-2 rounded-full transition-all"
-                style="width: {{ $percentage }}%"
-              ></div>
-            </div>
-          </div>
+  {{-- Country Stats --}}
+  <flux:card>
+    <flux:heading size="lg">Statistics by Country</flux:heading>
+    <flux:table class="mt-section">
+      <flux:table.columns>
+        <flux:table.column sortable :sorted="$sortBy === 'code'" :direction="$sortDirection" wire:click="sort('code')">Code</flux:table.column>
+        <flux:table.column class="ui-text-subtle">Name</flux:table.column>
+        <flux:table.column class="ui-text-subtle">Locales</flux:table.column>
+        <flux:table.column sortable :sorted="$sortBy === 'recipes_count'" :direction="$sortDirection" wire:click="sort('recipes_count')" align="end">Recipes</flux:table.column>
+        <flux:table.column sortable :sorted="$sortBy === 'recipes_with_pdf_count'" :direction="$sortDirection" wire:click="sort('recipes_with_pdf_count')" align="end">with PDF</flux:table.column>
+        <flux:table.column sortable :sorted="$sortBy === 'ingredients_count'" :direction="$sortDirection" wire:click="sort('ingredients_count')" align="end">Ingredients</flux:table.column>
+        <flux:table.column sortable :sorted="$sortBy === 'menus_count'" :direction="$sortDirection" wire:click="sort('menus_count')" align="end">Menus</flux:table.column>
+      </flux:table.columns>
+      <flux:table.rows>
+        @foreach($this->countryStats as $country)
+          <flux:table.row wire:key="country-{{ $country->id }}">
+            <flux:table.cell>
+              <span class="font-medium">{{ Str::countryFlag($country->code) }} {{ $country->code }}</span>
+            </flux:table.cell>
+            <flux:table.cell>{{ __('country.' . $country->code) }}</flux:table.cell>
+            <flux:table.cell>
+              <div class="flex flex-wrap gap-1">
+                @foreach($country->locales as $locale)
+                  <flux:badge size="sm">{{ $locale }}</flux:badge>
+                @endforeach
+              </div>
+            </flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums">
+              {{ number_format($country->recipes_count ?? 0) }}
+            </flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums">
+              {{ number_format($country->recipes_with_pdf_count ?? 0) }}
+            </flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums">
+              {{ number_format($country->ingredients_count ?? 0) }}
+            </flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums">
+              {{ number_format($country->menus_count) }}
+            </flux:table.cell>
+          </flux:table.row>
         @endforeach
-      </div>
-    </flux:card>
-  </div>
+      </flux:table.rows>
+    </flux:table>
+  </flux:card>
+
+  {{-- Difficulty Distribution --}}
+  <flux:card>
+    <flux:heading size="lg">Recipe Difficulty Distribution</flux:heading>
+    <div class="mt-section space-y-4">
+      @php
+        $totalRecipes = array_sum(array_column($this->difficultyDistribution, 'count'));
+        $difficultyLabels = [1 => 'Easy', 2 => 'Medium', 3 => 'Hard'];
+        $difficultyColors = [1 => 'bg-green-500', 2 => 'bg-amber-500', 3 => 'bg-red-500'];
+      @endphp
+      @foreach($this->difficultyDistribution as $item)
+        @php
+          $percentage = $totalRecipes > 0 ? ($item['count'] / $totalRecipes) * 100 : 0;
+        @endphp
+        <div wire:key="difficulty-{{ $item['difficulty'] }}">
+          <div class="flex justify-between mb-1">
+            <flux:text class="text-sm font-medium">
+              {{ $difficultyLabels[$item['difficulty']] ?? 'Level ' . $item['difficulty'] }}
+            </flux:text>
+            <flux:text class="text-sm text-zinc-500">
+              {{ number_format($item['count']) }} ({{ number_format($percentage, 1) }}%)
+            </flux:text>
+          </div>
+          <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
+            <div
+              class="{{ $difficultyColors[$item['difficulty']] ?? 'bg-zinc-500' }} h-2 rounded-full transition-all"
+              style="width: {{ $percentage }}%"
+            ></div>
+          </div>
+        </div>
+      @endforeach
+    </div>
+  </flux:card>
 
   {{-- Newest Recipes --}}
   <flux:card>
     <flux:heading size="lg">Recently Added Recipes</flux:heading>
     <flux:table class="mt-section">
       <flux:table.columns>
-        <flux:table.column>Recipe</flux:table.column>
-        <flux:table.column>Country</flux:table.column>
-        <flux:table.column>Difficulty</flux:table.column>
-        <flux:table.column>Added</flux:table.column>
+        <flux:table.column class="ui-text-subtle">Recipe</flux:table.column>
+        <flux:table.column class="ui-text-subtle">Country</flux:table.column>
+        <flux:table.column class="ui-text-subtle">Difficulty</flux:table.column>
+        <flux:table.column class="ui-text-subtle">Added</flux:table.column>
       </flux:table.columns>
       <flux:table.rows>
         @foreach($this->newestRecipes as $recipe)

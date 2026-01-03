@@ -24,9 +24,9 @@
 
             <flux:table class="mt-section">
                 <flux:table.columns>
-                    <flux:table.column>Parameter</flux:table.column>
-                    <flux:table.column>Type</flux:table.column>
-                    <flux:table.column>Description</flux:table.column>
+                    <flux:table.column class="ui-text-subtle">Parameter</flux:table.column>
+                    <flux:table.column class="ui-text-subtle">Type</flux:table.column>
+                    <flux:table.column class="ui-text-subtle">Description</flux:table.column>
                 </flux:table.columns>
                 <flux:table.rows>
                     @foreach($queryParams as $param)
@@ -46,9 +46,9 @@
 
         <flux:table class="mt-section">
             <flux:table.columns>
-                <flux:table.column>Field</flux:table.column>
-                <flux:table.column>Type</flux:table.column>
-                <flux:table.column>Description</flux:table.column>
+                <flux:table.column class="ui-text-subtle">Field</flux:table.column>
+                <flux:table.column class="ui-text-subtle">Type</flux:table.column>
+                <flux:table.column class="ui-text-subtle">Description</flux:table.column>
             </flux:table.columns>
             <flux:table.rows>
                 @foreach($responseFields as $field)

@@ -44,10 +44,10 @@
         <flux:card>
             <flux:table>
                 <flux:table.columns>
-                    <flux:table.column>Name</flux:table.column>
-                    <flux:table.column>Created</flux:table.column>
-                    <flux:table.column>Expires</flux:table.column>
-                    <flux:table.column>Last Used</flux:table.column>
+                    <flux:table.column class="ui-text-subtle">Name</flux:table.column>
+                    <flux:table.column class="ui-text-subtle">Created</flux:table.column>
+                    <flux:table.column class="ui-text-subtle">Expires</flux:table.column>
+                    <flux:table.column class="ui-text-subtle">Last Used</flux:table.column>
                     <flux:table.column class="w-20"></flux:table.column>
                 </flux:table.columns>
                 <flux:table.rows>

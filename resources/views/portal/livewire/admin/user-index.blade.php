@@ -50,7 +50,7 @@
       <flux:table.columns>
         <flux:table.column sortable :sorted="$sortBy === 'id'" :direction="$sortDirection" wire:click="sort('id')">ID</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection" wire:click="sort('name')">User</flux:table.column>
-        <flux:table.column>Status</flux:table.column>
+        <flux:table.column class="ui-text-subtle">Status</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'tokens_count'" :direction="$sortDirection" wire:click="sort('tokens_count')">Tokens</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'active_at'" :direction="$sortDirection" wire:click="sort('active_at')">Last Active</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'created_at'" :direction="$sortDirection" wire:click="sort('created_at')">Registered</flux:table.column>
