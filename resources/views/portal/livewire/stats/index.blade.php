@@ -9,7 +9,7 @@
     <flux:text class="mt-ui">Explore statistics about the {{ config('app.name') }} database and API usage.</flux:text>
   </div>
 
-  <div class="grid gap-section sm:grid-cols-3">
+  <div class="grid gap-section md:grid-cols-3">
     <flux:card>
       <div class="flex items-center gap-section">
         <div class="rounded-lg bg-lime-100 dark:bg-lime-900/30 p-3">
@@ -19,6 +19,7 @@
           <flux:heading size="lg">Recipes</flux:heading>
           <flux:text class="text-sm text-zinc-500">Recipe database statistics</flux:text>
         </div>
+        <flux:spacer />
       </div>
       <flux:button :href="route('portal.stats.recipes')" wire:navigate variant="primary" class="mt-section w-full">
         View Recipe Stats
@@ -34,6 +35,7 @@
           <flux:heading size="lg">Users</flux:heading>
           <flux:text class="text-sm text-zinc-500">User engagement statistics</flux:text>
         </div>
+        <flux:spacer />
       </div>
       <flux:button :href="route('portal.stats.users')" wire:navigate variant="primary" class="mt-section w-full">
         View User Stats
@@ -49,6 +51,7 @@
           <flux:heading size="lg">API</flux:heading>
           <flux:text class="text-sm text-zinc-500">API usage statistics</flux:text>
         </div>
+        <flux:spacer />
       </div>
       <flux:button :href="route('portal.stats.api')" wire:navigate variant="primary" class="mt-section w-full">
         View API Stats
