@@ -1,5 +1,5 @@
 <div class="space-y-section">
-  <flux:heading size="xl">{{ config('app.name') }} API</flux:heading>
+  <flux:heading size="xl">{{ config('app.name') }}</flux:heading>
   <flux:text>Access recipe data, menus, ingredients, and more through our REST API.</flux:text>
 
   <img
