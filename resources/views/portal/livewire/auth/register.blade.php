@@ -45,7 +45,7 @@
         <flux:field>
             <div class="flex items-start gap-ui">
                 <flux:checkbox wire:model="acceptPrivacy" id="accept-privacy" />
-                <flux:label for="accept-privacy" class="text-sm">
+                <flux:label for="accept-privacy" class="text-sm inline-flex gap-1 flex-wrap">
                     {{ __('I accept the') }}
                     <flux:link :href="route('portal.privacy')" target="_blank">{{ __('Privacy Policy') }}</flux:link>
                     {{ __('and') }}
