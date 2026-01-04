@@ -26,6 +26,11 @@ class RecipeShow extends AbstractComponent
      */
     public function mount(Recipe $recipe): void
     {
+        // Abort if recipe belongs to a different country than the URL context
+        if ($recipe->country_id !== $this->countryId) {
+            abort(404);
+        }
+
         $this->recipe = $recipe->load([
             'country',
             'label',
@@ -216,6 +221,7 @@ class RecipeShow extends AbstractComponent
 
         return Recipe::where('country_id', $this->recipe->country_id)
             ->whereNot('id', $this->recipe->id)
+            ->whereNotNull('name->' . app()->getLocale())
             ->whereHas('tags', fn (Builder $query): Builder => $query->whereIn('tags.id', $tagIds))
             ->when($excludedAllergenIds !== [], fn (Builder $query) => $query->whereDoesntHave(
                 'allergens',
