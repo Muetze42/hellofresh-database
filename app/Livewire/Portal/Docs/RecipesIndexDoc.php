@@ -31,8 +31,8 @@ class RecipesIndexDoc extends AbstractEndpointDoc
     {
         return [
             ['name' => 'search', 'type' => 'string', 'description' => 'Filter recipes by name (case-insensitive)'],
-            ['name' => 'tag', 'type' => 'string', 'description' => 'Filter by tag slug'],
-            ['name' => 'label', 'type' => 'string', 'description' => 'Filter by label slug'],
+            ['name' => 'tag', 'type' => 'integer', 'description' => 'Filter by tag ID'],
+            ['name' => 'label', 'type' => 'integer', 'description' => 'Filter by label ID'],
             ['name' => 'difficulty', 'type' => 'integer', 'description' => 'Filter by difficulty level (1-3)'],
             ['name' => 'has_pdf', 'type' => 'boolean', 'description' => 'Filter recipes that have a PDF card'],
             ['name' => 'per_page', 'type' => 'integer', 'description' => 'Results per page (' . config('api.pagination.per_page_min') . '-' . config('api.pagination.per_page_max') . ', default ' . config('api.pagination.per_page_default') . ')'],

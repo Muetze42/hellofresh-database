@@ -32,12 +32,12 @@ class RecipeController extends AbstractLocalizedController
                 })
                 ->when($request->filled('tag'), function (Builder $query) use ($request): void {
                     $query->whereHas('tags', function (Builder $query) use ($request): void {
-                        $query->where('slug', $request->input('tag'));
+                        $query->where('id', $request->input('tag'));
                     });
                 })
                 ->when($request->filled('label'), function (Builder $query) use ($request): void {
                     $query->whereHas('label', function (Builder $query) use ($request): void {
-                        $query->where('slug', $request->input('label'));
+                        $query->where('id', $request->input('label'));
                     });
                 })
                 ->when($request->filled('difficulty'), function (Builder $query) use ($request): void {
