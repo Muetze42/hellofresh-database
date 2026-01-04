@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api\Localized;
 
+use App\Http\Requests\Api\MenuIndexRequest;
 use App\Http\Resources\Api\MenuCollection;
 use App\Http\Resources\Api\MenuResource;
 use App\Models\Menu;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class MenuController extends AbstractLocalizedController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): MenuCollection
+    public function index(MenuIndexRequest $request): MenuCollection
     {
         return new MenuCollection(
             Menu::selectable()
@@ -46,20 +46,4 @@ class MenuController extends AbstractLocalizedController
 
         return new MenuResource($menu);
     }
-
-    /**
-     * Display the current week's menu.
-     */
-    // public function current(): MenuResource
-    // {
-    //     $country = $this->country();
-    //
-    //     $menu = Menu::where('country_id', $country->id)
-    //         ->where('start', '<=', now())
-    //         ->orderByDesc('year_week')
-    //         ->with(['recipes.label', 'recipes.tags'])
-    //         ->firstOrFail();
-    //
-    //     return new MenuResource($menu);
-    // }
 }
