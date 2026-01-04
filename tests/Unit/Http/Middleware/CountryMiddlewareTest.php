@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Http\Middleware;
 
-use App\Http\Middleware\LocalizationMiddleware;
+use App\Http\Middleware\Localization\LocalizationMiddleware;
 use App\Models\Country;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;

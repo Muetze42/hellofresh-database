@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Web\Concerns;
 
-use App\Http\Middleware\LocalizationMiddleware;
+use App\Http\Middleware\Localization\LocalizationMiddleware;
 use App\Models\Country;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;

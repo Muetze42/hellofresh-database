@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Middleware\LivewireContextMiddleware;
+use App\Http\Middleware\Context\LivewireContextMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;

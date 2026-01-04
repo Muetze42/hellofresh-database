@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Localization;
 
 use App\Models\Country;
 use Closure;
