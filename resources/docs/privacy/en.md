@@ -52,6 +52,17 @@ We do not sell, trade, or share your personal data with third parties. Recipe da
 
 Recipe images are loaded directly from HelloFresh servers. When you view recipe pages, your browser connects to HelloFresh servers to retrieve these images. This means your IP address and browser information may be transmitted to HelloFresh. We have no control over how HelloFresh processes this data. For more information, please refer to HelloFresh's privacy policy.
 
+### 7.2 Error Tracking (Sentry)
+
+We use Sentry, a service provided by Functional Software Inc., for error tracking and application monitoring. When errors occur, the following data may be transmitted to Sentry:
+- Anonymized IP address (IP addresses are not stored in full)
+- Browser type and version
+- Operating system
+- Error messages and stack traces
+- User ID (if logged in)
+
+Sentry servers are located within the European Union. For more information, see [Sentry's privacy policy](https://sentry.io/privacy/).
+
 ## 8. Changes to This Policy
 
 We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.

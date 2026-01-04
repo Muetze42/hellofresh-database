@@ -52,6 +52,17 @@ Vi säljer, handlar eller delar inte dina personuppgifter med tredje parter. Rec
 
 Receptbilder laddas direkt från HelloFresh-servrar. När du visar receptsidor ansluter din webbläsare till HelloFresh-servrar för att hämta dessa bilder. Detta innebär att din IP-adress och webbläsarinformation kan överföras till HelloFresh. Vi har ingen kontroll över hur HelloFresh behandlar dessa uppgifter. För mer information, se HelloFreshs integritetspolicy.
 
+### 7.2 Felspårning (Sentry)
+
+Vi använder Sentry, en tjänst som tillhandahålls av Functional Software Inc., för felspårning och applikationsövervakning. Vid fel kan följande uppgifter överföras till Sentry:
+- Anonymiserad IP-adress (IP-adresser lagras inte fullständigt)
+- Webbläsartyp och -version
+- Operativsystem
+- Felmeddelanden och stack traces
+- Användar-ID (om inloggad)
+
+Sentry-servrar finns inom Europeiska unionen. För mer information, se [Sentrys integritetspolicy](https://sentry.io/privacy/).
+
 ## 8. Ändringar i denna policy
 
 Vi kan uppdatera denna integritetspolicy då och då. Vi kommer att informera dig om eventuella ändringar genom att publicera den nya policyn på denna sida.

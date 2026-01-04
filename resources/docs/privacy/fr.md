@@ -52,6 +52,17 @@ Nous ne vendons, n'échangeons ni ne partageons vos données personnelles avec d
 
 Les images des recettes sont chargées directement depuis les serveurs HelloFresh. Lorsque vous consultez les pages de recettes, votre navigateur se connecte aux serveurs HelloFresh pour récupérer ces images. Cela signifie que votre adresse IP et les informations de votre navigateur peuvent être transmises à HelloFresh. Nous n'avons aucun contrôle sur la façon dont HelloFresh traite ces données. Pour plus d'informations, veuillez consulter la politique de confidentialité de HelloFresh.
 
+### 7.2 Suivi des erreurs (Sentry)
+
+Nous utilisons Sentry, un service fourni par Functional Software Inc., pour le suivi des erreurs et la surveillance des applications. En cas d'erreurs, les données suivantes peuvent être transmises à Sentry :
+- Adresse IP anonymisée (les adresses IP ne sont pas stockées en intégralité)
+- Type et version du navigateur
+- Système d'exploitation
+- Messages d'erreur et traces de pile
+- Identifiant utilisateur (si connecté)
+
+Les serveurs Sentry sont situés au sein de l'Union européenne. Pour plus d'informations, consultez la [politique de confidentialité de Sentry](https://sentry.io/privacy/).
+
 ## 8. Modifications de cette politique
 
 Nous pouvons mettre à jour cette politique de confidentialité de temps en temps. Nous vous informerons de tout changement en publiant la nouvelle politique sur cette page.

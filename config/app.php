@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'HelloFresh Database'),
 
+    'name_strict' => env('APP_NAME', 'HelloFresh Database'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

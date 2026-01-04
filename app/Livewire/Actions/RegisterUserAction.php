@@ -35,7 +35,7 @@ class RegisterUserAction
     public static function messages(): array
     {
         return [
-            'acceptPrivacy.accepted' => __('You must accept the privacy policy.'),
+            'acceptPrivacy.accepted' => __('You must accept the Privacy Policy and Terms of Use.'),
         ];
     }
 
