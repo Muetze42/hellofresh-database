@@ -11,7 +11,7 @@
   </div>
 
   {{-- Global Stats --}}
-  <div class="grid gap-section sm:grid-cols-2 lg:grid-cols-4">
+  <div class="grid gap-section sm:grid-cols-2 xl:grid-cols-4">
     <flux:card>
       <div class="flex items-center gap-section">
         <div class="rounded-lg bg-lime-100 dark:bg-lime-900/30 p-3">

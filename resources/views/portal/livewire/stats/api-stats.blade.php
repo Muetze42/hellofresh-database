@@ -20,7 +20,7 @@
   </div>
 
   {{-- Overview Stats --}}
-  <div class="grid gap-section sm:grid-cols-2 lg:grid-cols-5">
+  <div class="grid gap-section sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
     <flux:card>
       <div class="flex items-center gap-section">
         <div class="rounded-lg bg-blue-100 dark:bg-blue-900/30 p-3">
