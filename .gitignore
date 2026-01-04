@@ -33,5 +33,4 @@ package.lock
 /.mcp.json
 /.claude
 /.ai
-CLAUDE.md
 /build/
