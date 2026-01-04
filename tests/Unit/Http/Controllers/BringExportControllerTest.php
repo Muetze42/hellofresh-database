@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
 use Tests\TestCase;
@@ -21,10 +22,11 @@ use Tests\TestCase;
  */
 final class BringExportControllerTest extends TestCase
 {
-    protected Country $country;
+    private Country $country;
 
-    protected BringExportController $controller;
+    private BringExportController $bringExportController;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,7 +39,7 @@ final class BringExportControllerTest extends TestCase
         app()->bind('current.country', fn (): Country => $this->country);
         app()->setLocale('en');
 
-        $this->controller = new BringExportController();
+        $this->bringExportController = new BringExportController();
     }
 
     /**
@@ -45,10 +47,10 @@ final class BringExportControllerTest extends TestCase
      */
     protected function callMethod(string $method, array $args = []): mixed
     {
-        $reflection = new ReflectionClass($this->controller);
+        $reflection = new ReflectionClass($this->bringExportController);
         $method = $reflection->getMethod($method);
 
-        return $method->invokeArgs($this->controller, $args);
+        return $method->invokeArgs($this->bringExportController, $args);
     }
 
     #[Test]
@@ -143,7 +145,7 @@ final class BringExportControllerTest extends TestCase
         $result = $this->callMethod('getYieldsDataForServings', [$recipe, 2]);
 
         $this->assertArrayHasKey('Salt', $result);
-        $this->assertSame(5.0, $result['Salt']['amount']);
+        $this->assertEqualsWithDelta(5.0, $result['Salt']['amount'], PHP_FLOAT_EPSILON);
         $this->assertSame('g', $result['Salt']['unit']);
     }
 
@@ -165,7 +167,7 @@ final class BringExportControllerTest extends TestCase
         $result = $this->callMethod('getYieldsDataForServings', [$recipe, 2]);
 
         $this->assertArrayHasKey('Milk', $result);
-        $this->assertSame(250.0, $result['Milk']['amount']);
+        $this->assertEqualsWithDelta(250.0, $result['Milk']['amount'], PHP_FLOAT_EPSILON);
     }
 
     #[Test]
@@ -224,7 +226,7 @@ final class BringExportControllerTest extends TestCase
 
         $result = $this->callMethod('findIngredientInYields', [$yieldsData, 'Salt']);
 
-        $this->assertSame(5.0, $result['amount']);
+        $this->assertEqualsWithDelta(5.0, $result['amount'], PHP_FLOAT_EPSILON);
         $this->assertSame('g', $result['unit']);
     }
 
@@ -343,8 +345,8 @@ final class BringExportControllerTest extends TestCase
 
         $this->assertCount(1, $result);
         $this->assertSame('Sugar', $result[0]['name']);
-        $this->assertStringContainsString('50 g', $result[0]['amount']);
-        $this->assertStringContainsString('2 tbsp', $result[0]['amount']);
+        $this->assertStringContainsString('50 g', (string) $result[0]['amount']);
+        $this->assertStringContainsString('2 tbsp', (string) $result[0]['amount']);
     }
 
     #[Test]
@@ -497,7 +499,7 @@ final class BringExportControllerTest extends TestCase
             'recipes' => (string) $recipe->id,
         ]);
 
-        $view = $this->controller->__invoke($request, $this->country);
+        $view = $this->bringExportController->__invoke($request, $this->country);
 
         $this->assertSame('web::bring-export', $view->name());
         $this->assertArrayHasKey('ingredients', $view->getData());
@@ -515,7 +517,7 @@ final class BringExportControllerTest extends TestCase
             'recipes' => $recipeInCountry->id . ',' . $recipeOtherCountry->id,
         ]);
 
-        $view = $this->controller->__invoke($request, $this->country);
+        $view = $this->bringExportController->__invoke($request, $this->country);
 
         $recipes = $view->getData()['recipes'];
         $this->assertCount(1, $recipes);
@@ -527,7 +529,7 @@ final class BringExportControllerTest extends TestCase
     {
         $request = Request::create('/shopping-list/bring', 'GET');
 
-        $view = $this->controller->__invoke($request, $this->country);
+        $view = $this->bringExportController->__invoke($request, $this->country);
 
         $this->assertCount(0, $view->getData()['recipes']);
         $this->assertSame([], $view->getData()['ingredients']);
@@ -544,7 +546,7 @@ final class BringExportControllerTest extends TestCase
             'recipes' => (string) $recipe->id,
         ]);
 
-        $view = $this->controller->__invoke($request, $this->country);
+        $view = $this->bringExportController->__invoke($request, $this->country);
 
         $recipes = $view->getData()['recipes'];
         $this->assertTrue($recipes->first()->relationLoaded('ingredients'));

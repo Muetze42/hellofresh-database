@@ -105,7 +105,7 @@ final class ProfileTest extends TestCase
     #[Test]
     public function it_validates_name_is_unique(): void
     {
-        $existingUser = User::factory()->create(['name' => 'Taken Name']);
+        User::factory()->create(['name' => 'Taken Name']);
         $user = User::factory()->create();
 
         Livewire::actingAs($user)
@@ -154,7 +154,7 @@ final class ProfileTest extends TestCase
     #[Test]
     public function it_validates_email_is_unique(): void
     {
-        $existingUser = User::factory()->create(['email' => 'taken@gmail.com']);
+        User::factory()->create(['email' => 'taken@gmail.com']);
         $user = User::factory()->create(['email' => 'user@gmail.com']);
 
         Livewire::actingAs($user)

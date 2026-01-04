@@ -6,11 +6,13 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Country;
 use Illuminate\Support\Facades\Storage;
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 final class SitemapControllerTest extends TestCase
 {
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,7 +23,7 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_returns_xml_sitemap_index(): void
     {
-        $country = Country::factory()->create([
+        Country::factory()->create([
             'code' => 'US',
             'locales' => ['en'],
         ]);
@@ -38,7 +40,7 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_returns_valid_sitemap_index_structure(): void
     {
-        $country = Country::factory()->create([
+        Country::factory()->create([
             'code' => 'DE',
             'locales' => ['de'],
         ]);
@@ -56,7 +58,7 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_includes_existing_sitemap_files(): void
     {
-        $country = Country::factory()->create([
+        Country::factory()->create([
             'code' => 'FR',
             'locales' => ['fr'],
         ]);
@@ -74,7 +76,7 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_skips_non_existent_sitemap_files(): void
     {
-        $country = Country::factory()->create([
+        Country::factory()->create([
             'code' => 'IT',
             'locales' => ['it', 'en'],
         ]);
@@ -91,8 +93,8 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_lists_multiple_countries(): void
     {
-        $country1 = Country::factory()->create(['code' => 'AT', 'locales' => ['de']]);
-        $country2 = Country::factory()->create(['code' => 'CH', 'locales' => ['de']]);
+        Country::factory()->create(['code' => 'AT', 'locales' => ['de']]);
+        Country::factory()->create(['code' => 'CH', 'locales' => ['de']]);
 
         Storage::disk('public')->put('sitemaps/sitemap-de-AT.xml', '<?xml version="1.0"?><urlset></urlset>');
         Storage::disk('public')->put('sitemaps/sitemap-de-CH.xml', '<?xml version="1.0"?><urlset></urlset>');
@@ -107,8 +109,8 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_orders_countries_by_code(): void
     {
-        $countryZ = Country::factory()->create(['code' => 'ZA', 'locales' => ['en']]);
-        $countryA = Country::factory()->create(['code' => 'AU', 'locales' => ['en']]);
+        Country::factory()->create(['code' => 'ZA', 'locales' => ['en']]);
+        Country::factory()->create(['code' => 'AU', 'locales' => ['en']]);
 
         Storage::disk('public')->put('sitemaps/sitemap-en-ZA.xml', '<?xml version="1.0"?><urlset></urlset>');
         Storage::disk('public')->put('sitemaps/sitemap-en-AU.xml', '<?xml version="1.0"?><urlset></urlset>');
@@ -125,7 +127,7 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_includes_multiple_locales_per_country(): void
     {
-        $country = Country::factory()->create([
+        Country::factory()->create([
             'code' => 'BE',
             'locales' => ['nl', 'fr', 'de'],
         ]);
@@ -150,6 +152,7 @@ final class SitemapControllerTest extends TestCase
         $response = $this->get('/sitemap.xml');
 
         $response->assertOk();
+
         $content = $response->getContent();
         $this->assertStringContainsString('<sitemapindex', (string) $content);
         $this->assertStringContainsString('</sitemapindex>', (string) $content);
@@ -197,7 +200,7 @@ final class SitemapControllerTest extends TestCase
     #[Test]
     public function index_formats_lastmod_correctly(): void
     {
-        $country = Country::factory()->create([
+        Country::factory()->create([
             'code' => 'ES',
             'locales' => ['es'],
         ]);

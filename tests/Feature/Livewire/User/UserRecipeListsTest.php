@@ -792,7 +792,7 @@ final class UserRecipeListsTest extends TestCase
     {
         $owner = User::factory()->create();
         $list = RecipeList::factory()->forUser($owner)->create();
-        $targetUser = User::factory()->create(['email' => 'target2@gmail.com']);
+        User::factory()->create(['email' => 'target2@gmail.com']);
 
         $this->actingAs($this->user);
 
