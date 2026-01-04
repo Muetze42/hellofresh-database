@@ -30,14 +30,14 @@ class RecipeController extends AbstractLocalizedController
                             ->orWhereLike('headline->' . $locale, $searchTerm);
                     });
                 })
-                ->when($request->filled('tag'), function (Builder $query) use ($request): void {
+                ->when($request->integer('tag') > 0, function (Builder $query) use ($request): void {
                     $query->whereHas('tags', function (Builder $query) use ($request): void {
-                        $query->where('id', $request->input('tag'));
+                        $query->where('id', $request->integer('tag'));
                     });
                 })
-                ->when($request->filled('label'), function (Builder $query) use ($request): void {
+                ->when($request->integer('label') > 0, function (Builder $query) use ($request): void {
                     $query->whereHas('label', function (Builder $query) use ($request): void {
-                        $query->where('id', $request->input('label'));
+                        $query->where('id', $request->integer('label'));
                     });
                 })
                 ->when($request->filled('difficulty'), function (Builder $query) use ($request): void {
