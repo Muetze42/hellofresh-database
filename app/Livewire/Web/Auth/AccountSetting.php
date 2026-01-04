@@ -51,8 +51,8 @@ class AccountSetting extends AbstractComponent
         }
 
         $validated = $this->validate([
-            'name' => ['required', 'string', 'min:2', 'max:255'],
-            'email' => ['required', 'email:rfc', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
+            'name' => ['required', 'string', 'min:2', 'max:255', 'unique:users,name,' . $user->id],
+            'email' => ['required', 'email:rfc,dns', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
             'country_code' => ['nullable', 'string', 'size:2', new CountryCodeRule()],
         ]);
 
