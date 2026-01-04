@@ -19,8 +19,8 @@ class RegisterUserAction
     public static function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:2', 'max:255'],
-            'email' => ['required', 'email:rfc', 'unique:users,email', new DisposableEmailRule()],
+            'name' => ['required', 'string', 'min:2', 'max:255', 'unique:users,name'],
+            'email' => ['required', 'email:rfc,dns', 'unique:users,email', new DisposableEmailRule()],
             'password' => ['required', 'confirmed', Password::defaults()],
             'country_code' => ['nullable', 'string', 'size:2', new CountryCodeRule()],
             'acceptPrivacy' => ['accepted'],
