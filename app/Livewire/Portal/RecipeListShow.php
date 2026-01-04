@@ -68,7 +68,7 @@ class RecipeListShow extends Component
 
     public function render(): View
     {
-        return view('portal::livewire.recipe-list-show')
+        return view('portal::livewire.recipe-lists.show')
             ->title($this->recipeList->name . ' - ' . __('My Recipe Lists'));
     }
 }

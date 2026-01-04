@@ -1,6 +1,7 @@
 <div class="space-y-section">
     <flux:breadcrumbs>
-        <flux:breadcrumbs.item :href="route('portal.recipe-lists.index')" wire:navigate>{{ __('My Recipe Lists') }}</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item :href="route('portal.recipe-lists.index')" wire:navigate>{{ __('Recipe Lists') }}</flux:breadcrumbs.item>
         <flux:breadcrumbs.item>{{ $recipeList->name }}</flux:breadcrumbs.item>
     </flux:breadcrumbs>
 

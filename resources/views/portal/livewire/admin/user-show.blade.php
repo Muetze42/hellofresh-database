@@ -1,5 +1,6 @@
 <div class="space-y-section">
     <flux:breadcrumbs>
+        <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
         <flux:breadcrumbs.item :href="route('portal.admin.users')" wire:navigate>Users</flux:breadcrumbs.item>
         <flux:breadcrumbs.item>{{ $user->name }}</flux:breadcrumbs.item>
     </flux:breadcrumbs>

@@ -84,4 +84,16 @@ return [
 
     'version' => env('API_VERSION', 'unknown'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | API Portal Name
+    |--------------------------------------------------------------------------
+    |
+    | This value defines the display name for the API Portal. It is shown
+    | in the portal navigation, page titles, and other UI elements where
+    | the portal name is displayed to users.
+    |
+    */
+
+    'portal_name' => env('API_PORTAL_NAME', 'API + Data Portal'),
 ];

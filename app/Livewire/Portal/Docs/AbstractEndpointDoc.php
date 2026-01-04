@@ -46,6 +46,6 @@ abstract class AbstractEndpointDoc extends Component
             'exampleRequest' => $this->exampleRequest(),
             'version' => $version,
             'isPreRelease' => version_compare($version, '1.0.0', '<'),
-        ])->title($this->title());
+        ])->title(page_title($this->title(), 'API Reference'));
     }
 }

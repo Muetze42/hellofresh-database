@@ -8,7 +8,7 @@ class LabelsDoc extends AbstractEndpointDoc
 {
     protected function title(): string
     {
-        return 'Labels API';
+        return 'Labels';
     }
 
     protected function description(): string

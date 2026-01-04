@@ -80,7 +80,20 @@
         Ingredients
       </flux:sidebar.item>
     </flux:sidebar.group>
-      @if(auth()->user()?->admin)
+
+    <flux:sidebar.group expandable heading="Statistics">
+      <flux:sidebar.item icon="utensils" :href="route('portal.stats.recipes')" :current="request()->routeIs('portal.stats.recipes')" wire:navigate>
+        Recipes
+      </flux:sidebar.item>
+      <flux:sidebar.item icon="activity" :href="route('portal.stats.api')" :current="request()->routeIs('portal.stats.api')" wire:navigate>
+        API
+      </flux:sidebar.item>
+      <flux:sidebar.item icon="users" :href="route('portal.stats.users')" :current="request()->routeIs('portal.stats.users')" wire:navigate>
+        Users
+      </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    @if(auth()->user()?->admin)
         <flux:sidebar.group expandable :expanded="false" heading="Admin" class="grid">
           <flux:sidebar.item icon="users" :href="route('portal.admin.users')" :current="request()->routeIs('portal.admin.users')" wire:navigate>
             Users
@@ -95,9 +108,6 @@
   <flux:spacer />
 
   <flux:sidebar.nav>
-    <flux:sidebar.item icon="chart-pie" :href="route('portal.stats')" :current="request()->routeIs('portal.stats')" wire:navigate>
-      Statistics
-    </flux:sidebar.item>
     <flux:sidebar.item icon="scroll-text" :href="route('portal.changelog')" :current="request()->routeIs('portal.changelog')" wire:navigate>
       Changelog
     </flux:sidebar.item>

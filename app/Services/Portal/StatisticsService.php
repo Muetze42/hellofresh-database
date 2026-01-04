@@ -24,7 +24,7 @@ class StatisticsService
     protected int $cacheTtl = 3600;
 
     /**
-     * The cache keys used by the statistics.
+     * The cache keys used by the recipe statistics.
      *
      * @var list<string>
      */
@@ -38,8 +38,6 @@ class StatisticsService
         'portal_top_tags',
         'portal_top_cuisines',
         'portal_recipes_per_month',
-        'portal_user_engagement',
-        'portal_users_by_country',
         'portal_avg_prep_times',
         'portal_data_health',
     ];
@@ -55,7 +53,7 @@ class StatisticsService
     }
 
     /**
-     * Warm all statistics cache.
+     * Warm all recipe statistics cache.
      */
     public function warmCache(): void
     {
@@ -70,8 +68,6 @@ class StatisticsService
         $this->topTags();
         $this->topCuisines();
         $this->recipesPerMonth();
-        $this->userEngagement();
-        $this->usersByCountry();
         $this->avgPrepTimesByCountry();
         $this->dataHealth();
     }
@@ -83,6 +79,7 @@ class StatisticsService
      */
     public function globalStats(): array
     {
+        /** @var array{recipes: int, ingredients: int, menus: int, countries: int, tags: int, allergens: int, cuisines: int} */
         return Cache::remember('portal_global_stats', $this->cacheTtl, static fn (): array => [
             'recipes' => Recipe::count(),
             'ingredients' => Ingredient::count(),
@@ -101,6 +98,7 @@ class StatisticsService
      */
     public function countryStats(): Collection
     {
+        /** @var Collection<int, Country> */
         return Cache::remember('portal_country_stats', $this->cacheTtl, static fn (): Collection => Country::where('active', true)
             ->withCount('menus')
             ->get());
@@ -113,6 +111,7 @@ class StatisticsService
      */
     public function newestRecipes(): Collection
     {
+        /** @var Collection<int, Recipe> */
         return Cache::remember('portal_newest_recipes', $this->cacheTtl, static fn (): Collection => Recipe::with('country')
             ->latest('created_at')
             ->limit(5)
@@ -126,6 +125,7 @@ class StatisticsService
      */
     public function difficultyDistribution(): array
     {
+        /** @var array<int, array{difficulty: int, count: int}> */
         return Cache::remember('portal_difficulty_distribution', $this->cacheTtl, static function (): array {
             $results = DB::table('recipes')
                 ->selectRaw('difficulty, COUNT(*) as count')
@@ -134,9 +134,9 @@ class StatisticsService
                 ->orderBy('difficulty')
                 ->get();
 
-            return $results->map(fn (stdClass $row): array => [
-                'difficulty' => (int) $row->difficulty,
-                'count' => (int) $row->count,
+            return $results->map(static fn (stdClass $row): array => [
+                'difficulty' => is_numeric($row->difficulty) ? (int) $row->difficulty : 0,
+                'count' => is_numeric($row->count) ? (int) $row->count : 0,
             ])->all();
         });
     }
@@ -148,6 +148,7 @@ class StatisticsService
      */
     public function recipeQuality(): array
     {
+        /** @var array{total: int, without_image: int, without_nutrition: int, with_pdf: int, pdf_percentage: float} */
         return Cache::remember('portal_recipe_quality', $this->cacheTtl, static function (): array {
             $total = Recipe::count();
             $withoutImage = Recipe::whereNull('image_path')->count();
@@ -159,7 +160,7 @@ class StatisticsService
                 'without_image' => $withoutImage,
                 'without_nutrition' => $withoutNutrition,
                 'with_pdf' => $withPdf,
-                'pdf_percentage' => $total > 0 ? round(($withPdf / $total) * 100, 1) : 0,
+                'pdf_percentage' => $total > 0 ? round(($withPdf / $total) * 100, 1) : 0.0,
             ];
         });
     }
@@ -167,10 +168,11 @@ class StatisticsService
     /**
      * Get top ingredients by recipe count.
      *
-     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
+     * @return Collection<int, stdClass>
      */
     public function topIngredients(): Collection
     {
+        /** @var Collection<int, stdClass> */
         return Cache::remember('portal_top_ingredients', $this->cacheTtl, static fn (): Collection => DB::table('ingredients')
             ->join('ingredient_recipe', 'ingredients.id', '=', 'ingredient_recipe.ingredient_id')
             ->join('countries', 'ingredients.country_id', '=', 'countries.id')
@@ -184,10 +186,11 @@ class StatisticsService
     /**
      * Get top tags by recipe count.
      *
-     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
+     * @return Collection<int, stdClass>
      */
     public function topTags(): Collection
     {
+        /** @var Collection<int, stdClass> */
         return Cache::remember('portal_top_tags', $this->cacheTtl, static fn (): Collection => DB::table('tags')
             ->join('recipe_tag', 'tags.id', '=', 'recipe_tag.tag_id')
             ->join('countries', 'tags.country_id', '=', 'countries.id')
@@ -201,10 +204,11 @@ class StatisticsService
     /**
      * Get top cuisines by recipe count.
      *
-     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
+     * @return Collection<int, stdClass>
      */
     public function topCuisines(): Collection
     {
+        /** @var Collection<int, stdClass> */
         return Cache::remember('portal_top_cuisines', $this->cacheTtl, static fn (): Collection => DB::table('cuisines')
             ->join('cuisine_recipe', 'cuisines.id', '=', 'cuisine_recipe.cuisine_id')
             ->join('countries', 'cuisines.country_id', '=', 'countries.id')
@@ -218,10 +222,11 @@ class StatisticsService
     /**
      * Get recipes per month for the last 12 months.
      *
-     * @return Collection<int, object{month: string, count: int}>
+     * @return Collection<int, stdClass>
      */
     public function recipesPerMonth(): Collection
     {
+        /** @var Collection<int, stdClass> */
         return Cache::remember('portal_recipes_per_month', $this->cacheTtl, static fn (): Collection => DB::table('recipes')
             ->select(DB::raw("TO_CHAR(created_at, 'YYYY-MM') as month"), DB::raw('COUNT(*) as count'))
             ->where('created_at', '>=', now()->subMonths(12))
@@ -234,46 +239,51 @@ class StatisticsService
     /**
      * Get user engagement statistics.
      *
+     * Note: User statistics are not cached as they are relatively fast queries
+     * and benefit from real-time accuracy.
+     *
      * @return array{total_users: int, users_with_lists: int, total_lists: int, total_recipes_in_lists: int}
      */
     public function userEngagement(): array
     {
-        return Cache::remember('portal_user_engagement', $this->cacheTtl, static function (): array {
-            $totalUsers = User::count();
-            $usersWithLists = User::whereHas('recipeLists')->count();
-            $totalLists = RecipeList::count();
-            $totalRecipesInLists = DB::table('recipe_recipe_list')->count();
+        $totalUsers = User::count();
+        $usersWithLists = User::whereHas('recipeLists')->count();
+        $totalLists = RecipeList::count();
+        $totalRecipesInLists = DB::table('recipe_recipe_list')->count();
 
-            return [
-                'total_users' => $totalUsers,
-                'users_with_lists' => $usersWithLists,
-                'total_lists' => $totalLists,
-                'total_recipes_in_lists' => $totalRecipesInLists,
-            ];
-        });
+        return [
+            'total_users' => $totalUsers,
+            'users_with_lists' => $usersWithLists,
+            'total_lists' => $totalLists,
+            'total_recipes_in_lists' => $totalRecipesInLists,
+        ];
     }
 
     /**
      * Get user counts grouped by country.
      *
+     * Note: User statistics are not cached as they are relatively fast queries
+     * and benefit from real-time accuracy.
+     *
      * @return Collection<int, stdClass>
      */
     public function usersByCountry(): Collection
     {
-        return Cache::remember('portal_users_by_country', $this->cacheTtl, static fn (): Collection => DB::table('users')
+        return DB::table('users')
             ->select('country_code', DB::raw('COUNT(*) as count'))
             ->groupBy('country_code')
             ->orderByDesc('count')
-            ->get());
+            ->get();
     }
 
     /**
      * Get average prep times per country.
      *
-     * @return Collection<int, object{code: string, avg_prep: float, avg_total: float}>
+     * @return Collection<int, stdClass>
      */
     public function avgPrepTimesByCountry(): Collection
     {
+        /** @var Collection<int, stdClass> */
         return Cache::remember('portal_avg_prep_times', $this->cacheTtl, static fn (): Collection => DB::table('recipes')
             ->join('countries', 'recipes.country_id', '=', 'countries.id')
             ->select(
@@ -296,6 +306,7 @@ class StatisticsService
      */
     public function dataHealth(): array
     {
+        /** @var array{orphan_ingredients: int, inactive_countries: int, recipes_without_tags: int} */
         return Cache::remember('portal_data_health', $this->cacheTtl, static function (): array {
             $orphanIngredients = Ingredient::whereDoesntHave('recipes')->count();
             $inactiveCountries = Country::where('active', false)->count();

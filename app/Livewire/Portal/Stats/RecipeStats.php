@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Portal;
+namespace App\Livewire\Portal\Stats;
 
 use App\Models\Country;
 use App\Models\Recipe;
@@ -13,7 +13,7 @@ use Livewire\Component;
 use stdClass;
 
 #[Layout('portal::components.layouts.app')]
-class Statistic extends Component
+class RecipeStats extends Component
 {
     public string $sortBy = 'recipes_count';
 
@@ -101,7 +101,7 @@ class Statistic extends Component
     /**
      * Get top ingredients by recipe count.
      *
-     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
+     * @return Collection<int, stdClass>
      */
     #[Computed]
     public function topIngredients(): Collection
@@ -112,7 +112,7 @@ class Statistic extends Component
     /**
      * Get top tags by recipe count.
      *
-     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
+     * @return Collection<int, stdClass>
      */
     #[Computed]
     public function topTags(): Collection
@@ -123,7 +123,7 @@ class Statistic extends Component
     /**
      * Get top cuisines by recipe count.
      *
-     * @return Collection<int, object{name: string, country_code: string, recipes_count: int}>
+     * @return Collection<int, stdClass>
      */
     #[Computed]
     public function topCuisines(): Collection
@@ -134,7 +134,7 @@ class Statistic extends Component
     /**
      * Get recipes per month for the last 12 months.
      *
-     * @return Collection<int, object{month: string, count: int}>
+     * @return Collection<int, stdClass>
      */
     #[Computed]
     public function recipesPerMonth(): Collection
@@ -143,31 +143,9 @@ class Statistic extends Component
     }
 
     /**
-     * Get user engagement statistics.
-     *
-     * @return array{total_users: int, users_with_lists: int, total_lists: int, total_recipes_in_lists: int}
-     */
-    #[Computed]
-    public function userEngagement(): array
-    {
-        return $this->statistics()->userEngagement();
-    }
-
-    /**
-     * Get user counts grouped by country.
-     *
-     * @return Collection<int, stdClass>
-     */
-    #[Computed]
-    public function usersByCountry(): Collection
-    {
-        return $this->statistics()->usersByCountry();
-    }
-
-    /**
      * Get average prep times per country.
      *
-     * @return Collection<int, object{code: string, avg_prep: float, avg_total: float}>
+     * @return Collection<int, stdClass>
      */
     #[Computed]
     public function avgPrepTimesByCountry(): Collection
@@ -188,6 +166,10 @@ class Statistic extends Component
 
     public function render(): View
     {
-        return view('portal::livewire.statistic.index')->title('Database Statistics');
+        /** @var View $view */
+        $view = view('portal::livewire.stats.recipe-stats')
+            ->title(page_title('Recipes', 'Statistics'));
+
+        return $view;
     }
 }

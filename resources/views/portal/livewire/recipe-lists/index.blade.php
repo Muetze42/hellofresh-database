@@ -1,4 +1,9 @@
 <div class="space-y-section">
+    <flux:breadcrumbs>
+        <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item>{{ __('Recipe Lists') }}</flux:breadcrumbs.item>
+    </flux:breadcrumbs>
+
     <flux:heading size="xl">{{ __('My Recipe Lists') }}</flux:heading>
 
     <flux:callout icon="info" color="sky">

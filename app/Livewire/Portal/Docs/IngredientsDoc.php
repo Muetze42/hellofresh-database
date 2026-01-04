@@ -8,7 +8,7 @@ class IngredientsDoc extends AbstractEndpointDoc
 {
     protected function title(): string
     {
-        return 'Ingredients API';
+        return 'Ingredients';
     }
 
     protected function description(): string
