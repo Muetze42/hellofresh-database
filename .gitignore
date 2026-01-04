@@ -14,7 +14,9 @@
 /auth.json
 /node_modules
 /public/build
+/public/build-portal
 /public/hot
+/public/hot-portal
 /public/storage
 /storage/*.key
 /storage/pail

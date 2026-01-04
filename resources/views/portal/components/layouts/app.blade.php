@@ -24,7 +24,7 @@
   <meta name="twitter:image" content="{{ route('og.generic', ['title' => $pageTitle, 'font' => 'mono']) }}">
 
   <x-partials.favicon />
-  @vite(['resources/css/portal/app.css'], 'build-portal')
+  {{ Vite::useHotFile(public_path('hot-portal'))->useBuildDirectory('build-portal')->withEntryPoints(['resources/css/portal/app.css']) }}
   @livewireStyles
   @fluxAppearance
 </head>
@@ -206,7 +206,7 @@
 
 <x-confirmation-modal />
 
-@vite(['resources/js/portal/app.js'], 'build-portal')
+{{ Vite::useHotFile(public_path('hot-portal'))->useBuildDirectory('build-portal')->withEntryPoints(['resources/js/portal/app.js']) }}
 @livewireScripts
 @fluxScripts
 </body>
