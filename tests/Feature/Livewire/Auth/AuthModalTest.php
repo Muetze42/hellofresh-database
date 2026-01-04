@@ -177,9 +177,12 @@ final class AuthModalTest extends TestCase
     #[Test]
     public function register_creates_user_and_logs_in(): void
     {
+        // Use a domain with valid MX records to pass email:dns validation
+        $testEmail = 'testuser_' . uniqid() . '@gmail.com';
+
         Livewire::test(AuthModal::class)
             ->set('name', 'New User')
-            ->set('email', 'new@example.com')
+            ->set('email', $testEmail)
             ->set('password', 'SecurePassword123!')
             ->set('password_confirmation', 'SecurePassword123!')
             ->set('acceptPrivacy', true)
@@ -188,7 +191,7 @@ final class AuthModalTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'name' => 'New User',
-            'email' => 'new@example.com',
+            'email' => $testEmail,
         ]);
 
         $this->assertTrue(Auth::check());

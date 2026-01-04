@@ -15,6 +15,16 @@ final class MenuRedirectControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Get the web app base URL.
+     */
+    protected function webUrl(string $path = ''): string
+    {
+        $appUrl = (string) config('app.url');
+
+        return rtrim($appUrl, '/') . '/' . ltrim($path, '/');
+    }
+
     #[Test]
     public function it_redirects_to_current_menu(): void
     {
@@ -30,10 +40,10 @@ final class MenuRedirectControllerTest extends TestCase
 
         app()->bind('current.country', fn () => $country);
 
-        $response = $this->get('/en-US/menus');
+        $response = $this->get($this->webUrl('/en-US/menus'));
 
         $response->assertRedirect();
-        $response->assertRedirectContains($currentMenu->year_week);
+        $response->assertRedirectContains((string) $currentMenu->year_week);
     }
 
     #[Test]
@@ -51,7 +61,7 @@ final class MenuRedirectControllerTest extends TestCase
 
         app()->bind('current.country', fn () => $country);
 
-        $response = $this->get('/en-US/menus');
+        $response = $this->get($this->webUrl('/en-US/menus'));
 
         $response->assertRedirect();
         $response->assertRedirectContains((string) $pastMenu->year_week);
@@ -72,7 +82,7 @@ final class MenuRedirectControllerTest extends TestCase
 
         app()->bind('current.country', fn () => $country);
 
-        $response = $this->get('/en-US/menus');
+        $response = $this->get($this->webUrl('/en-US/menus'));
 
         $response->assertRedirect();
         $response->assertRedirectContains((string) $futureMenu->year_week);
@@ -88,7 +98,7 @@ final class MenuRedirectControllerTest extends TestCase
 
         app()->bind('current.country', fn () => $country);
 
-        $response = $this->get('/en-US/menus');
+        $response = $this->get($this->webUrl('/en-US/menus'));
 
         $response->assertNotFound();
     }
@@ -113,7 +123,7 @@ final class MenuRedirectControllerTest extends TestCase
 
         app()->bind('current.country', fn () => $usCountry);
 
-        $response = $this->get('/en-US/menus');
+        $response = $this->get($this->webUrl('/en-US/menus'));
 
         $response->assertNotFound();
     }

@@ -13,6 +13,7 @@ use App\Models\Menu;
 use App\Models\Recipe;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Bus;
 use Mockery;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -123,8 +124,10 @@ final class FetchMenusJobTest extends TestCase
     }
 
     #[Test]
-    public function handle_skips_menu_without_matching_recipes(): void
+    public function handle_creates_menu_and_dispatches_batch_for_missing_recipes(): void
     {
+        Bus::fake();
+
         $country = Country::factory()->create([
             'locales' => ['en'],
         ]);
@@ -154,10 +157,14 @@ final class FetchMenusJobTest extends TestCase
         $job = new FetchMenusJob($country);
         $job->handle($client);
 
-        $this->assertDatabaseMissing('menus', [
+        // Menu is created even when recipes don't exist (will be fetched via batch)
+        $this->assertDatabaseHas('menus', [
             'country_id' => $country->id,
             'year_week' => 202510,
         ]);
+
+        // A batch was dispatched to fetch missing recipes
+        Bus::assertBatched(fn ($batch): bool => $batch->name === 'Fetch missing recipes for menu 202510');
     }
 
     #[Test]
