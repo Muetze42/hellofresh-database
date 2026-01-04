@@ -52,6 +52,17 @@ Wij verkopen, verhandelen of delen uw persoonlijke gegevens niet met derden. Rec
 
 Receptafbeeldingen worden rechtstreeks geladen vanaf HelloFresh-servers. Wanneer u receptpagina's bekijkt, maakt uw browser verbinding met HelloFresh-servers om deze afbeeldingen op te halen. Dit betekent dat uw IP-adres en browserinformatie kunnen worden verzonden naar HelloFresh. Wij hebben geen controle over hoe HelloFresh deze gegevens verwerkt. Raadpleeg voor meer informatie het privacybeleid van HelloFresh.
 
+### 7.2 Foutopsporing (Sentry)
+
+Wij gebruiken Sentry, een dienst van Functional Software Inc., voor foutopsporing en applicatiemonitoring. Bij fouten kunnen de volgende gegevens naar Sentry worden verzonden:
+- Geanonimiseerd IP-adres (IP-adressen worden niet volledig opgeslagen)
+- Browsertype en -versie
+- Besturingssysteem
+- Foutmeldingen en stack traces
+- Gebruikers-ID (indien ingelogd)
+
+De Sentry-servers bevinden zich binnen de Europese Unie. Voor meer informatie, zie het [privacybeleid van Sentry](https://sentry.io/privacy/).
+
 ## 8. Wijzigingen in dit beleid
 
 Wij kunnen dit privacybeleid van tijd tot tijd bijwerken. Wij zullen u op de hoogte stellen van wijzigingen door het nieuwe beleid op deze pagina te plaatsen.

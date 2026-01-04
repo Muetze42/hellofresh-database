@@ -52,6 +52,17 @@ Wir verkaufen, handeln oder teilen deine personenbezogenen Daten nicht mit Dritt
 
 Rezeptbilder werden direkt von HelloFresh-Servern geladen. Wenn du Rezeptseiten aufrufst, stellt dein Browser eine Verbindung zu HelloFresh-Servern her, um diese Bilder abzurufen. Das bedeutet, dass deine IP-Adresse und Browserinformationen an HelloFresh übermittelt werden können. Wir haben keinen Einfluss darauf, wie HelloFresh diese Daten verarbeitet. Weitere Informationen findest du in der Datenschutzerklärung von HelloFresh.
 
+### 7.2 Fehlerüberwachung (Sentry)
+
+Wir verwenden Sentry, einen Dienst von Functional Software Inc., zur Fehlerüberwachung und Anwendungsüberwachung. Bei Fehlern können folgende Daten an Sentry übermittelt werden:
+- Anonymisierte IP-Adresse (IP-Adressen werden nicht vollständig gespeichert)
+- Browsertyp und -version
+- Betriebssystem
+- Fehlermeldungen und Stack-Traces
+- Benutzer-ID (wenn angemeldet)
+
+Die Sentry-Server befinden sich innerhalb der Europäischen Union. Weitere Informationen findest du in der [Datenschutzerklärung von Sentry](https://sentry.io/privacy/).
+
 ## 8. Änderungen dieser Erklärung
 
 Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Über Änderungen informieren wir dich durch Veröffentlichung der neuen Erklärung auf dieser Seite.

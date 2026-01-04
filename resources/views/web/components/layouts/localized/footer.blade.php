@@ -5,6 +5,10 @@
         <flux:icon.shield-check variant="micro" />
         <span>{{ __('Privacy Policy') }}</span>
       </flux:link>
+      <flux:link :href="localized_route('localized.terms-of-use')" class="inline-flex items-center gap-1 hover:text-zinc-700 dark:hover:text-zinc-200">
+        <flux:icon.file-text variant="micro" />
+        <span>{{ __('Terms of Use') }}</span>
+      </flux:link>
       <flux:link href="https://github.com/Muetze42/hellofresh-database" target="_blank" class="inline-flex items-center gap-1 hover:text-zinc-700 dark:hover:text-zinc-200">
         <flux:icon.github variant="micro" />
         <span>GitHub</span>

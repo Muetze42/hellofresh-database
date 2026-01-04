@@ -111,8 +111,14 @@
     <flux:sidebar.item icon="scroll-text" :href="route('portal.changelog')" :current="request()->routeIs('portal.changelog')" wire:navigate>
       Changelog
     </flux:sidebar.item>
+    <flux:sidebar.item icon="shield" :href="route('portal.privacy')" :current="request()->routeIs('portal.privacy')" wire:navigate>
+      Privacy Policy
+    </flux:sidebar.item>
+    <flux:sidebar.item icon="file-text" :href="route('portal.terms')" :current="request()->routeIs('portal.terms')" wire:navigate>
+      Terms of Use
+    </flux:sidebar.item>
     <flux:sidebar.item icon="home" :href="config('app.url')" :current="false">
-      {{ config('app.name') }}
+      {{ config('app.name_strict') }}
     </flux:sidebar.item>
     @if(auth()->user()?->admin)
       <flux:sidebar.item icon="laravel-horizon" :href="config('app.url').'/'.config('horizon.path')" :current="false" target="_blank">

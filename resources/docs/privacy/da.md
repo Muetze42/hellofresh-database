@@ -52,6 +52,17 @@ Vi sælger, handler eller deler ikke dine personlige data med tredjeparter. Opsk
 
 Opskriftsbilleder indlæses direkte fra HelloFresh-servere. Når du ser opskriftssider, opretter din browser forbindelse til HelloFresh-servere for at hente disse billeder. Dette betyder, at din IP-adresse og browseroplysninger kan blive overført til HelloFresh. Vi har ingen kontrol over, hvordan HelloFresh behandler disse data. For mere information henvises til HelloFreshs privatlivspolitik.
 
+### 7.2 Fejlsporing (Sentry)
+
+Vi bruger Sentry, en tjeneste leveret af Functional Software Inc., til fejlsporing og applikationsovervågning. Ved fejl kan følgende data blive overført til Sentry:
+- Anonymiseret IP-adresse (IP-adresser gemmes ikke fuldt ud)
+- Browsertype og -version
+- Operativsystem
+- Fejlmeddelelser og stack traces
+- Bruger-ID (hvis logget ind)
+
+Sentry-servere er placeret inden for Den Europæiske Union. For mere information, se [Sentrys privatlivspolitik](https://sentry.io/privacy/).
+
 ## 8. Ændringer af denne politik
 
 Vi kan opdatere denne privatlivspolitik fra tid til anden. Vi vil informere dig om eventuelle ændringer ved at offentliggøre den nye politik på denne side.

@@ -22,6 +22,7 @@ use App\Livewire\Portal\Docs\MenusShowDoc;
 use App\Livewire\Portal\Docs\RecipesIndexDoc;
 use App\Livewire\Portal\Docs\RecipesShowDoc;
 use App\Livewire\Portal\Docs\TagsDoc;
+use App\Livewire\Portal\PrivacyPolicy;
 use App\Livewire\Portal\Profile;
 use App\Livewire\Portal\RecipeLists;
 use App\Livewire\Portal\RecipeListShow;
@@ -29,6 +30,7 @@ use App\Livewire\Portal\Stats\ApiStats;
 use App\Livewire\Portal\Stats\RecipeStats;
 use App\Livewire\Portal\Stats\StatsIndex;
 use App\Livewire\Portal\Stats\UserStats;
+use App\Livewire\Portal\TermsOfUse;
 use App\Livewire\Portal\Tokens\TokenIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +53,8 @@ Route::middleware('guest')->group(function (): void {
 // Public routes (accessible to everyone)
 Route::get('/', Dashboard::class)->name('dashboard');
 Route::get('changelog', Changelog::class)->name('changelog');
+Route::get('privacy', PrivacyPolicy::class)->name('privacy');
+Route::get('terms', TermsOfUse::class)->name('terms');
 
 // Statistics routes
 Route::prefix('stats')->name('stats.')->group(function (): void {

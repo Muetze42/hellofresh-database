@@ -52,6 +52,17 @@ Vi selger, handler eller deler ikke personopplysningene dine med tredjeparter. O
 
 Oppskriftsbilder lastes direkte fra HelloFresh-servere. Når du ser på oppskriftssider, kobler nettleseren din til HelloFresh-servere for å hente disse bildene. Dette betyr at IP-adressen din og nettleserinformasjon kan overføres til HelloFresh. Vi har ingen kontroll over hvordan HelloFresh behandler disse dataene. For mer informasjon, se HelloFreshs personvernerklæring.
 
+### 7.2 Feilsporing (Sentry)
+
+Vi bruker Sentry, en tjeneste levert av Functional Software Inc., for feilsporing og applikasjonsovervåking. Ved feil kan følgende data overføres til Sentry:
+- Anonymisert IP-adresse (IP-adresser lagres ikke fullstendig)
+- Nettlesertype og -versjon
+- Operativsystem
+- Feilmeldinger og stack traces
+- Bruker-ID (hvis innlogget)
+
+Sentry-servere er plassert innenfor Den europeiske union. For mer informasjon, se [Sentrys personvernerklæring](https://sentry.io/privacy/).
+
 ## 8. Endringer i denne erklæringen
 
 Vi kan oppdatere denne personvernerklæringen fra tid til annen. Vi vil informere deg om eventuelle endringer ved å publisere den nye erklæringen på denne siden.
