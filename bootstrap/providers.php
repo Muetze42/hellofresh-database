@@ -9,5 +9,6 @@ return [
     App\Providers\LivewireServiceProvider::class,
     App\Providers\MacroServiceProvider::class,
     App\Providers\MigrationServiceProvider::class,
+    App\Providers\PulseServiceProvider::class,
     App\Providers\ViewServiceProvider::class,
 ];

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Contracts\Validation\ValidationRule;
+use Override;
 
 /**
  * Validation for the Menu API index endpoint.
@@ -10,10 +10,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 class MenuIndexRequest extends ListIndexRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|string|list<ValidationRule|string>>
+     * @return array<string, mixed>
      */
+    #[Override]
     public function rules(): array
     {
         return array_merge(parent::rules(), [

@@ -15,17 +15,19 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Services\Portal\StatisticsService;
 use Illuminate\Support\Facades\Cache;
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 final class StatisticsServiceTest extends TestCase
 {
-    protected StatisticsService $service;
+    private StatisticsService $statisticsService;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new StatisticsService();
+        $this->statisticsService = new StatisticsService();
         Cache::flush();
     }
 
@@ -35,7 +37,7 @@ final class StatisticsServiceTest extends TestCase
         Cache::put('portal_global_stats', ['test' => 1], 3600);
         Cache::put('portal_country_stats', ['test' => 2], 3600);
 
-        $this->service->clearCache();
+        $this->statisticsService->clearCache();
 
         $this->assertFalse(Cache::has('portal_global_stats'));
         $this->assertFalse(Cache::has('portal_country_stats'));
@@ -47,7 +49,7 @@ final class StatisticsServiceTest extends TestCase
         Country::factory()->create(['active' => true]);
         Recipe::factory()->create();
 
-        $this->service->warmCache();
+        $this->statisticsService->warmCache();
 
         $this->assertTrue(Cache::has('portal_global_stats'));
         $this->assertTrue(Cache::has('portal_country_stats'));
@@ -73,7 +75,7 @@ final class StatisticsServiceTest extends TestCase
         Allergen::factory()->for($country)->count(4)->create();
         Cuisine::factory()->for($country)->create();
 
-        $result = $this->service->globalStats();
+        $result = $this->statisticsService->globalStats();
 
         $this->assertArrayHasKey('recipes', $result);
         $this->assertArrayHasKey('ingredients', $result);
@@ -93,7 +95,7 @@ final class StatisticsServiceTest extends TestCase
     {
         Country::factory()->create(['active' => true]);
 
-        $this->service->globalStats();
+        $this->statisticsService->globalStats();
 
         $this->assertTrue(Cache::has('portal_global_stats'));
     }
@@ -105,7 +107,7 @@ final class StatisticsServiceTest extends TestCase
         Menu::factory()->for($country)->count(3)->create();
         Country::factory()->create(['active' => false]);
 
-        $result = $this->service->countryStats();
+        $result = $this->statisticsService->countryStats();
 
         $this->assertCount(1, $result);
         $this->assertSame(3, $result->first()->menus_count);
@@ -115,10 +117,10 @@ final class StatisticsServiceTest extends TestCase
     public function it_returns_newest_recipes(): void
     {
         $country = Country::factory()->create(['active' => true]);
-        $oldRecipe = Recipe::factory()->for($country)->create(['created_at' => now()->subDays(10)]);
+        Recipe::factory()->for($country)->create(['created_at' => now()->subDays(10)]);
         $newRecipe = Recipe::factory()->for($country)->create(['created_at' => now()]);
 
-        $result = $this->service->newestRecipes();
+        $result = $this->statisticsService->newestRecipes();
 
         $this->assertCount(2, $result);
         $this->assertSame($newRecipe->id, $result->first()->id);
@@ -131,7 +133,7 @@ final class StatisticsServiceTest extends TestCase
         $country = Country::factory()->create(['active' => true]);
         Recipe::factory()->for($country)->count(10)->create();
 
-        $result = $this->service->newestRecipes();
+        $result = $this->statisticsService->newestRecipes();
 
         $this->assertCount(5, $result);
     }
@@ -145,7 +147,7 @@ final class StatisticsServiceTest extends TestCase
         Recipe::factory()->for($country)->create(['difficulty' => 2]);
         Recipe::factory()->for($country)->create(['difficulty' => 3]);
 
-        $result = $this->service->difficultyDistribution();
+        $result = $this->statisticsService->difficultyDistribution();
 
         $this->assertIsArray($result);
         $this->assertArrayHasKey(0, $result);
@@ -160,7 +162,7 @@ final class StatisticsServiceTest extends TestCase
         Recipe::factory()->for($country)->create(['difficulty' => null]);
         Recipe::factory()->for($country)->create(['difficulty' => 1]);
 
-        $result = $this->service->difficultyDistribution();
+        $result = $this->statisticsService->difficultyDistribution();
 
         $this->assertCount(1, $result);
         $this->assertSame(1, $result[0]['difficulty']);
@@ -179,7 +181,7 @@ final class StatisticsServiceTest extends TestCase
             'nutrition_primary' => null,
         ]);
 
-        $result = $this->service->recipeQuality();
+        $result = $this->statisticsService->recipeQuality();
 
         $this->assertArrayHasKey('total', $result);
         $this->assertArrayHasKey('without_image', $result);
@@ -199,18 +201,18 @@ final class StatisticsServiceTest extends TestCase
         Recipe::factory()->for($country)->withPdf()->count(3)->create();
         Recipe::factory()->for($country)->count(7)->create();
 
-        $result = $this->service->recipeQuality();
+        $result = $this->statisticsService->recipeQuality();
 
-        $this->assertSame(30.0, $result['pdf_percentage']);
+        $this->assertEqualsWithDelta(30.0, $result['pdf_percentage'], PHP_FLOAT_EPSILON);
     }
 
     #[Test]
     public function it_handles_zero_recipes_for_pdf_percentage(): void
     {
-        $result = $this->service->recipeQuality();
+        $result = $this->statisticsService->recipeQuality();
 
         $this->assertSame(0, $result['total']);
-        $this->assertSame(0.0, $result['pdf_percentage']);
+        $this->assertEqualsWithDelta(0.0, $result['pdf_percentage'], PHP_FLOAT_EPSILON);
     }
 
     #[Test]
@@ -226,7 +228,7 @@ final class StatisticsServiceTest extends TestCase
         $recipe2->ingredients()->attach($ingredient1->id);
         $recipe3->ingredients()->attach($ingredient1->id);
 
-        $result = $this->service->topIngredients();
+        $result = $this->statisticsService->topIngredients();
 
         $this->assertGreaterThanOrEqual(1, $result->count());
         $this->assertSame(3, (int) $result->first()->recipes_count);
@@ -240,7 +242,7 @@ final class StatisticsServiceTest extends TestCase
         $recipe = Recipe::factory()->for($country)->create();
         $recipe->ingredients()->attach($ingredients->pluck('id'));
 
-        $result = $this->service->topIngredients();
+        $result = $this->statisticsService->topIngredients();
 
         $this->assertCount(10, $result);
     }
@@ -255,7 +257,7 @@ final class StatisticsServiceTest extends TestCase
             $recipe->tags()->attach($tag->id);
         }
 
-        $result = $this->service->topTags();
+        $result = $this->statisticsService->topTags();
 
         $this->assertGreaterThanOrEqual(1, $result->count());
         $this->assertSame(3, (int) $result->first()->recipes_count);
@@ -271,7 +273,7 @@ final class StatisticsServiceTest extends TestCase
             $recipe->cuisines()->attach($cuisine->id);
         }
 
-        $result = $this->service->topCuisines();
+        $result = $this->statisticsService->topCuisines();
 
         $this->assertGreaterThanOrEqual(1, $result->count());
         $this->assertSame(4, (int) $result->first()->recipes_count);
@@ -285,7 +287,7 @@ final class StatisticsServiceTest extends TestCase
         Recipe::factory()->for($country)->create(['created_at' => now()->subMonth()]);
         Recipe::factory()->for($country)->create(['created_at' => now()->subMonths(2)]);
 
-        $result = $this->service->recipesPerMonth();
+        $result = $this->statisticsService->recipesPerMonth();
 
         $this->assertGreaterThanOrEqual(1, $result->count());
     }
@@ -296,7 +298,7 @@ final class StatisticsServiceTest extends TestCase
         $country = Country::factory()->create(['active' => true]);
         Recipe::factory()->for($country)->create(['created_at' => now()->subMonths(13)]);
 
-        $result = $this->service->recipesPerMonth();
+        $result = $this->statisticsService->recipesPerMonth();
 
         $this->assertCount(0, $result);
     }
@@ -306,13 +308,13 @@ final class StatisticsServiceTest extends TestCase
     {
         $country = Country::factory()->create(['active' => true]);
         $user1 = User::factory()->create();
-        $user2 = User::factory()->create();
-        $user3 = User::factory()->create();
+        User::factory()->create();
+        User::factory()->create();
         $list = RecipeList::factory()->for($user1)->create();
         $recipe = Recipe::factory()->for($country)->create();
         $list->recipes()->attach($recipe->id, ['country_id' => $country->id]);
 
-        $result = $this->service->userEngagement();
+        $result = $this->statisticsService->userEngagement();
 
         $this->assertArrayHasKey('total_users', $result);
         $this->assertArrayHasKey('users_with_lists', $result);
@@ -331,7 +333,7 @@ final class StatisticsServiceTest extends TestCase
         User::factory()->create(['country_code' => 'DE']);
         User::factory()->create(['country_code' => 'US']);
 
-        $result = $this->service->usersByCountry();
+        $result = $this->statisticsService->usersByCountry();
 
         $this->assertGreaterThanOrEqual(2, $result->count());
         $this->assertSame('DE', $result->first()->country_code);
@@ -345,7 +347,7 @@ final class StatisticsServiceTest extends TestCase
         Recipe::factory()->for($country)->create(['prep_time' => 10, 'total_time' => 30]);
         Recipe::factory()->for($country)->create(['prep_time' => 20, 'total_time' => 50]);
 
-        $result = $this->service->avgPrepTimesByCountry();
+        $result = $this->statisticsService->avgPrepTimesByCountry();
 
         $this->assertGreaterThanOrEqual(1, $result->count());
         $this->assertSame('DE', $result->first()->code);
@@ -361,7 +363,7 @@ final class StatisticsServiceTest extends TestCase
         Recipe::factory()->for($activeCountry)->create(['prep_time' => 10, 'total_time' => 30]);
         Recipe::factory()->for($inactiveCountry)->create(['prep_time' => 20, 'total_time' => 50]);
 
-        $result = $this->service->avgPrepTimesByCountry();
+        $result = $this->statisticsService->avgPrepTimesByCountry();
 
         $this->assertCount(1, $result);
         $this->assertSame('DE', $result->first()->code);
@@ -374,7 +376,7 @@ final class StatisticsServiceTest extends TestCase
         Recipe::factory()->for($country)->create(['prep_time' => 0, 'total_time' => 30]);
         Recipe::factory()->for($country)->create(['prep_time' => 20, 'total_time' => 50]);
 
-        $result = $this->service->avgPrepTimesByCountry();
+        $result = $this->statisticsService->avgPrepTimesByCountry();
 
         $this->assertSame(20, (int) $result->first()->avg_prep);
     }
@@ -383,14 +385,14 @@ final class StatisticsServiceTest extends TestCase
     public function it_returns_data_health_statistics(): void
     {
         $activeCountry = Country::factory()->create(['active' => true]);
-        $inactiveCountry = Country::factory()->create(['active' => false]);
+        Country::factory()->create(['active' => false]);
         $tag = Tag::factory()->for($activeCountry)->create();
-        $orphanIngredient = Ingredient::factory()->for($activeCountry)->create();
+        Ingredient::factory()->for($activeCountry)->create();
         $recipeWithTag = Recipe::factory()->for($activeCountry)->create();
         $recipeWithTag->tags()->attach($tag->id);
-        $recipeWithoutTag = Recipe::factory()->for($activeCountry)->create();
+        Recipe::factory()->for($activeCountry)->create();
 
-        $result = $this->service->dataHealth();
+        $result = $this->statisticsService->dataHealth();
 
         $this->assertArrayHasKey('orphan_ingredients', $result);
         $this->assertArrayHasKey('inactive_countries', $result);
@@ -403,7 +405,7 @@ final class StatisticsServiceTest extends TestCase
     #[Test]
     public function it_caches_data_health_statistics(): void
     {
-        $this->service->dataHealth();
+        $this->statisticsService->dataHealth();
 
         $this->assertTrue(Cache::has('portal_data_health'));
     }
@@ -411,7 +413,7 @@ final class StatisticsServiceTest extends TestCase
     #[Test]
     public function it_does_not_cache_user_engagement(): void
     {
-        $this->service->userEngagement();
+        $this->statisticsService->userEngagement();
 
         $this->assertFalse(Cache::has('portal_user_engagement'));
     }
@@ -419,7 +421,7 @@ final class StatisticsServiceTest extends TestCase
     #[Test]
     public function it_does_not_cache_users_by_country(): void
     {
-        $this->service->usersByCountry();
+        $this->statisticsService->usersByCountry();
 
         $this->assertFalse(Cache::has('portal_users_by_country'));
     }

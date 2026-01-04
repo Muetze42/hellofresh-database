@@ -120,11 +120,16 @@
     <flux:sidebar.item icon="home" :href="config('app.url')" :current="false">
       {{ config('app.name_strict') }}
     </flux:sidebar.item>
-    @if(auth()->user()?->admin)
+    @can('viewHorizon')
       <flux:sidebar.item icon="laravel-horizon" :href="config('app.url').'/'.config('horizon.path')" :current="false" target="_blank">
         Horizon
       </flux:sidebar.item>
-    @endif
+    @endcan
+    @can('viewPulse')
+      <flux:sidebar.item icon="laravel-pulse" :href="config('app.url').'/'.config('pulse.path')" :current="false" target="_blank">
+        Pulse
+      </flux:sidebar.item>
+    @endcan
   </flux:sidebar.nav>
 
   @auth

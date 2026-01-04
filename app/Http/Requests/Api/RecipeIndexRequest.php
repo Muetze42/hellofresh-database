@@ -3,8 +3,8 @@
 namespace App\Http\Requests\Api;
 
 use App\Enums\DifficultyEnum;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rule;
+use Override;
 
 /**
  * Validation for the Recipe API index endpoint.
@@ -12,10 +12,9 @@ use Illuminate\Validation\Rule;
 class RecipeIndexRequest extends ListIndexRequest
 {
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|string|list<ValidationRule|string>>
+     * @return array<string, mixed>
      */
+    #[Override]
     public function rules(): array
     {
         return array_merge(parent::rules(), [

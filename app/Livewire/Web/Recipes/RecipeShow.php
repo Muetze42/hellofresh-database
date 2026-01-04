@@ -27,9 +27,7 @@ class RecipeShow extends AbstractComponent
     public function mount(Recipe $recipe): void
     {
         // Abort if recipe belongs to a different country than the URL context
-        if ($recipe->country_id !== $this->countryId) {
-            abort(404);
-        }
+        abort_if($recipe->country_id !== $this->countryId, 404);
 
         $this->recipe = $recipe->load([
             'country',
