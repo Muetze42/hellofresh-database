@@ -10,6 +10,7 @@ export default defineConfig({
               'resources/js/portal/app.js'
             ],
             buildDirectory: 'build-portal',
+            hotFile: 'public/hot-portal',
             refresh: true,
         }),
         tailwindcss(),
