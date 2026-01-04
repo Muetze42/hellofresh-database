@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Middleware\ApiLocalizationMiddleware;
-use App\Http\Middleware\AuthenticateOrShowMessageMiddleware;
-use App\Http\Middleware\EnsureEmailIsVerifiedMiddleware;
-use App\Http\Middleware\EnsureUserIsAdminMiddleware;
-use App\Http\Middleware\LocalizationMiddleware;
+use App\Http\Middleware\Auth\AuthenticateOrShowMessageMiddleware;
+use App\Http\Middleware\Auth\EnsureEmailIsVerifiedMiddleware;
+use App\Http\Middleware\Auth\EnsureUserIsAdminMiddleware;
+use App\Http\Middleware\Context\RequestContextMiddleware;
+use App\Http\Middleware\Localization\ApiLocalizationMiddleware;
+use App\Http\Middleware\Localization\LocalizationMiddleware;
 use App\Http\Middleware\LogUserActivityMiddleware;
 use App\Http\Middleware\PortalMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
@@ -29,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'api',
                 'throttle:api',
                 'auth:sanctum',
+                RequestContextMiddleware::class,
                 EnsureEmailIsVerifiedMiddleware::class,
                 LogUserActivityMiddleware::class,
             ])
@@ -41,6 +43,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'api',
                 'throttle:api',
                 'auth:sanctum',
+                RequestContextMiddleware::class,
                 EnsureEmailIsVerifiedMiddleware::class,
                 ApiLocalizationMiddleware::class,
                 LogUserActivityMiddleware::class,
