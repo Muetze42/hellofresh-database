@@ -94,7 +94,7 @@
     </flux:sidebar.group>
 
     @if(auth()->user()?->admin)
-        <flux:sidebar.group expandable :expanded="false" heading="Admin" class="grid">
+        <flux:sidebar.group expandable :expanded="request()->is('admin/*')" heading="Admin" class="grid">
           <flux:sidebar.item icon="users" :href="route('portal.admin.users')" :current="request()->routeIs('portal.admin.users')" wire:navigate>
             Users
           </flux:sidebar.item>
