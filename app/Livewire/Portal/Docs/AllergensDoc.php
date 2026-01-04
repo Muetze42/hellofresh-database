@@ -8,7 +8,7 @@ class AllergensDoc extends AbstractEndpointDoc
 {
     protected function title(): string
     {
-        return 'Allergens API';
+        return 'Allergens';
     }
 
     protected function description(): string

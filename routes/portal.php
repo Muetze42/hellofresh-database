@@ -13,6 +13,7 @@ use App\Livewire\Portal\Changelog;
 use App\Livewire\Portal\Dashboard;
 use App\Livewire\Portal\Docs\AllergensDoc;
 use App\Livewire\Portal\Docs\CountriesDoc;
+use App\Livewire\Portal\Docs\DocsIndex;
 use App\Livewire\Portal\Docs\GetStartedDoc;
 use App\Livewire\Portal\Docs\IngredientsDoc;
 use App\Livewire\Portal\Docs\LabelsDoc;
@@ -24,7 +25,10 @@ use App\Livewire\Portal\Docs\TagsDoc;
 use App\Livewire\Portal\Profile;
 use App\Livewire\Portal\RecipeLists;
 use App\Livewire\Portal\RecipeListShow;
-use App\Livewire\Portal\Statistic;
+use App\Livewire\Portal\Stats\ApiStats;
+use App\Livewire\Portal\Stats\RecipeStats;
+use App\Livewire\Portal\Stats\StatsIndex;
+use App\Livewire\Portal\Stats\UserStats;
 use App\Livewire\Portal\Tokens\TokenIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -46,11 +50,19 @@ Route::middleware('guest')->group(function (): void {
 
 // Public routes (accessible to everyone)
 Route::get('/', Dashboard::class)->name('dashboard');
-Route::get('stats', Statistic::class)->name('stats');
 Route::get('changelog', Changelog::class)->name('changelog');
+
+// Statistics routes
+Route::prefix('stats')->name('stats.')->group(function (): void {
+    Route::get('/', StatsIndex::class)->name('index');
+    Route::get('users', UserStats::class)->name('users');
+    Route::get('recipes', RecipeStats::class)->name('recipes');
+    Route::get('api', ApiStats::class)->name('api');
+});
 
 // API Documentation (public, no authentication required)
 Route::prefix('docs')->name('docs.')->group(function (): void {
+    Route::get('/', DocsIndex::class)->name('index');
     Route::get('get-started', GetStartedDoc::class)->name('get-started');
     Route::get('countries', CountriesDoc::class)->name('countries');
     Route::get('recipes', RecipesIndexDoc::class)->name('recipes');

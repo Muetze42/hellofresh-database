@@ -8,7 +8,7 @@ class CountriesDoc extends AbstractEndpointDoc
 {
     protected function title(): string
     {
-        return 'Countries API';
+        return 'Countries';
     }
 
     protected function description(): string

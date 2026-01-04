@@ -71,6 +71,7 @@ namespace App\Models{
  * @property bool $has_utensil
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $recipes_with_pdf_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cuisine> $cuisines
@@ -111,6 +112,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country wherePrepMax($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country wherePrepMin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereRecipesCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereRecipesWithPdfCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereTake($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereTotalMax($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Country whereTotalMin($value)
@@ -470,14 +472,12 @@ namespace App\Models{
  * @mixin Builder<RecipeList>
  * @property int $id
  * @property int $user_id
- * @property int $country_id
  * @property string $name
  * @property string|null $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeListActivity> $activities
  * @property-read int|null $activities_count
- * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $sharedWith
@@ -487,7 +487,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList whereId($value)

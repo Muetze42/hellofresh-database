@@ -1,4 +1,10 @@
 <div class="space-y-section">
+    <flux:breadcrumbs>
+        <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item :href="route('portal.docs.index')" wire:navigate>API Reference</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item>Get Started</flux:breadcrumbs.item>
+    </flux:breadcrumbs>
+
     <div>
         <flux:heading size="xl">Get Started</flux:heading>
         <flux:text class="mt-ui">Everything you need to start using the {{ config('app.name') }} API.</flux:text>

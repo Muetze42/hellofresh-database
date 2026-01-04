@@ -1,4 +1,10 @@
 <div class="space-y-section">
+  <flux:breadcrumbs>
+    <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
+    <flux:breadcrumbs.item>Admin</flux:breadcrumbs.item>
+    <flux:breadcrumbs.item>Users</flux:breadcrumbs.item>
+  </flux:breadcrumbs>
+
   <flux:heading size="xl">Users</flux:heading>
 
   {{-- Statistics Cards --}}

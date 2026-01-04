@@ -8,7 +8,7 @@ class TagsDoc extends AbstractEndpointDoc
 {
     protected function title(): string
     {
-        return 'Tags API';
+        return 'Tags';
     }
 
     protected function description(): string

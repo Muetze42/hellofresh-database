@@ -1,4 +1,10 @@
 <div class="space-y-section">
+    <flux:breadcrumbs>
+        <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item :href="route('portal.docs.index')" wire:navigate>API Reference</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item>{{ $title }}</flux:breadcrumbs.item>
+    </flux:breadcrumbs>
+
     <div>
         <flux:heading size="xl">{{ $title }}</flux:heading>
         <flux:text class="mt-ui">{{ $description }}</flux:text>

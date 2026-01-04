@@ -6,6 +6,7 @@ use App\Http\Middleware\EnsureEmailIsVerifiedMiddleware;
 use App\Http\Middleware\EnsureUserIsAdminMiddleware;
 use App\Http\Middleware\LocalizationMiddleware;
 use App\Http\Middleware\LogUserActivityMiddleware;
+use App\Http\Middleware\PortalMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenanceMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -55,7 +56,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('{locale}-{country:code}')
                 ->group(base_path('routes/web-localized.php'));
 
-            Route::middleware(['web', LogUserActivityMiddleware::class])
+            Route::middleware([
+                'web',
+                LogUserActivityMiddleware::class,
+                PortalMiddleware::class,
+            ])
                 ->domain(config('api.portal_domain_name'))
                 ->name('portal.')
                 ->group(base_path('routes/portal.php'));
