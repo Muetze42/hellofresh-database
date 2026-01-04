@@ -182,16 +182,6 @@ class Country extends Model
     }
 
     /**
-     * Get the recipe lists for the country.
-     *
-     * @return HasMany<RecipeList, $this>
-     */
-    public function recipeLists(): HasMany
-    {
-        return $this->hasMany(RecipeList::class);
-    }
-
-    /**
      * Get the shopping lists for the country.
      *
      * @return HasMany<ShoppingList, $this>

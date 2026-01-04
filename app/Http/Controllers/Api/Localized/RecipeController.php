@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\Localized;
 
+use App\Http\Requests\Api\RecipeIndexRequest;
 use App\Http\Resources\Api\RecipeCollection;
 use App\Http\Resources\Api\RecipeResource;
 use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Throwable;
 
 class RecipeController extends AbstractLocalizedController
@@ -16,7 +16,7 @@ class RecipeController extends AbstractLocalizedController
      *
      * @throws Throwable
      */
-    public function index(Request $request): RecipeCollection
+    public function index(RecipeIndexRequest $request): RecipeCollection
     {
         return new RecipeCollection(
             Recipe::where('country_id', $this->country()->id)
@@ -30,18 +30,18 @@ class RecipeController extends AbstractLocalizedController
                             ->orWhereLike('headline->' . $locale, $searchTerm);
                     });
                 })
-                ->when($request->integer('tag') > 0, function (Builder $query) use ($request): void {
+                ->when($request->filled('tag'), function (Builder $query) use ($request): void {
                     $query->whereHas('tags', function (Builder $query) use ($request): void {
-                        $query->where('id', $request->integer('tag'));
+                        $query->where('id', $request->validated('tag'));
                     });
                 })
-                ->when($request->integer('label') > 0, function (Builder $query) use ($request): void {
+                ->when($request->filled('label'), function (Builder $query) use ($request): void {
                     $query->whereHas('label', function (Builder $query) use ($request): void {
-                        $query->where('id', $request->integer('label'));
+                        $query->where('id', $request->validated('label'));
                     });
                 })
                 ->when($request->filled('difficulty'), function (Builder $query) use ($request): void {
-                    $query->where('difficulty', $request->input('difficulty'));
+                    $query->where('difficulty', $request->validated('difficulty'));
                 })
                 ->when($request->boolean('has_pdf'), function (Builder $query): void {
                     $query->where('has_pdf', true);

@@ -286,4 +286,40 @@ final class RecipeControllerTest extends TestCase
             ->assertJsonCount(1, 'data')
             ->assertJsonPath('data.0.id', $matchingRecipe->id);
     }
+
+    #[Test]
+    public function it_returns_validation_error_for_non_integer_tag(): void
+    {
+        $response = $this->apiGet('/de-DE/recipes?tag=seasonal');
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['tag']);
+    }
+
+    #[Test]
+    public function it_returns_validation_error_for_non_integer_label(): void
+    {
+        $response = $this->apiGet('/de-DE/recipes?label=premium');
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['label']);
+    }
+
+    #[Test]
+    public function it_returns_validation_error_for_invalid_difficulty(): void
+    {
+        $response = $this->apiGet('/de-DE/recipes?difficulty=99');
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['difficulty']);
+    }
+
+    #[Test]
+    public function it_returns_validation_error_for_invalid_per_page(): void
+    {
+        $response = $this->apiGet('/de-DE/recipes?perPage=999');
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['perPage']);
+    }
 }
