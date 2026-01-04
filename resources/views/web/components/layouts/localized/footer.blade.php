@@ -10,8 +10,8 @@
         <span>GitHub</span>
       </flux:link>
       <flux:link :href="route('portal.dashboard')" class="inline-flex items-center gap-1 hover:text-zinc-700 dark:hover:text-zinc-200">
-        <flux:icon.code variant="micro" />
-        <span>API</span>
+        <flux:icon.boxes variant="micro" />
+        <span>API + Data Portal</span>
       </flux:link>
     </div>
     <div>
