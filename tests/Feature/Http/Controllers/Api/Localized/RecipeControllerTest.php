@@ -40,13 +40,25 @@ final class RecipeControllerTest extends TestCase
     }
 
     /**
-     * Make an authenticated API request.
+     * Get the API base URL.
+     */
+    protected function apiUrl(string $path = ''): string
+    {
+        $apiDomain = (string) config('api.domain_name');
+
+        return 'http://' . $apiDomain . '/' . ltrim($path, '/');
+    }
+
+    /**
+     * Make an authenticated API request to the API domain.
      *
      * @param  array<string, mixed>  $headers
      */
     protected function apiGet(string $uri, array $headers = []): TestResponse
     {
-        return $this->withToken($this->token)->getJson($uri, $headers);
+        return $this
+            ->withToken($this->token)
+            ->getJson($this->apiUrl($uri), $headers);
     }
 
     #[Test]
@@ -202,8 +214,8 @@ final class RecipeControllerTest extends TestCase
     #[Test]
     public function it_requires_authentication(): void
     {
-        // Request without any token
-        $response = $this->getJson('/de-DE/recipes');
+        // Request without any token to the API domain
+        $response = $this->getJson($this->apiUrl('/de-DE/recipes'));
 
         $response->assertUnauthorized();
     }
@@ -214,7 +226,9 @@ final class RecipeControllerTest extends TestCase
         $unverifiedUser = User::factory()->unverified()->create();
         $token = $unverifiedUser->createToken('test-token')->plainTextToken;
 
-        $response = $this->withToken($token)->getJson('/de-DE/recipes');
+        $response = $this
+            ->withToken($token)
+            ->getJson($this->apiUrl('/de-DE/recipes'));
 
         $response->assertForbidden();
     }

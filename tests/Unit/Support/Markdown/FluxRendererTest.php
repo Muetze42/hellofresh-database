@@ -110,19 +110,23 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Link](/path/to/page)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="/path/to/page">Link</flux:link>', $output);
-        $this->assertStringNotContainsString('external', $output);
+        $this->assertStringContainsString('href="/path/to/page"', $output);
+        $this->assertStringContainsString('data-flux-link', $output);
+        $this->assertStringContainsString('>Link</a>', $output);
+        $this->assertStringNotContainsString('target="_blank"', $output);
     }
 
     #[Test]
-    public function it_renders_external_link_with_external_attribute(): void
+    public function it_renders_external_link_with_target_blank(): void
     {
         config(['app.url' => 'https://example.com']);
 
         $document = $this->parse('[External](https://other.com/page)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="https://other.com/page" external>External</flux:link>', $output);
+        $this->assertStringContainsString('href="https://other.com/page"', $output);
+        $this->assertStringContainsString('target="_blank"', $output);
+        $this->assertStringContainsString('>External</a>', $output);
     }
 
     #[Test]
@@ -131,8 +135,10 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Anchor](#section)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="#section">Anchor</flux:link>', $output);
-        $this->assertStringNotContainsString('external', $output);
+        $this->assertStringContainsString('href="#section"', $output);
+        $this->assertStringContainsString('data-flux-link', $output);
+        $this->assertStringContainsString('>Anchor</a>', $output);
+        $this->assertStringNotContainsString('target="_blank"', $output);
     }
 
     #[Test]
@@ -141,8 +147,10 @@ final class FluxRendererTest extends TestCase
         $document = $this->parse('[Email](mailto:test@example.com)');
         $output = $this->fluxRenderer->render($document);
 
-        $this->assertStringContainsString('<flux:link href="mailto:test@example.com">Email</flux:link>', $output);
-        $this->assertStringNotContainsString('external', $output);
+        $this->assertStringContainsString('href="mailto:test@example.com"', $output);
+        $this->assertStringContainsString('data-flux-link', $output);
+        $this->assertStringContainsString('>Email</a>', $output);
+        $this->assertStringNotContainsString('target="_blank"', $output);
     }
 
     #[Test]

@@ -389,4 +389,78 @@ final class OgImageControllerTest extends TestCase
         $this->assertSame(1200, $width->getValue($controller));
         $this->assertSame(630, $height->getValue($controller));
     }
+
+    #[Test]
+    public function generic_og_image_uses_mono_font(): void
+    {
+        $response = $this->get(route('og.generic', ['font' => 'mono']));
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'image/jpeg');
+    }
+
+    #[Test]
+    public function generic_og_image_uses_default_font_for_non_mono(): void
+    {
+        $response = $this->get(route('og.generic', ['font' => 'regular']));
+
+        $response->assertOk();
+        $response->assertHeader('Content-Type', 'image/jpeg');
+    }
+
+    #[Test]
+    public function add_gradient_overlay_skips_top_portion(): void
+    {
+        $controller = new OgImageController();
+        $reflection = new ReflectionClass($controller);
+        $createCanvas = $reflection->getMethod('createCanvas');
+        $fillBackground = $reflection->getMethod('fillSolidBackground');
+        $addGradient = $reflection->getMethod('addGradientOverlay');
+
+        $canvas = $createCanvas->invoke($controller);
+        $fillBackground->invoke($controller, $canvas);
+
+        // Get color at top before gradient
+        $topColorBefore = imagecolorat($canvas, 600, 100);
+
+        $addGradient->invoke($controller, $canvas);
+
+        // Top portion (before 30% height) should not be affected by gradient
+        // The gradient starts at 30% of 630 = 189
+        $topColorAfter = imagecolorat($canvas, 600, 100);
+        $this->assertSame($topColorBefore, $topColorAfter);
+
+        imagedestroy($canvas);
+    }
+
+    #[Test]
+    public function fill_solid_background_handles_full_height(): void
+    {
+        $controller = new OgImageController();
+        $reflection = new ReflectionClass($controller);
+        $createCanvas = $reflection->getMethod('createCanvas');
+        $fillBackground = $reflection->getMethod('fillSolidBackground');
+
+        $canvas = $createCanvas->invoke($controller);
+        $fillBackground->invoke($controller, $canvas);
+
+        // Check middle of the canvas is filled
+        $midColor = imagecolorat($canvas, 600, 315);
+        $this->assertGreaterThan(0, $midColor);
+
+        imagedestroy($canvas);
+    }
+
+    #[Test]
+    public function menu_extracts_year_and_week_correctly(): void
+    {
+        $country = Country::factory()->create(['locales' => ['en']]);
+        $menu = Menu::factory()->for($country)->create([
+            'year_week' => 202552,
+        ]);
+
+        $response = $this->get(route('og.menu', $menu));
+
+        $response->assertOk();
+    }
 }

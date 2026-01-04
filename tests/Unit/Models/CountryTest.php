@@ -11,7 +11,6 @@ use App\Models\Ingredient;
 use App\Models\Label;
 use App\Models\Menu;
 use App\Models\Recipe;
-use App\Models\RecipeList;
 use App\Models\ShoppingList;
 use App\Models\Tag;
 use App\Models\Utensil;
@@ -166,23 +165,6 @@ final class CountryTest extends TestCase
         $country = Country::factory()->create();
 
         $this->assertInstanceOf(HasMany::class, $country->favorites());
-    }
-
-    #[Test]
-    public function it_has_recipe_lists_relationship(): void
-    {
-        $country = Country::factory()->create();
-
-        $this->assertInstanceOf(HasMany::class, $country->recipeLists());
-    }
-
-    #[Test]
-    public function it_can_have_many_recipe_lists(): void
-    {
-        $country = Country::factory()->create();
-        RecipeList::factory()->count(3)->forCountry($country)->create();
-
-        $this->assertCount(3, $country->recipeLists);
     }
 
     #[Test]

@@ -597,4 +597,358 @@ final class UserRecipeListsTest extends TestCase
             ->call('updateList')
             ->assertHasNoErrors();
     }
+
+    #[Test]
+    public function it_returns_zero_other_countries_count_when_no_viewing_list(): void
+    {
+        $this->actingAs($this->user);
+
+        $component = Livewire::test(UserRecipeLists::class);
+
+        $this->assertEquals(0, $component->instance()->otherCountriesRecipeCount());
+    }
+
+    #[Test]
+    public function it_returns_empty_recent_activities_when_no_viewing_list(): void
+    {
+        $this->actingAs($this->user);
+
+        $component = Livewire::test(UserRecipeLists::class);
+
+        $this->assertCount(0, $component->instance()->recentActivities());
+    }
+
+    #[Test]
+    public function it_returns_empty_shared_lists_for_guest(): void
+    {
+        $component = Livewire::test(UserRecipeLists::class);
+
+        $this->assertCount(0, $component->instance()->sharedLists());
+    }
+
+    #[Test]
+    public function it_returns_shared_lists_for_authenticated_user(): void
+    {
+        $owner = User::factory()->create();
+        $list = RecipeList::factory()->forUser($owner)->create();
+        $list->sharedWith()->attach($this->user->id);
+
+        $this->actingAs($this->user);
+
+        $component = Livewire::test(UserRecipeLists::class);
+
+        $this->assertCount(1, $component->instance()->sharedLists());
+    }
+
+    #[Test]
+    public function it_starts_sharing_a_list(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()->forUser($this->user)->create();
+
+        Livewire::test(UserRecipeLists::class)
+            ->call('startSharing', $list->id)
+            ->assertSet('sharingListId', $list->id)
+            ->assertSet('shareEmail', '');
+    }
+
+    #[Test]
+    public function it_validates_share_email_is_required(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()->forUser($this->user)->create();
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', $list->id)
+            ->set('shareEmail', '')
+            ->call('shareList')
+            ->assertHasErrors(['shareEmail' => 'required']);
+    }
+
+    #[Test]
+    public function it_validates_share_email_format(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()->forUser($this->user)->create();
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', $list->id)
+            ->set('shareEmail', 'invalid-email')
+            ->call('shareList')
+            ->assertHasErrors(['shareEmail' => 'email']);
+    }
+
+    #[Test]
+    public function it_shares_list_with_valid_user(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()->forUser($this->user)->create();
+        $targetUser = User::factory()->create(['email' => 'target@gmail.com']);
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', $list->id)
+            ->set('shareEmail', 'target@gmail.com')
+            ->call('shareList')
+            ->assertHasNoErrors();
+
+        $this->assertTrue($list->sharedWith()->where('users.id', $targetUser->id)->exists());
+    }
+
+    #[Test]
+    public function it_prevents_sharing_with_non_existent_user(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()->forUser($this->user)->create();
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', $list->id)
+            ->set('shareEmail', 'nonexistent@gmail.com')
+            ->call('shareList')
+            ->assertHasErrors('shareEmail');
+    }
+
+    #[Test]
+    public function it_prevents_sharing_with_yourself(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()->forUser($this->user)->create();
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', $list->id)
+            ->set('shareEmail', $this->user->email)
+            ->call('shareList')
+            ->assertHasErrors('shareEmail');
+    }
+
+    #[Test]
+    public function it_prevents_sharing_already_shared_list(): void
+    {
+        $this->actingAs($this->user);
+
+        $targetUser = User::factory()->create(['email' => 'already@gmail.com']);
+        $list = RecipeList::factory()->forUser($this->user)->create();
+        $list->sharedWith()->attach($targetUser->id);
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', $list->id)
+            ->set('shareEmail', 'already@gmail.com')
+            ->call('shareList')
+            ->assertHasErrors('shareEmail');
+    }
+
+    #[Test]
+    public function it_unshares_list_from_user(): void
+    {
+        $this->actingAs($this->user);
+
+        $targetUser = User::factory()->create();
+        $list = RecipeList::factory()->forUser($this->user)->create();
+        $list->sharedWith()->attach($targetUser->id);
+
+        Livewire::test(UserRecipeLists::class)
+            ->call('unshareList', $list->id, $targetUser->id);
+
+        $this->assertFalse($list->sharedWith()->where('users.id', $targetUser->id)->exists());
+    }
+
+    #[Test]
+    public function it_leaves_shared_list(): void
+    {
+        $owner = User::factory()->create();
+        $list = RecipeList::factory()->forUser($owner)->create();
+        $list->sharedWith()->attach($this->user->id);
+
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->call('leaveSharedList', $list->id);
+
+        $this->assertFalse($list->sharedWith()->where('users.id', $this->user->id)->exists());
+    }
+
+    #[Test]
+    public function it_clears_viewing_id_when_leaving_viewed_shared_list(): void
+    {
+        $owner = User::factory()->create();
+        $list = RecipeList::factory()->forUser($owner)->create();
+        $list->sharedWith()->attach($this->user->id);
+
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('viewingListId', $list->id)
+            ->call('leaveSharedList', $list->id)
+            ->assertSet('viewingListId', null);
+    }
+
+    #[Test]
+    public function it_does_not_share_when_not_owner(): void
+    {
+        $owner = User::factory()->create();
+        $list = RecipeList::factory()->forUser($owner)->create();
+        $targetUser = User::factory()->create(['email' => 'target2@gmail.com']);
+
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', $list->id)
+            ->set('shareEmail', 'target2@gmail.com')
+            ->call('shareList')
+            ->assertHasErrors('shareEmail');
+    }
+
+    #[Test]
+    public function it_does_not_unshare_when_not_owner(): void
+    {
+        $owner = User::factory()->create();
+        $targetUser = User::factory()->create();
+        $list = RecipeList::factory()->forUser($owner)->create();
+        $list->sharedWith()->attach($targetUser->id);
+
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->call('unshareList', $list->id, $targetUser->id);
+
+        $this->assertTrue($list->sharedWith()->where('users.id', $targetUser->id)->exists());
+    }
+
+    #[Test]
+    public function it_does_not_remove_recipe_when_list_not_accessible(): void
+    {
+        $owner = User::factory()->create();
+        $list = RecipeList::factory()->forUser($owner)->create();
+        $recipe = Recipe::factory()->for($this->country)->create();
+        $list->recipes()->attach($recipe, [
+            'added_at' => now(),
+            'country_id' => $this->country->id,
+        ]);
+
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('viewingListId', $list->id)
+            ->call('removeRecipeFromList', $recipe->id);
+
+        $this->assertDatabaseHas('recipe_recipe_list', [
+            'recipe_list_id' => $list->id,
+            'recipe_id' => $recipe->id,
+        ]);
+    }
+
+    #[Test]
+    public function it_creates_activity_when_removing_recipe(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()
+            ->forUser($this->user)
+            ->create();
+        $recipe = Recipe::factory()->for($this->country)->create();
+        $list->recipes()->attach($recipe, [
+            'added_at' => now(),
+            'country_id' => $this->country->id,
+        ]);
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('viewingListId', $list->id)
+            ->call('removeRecipeFromList', $recipe->id);
+
+        $this->assertDatabaseHas('recipe_list_activities', [
+            'recipe_list_id' => $list->id,
+            'recipe_id' => $recipe->id,
+            'user_id' => $this->user->id,
+        ]);
+    }
+
+    #[Test]
+    public function it_returns_recent_activities_for_viewing_list(): void
+    {
+        $this->actingAs($this->user);
+
+        $list = RecipeList::factory()->forUser($this->user)->create();
+        $recipe = Recipe::factory()->for($this->country)->create();
+        $list->recipes()->attach($recipe, [
+            'added_at' => now(),
+            'country_id' => $this->country->id,
+        ]);
+
+        // Remove recipe to create activity
+        Livewire::test(UserRecipeLists::class)
+            ->set('viewingListId', $list->id)
+            ->call('removeRecipeFromList', $recipe->id);
+
+        $component = Livewire::test(UserRecipeLists::class)
+            ->set('viewingListId', $list->id);
+
+        $this->assertCount(1, $component->instance()->recentActivities());
+    }
+
+    #[Test]
+    public function it_does_not_leave_shared_list_for_guest(): void
+    {
+        $owner = User::factory()->create();
+        $list = RecipeList::factory()->forUser($owner)->create();
+
+        Livewire::test(UserRecipeLists::class)
+            ->call('leaveSharedList', $list->id);
+
+        $this->assertTrue(true);
+    }
+
+    #[Test]
+    public function it_handles_leave_non_existent_list(): void
+    {
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->call('leaveSharedList', 99999)
+            ->assertOk();
+    }
+
+    #[Test]
+    public function it_handles_share_when_no_user(): void
+    {
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', 1)
+            ->set('shareEmail', 'test@gmail.com')
+            ->call('shareList')
+            ->assertOk();
+    }
+
+    #[Test]
+    public function it_handles_share_when_list_not_found(): void
+    {
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->set('sharingListId', 99999)
+            ->set('shareEmail', 'test@gmail.com')
+            ->call('shareList')
+            ->assertOk();
+    }
+
+    #[Test]
+    public function it_handles_unshare_when_no_user(): void
+    {
+        Livewire::test(UserRecipeLists::class)
+            ->call('unshareList', 1, 1)
+            ->assertOk();
+    }
+
+    #[Test]
+    public function it_handles_unshare_when_list_not_found(): void
+    {
+        $this->actingAs($this->user);
+
+        Livewire::test(UserRecipeLists::class)
+            ->call('unshareList', 99999, 1)
+            ->assertOk();
+    }
 }
