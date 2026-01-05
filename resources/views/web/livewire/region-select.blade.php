@@ -8,7 +8,7 @@
     @foreach ($this->countries as $country)
       <flux:card wire:key="country-{{ $country->id }}" size="sm">
         <div class="flex items-center justify-center gap-ui mb-ui">
-          <x-flag :code="$country->code" class="text-2xl" />
+          <x-flag :code="$country->code" />
           <flux:heading size="lg">
             {{ __('country.' . $country->code) }}
           </flux:heading>
