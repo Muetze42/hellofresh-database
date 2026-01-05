@@ -31,18 +31,5 @@ class MacroServiceProvider extends ServiceProvider
             'normalizeNameStrict',
             fn (string $value): string => Str::ucfirst(Str::squish(rtrim(Str::before($value, ' ('), '*')))
         );
-
-        Str::macro(
-            'countryFlag',
-            function (string $countryCode): string {
-                $code = Str::upper($countryCode);
-                $flag = '';
-                for ($i = 0; $i < strlen($code); $i++) {
-                    $flag .= mb_chr(ord($code[$i]) - ord('A') + 0x1F1E6);
-                }
-
-                return $flag;
-            }
-        );
     }
 }

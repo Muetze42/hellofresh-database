@@ -169,7 +169,7 @@
         @foreach($this->countryStats as $country)
           <flux:table.row wire:key="country-{{ $country->id }}">
             <flux:table.cell>
-              <span class="font-medium">{{ Str::countryFlag($country->code) }} {{ $country->code }}</span>
+              <span class="font-medium"><x-flag :code="$country->code" /> {{ $country->code }}</span>
             </flux:table.cell>
             <flux:table.cell>{{ __('country.' . $country->code) }}</flux:table.cell>
             <flux:table.cell>
@@ -210,7 +210,7 @@
           @foreach($this->topIngredients as $ingredient)
             <flux:table.row wire:key="ingredient-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
-                <span title="{{ $ingredient->country_code }}">{{ Str::countryFlag($ingredient->country_code) }}</span>
+                <x-flag :code="$ingredient->country_code" :title="$ingredient->country_code" />
                 {{ json_decode($ingredient->name)->en ?? $ingredient->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ number_format($ingredient->recipes_count) }}</flux:table.cell>
@@ -231,7 +231,7 @@
           @foreach($this->topTags as $tag)
             <flux:table.row wire:key="tag-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
-                <span title="{{ $tag->country_code }}">{{ Str::countryFlag($tag->country_code) }}</span>
+                <x-flag :code="$tag->country_code" :title="$tag->country_code" />
                 {{ json_decode($tag->name)->en ?? $tag->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ number_format($tag->recipes_count) }}</flux:table.cell>
@@ -252,7 +252,7 @@
           @foreach($this->topCuisines as $cuisine)
             <flux:table.row wire:key="cuisine-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
-                <span title="{{ $cuisine->country_code }}">{{ Str::countryFlag($cuisine->country_code) }}</span>
+                <x-flag :code="$cuisine->country_code" :title="$cuisine->country_code" />
                 {{ json_decode($cuisine->name)->en ?? $cuisine->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ number_format($cuisine->recipes_count) }}</flux:table.cell>
@@ -311,7 +311,7 @@
         @foreach($this->avgPrepTimesByCountry as $country)
           <flux:table.row wire:key="prep-{{ $country->code }}">
             <flux:table.cell>
-              <span class="font-medium">{{ Str::countryFlag($country->code) }} {{ $country->code }}</span>
+              <span class="font-medium"><x-flag :code="$country->code" /> {{ $country->code }}</span>
             </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">{{ $country->avg_prep }} min</flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">{{ $country->avg_total }} min</flux:table.cell>

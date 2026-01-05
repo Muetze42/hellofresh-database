@@ -74,7 +74,7 @@
           <flux:table.row wire:key="user-country-{{ $countryStat->country_code ?? 'unknown' }}">
             <flux:table.cell>
               @if($countryStat->country_code)
-                {{ Str::countryFlag($countryStat->country_code) }} {{ __('country.' . $countryStat->country_code) }}
+                <x-flag :code="$countryStat->country_code" /> {{ __('country.' . $countryStat->country_code) }}
               @else
                 <span class="text-zinc-400">Not set</span>
               @endif

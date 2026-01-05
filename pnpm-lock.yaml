@@ -17,6 +17,9 @@ importers:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
+      flag-icons:
+        specifier: ^7.5.0
+        version: 7.5.0
       laravel-echo:
         specifier: ^2.2.6
         version: 2.2.6(pusher-js@8.4.0)(socket.io-client@4.8.1)
@@ -523,6 +526,9 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  flag-icons@7.5.0:
+    resolution: {integrity: sha512-kd+MNXviFIg5hijH766tt+3x76ele1AXlo4zDdCxIvqWZhKt4T83bOtxUOOMlTx/EcFdUMH5yvQgYlFh1EqqFg==}
 
   follow-redirects@1.15.11:
     resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
@@ -1228,6 +1234,8 @@ snapshots:
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
       picomatch: 4.0.3
+
+  flag-icons@7.5.0: {}
 
   follow-redirects@1.15.11: {}
 
