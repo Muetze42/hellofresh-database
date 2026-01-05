@@ -25,7 +25,7 @@
             <div class="space-y-ui">
                 <div class="flex items-center gap-ui">
                     @if ($group['country'])
-                        <flux:heading size="lg">{{ Str::countryFlag($group['country']->code) }} {{ __('country.' . $group['country']->code) }}</flux:heading>
+                        <flux:heading size="lg"><x-flag :code="$group['country']->code" /> {{ __('country.' . $group['country']->code) }}</flux:heading>
                     @else
                         <flux:heading size="lg">{{ __('Unknown Country') }}</flux:heading>
                     @endif

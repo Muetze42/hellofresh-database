@@ -13,19 +13,6 @@ use Livewire\Attributes\Layout;
 class RegionSelect extends AbstractComponent
 {
     /**
-     * Convert a country code to a flag emoji.
-     */
-    public function getFlagEmoji(string $countryCode): string
-    {
-        $codePoints = array_map(
-            static fn (string $char): string => mb_chr(ord($char) - ord('A') + 0x1F1E6),
-            str_split(strtoupper($countryCode))
-        );
-
-        return implode('', $codePoints);
-    }
-
-    /**
      * Get all active countries.
      *
      * @return Collection<int, Country>

@@ -68,7 +68,7 @@
                           {{ $activity->recipe->name }}
                         </flux:link>
                       @else
-                        <strong>{{ Str::countryFlag($activity->recipe->country->code) }} {{ $activity->recipe?->getFirstTranslation('name') }}</strong>
+                        <strong><x-flag :code="$activity->recipe->country->code" /> {{ $activity->recipe?->getFirstTranslation('name') }}</strong>
                       @endif
                       <span class="text-zinc-400">{{ $activity->created_at->diffForHumans() }}</span>
                     </flux:text>

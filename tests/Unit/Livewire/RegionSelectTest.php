@@ -23,32 +23,6 @@ final class RegionSelectTest extends TestCase
     }
 
     #[Test]
-    public function it_converts_country_code_to_flag_emoji(): void
-    {
-        $component = Livewire::test(RegionSelect::class);
-
-        $usFlag = $component->instance()->getFlagEmoji('US');
-        $deFlag = $component->instance()->getFlagEmoji('DE');
-        $frFlag = $component->instance()->getFlagEmoji('FR');
-
-        $this->assertNotEmpty($usFlag);
-        $this->assertNotEmpty($deFlag);
-        $this->assertNotEmpty($frFlag);
-        $this->assertNotSame($usFlag, $deFlag);
-    }
-
-    #[Test]
-    public function it_handles_lowercase_country_code(): void
-    {
-        $component = Livewire::test(RegionSelect::class);
-
-        $upperFlag = $component->instance()->getFlagEmoji('US');
-        $lowerFlag = $component->instance()->getFlagEmoji('us');
-
-        $this->assertSame($upperFlag, $lowerFlag);
-    }
-
-    #[Test]
     public function it_returns_only_active_countries(): void
     {
         Country::factory()->create(['code' => 'US', 'active' => true, 'prep_min' => 5, 'recipes_count' => 100, 'ingredients_count' => 50]);
