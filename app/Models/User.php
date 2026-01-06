@@ -7,28 +7,33 @@ use App\Observers\UserObserver;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @mixin Builder<User>
  */
 #[ObservedBy([UserObserver::class])]
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens;
 
     /** @use HasFactory<UserFactory> */
     use HasFactory;
 
+    use InteractsWithMedia;
     use Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass-assignable.
      *
      * @var list<string>
      */
@@ -138,13 +143,41 @@ class User extends Authenticatable
 
     /**
      * Get the user's country name.
+     *
+     * @return Attribute<string|null, never>
      */
-    public function countryName(): ?string
+    protected function countryName(): Attribute
     {
-        if ($this->country_code === null) {
-            return null;
-        }
+        return Attribute::make(
+            get: fn (): ?string => $this->country_code !== null
+                ? __('country.' . $this->country_code)
+                : null,
+        );
+    }
 
-        return __('country.' . $this->country_code);
+    /**
+     * Register the media collections for the model.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile();
+    }
+
+    /**
+     * Register the media conversions for the model.
+     */
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('sm')
+            ->performOnCollections('avatar')
+            ->nonQueued()
+            ->width(64)
+            ->height(64);
+        $this->addMediaConversion('md')
+            ->performOnCollections('avatar')
+            ->nonQueued()
+            ->width(128)
+            ->height(128);
     }
 }

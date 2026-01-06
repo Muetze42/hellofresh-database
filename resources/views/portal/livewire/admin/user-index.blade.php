@@ -92,7 +92,7 @@
             </flux:table.cell>
             <flux:table.cell>
               @if($user->country_code)
-                <span title="{{ $user->countryName() }}"><x-flag :code="$user->country_code" /> {{ $user->country_code }}</span>
+                <span title="{{ $user->country_name }}"><x-flag :code="$user->country_code" /> {{ $user->country_code }}</span>
               @else
                 <flux:text variant="subtle">—</flux:text>
               @endif
