@@ -3,7 +3,6 @@
 namespace App\Http\Clients\HelloFresh\Responses;
 
 use Illuminate\Support\Facades\Date;
-use TypeError;
 
 /**
  * @phpstan-type MenuRecipe array{
@@ -60,8 +59,6 @@ class MenusResponse extends AbstractHelloFreshResponse
      * Get the JSON decoded body of the response as an array.
      *
      * @return MenusData
-     *
-     * @throws TypeError
      */
     public function array(): array
     {
