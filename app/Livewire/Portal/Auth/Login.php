@@ -2,15 +2,15 @@
 
 namespace App\Livewire\Portal\Auth;
 
+use App\Livewire\AbstractComponent;
 use App\Livewire\Actions\LoginUserAction;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.guest')]
-class Login extends Component
+class Login extends AbstractComponent
 {
     public string $email = '';
 

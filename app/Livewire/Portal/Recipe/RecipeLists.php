@@ -2,15 +2,15 @@
 
 namespace App\Livewire\Portal\Recipe;
 
+use App\Livewire\AbstractComponent;
 use App\Models\RecipeList;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class RecipeLists extends Component
+class RecipeLists extends AbstractComponent
 {
     /**
      * Get the user's recipe lists.

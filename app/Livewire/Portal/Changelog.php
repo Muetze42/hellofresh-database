@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Portal;
 
+use App\Livewire\AbstractComponent;
 use App\Support\Markdown\FluxRenderer;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\File;
@@ -11,10 +12,9 @@ use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class Changelog extends Component
+class Changelog extends AbstractComponent
 {
     /**
      * Get the rendered changelog content.

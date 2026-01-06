@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Portal\Docs;
 
+use App\Livewire\AbstractComponent;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class DocsIndex extends Component
+class DocsIndex extends AbstractComponent
 {
     public function render(): View
     {

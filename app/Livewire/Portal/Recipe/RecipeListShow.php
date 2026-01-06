@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Portal\Recipe;
 
+use App\Livewire\AbstractComponent;
 use App\Models\Country;
 use App\Models\Recipe;
 use App\Models\RecipeList;
@@ -10,10 +11,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class RecipeListShow extends Component
+class RecipeListShow extends AbstractComponent
 {
     public RecipeList $recipeList;
 

@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Portal\Legal;
 
+use App\Livewire\AbstractComponent;
 use App\Livewire\Concerns\RendersMarkdownDocumentTrait;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class TermsOfUse extends Component
+class TermsOfUse extends AbstractComponent
 {
     use RendersMarkdownDocumentTrait;
 

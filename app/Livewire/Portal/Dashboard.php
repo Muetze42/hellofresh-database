@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Portal;
 
+use App\Livewire\AbstractComponent;
 use App\Models\PersonalAccessTokenUsage;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Date;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class Dashboard extends Component
+class Dashboard extends AbstractComponent
 {
     public function render(): View
     {

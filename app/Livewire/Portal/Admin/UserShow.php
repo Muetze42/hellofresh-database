@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Portal\Admin;
 
+use App\Livewire\AbstractComponent;
 use App\Models\PersonalAccessTokenUsage;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -14,12 +15,11 @@ use Laravel\Sanctum\PersonalAccessToken;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
-use Livewire\Component;
 use Livewire\WithPagination;
 use stdClass;
 
 #[Layout('portal::components.layouts.app')]
-class UserShow extends Component
+class UserShow extends AbstractComponent
 {
     use WithPagination;
 
