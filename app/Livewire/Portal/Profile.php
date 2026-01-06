@@ -3,122 +3,31 @@
 namespace App\Livewire\Portal;
 
 use App\Livewire\AbstractComponent;
-use App\Rules\CountryCodeRule;
-use App\Rules\DisposableEmailRule;
-use App\Support\Facades\Flux;
+use App\Livewire\Concerns\ManagesUserProfileTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 
 #[Layout('portal::components.layouts.app')]
 class Profile extends AbstractComponent
 {
-    public string $name = '';
-
-    public string $email = '';
-
-    public ?string $country_code = null;
-
-    public string $current_password = '';
-
-    public string $password = '';
-
-    public string $password_confirmation = '';
+    use ManagesUserProfileTrait;
 
     public string $delete_confirmation = '';
 
-    /**
-     * Mount the component.
-     */
     public function mount(): void
     {
-        $user = auth()->user();
-
-        $this->name = $user->name ?? '';
-        $this->email = $user->email ?? '';
-        $this->country_code = $user?->country_code;
+        $this->mountUserProfile();
     }
 
     /**
-     * Update the user's profile information.
-     *
-     * @throws ValidationException
+     * Redirect to profile page after email change.
      */
-    public function updateProfile(): void
+    protected function afterEmailChanged(): void
     {
-        $user = auth()->user();
-
-        if (! $user) {
-            return;
-        }
-
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'min:2', 'max:255', 'unique:users,name,' . $user->id],
-            'email' => ['required', 'email:rfc,dns', 'unique:users,email,' . $user->id, new DisposableEmailRule()],
-            'country_code' => ['nullable', 'string', 'size:2', new CountryCodeRule()],
-        ]);
-
-        $emailWasVerified = $user->hasVerifiedEmail();
-        $emailChanged = $user->email !== $validated['email'];
-
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'country_code' => $validated['country_code'],
-        ]);
-
-        if ($emailChanged && $emailWasVerified && ! $user->hasVerifiedEmail()) {
-            $user->sendEmailVerificationNotification();
-
-            Flux::toast('Profile updated. Please verify your new email address.');
-
-            $this->redirect(route('portal.profile'), navigate: true);
-
-            return;
-        }
-
-        Flux::toastSuccess('Profile updated successfully.');
-
-        if ($emailChanged) {
-            $this->redirect(route('portal.profile'), navigate: true);
-        }
-    }
-
-    /**
-     * Update the user's password.
-     *
-     * @throws ValidationException
-     */
-    public function updatePassword(): void
-    {
-        $user = auth()->user();
-
-        if (! $user) {
-            return;
-        }
-
-        $this->validate([
-            'current_password' => ['required'],
-            'password' => ['required', 'confirmed', Password::defaults()],
-        ]);
-
-        if (! Hash::check($this->current_password, $user->password)) {
-            throw ValidationException::withMessages([
-                'current_password' => 'The provided password does not match your current password.',
-            ]);
-        }
-
-        $user->update([
-            'password' => Hash::make($this->password),
-        ]);
-
-        $this->reset(['current_password', 'password', 'password_confirmation']);
-
-        Flux::toastSuccess('Password updated successfully.');
+        $this->redirect(route('portal.profile'), navigate: true);
     }
 
     /**
@@ -140,15 +49,12 @@ class Profile extends AbstractComponent
             'delete_confirmation.in' => 'Please type DELETE to confirm.',
         ]);
 
-        // Delete all tokens
         $user->tokens()->delete();
 
-        // Logout
         Auth::logout();
         Session::invalidate();
         Session::regenerateToken();
 
-        // Delete the user
         $user->delete();
 
         $this->redirect(route('portal.login'), navigate: true);

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Portal\Admin;
 
+use App\Livewire\AbstractComponent;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,11 +10,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
-use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('portal::components.layouts.app')]
-class UserIndex extends Component
+class UserIndex extends AbstractComponent
 {
     use WithPagination;
 

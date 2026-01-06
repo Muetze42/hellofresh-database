@@ -45,6 +45,7 @@ class FetchMenusJob implements ShouldQueue
      *
      * @throws ConnectionException
      * @throws RequestException
+     * @throws Throwable
      */
     public function handle(HelloFreshClient $client): void
     {

@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Portal\Tokens;
 
+use App\Livewire\AbstractComponent;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View;
 use Laravel\Sanctum\PersonalAccessToken;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class TokenIndex extends Component
+class TokenIndex extends AbstractComponent
 {
     public string $tokenName = '';
 

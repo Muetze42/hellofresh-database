@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Portal\Stats;
 
+use App\Livewire\AbstractComponent;
 use App\Models\Country;
 use App\Models\Recipe;
 use App\Services\Portal\StatisticsService;
@@ -9,11 +10,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 use stdClass;
 
 #[Layout('portal::components.layouts.app')]
-class RecipeStats extends Component
+class RecipeStats extends AbstractComponent
 {
     public string $sortBy = 'recipes_count';
 

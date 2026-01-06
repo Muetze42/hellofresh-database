@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Portal\Stats;
 
+use App\Livewire\AbstractComponent;
 use App\Models\PersonalAccessToken;
 use App\Models\PersonalAccessTokenUsage;
 use Illuminate\Contracts\View\View;
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
-use Livewire\Component;
 use stdClass;
 
 /**
@@ -22,7 +22,7 @@ use stdClass;
  * @property-read array<int, array{date: string, requests: int}> $chartData
  */
 #[Layout('portal::components.layouts.app')]
-class ApiStats extends Component
+class ApiStats extends AbstractComponent
 {
     #[Url]
     public string $period = '7d';

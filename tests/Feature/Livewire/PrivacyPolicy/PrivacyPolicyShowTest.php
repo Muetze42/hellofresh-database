@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Livewire\PrivacyPolicy;
 
-use App\Livewire\Web\PrivacyPolicy\PrivacyPolicyShow;
+use App\Livewire\Web\Legal\PrivacyPolicyShow;
 use App\Models\Country;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;

@@ -2,16 +2,16 @@
 
 namespace App\Livewire\Portal\Stats;
 
+use App\Livewire\AbstractComponent;
 use App\Services\Portal\StatisticsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 use stdClass;
 
 #[Layout('portal::components.layouts.app')]
-class UserStats extends Component
+class UserStats extends AbstractComponent
 {
     protected function statistics(): StatisticsService
     {

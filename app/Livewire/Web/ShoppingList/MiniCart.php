@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Livewire\Web\ShoppingList;
 
+use App\Livewire\AbstractComponent;
 use App\Models\Recipe;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
-use Livewire\Component;
 
-class MiniCart extends Component
+class MiniCart extends AbstractComponent
 {
     public string $shoppingListUrl = '';
 
