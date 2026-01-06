@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Portal;
+namespace App\Livewire\Portal\Legal;
 
 use App\Support\Markdown\FluxRenderer;
 use Illuminate\Contracts\View\View;
@@ -14,15 +14,15 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class TermsOfUse extends Component
+class PrivacyPolicy extends Component
 {
     /**
-     * Get the rendered terms of use content.
+     * Get the rendered privacy policy content.
      */
     #[Computed]
     public function content(): string
     {
-        $path = resource_path('docs/terms/en.md');
+        $path = resource_path('docs/privacy/en.md');
 
         if (! File::exists($path)) {
             return '';
@@ -42,6 +42,6 @@ class TermsOfUse extends Component
 
     public function render(): View
     {
-        return view('portal::livewire.terms-of-use')->title('Terms of Use');
+        return view('portal::livewire.privacy-policy')->title('Privacy Policy');
     }
 }

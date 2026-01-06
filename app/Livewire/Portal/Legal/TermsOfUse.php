@@ -1,28 +1,33 @@
 <?php
 
-namespace App\Livewire\Portal;
+namespace App\Livewire\Portal\Legal;
 
+use App\Livewire\AbstractComponent;
 use App\Support\Markdown\FluxRenderer;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('portal::components.layouts.app')]
-class PrivacyPolicy extends Component
+class TermsOfUse extends AbstractComponent
 {
     /**
-     * Get the rendered privacy policy content.
+     * Get the rendered terms of use content.
+     *
+     * @throws FileNotFoundException
+     * @throws CommonMarkException
      */
     #[Computed]
     public function content(): string
     {
-        $path = resource_path('docs/privacy/en.md');
+        $path = resource_path('docs/terms/en.md');
 
         if (! File::exists($path)) {
             return '';
@@ -42,6 +47,6 @@ class PrivacyPolicy extends Component
 
     public function render(): View
     {
-        return view('portal::livewire.privacy-policy')->title('Privacy Policy');
+        return view('portal::livewire.terms-of-use')->title('Terms of Use');
     }
 }

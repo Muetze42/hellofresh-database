@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Web\TermsOfUse;
+namespace App\Livewire\Web\Legal;
 
 use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
@@ -13,12 +13,12 @@ use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use Livewire\Attributes\Computed;
 
-class TermsOfUseShow extends AbstractComponent
+class PrivacyPolicyShow extends AbstractComponent
 {
     use WithLocalizedContextTrait;
 
     /**
-     * Get the terms of use content as HTML.
+     * Get the privacy policy content as HTML.
      */
     #[Computed]
     public function content(): ?string
@@ -44,13 +44,13 @@ class TermsOfUseShow extends AbstractComponent
      */
     protected function getMarkdownContent(): ?string
     {
-        $path = $this->getTermsOfUsePath($this->locale);
+        $path = $this->getPrivacyPolicyPath($this->locale);
 
         if (File::exists($path)) {
             return File::get($path);
         }
 
-        $fallbackPath = $this->getTermsOfUsePath('en');
+        $fallbackPath = $this->getPrivacyPolicyPath('en');
 
         if (File::exists($fallbackPath)) {
             return File::get($fallbackPath);
@@ -60,11 +60,11 @@ class TermsOfUseShow extends AbstractComponent
     }
 
     /**
-     * Get the path to the terms of use markdown file.
+     * Get the path to the privacy policy markdown file.
      */
-    protected function getTermsOfUsePath(string $locale): string
+    protected function getPrivacyPolicyPath(string $locale): string
     {
-        return resource_path(sprintf('docs/terms/%s.md', $locale));
+        return resource_path(sprintf('docs/privacy/%s.md', $locale));
     }
 
     /**
@@ -72,6 +72,6 @@ class TermsOfUseShow extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('web::livewire.terms-of-use.terms-of-use-show');
+        return view('web::livewire.privacy-policy.privacy-policy-show');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Portal;
+namespace App\Livewire\Portal\Recipe;
 
 use App\Models\Country;
 use App\Models\Recipe;

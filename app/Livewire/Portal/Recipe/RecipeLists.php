@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Portal;
+namespace App\Livewire\Portal\Recipe;
 
 use App\Models\RecipeList;
 use Illuminate\Contracts\View\View;

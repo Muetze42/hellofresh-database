@@ -1,24 +1,29 @@
 <?php
 
-namespace App\Livewire\Web\PrivacyPolicy;
+namespace App\Livewire\Web\Legal;
 
 use App\Livewire\AbstractComponent;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Support\Markdown\FluxRenderer;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\MarkdownParser;
 use Livewire\Attributes\Computed;
 
-class PrivacyPolicyShow extends AbstractComponent
+class TermsOfUseShow extends AbstractComponent
 {
     use WithLocalizedContextTrait;
 
     /**
-     * Get the privacy policy content as HTML.
+     * Get the terms of use content as HTML.
+     *
+     * @throws CommonMarkException
+     * @throws FileNotFoundException
      */
     #[Computed]
     public function content(): ?string
@@ -41,16 +46,18 @@ class PrivacyPolicyShow extends AbstractComponent
 
     /**
      * Get the markdown content for the current locale with fallback to English.
+     *
+     * @throws FileNotFoundException
      */
     protected function getMarkdownContent(): ?string
     {
-        $path = $this->getPrivacyPolicyPath($this->locale);
+        $path = $this->getTermsOfUsePath($this->locale);
 
         if (File::exists($path)) {
             return File::get($path);
         }
 
-        $fallbackPath = $this->getPrivacyPolicyPath('en');
+        $fallbackPath = $this->getTermsOfUsePath('en');
 
         if (File::exists($fallbackPath)) {
             return File::get($fallbackPath);
@@ -60,11 +67,11 @@ class PrivacyPolicyShow extends AbstractComponent
     }
 
     /**
-     * Get the path to the privacy policy markdown file.
+     * Get the path to the terms of use markdown file.
      */
-    protected function getPrivacyPolicyPath(string $locale): string
+    protected function getTermsOfUsePath(string $locale): string
     {
-        return resource_path(sprintf('docs/privacy/%s.md', $locale));
+        return resource_path(sprintf('docs/terms/%s.md', $locale));
     }
 
     /**
@@ -72,6 +79,6 @@ class PrivacyPolicyShow extends AbstractComponent
      */
     public function render(): ViewInterface
     {
-        return view('web::livewire.privacy-policy.privacy-policy-show');
+        return view('web::livewire.terms-of-use.terms-of-use-show');
     }
 }
