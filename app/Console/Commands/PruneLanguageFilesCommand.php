@@ -54,6 +54,8 @@ class PruneLanguageFilesCommand extends Command
 
     /**
      * Execute the console command.
+     *
+     * @throws FileNotFoundException
      */
     public function handle(): int
     {

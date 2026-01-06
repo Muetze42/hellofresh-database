@@ -2,6 +2,8 @@
 
 namespace App\Http\Clients\HelloFresh\Responses;
 
+use TypeError;
+
 /**
  * @phpstan-type RecipeAllergen array{
  *     id: string,
@@ -159,6 +161,8 @@ class RecipesResponse extends AbstractHelloFreshResponse
      * Get the JSON decoded body of the response as an array.
      *
      * @return RecipesData
+     *
+     * @throws TypeError
      */
     public function array(): array
     {

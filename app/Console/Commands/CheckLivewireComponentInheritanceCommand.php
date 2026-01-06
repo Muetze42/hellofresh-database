@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use JsonException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Finder\SplFileInfo;
+use Throwable;
 
 #[AsCommand(name: 'livewire:check-inheritance')]
 class CheckLivewireComponentInheritanceCommand extends Command
@@ -20,6 +22,10 @@ class CheckLivewireComponentInheritanceCommand extends Command
      */
     protected array $violations = [];
 
+    /**
+     * @throws JsonException
+     * @throws Throwable
+     */
     public function handle(): void
     {
         $livewirePath = app_path('Livewire');
@@ -93,6 +99,9 @@ class CheckLivewireComponentInheritanceCommand extends Command
         ];
     }
 
+    /**
+     * @throws JsonException
+     */
     protected function outputSuccess(): void
     {
         if ($this->option('json')) {
@@ -108,6 +117,9 @@ class CheckLivewireComponentInheritanceCommand extends Command
         $this->info('All Livewire components correctly extend AbstractComponent.');
     }
 
+    /**
+     * @throws JsonException
+     */
     protected function outputError(string $message): void
     {
         if ($this->option('json')) {
@@ -123,6 +135,9 @@ class CheckLivewireComponentInheritanceCommand extends Command
         $this->error($message);
     }
 
+    /**
+     * @throws JsonException
+     */
     protected function outputViolations(): void
     {
         if ($this->option('json')) {
