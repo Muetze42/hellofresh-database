@@ -46,6 +46,7 @@
         "livewire/flux-pro": "^2.10",
         "norman-huth/gd-text": "^1.0",
         "sentry/sentry-laravel": "^4.20",
+        "spatie/laravel-medialibrary": "^11.17",
         "spatie/laravel-translatable": "^6.12"
     },
     "require-dev": {

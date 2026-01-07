@@ -1,4 +1,5 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
+    <x-portal::email-not-verified />
   <flux:breadcrumbs>
     <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
     <flux:breadcrumbs.item :href="route('portal.stats.index')" wire:navigate>Statistics</flux:breadcrumbs.item>
@@ -392,4 +393,4 @@
   <flux:text class="text-sm text-zinc-500 text-center">
     Statistics are cached and refresh every hour.
   </flux:text>
-</div>
+</flux:main>

@@ -1,4 +1,5 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
+    <x-portal::email-not-verified />
     <flux:breadcrumbs>
         <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
         <flux:breadcrumbs.item>{{ __('Recipe Lists') }}</flux:breadcrumbs.item>
@@ -37,4 +38,4 @@
             @endforeach
         </div>
     @endif
-</div>
+</flux:main>

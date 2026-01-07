@@ -1,4 +1,5 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
+    <x-portal::email-not-verified />
   <flux:breadcrumbs>
     <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
     <flux:breadcrumbs.item>Admin</flux:breadcrumbs.item>
@@ -92,7 +93,7 @@
             </flux:table.cell>
             <flux:table.cell>
               @if($user->country_code)
-                <span title="{{ $user->countryName() }}"><x-flag :code="$user->country_code" /> {{ $user->country_code }}</span>
+                <span title="{{ $user->country_name }}"><x-flag :code="$user->country_code" /> {{ $user->country_code }}</span>
               @else
                 <flux:text variant="subtle">—</flux:text>
               @endif
@@ -128,4 +129,4 @@
 
     <flux:pagination :paginator="$this->users" class="mt-section" />
   </flux:card>
-</div>
+</flux:main>

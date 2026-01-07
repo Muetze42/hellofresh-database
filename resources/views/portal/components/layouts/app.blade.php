@@ -186,21 +186,7 @@
   @endauth
 </flux:header>
 
-<flux:main class="space-y-section sm:mb-18" container>
-  @auth
-    @if(!auth()->user()->hasVerifiedEmail())
-      <flux:callout icon="triangle-alert" color="amber">
-        <flux:callout.heading>Email Not Verified</flux:callout.heading>
-        <flux:callout.text>
-          Please verify your email address to access all API features.
-          <flux:link :href="route('portal.verification.notice')" wire:navigate>Resend verification email</flux:link>
-        </flux:callout.text>
-      </flux:callout>
-    @endif
-  @endauth
-
-  {{ $slot }}
-</flux:main>
+{{ $slot }}
 <flux:footer class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700 !py-3 text-sm flex max-sm:flex-col justify-end gap-y-ui gap-x-4 sm:fixed w-full bottom-0">
   <flux:text variant="subtle" class="max-sm:text-center">
     API Version: {{ config('api.version') }}

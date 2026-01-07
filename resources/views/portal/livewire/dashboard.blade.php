@@ -1,4 +1,6 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
+  <x-portal::email-not-verified />
+
   <flux:heading size="xl">{{ config('app.name') }}</flux:heading>
   <flux:text>Access recipe data, menus, ingredients, and more through our REST API.</flux:text>
 
@@ -147,4 +149,4 @@
     </flux:text>
     <pre class="mt-ui p-section bg-zinc-900 text-zinc-100 rounded-lg text-sm overflow-x-auto"><code>Authorization: Bearer YOUR_API_TOKEN</code></pre>
   </flux:card>
-</div>
+</flux:main>

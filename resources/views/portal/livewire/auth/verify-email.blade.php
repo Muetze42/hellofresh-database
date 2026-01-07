@@ -1,4 +1,4 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
     <div class="text-center">
         <flux:heading size="lg">Verify your email</flux:heading>
         <flux:text class="mt-ui">
@@ -22,4 +22,4 @@
             Skip for now
         </flux:link>
     </div>
-</div>
+</flux:main>

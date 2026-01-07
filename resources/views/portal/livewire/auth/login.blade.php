@@ -1,4 +1,4 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
     <div class="text-center">
         <flux:heading size="lg">Sign in to your account</flux:heading>
         <flux:text class="mt-ui">
@@ -30,4 +30,4 @@
             Sign in
         </flux:button>
     </form>
-</div>
+</flux:main>

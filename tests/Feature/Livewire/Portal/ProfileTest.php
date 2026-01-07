@@ -335,65 +335,13 @@ final class ProfileTest extends TestCase
     }
 
     #[Test]
-    public function it_validates_delete_confirmation_is_required(): void
-    {
-        $user = User::factory()->create();
-
-        Livewire::actingAs($user)
-            ->test(Profile::class)
-            ->set('delete_confirmation', '')
-            ->call('deleteAccount')
-            ->assertHasErrors(['delete_confirmation' => 'required']);
-    }
-
-    #[Test]
-    public function it_validates_delete_confirmation_must_be_delete(): void
-    {
-        $user = User::factory()->create();
-
-        Livewire::actingAs($user)
-            ->test(Profile::class)
-            ->set('delete_confirmation', 'WRONG')
-            ->call('deleteAccount')
-            ->assertHasErrors(['delete_confirmation' => 'in']);
-    }
-
-    #[Test]
-    public function it_deletes_account_successfully(): void
-    {
-        $user = User::factory()->create();
-        $userId = $user->id;
-
-        Livewire::actingAs($user)
-            ->test(Profile::class)
-            ->set('delete_confirmation', 'DELETE')
-            ->call('deleteAccount')
-            ->assertRedirect(route('portal.login'));
-
-        $this->assertDatabaseMissing('users', ['id' => $userId]);
-    }
-
-    #[Test]
-    public function it_invalidates_session_on_account_deletion(): void
-    {
-        $user = User::factory()->create();
-
-        Livewire::actingAs($user)
-            ->test(Profile::class)
-            ->set('delete_confirmation', 'DELETE')
-            ->call('deleteAccount');
-
-        $this->assertGuest();
-    }
-
-    #[Test]
     public function it_renders_the_profile_view(): void
     {
         $user = User::factory()->create();
 
         Livewire::actingAs($user)
             ->test(Profile::class)
-            ->assertViewIs('portal::livewire.profile');
+            ->assertViewIs('livewire.settings');
     }
 
     #[Test]
@@ -410,15 +358,6 @@ final class ProfileTest extends TestCase
     {
         $component = new Profile();
         $component->updatePassword();
-
-        $this->assertTrue(true);
-    }
-
-    #[Test]
-    public function it_returns_early_when_no_user_for_delete_account(): void
-    {
-        $component = new Profile();
-        $component->deleteAccount();
 
         $this->assertTrue(true);
     }

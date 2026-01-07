@@ -1,4 +1,5 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
+    <x-portal::email-not-verified />
   <flux:breadcrumbs>
     <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
     <flux:breadcrumbs.item>Statistics</flux:breadcrumbs.item>
@@ -58,4 +59,4 @@
       </flux:button>
     </flux:card>
   </div>
-</div>
+</flux:main>
