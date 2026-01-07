@@ -65,9 +65,7 @@
     {{-- User Menu --}}
     @auth
       <flux:dropdown position="bottom" align="end">
-        <flux:button variant="subtle" square>
-          <flux:icon.user variant="mini" />
-        </flux:button>
+        <flux:profile :avatar="auth()->user()->getFirstMediaUrl('avatar', 'sm')" :name="auth()->user()->name" />
 
         <flux:menu>
           <flux:menu.item icon="list" :href="localized_route('localized.lists')" wire:navigate>

@@ -7,7 +7,9 @@ namespace Tests\Feature\Livewire\Portal;
 use App\Livewire\Portal\Profile;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -358,6 +360,193 @@ final class ProfileTest extends TestCase
     {
         $component = new Profile();
         $component->updatePassword();
+
+        $this->assertTrue(true);
+    }
+
+    #[Test]
+    public function it_uploads_avatar_successfully(): void
+    {
+        Storage::fake('media');
+
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 500);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('updateAvatar')
+            ->assertHasNoErrors()
+            ->assertSet('avatar', null);
+
+        $user->refresh();
+        $this->assertCount(1, $user->getMedia('avatar'));
+    }
+
+    #[Test]
+    public function it_validates_avatar_is_required_for_upload(): void
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', null)
+            ->call('updateAvatar')
+            ->assertHasErrors(['avatar' => 'required']);
+    }
+
+    #[Test]
+    public function it_validates_avatar_must_be_image(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->create('document.pdf', 100);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('updateAvatar')
+            ->assertHasErrors(['avatar']);
+    }
+
+    #[Test]
+    public function it_rejects_non_jpg_image_formats(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.png', 500, 500);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('updateAvatar')
+            ->assertHasErrors(['avatar']);
+    }
+
+    #[Test]
+    public function it_validates_avatar_min_dimensions(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 100, 100);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('updateAvatar')
+            ->assertHasErrors(['avatar']);
+    }
+
+    #[Test]
+    public function it_validates_avatar_max_dimensions(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 2000, 2000);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('updateAvatar')
+            ->assertHasErrors(['avatar']);
+    }
+
+    #[Test]
+    public function it_validates_avatar_max_file_size(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 500)->size(3000);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('updateAvatar')
+            ->assertHasErrors(['avatar']);
+    }
+
+    #[Test]
+    public function it_validates_avatar_aspect_ratio(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 300);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('updateAvatar')
+            ->assertHasErrors(['avatar']);
+    }
+
+    #[Test]
+    public function it_removes_avatar_successfully(): void
+    {
+        Storage::fake('media');
+
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 500);
+        $user->addMedia($file->getRealPath())
+            ->usingFileName('avatar.jpg')
+            ->toMediaCollection('avatar');
+
+        $this->assertCount(1, $user->getMedia('avatar'));
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->call('removeAvatar');
+
+        $user->refresh();
+        $this->assertCount(0, $user->getMedia('avatar'));
+    }
+
+    #[Test]
+    public function it_cancels_avatar_upload(): void
+    {
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 500);
+
+        Livewire::actingAs($user)
+            ->test(Profile::class)
+            ->set('avatar', $file)
+            ->call('cancelAvatarUpload')
+            ->assertSet('avatar', null);
+    }
+
+    #[Test]
+    public function it_returns_avatar_url_when_avatar_exists(): void
+    {
+        Storage::fake('media');
+
+        $user = User::factory()->create();
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 500);
+        $user->addMedia($file->getRealPath())
+            ->usingFileName('avatar.jpg')
+            ->toMediaCollection('avatar');
+
+        $component = Livewire::actingAs($user)->test(Profile::class);
+
+        $this->assertNotNull($component->get('avatarUrl'));
+    }
+
+    #[Test]
+    public function it_returns_null_avatar_url_when_no_avatar(): void
+    {
+        $user = User::factory()->create();
+
+        $component = Livewire::actingAs($user)->test(Profile::class);
+
+        $this->assertNull($component->get('avatarUrl'));
+    }
+
+    #[Test]
+    public function it_returns_early_when_no_user_for_update_avatar(): void
+    {
+        $component = new Profile();
+        $component->updateAvatar();
+
+        $this->assertTrue(true);
+    }
+
+    #[Test]
+    public function it_returns_early_when_no_user_for_remove_avatar(): void
+    {
+        $component = new Profile();
+        $component->removeAvatar();
 
         $this->assertTrue(true);
     }

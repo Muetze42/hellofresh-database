@@ -134,7 +134,7 @@
 
   @auth
     <flux:dropdown position="top" align="start" class="max-lg:hidden">
-      <flux:sidebar.profile name="{{ auth()->user()->name }}" />
+      <flux:sidebar.profile :avatar="auth()->user()->getFirstMediaUrl('avatar', 'sm')" name="{{ auth()->user()->name }}" />
 
       <flux:menu>
         <flux:menu.item icon="user" :href="route('portal.profile')">Profile</flux:menu.item>
@@ -171,7 +171,7 @@
 
   @auth
     <flux:dropdown position="top" align="end">
-      <flux:profile name="{{ auth()->user()->name }}" />
+      <flux:profile :avatar="auth()->user()->getFirstMediaUrl('avatar', 'sm')" name="{{ auth()->user()->name }}" />
 
       <flux:menu>
         <flux:menu.item icon="user" :href="route('portal.profile')">Profile</flux:menu.item>

@@ -8,11 +8,19 @@ use App\Rules\DisposableEmailRule;
 use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class AccountSetting extends AbstractComponent
 {
+    use WithFileUploads;
+
     public string $name = '';
 
     public string $email = '';
@@ -24,6 +32,8 @@ class AccountSetting extends AbstractComponent
     public string $password = '';
 
     public string $password_confirmation = '';
+
+    public ?TemporaryUploadedFile $avatar = null;
 
     public function mount(): void
     {
@@ -110,6 +120,79 @@ class AccountSetting extends AbstractComponent
         $this->reset(['current_password', 'password', 'password_confirmation']);
 
         Flux::toastSuccess(__('Password updated successfully.'));
+    }
+
+    /**
+     * Update the user's avatar.
+     *
+     * @throws ValidationException
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function updateAvatar(): void
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return;
+        }
+
+        $this->validate([
+            'avatar' => [
+                'required',
+                'mimes:jpg,jpeg',
+                'max:' . (2 * 1024),
+                Rule::dimensions()
+                    ->minWidth(200)
+                    ->minHeight(200)
+                    ->maxWidth(1000)
+                    ->maxHeight(1000)
+                    ->ratio(1),
+            ],
+        ]);
+
+        /** @var TemporaryUploadedFile $avatar */
+        $avatar = $this->avatar;
+
+        $user->addMedia($avatar->getRealPath())
+            ->usingFileName(Str::slug($user->name) . '.jpg')
+            ->toMediaCollection('avatar');
+
+        $this->reset('avatar');
+
+        Flux::toastSuccess(__('Avatar updated successfully.'));
+    }
+
+    /**
+     * Remove the user's avatar.
+     */
+    public function removeAvatar(): void
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return;
+        }
+
+        $user->clearMediaCollection('avatar');
+
+        Flux::toastSuccess(__('Avatar removed successfully.'));
+    }
+
+    /**
+     * Cancel the pending avatar upload.
+     */
+    public function cancelAvatarUpload(): void
+    {
+        $this->reset('avatar');
+    }
+
+    /**
+     * Get the current avatar URL.
+     */
+    public function getAvatarUrlProperty(): ?string
+    {
+        return auth()->user()?->getFirstMediaUrl('avatar', 'md') ?: null;
     }
 
     protected function afterEmailChanged(): void
