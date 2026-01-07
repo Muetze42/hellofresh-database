@@ -1,4 +1,5 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
+    <x-portal::email-not-verified />
   <flux:breadcrumbs>
     <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
     <flux:breadcrumbs.item>Admin</flux:breadcrumbs.item>
@@ -191,4 +192,4 @@
 
     <flux:pagination :paginator="$this->usageLogs" class="mt-section" />
   </flux:card>
-</div>
+</flux:main>

@@ -1,4 +1,5 @@
-<div class="space-y-section">
+<flux:main container class="space-y-section">
+    <x-portal::email-not-verified />
     <div class="flex items-center justify-between">
         <flux:heading size="xl">API Tokens</flux:heading>
         <flux:modal.trigger name="create-token">
@@ -118,4 +119,4 @@
             </div>
         </form>
     </flux:modal>
-</div>
+</flux:main>
