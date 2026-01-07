@@ -11,5 +11,9 @@
 
 @source '../../../resources/components/*.blade.php';
 /*@source '../../../resources/common!*.blade.php';*/
-@source '../../../resources/portal/*.blade.php';
+@source '../../../resources/porFtal/*.blade.php';
 @source '../../resources/js/portal/*.js';
+
+[data-flux-main] {
+  @apply sm:mb-18;
+}

@@ -150,7 +150,7 @@ class User extends Authenticatable implements HasMedia
     {
         return Attribute::make(
             get: fn (): ?string => $this->country_code !== null
-                ? __('country.' . $this->country_code)
+                ? (string) __('country.' . $this->country_code)
                 : null,
         );
     }
