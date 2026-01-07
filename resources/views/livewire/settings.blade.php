@@ -48,7 +48,7 @@
         <flux:subheading>{{ __('Upload a profile picture. Image must be square and between 200x200 and 1000x1000 pixels.') }}</flux:subheading>
       </div>
 
-      <div class="flex-1 space-y-section">
+      <div class="flex-1 space-y-ui">
         <div class="flex items-center gap-section">
           <flux:avatar
             :src="$this->avatarUrl"
