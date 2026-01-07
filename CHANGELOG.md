@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.11.0] - 2026-01-07
+
+### Added
+
+- **User Avatars** - Users can now upload a profile picture
+    - Avatar displayed in navigation menus (sidebar and header)
+    - Preparation for upcoming features
+
+### Changed
+
+- **Settings Page Layout** - Redesigned with two-column layout for better readability
+
 ## [3.10.0] - 2026-01-03
 
 ### Added
