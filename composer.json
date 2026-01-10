@@ -37,7 +37,7 @@
         "php": "^8.4",
         "ext-dom": "*",
         "ext-pdo": "*",
-        "laravel/framework": "^12.45",
+        "laravel/framework": "^12.46",
         "laravel/horizon": "^5.42",
         "laravel/pulse": "^1.4",
         "laravel/reverb": "^1.7",
