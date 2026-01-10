@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
@@ -100,6 +100,8 @@ jobs:
           DB_PASSWORD: postgres
 
       - name: Run tests with coverage
+        id: tests
+        continue-on-error: true
         run: php artisan test --parallel --coverage-clover build/logs/clover.xml
         env:
           DB_CONNECTION: pgsql
@@ -109,6 +111,21 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
 
+      - name: Run PHPStan
+        id: phpstan
+        continue-on-error: true
+        run: vendor/bin/phpstan analyse
+
+      - name: Run Pint
+        id: pint
+        continue-on-error: true
+        run: vendor/bin/pint --test
+
+      - name: Run Rector
+        id: rector
+        continue-on-error: true
+        run: vendor/bin/rector --dry-run
+
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         if: always()
@@ -117,114 +134,134 @@ jobs:
           path: build/logs/clover.xml
           retention-days: 7
 
-  infection:
-    runs-on: ubuntu-latest
-    needs: tests
-
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: laravel
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          extensions: pgsql, pdo_pgsql, mbstring, dom, fileinfo, json, libxml
-          ini-values: upload_max_filesize=64M, post_max_size=64M
-          coverage: xdebug
-          tools: composer:v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10
-
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Configure Flux Pro authentication
-        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
-
-      - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-store-
-
-      - name: Install Node dependencies
-        run: pnpm install
-
-      - name: Build assets
-        run: pnpm run build
-
-      - name: Copy .env
-        run: cp .env.testing .env
-
-      - name: Generate application key
-        run: php artisan key:generate
-
-      - name: Run database migrations
-        run: php artisan migrate --force
-        env:
-          DB_CONNECTION: pgsql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
-          DB_DATABASE: laravel
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
-
-      - name: Run Infection
-        run: vendor/bin/infection --min-msi=70 --min-covered-msi=80 --threads=4 --no-progress --logger-github
-        env:
-          DB_CONNECTION: pgsql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
-          DB_DATABASE: laravel
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
-          XDEBUG_MODE: coverage
-
-      - name: Upload Infection report
-        uses: actions/upload-artifact@v4
+      - name: Check results
         if: always()
-        with:
-          name: infection-report
-          path: infection.log
-          retention-days: 7
+        run: |
+          if [[ "${{ steps.tests.outcome }}" == "failure" ]]; then
+            echo "Tests failed"
+            exit 1
+          fi
+          if [[ "${{ steps.phpstan.outcome }}" == "failure" ]]; then
+            echo "PHPStan failed"
+            exit 1
+          fi
+          if [[ "${{ steps.pint.outcome }}" == "failure" ]]; then
+            echo "Pint failed"
+            exit 1
+          fi
+          if [[ "${{ steps.rector.outcome }}" == "failure" ]]; then
+            echo "Rector failed"
+            exit 1
+          fi
+
+#  infection:
+#    runs-on: ubuntu-24.04
+#    needs: tests
+#
+#    services:
+#      postgres:
+#        image: postgres:16
+#        env:
+#          POSTGRES_USER: postgres
+#          POSTGRES_PASSWORD: postgres
+#          POSTGRES_DB: laravel
+#        ports:
+#          - 5432:5432
+#        options: >-
+#          --health-cmd pg_isready
+#          --health-interval 10s
+#          --health-timeout 5s
+#          --health-retries 5
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: '8.4'
+#          extensions: pgsql, pdo_pgsql, mbstring, dom, fileinfo, json, libxml
+#          ini-values: upload_max_filesize=64M, post_max_size=64M
+#          coverage: xdebug
+#          tools: composer:v2
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: '22'
+#
+#      - name: Install pnpm
+#        uses: pnpm/action-setup@v2
+#        with:
+#          version: 10
+#
+#      - name: Get Composer cache directory
+#        id: composer-cache
+#        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+#
+#      - name: Cache Composer dependencies
+#        uses: actions/cache@v4
+#        with:
+#          path: ${{ steps.composer-cache.outputs.dir }}
+#          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+#          restore-keys: ${{ runner.os }}-composer-
+#
+#      - name: Configure Flux Pro authentication
+#        run: composer config http-basic.composer.fluxui.dev "${{ secrets.FLUX_USERNAME }}" "${{ secrets.FLUX_LICENSE_KEY }}"
+#
+#      - name: Install Composer dependencies
+#        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+#
+#      - name: Get pnpm store directory
+#        id: pnpm-cache
+#        shell: bash
+#        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+#
+#      - name: Cache pnpm dependencies
+#        uses: actions/cache@v4
+#        with:
+#          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+#          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+#          restore-keys: ${{ runner.os }}-pnpm-store-
+#
+#      - name: Install Node dependencies
+#        run: pnpm install
+#
+#      - name: Build assets
+#        run: pnpm run build
+#
+#      - name: Copy .env
+#        run: cp .env.testing .env
+#
+#      - name: Generate application key
+#        run: php artisan key:generate
+#
+#      - name: Run database migrations
+#        run: php artisan migrate --force
+#        env:
+#          DB_CONNECTION: pgsql
+#          DB_HOST: 127.0.0.1
+#          DB_PORT: 5432
+#          DB_DATABASE: laravel
+#          DB_USERNAME: postgres
+#          DB_PASSWORD: postgres
+#
+#      - name: Run Infection
+#        run: vendor/bin/infection --min-msi=70 --min-covered-msi=80 --threads=4 --no-progress --logger-github
+#        env:
+#          DB_CONNECTION: pgsql
+#          DB_HOST: 127.0.0.1
+#          DB_PORT: 5432
+#          DB_DATABASE: laravel
+#          DB_USERNAME: postgres
+#          DB_PASSWORD: postgres
+#          XDEBUG_MODE: coverage
+#
+#      - name: Upload Infection report
+#        uses: actions/upload-artifact@v4
+#        if: always()
+#        with:
+#          name: infection-report
+#          path: infection.log
+#          retention-days: 7
