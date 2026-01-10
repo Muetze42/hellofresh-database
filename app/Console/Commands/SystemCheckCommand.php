@@ -73,7 +73,7 @@ class SystemCheckCommand extends Command
         // 'ghostscript',
         // 'libreoffice',
         // 'qpdf',
-        'pnpm',
+        // 'pnpm',
         'unzip',
         'zip',
     ];
