@@ -12,23 +12,23 @@
   <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-section">
     <flux:card>
       <flux:text variant="subtle">Total Users</flux:text>
-      <flux:heading size="xl">{{ number_format($this->stats['total']) }}</flux:heading>
+      <flux:heading size="xl">{{ Number::format($this->stats['total']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">Verified</flux:text>
-      <flux:heading size="xl" class="text-green-600 dark:text-green-400">{{ number_format($this->stats['verified']) }}</flux:heading>
+      <flux:heading size="xl" class="text-green-600 dark:text-green-400">{{ Number::format($this->stats['verified']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">Unverified</flux:text>
-      <flux:heading size="xl" class="text-amber-600 dark:text-amber-400">{{ number_format($this->stats['unverified']) }}</flux:heading>
+      <flux:heading size="xl" class="text-amber-600 dark:text-amber-400">{{ Number::format($this->stats['unverified']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">Admins</flux:text>
-      <flux:heading size="xl" class="text-blue-600 dark:text-blue-400">{{ number_format($this->stats['admins']) }}</flux:heading>
+      <flux:heading size="xl" class="text-blue-600 dark:text-blue-400">{{ Number::format($this->stats['admins']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">With Tokens</flux:text>
-      <flux:heading size="xl" class="text-purple-600 dark:text-purple-400">{{ number_format($this->stats['with_tokens']) }}</flux:heading>
+      <flux:heading size="xl" class="text-purple-600 dark:text-purple-400">{{ Number::format($this->stats['with_tokens']) }}</flux:heading>
     </flux:card>
   </div>
 
@@ -55,13 +55,13 @@
   <flux:card>
     <flux:table>
       <flux:table.columns>
-        <flux:table.column sortable :sorted="$sortBy === 'id'" :direction="$sortDirection" wire:click="sort('id')">ID</flux:table.column>
+        <flux:table.column class="w-id-col" sortable :sorted="$sortBy === 'id'" :direction="$sortDirection" wire:click="sort('id')">ID</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'name'" :direction="$sortDirection" wire:click="sort('name')">User</flux:table.column>
         <flux:table.column class="ui-text-subtle">Status</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'country_code'" :direction="$sortDirection" wire:click="sort('country_code')">Country</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'tokens_count'" :direction="$sortDirection" wire:click="sort('tokens_count')">Tokens</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'active_at'" :direction="$sortDirection" wire:click="sort('active_at')">Last Active</flux:table.column>
-        <flux:table.column sortable :sorted="$sortBy === 'created_at'" :direction="$sortDirection" wire:click="sort('created_at')">Registered</flux:table.column>
+        <flux:table.column class="w-1" sortable :sorted="$sortBy === 'created_at'" :direction="$sortDirection" wire:click="sort('created_at')">Registered</flux:table.column>
         <flux:table.column class="w-16"></flux:table.column>
       </flux:table.columns>
       <flux:table.rows>
@@ -101,13 +101,13 @@
             <flux:table.cell>
               <flux:badge size="sm">{{ $user->tokens_count }}</flux:badge>
             </flux:table.cell>
-            <flux:table.cell align="right">
+            <flux:table.cell align="end">
               {{ $user->active_at?->toDateTimeString() ?? 'Never' }}
             </flux:table.cell>
-            <flux:table.cell align="right">
+            <flux:table.cell align="end">
               {{ $user->created_at->toDateTimeString() }}
             </flux:table.cell>
-            <flux:table.cell align="right">
+            <flux:table.cell align="end">
               <flux:button
                 icon="eye"
                 variant="ghost"

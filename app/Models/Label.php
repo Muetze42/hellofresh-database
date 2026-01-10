@@ -44,6 +44,7 @@ class Label extends Model
         'foreground_color',
         'background_color',
         'display_label',
+        'cached_recipes_count',
     ];
 
     /**

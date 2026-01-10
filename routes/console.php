@@ -2,6 +2,7 @@
 
 use App\Jobs\Country\CountryResourcesOrchestrationJob;
 use App\Jobs\Country\UpdateCountryStatisticsJob;
+use App\Jobs\Country\UpdateResourcesRecipeCountOrchestrationJob;
 use App\Jobs\Menu\SyncMenusJob;
 use App\Jobs\Recipe\SyncRecipesJob;
 use App\Jobs\Seo\GenerateSitemapsJob;
@@ -34,6 +35,8 @@ Schedule::job(new SyncMenusJob())
     ->twiceDaily();
 
 Schedule::job(new CountryResourcesOrchestrationJob())
+    ->twiceDaily();
+Schedule::job(new UpdateResourcesRecipeCountOrchestrationJob())
     ->twiceDaily();
 
 Schedule::job(new UpdateCountryStatisticsJob())

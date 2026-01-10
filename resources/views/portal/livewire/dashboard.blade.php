@@ -70,15 +70,15 @@
       <div class="mt-section grid gap-section md:grid-cols-3">
         <div>
           <flux:text class="text-sm text-zinc-500">Today</flux:text>
-          <flux:heading size="xl">{{ number_format($usageStats['today']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($usageStats['today']) }}</flux:heading>
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Last 7 Days</flux:text>
-          <flux:heading size="xl">{{ number_format($usageStats['week']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($usageStats['week']) }}</flux:heading>
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">All Time</flux:text>
-          <flux:heading size="xl">{{ number_format($usageStats['total']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($usageStats['total']) }}</flux:heading>
         </div>
       </div>
 
@@ -111,7 +111,7 @@
             @foreach($usageStats['topEndpoints'] as $endpoint)
               <div wire:key="endpoint-{{ $loop->index }}" class="flex justify-between items-center text-sm">
                 <code class="text-xs bg-zinc-100 dark:bg-zinc-800 px-ui py-0.5 rounded truncate max-w-[70%]">{{ $endpoint['path'] }}</code>
-                <span class="text-zinc-500">{{ number_format($endpoint['count']) }}</span>
+                <span class="text-zinc-500">{{ Number::format($endpoint['count']) }}</span>
               </div>
             @endforeach
           </div>

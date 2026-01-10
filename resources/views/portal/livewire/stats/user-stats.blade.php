@@ -20,7 +20,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Total Users</flux:text>
-          <flux:heading size="xl">{{ number_format($this->userEngagement['total_users']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->userEngagement['total_users']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -32,7 +32,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Users with Lists</flux:text>
-          <flux:heading size="xl">{{ number_format($this->userEngagement['users_with_lists']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->userEngagement['users_with_lists']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -44,7 +44,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Recipe Lists</flux:text>
-          <flux:heading size="xl">{{ number_format($this->userEngagement['total_lists']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->userEngagement['total_lists']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -56,7 +56,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Saved Recipes</flux:text>
-          <flux:heading size="xl">{{ number_format($this->userEngagement['total_recipes_in_lists']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->userEngagement['total_recipes_in_lists']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -80,7 +80,7 @@
                 <span class="text-zinc-400">Not set</span>
               @endif
             </flux:table.cell>
-            <flux:table.cell align="end" class="tabular-nums">{{ number_format($countryStat->count) }}</flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums">{{ Number::format($countryStat->count) }}</flux:table.cell>
           </flux:table.row>
         @endforeach
       </flux:table.rows>

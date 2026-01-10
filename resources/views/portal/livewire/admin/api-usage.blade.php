@@ -20,23 +20,23 @@
   <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-section">
     <flux:card>
       <flux:text variant="subtle">Total Requests</flux:text>
-      <flux:heading size="xl">{{ number_format($this->stats['total_requests']) }}</flux:heading>
+      <flux:heading size="xl">{{ Number::format($this->stats['total_requests']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">Active Tokens</flux:text>
-      <flux:heading size="xl" class="text-green-600 dark:text-green-400">{{ number_format($this->stats['active_tokens']) }}</flux:heading>
+      <flux:heading size="xl" class="text-green-600 dark:text-green-400">{{ Number::format($this->stats['active_tokens']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">Total Tokens</flux:text>
-      <flux:heading size="xl">{{ number_format($this->stats['total_tokens']) }}</flux:heading>
+      <flux:heading size="xl">{{ Number::format($this->stats['total_tokens']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">Unique Tokens Used</flux:text>
-      <flux:heading size="xl" class="text-blue-600 dark:text-blue-400">{{ number_format($this->stats['unique_tokens']) }}</flux:heading>
+      <flux:heading size="xl" class="text-blue-600 dark:text-blue-400">{{ Number::format($this->stats['unique_tokens']) }}</flux:heading>
     </flux:card>
     <flux:card>
       <flux:text variant="subtle">Unique Users</flux:text>
-      <flux:heading size="xl" class="text-purple-600 dark:text-purple-400">{{ number_format($this->stats['unique_users']) }}</flux:heading>
+      <flux:heading size="xl" class="text-purple-600 dark:text-purple-400">{{ Number::format($this->stats['unique_users']) }}</flux:heading>
     </flux:card>
   </div>
 
@@ -50,7 +50,7 @@
           @foreach($this->topEndpoints as $endpoint)
             <div wire:key="endpoint-{{ $loop->index }}" class="flex items-center justify-between">
               <flux:text class="font-mono text-sm truncate flex-1 mr-ui">{{ $endpoint->path }}</flux:text>
-              <flux:badge size="sm">{{ number_format($endpoint->count) }}</flux:badge>
+              <flux:badge size="sm">{{ Number::format($endpoint->count) }}</flux:badge>
             </div>
           @endforeach
         </div>
@@ -73,7 +73,7 @@
                   <flux:text variant="subtle" size="sm" class="truncate">{{ $topUser->email }}</flux:text>
                 </div>
               </div>
-              <flux:badge size="sm">{{ number_format($topUser->request_count) }}</flux:badge>
+              <flux:badge size="sm">{{ Number::format($topUser->request_count) }}</flux:badge>
             </div>
           @endforeach
         </div>
@@ -95,7 +95,7 @@
         {{-- Y-Axis --}}
         <div class="flex flex-col justify-between h-48 text-xs text-zinc-500 dark:text-zinc-400 text-right shrink-0 w-8">
           @foreach($yAxisSteps as $percent)
-            <span>{{ number_format($maxCount * $percent / 100) }}</span>
+            <span>{{ Number::format($maxCount * $percent / 100) }}</span>
           @endforeach
         </div>
 
@@ -109,7 +109,7 @@
                 style="height: {{ $maxCount > 0 ? max(($day->count / $maxCount * 100), 4) : 4 }}%"
               >
                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs px-2 py-1 rounded whitespace-nowrap z-10">
-                  {{ \Carbon\Carbon::parse($day->date)->format('M d') }}: {{ number_format($day->count) }}
+                  {{ \Carbon\Carbon::parse($day->date)->format('M d') }}: {{ Number::format($day->count) }}
                 </div>
               </div>
             @endforeach

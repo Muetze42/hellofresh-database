@@ -22,6 +22,7 @@ namespace App\Models{
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $cached_recipes_count
  * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
@@ -34,6 +35,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen whereCachedRecipesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Allergen whereHellofreshIds($value)
@@ -83,8 +85,6 @@ namespace App\Models{
  * @property-read int|null $labels_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Menu> $menus
  * @property-read int|null $menus_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeList> $recipeLists
- * @property-read int|null $recipe_lists_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ShoppingList> $shoppingLists
  * @property-read int|null $shopping_lists_count
@@ -132,6 +132,7 @@ namespace App\Models{
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $cached_recipes_count
  * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
@@ -142,6 +143,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cuisine newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cuisine query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cuisine whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Cuisine whereCachedRecipesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cuisine whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cuisine whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Cuisine whereHellofreshIds($value)
@@ -214,6 +216,7 @@ namespace App\Models{
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $cached_recipes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
  * @property-read \App\Models\Country $country
@@ -226,6 +229,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ingredient newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ingredient query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ingredient whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ingredient whereCachedRecipesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ingredient whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ingredient whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ingredient whereHellofreshIds($value)
@@ -255,6 +259,7 @@ namespace App\Models{
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $cached_recipes_count
  * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
@@ -266,6 +271,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereActive($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereBackgroundColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereCachedRecipesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereDisplayLabel($value)
@@ -560,6 +566,7 @@ namespace App\Models{
  * @property bool $display_label
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $cached_recipes_count
  * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
@@ -570,6 +577,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereCachedRecipesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereDisplayLabel($value)
@@ -599,10 +607,13 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $country_code
+ * @property-read string|null $country_name
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmailVerification> $emailVerifications
  * @property-read int|null $email_verifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Favorite> $favorites
  * @property-read int|null $favorites_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read int|null $media_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RecipeList> $recipeLists
@@ -629,7 +640,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  */
-	class User extends \Eloquent {}
+	class User extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
 }
 
 namespace App\Models{
@@ -643,6 +654,7 @@ namespace App\Models{
  * @property bool $active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $cached_recipes_count
  * @property-read \App\Models\Country $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
@@ -653,6 +665,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Utensil newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Utensil query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Utensil whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Utensil whereCachedRecipesCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Utensil whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Utensil whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Utensil whereHellofreshIds($value)

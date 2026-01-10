@@ -44,6 +44,7 @@ class Allergen extends Model
         'type',
         'name',
         'icon_path',
+        'cached_recipes_count',
     ];
 
     /**

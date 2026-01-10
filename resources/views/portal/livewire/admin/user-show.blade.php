@@ -53,7 +53,7 @@
         </flux:card>
         <flux:card>
             <flux:text variant="subtle">API Requests</flux:text>
-            <flux:heading size="xl" class="text-blue-600 dark:text-blue-400">{{ number_format($this->stats['total_requests']) }}</flux:heading>
+            <flux:heading size="xl" class="text-blue-600 dark:text-blue-400">{{ Number::format($this->stats['total_requests']) }}</flux:heading>
         </flux:card>
     </div>
 
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-ui">
-                                <flux:badge size="sm">{{ number_format($token->usages_count) }} requests</flux:badge>
+                                <flux:badge size="sm">{{ Number::format($token->usages_count) }} requests</flux:badge>
                                 @if($token->expires_at?->isPast())
                                     <flux:badge color="red" size="sm">Expired</flux:badge>
                                 @elseif($token->last_used_at)
@@ -123,7 +123,7 @@
                     @foreach($this->topEndpoints as $endpoint)
                         <div wire:key="endpoint-{{ $loop->index }}" class="flex items-center justify-between">
                             <flux:text class="font-mono text-sm truncate flex-1 mr-ui">{{ $endpoint->path }}</flux:text>
-                            <flux:badge size="sm">{{ number_format($endpoint->count) }}</flux:badge>
+                            <flux:badge size="sm">{{ Number::format($endpoint->count) }}</flux:badge>
                         </div>
                     @endforeach
                 </div>
@@ -145,7 +145,7 @@
                 {{-- Y-Axis --}}
                 <div class="flex flex-col justify-between h-48 text-xs text-zinc-500 dark:text-zinc-400 text-right shrink-0 w-8">
                     @foreach($yAxisSteps as $percent)
-                        <span>{{ number_format($maxCount * $percent / 100) }}</span>
+                        <span>{{ Number::format($maxCount * $percent / 100) }}</span>
                     @endforeach
                 </div>
 
@@ -159,7 +159,7 @@
                                 style="height: {{ $maxCount > 0 ? max(($day->count / $maxCount * 100), 4) : 4 }}%"
                             >
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs px-2 py-1 rounded whitespace-nowrap z-10">
-                                    {{ \Carbon\Carbon::parse($day->date)->format('M d') }}: {{ number_format($day->count) }}
+                                    {{ \Carbon\Carbon::parse($day->date)->format('M d') }}: {{ Number::format($day->count) }}
                                 </div>
                             </div>
                         @endforeach

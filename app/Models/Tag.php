@@ -42,6 +42,7 @@ class Tag extends Model
     protected $fillable = [
         'name',
         'display_label',
+        'cached_recipes_count',
     ];
 
     /**

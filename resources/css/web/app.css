@@ -12,4 +12,5 @@
 @source '../../../resources/components/*.blade.php';
 /*@source '../../../resources/common!*.blade.php';*/
 @source '../../../resources/web/*.blade.php';
+@source '../../../resources/livewire/*.blade.php';
 @source '../../resources/js/web/*.js';
