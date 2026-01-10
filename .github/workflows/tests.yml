@@ -1,14 +1,13 @@
 name: Tests
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
   tests:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     # if: github.event.pull_request.head.repo.fork == true
 
     services:
