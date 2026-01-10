@@ -11,9 +11,65 @@
 
 @source '../../../resources/components/*.blade.php';
 /*@source '../../../resources/common!*.blade.php';*/
-@source '../../../resources/porFtal/*.blade.php';
+@source '../../../resources/portal/*.blade.php';
+@source '../../../resources/livewire/*.blade.php';
 @source '../../resources/js/portal/*.js';
+
+@theme {
+  --spacing-id-col: calc(var(--spacing) * 20);
+}
 
 [data-flux-main] {
   @apply sm:mb-18;
+}
+
+/* Tables */
+.sticky-section-child {
+  @apply max-h-[calc(100vh_-_(4.5rem_+_var(--i)_*_4rem))];
+}
+@theme {
+  --spacing-fluxion: calc(var(--spacing) * 3);
+}
+@utility fluxion-table-bg {
+  /*@apply bg-zinc-50 dark:bg-zinc-700;*/
+  @apply bg-transparent;
+}
+@utility fluxion-table-border {
+  @apply border-zinc-800/10 dark:border-white/20;
+}
+.fluxion-table {
+  @apply rounded-md;
+  @apply fluxion-table-bg;
+  @apply border fluxion-table-border;
+
+  table th {
+    @apply rounded-t-md;
+    /*@apply fluxion-table-bg;*/
+    @apply bg-zinc-50 dark:bg-zinc-700;
+  }
+
+  table tr > th:first-child, table tr > td:first-child {
+    @apply pl-fluxion;
+  }
+
+  table tr > th:last-child, table tr > td:last-child {
+    @apply pr-fluxion;
+  }
+
+  [data-flux-pagination] {
+    @apply border-t fluxion-table-border;
+    @apply p-fluxion;
+  }
+
+  .table-footer {
+    @apply border-t fluxion-table-border p-fluxion;
+  }
+
+  tr.clickable {
+    @apply hover:bg-zinc-200/30 dark:hover:bg-zinc-800/30;
+
+    td:not(.actions) {
+      @apply cursor-pointer;
+    }
+  }
 }

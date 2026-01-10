@@ -176,8 +176,8 @@ class StatisticsService
         return Cache::remember('portal_top_ingredients', $this->cacheTtl, static fn (): Collection => DB::table('ingredients')
             ->join('ingredient_recipe', 'ingredients.id', '=', 'ingredient_recipe.ingredient_id')
             ->join('countries', 'ingredients.country_id', '=', 'countries.id')
-            ->select('ingredients.name', 'countries.code as country_code', DB::raw('COUNT(ingredient_recipe.recipe_id) as recipes_count'))
-            ->groupBy('ingredients.id', 'ingredients.name', 'countries.code')
+            ->select('ingredients.name', 'countries.code as country_code', 'countries.locales as country_locales', DB::raw('COUNT(ingredient_recipe.recipe_id) as recipes_count'))
+            ->groupBy('ingredients.id', 'ingredients.name', 'countries.code', 'countries.locales')
             ->orderByDesc('recipes_count')
             ->limit(10)
             ->get());
@@ -194,8 +194,8 @@ class StatisticsService
         return Cache::remember('portal_top_tags', $this->cacheTtl, static fn (): Collection => DB::table('tags')
             ->join('recipe_tag', 'tags.id', '=', 'recipe_tag.tag_id')
             ->join('countries', 'tags.country_id', '=', 'countries.id')
-            ->select('tags.name', 'countries.code as country_code', DB::raw('COUNT(recipe_tag.recipe_id) as recipes_count'))
-            ->groupBy('tags.id', 'tags.name', 'countries.code')
+            ->select('tags.name', 'countries.code as country_code', 'countries.locales as country_locales', DB::raw('COUNT(recipe_tag.recipe_id) as recipes_count'))
+            ->groupBy('tags.id', 'tags.name', 'countries.code', 'countries.locales')
             ->orderByDesc('recipes_count')
             ->limit(10)
             ->get());
@@ -212,8 +212,8 @@ class StatisticsService
         return Cache::remember('portal_top_cuisines', $this->cacheTtl, static fn (): Collection => DB::table('cuisines')
             ->join('cuisine_recipe', 'cuisines.id', '=', 'cuisine_recipe.cuisine_id')
             ->join('countries', 'cuisines.country_id', '=', 'countries.id')
-            ->select('cuisines.name', 'countries.code as country_code', DB::raw('COUNT(cuisine_recipe.recipe_id) as recipes_count'))
-            ->groupBy('cuisines.id', 'cuisines.name', 'countries.code')
+            ->select('cuisines.name', 'countries.code as country_code', 'countries.locales as country_locales', DB::raw('COUNT(cuisine_recipe.recipe_id) as recipes_count'))
+            ->groupBy('cuisines.id', 'cuisines.name', 'countries.code', 'countries.locales')
             ->orderByDesc('recipes_count')
             ->limit(10)
             ->get());

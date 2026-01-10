@@ -9,9 +9,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
 /**
- * Orchestrator job that dispatches ActivateCountryResourcesJob for each country.
+ * Orchestrator job that dispatches UpdateCountryResourcesRecipeCountJob for each country.
  */
-class CountryResourcesOrchestrationJob implements LauncherJobInterface, ShouldQueue
+class UpdateResourcesRecipeCountOrchestrationJob implements LauncherJobInterface, ShouldQueue
 {
     use Queueable;
 
@@ -22,13 +22,13 @@ class CountryResourcesOrchestrationJob implements LauncherJobInterface, ShouldQu
 
     public static function description(): string
     {
-        return 'Orchestration: Update active status for activatable models for all countries';
+        return 'Orchestration: Update recipe counts for all country resources';
     }
 
     public function handle(): void
     {
         Country::each(static function (Country $country): void {
-            ActivateCountryResourcesJob::dispatch($country);
+            UpdateCountryResourcesRecipeCountJob::dispatch($country);
         });
     }
 }

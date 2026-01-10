@@ -29,7 +29,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Total Requests</flux:text>
-          <flux:heading size="xl">{{ number_format($this->stats['total_requests']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->stats['total_requests']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -41,7 +41,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Unique Users</flux:text>
-          <flux:heading size="xl">{{ number_format($this->stats['unique_users']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->stats['unique_users']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -53,7 +53,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Unique Tokens</flux:text>
-          <flux:heading size="xl">{{ number_format($this->stats['unique_tokens']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->stats['unique_tokens']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -65,7 +65,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Total Tokens</flux:text>
-          <flux:heading size="xl">{{ number_format($this->stats['total_tokens']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->stats['total_tokens']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -77,7 +77,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Active Tokens</flux:text>
-          <flux:heading size="xl">{{ number_format($this->stats['active_tokens']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->stats['active_tokens']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -124,7 +124,7 @@
             <flux:table.cell>
               <code class="text-sm bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">{{ $endpoint->path }}</code>
             </flux:table.cell>
-            <flux:table.cell align="end" class="tabular-nums">{{ number_format($endpoint->count) }}</flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums">{{ Number::format($endpoint->count) }}</flux:table.cell>
           </flux:table.row>
         @empty
           <flux:table.row>

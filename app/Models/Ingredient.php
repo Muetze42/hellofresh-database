@@ -45,6 +45,7 @@ class Ingredient extends Model
         'name',
         'name_slug',
         'image_path',
+        'cached_recipes_count',
     ];
 
     /**

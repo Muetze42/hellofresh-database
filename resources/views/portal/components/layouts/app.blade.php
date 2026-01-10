@@ -48,7 +48,7 @@
       </flux:sidebar.item>
     @endauth
 
-    <flux:sidebar.group expandable heading="API Reference">
+    <flux:sidebar.group expandable heading="API Reference" :expanded="request()->is(['docs', 'docs/*'])">
       <flux:sidebar.item :href="route('portal.docs.get-started')" :current="request()->routeIs('portal.docs.get-started')" wire:navigate>
         Get Started
       </flux:sidebar.item>
@@ -81,7 +81,28 @@
       </flux:sidebar.item>
     </flux:sidebar.group>
 
-    <flux:sidebar.group expandable heading="Statistics">
+    <flux:sidebar.group expandable heading="Resources" :expanded="request()->is(['resources', 'resources/*'])">
+      <flux:sidebar.item icon="carrot" :href="route('portal.resources.ingredients')" :current="request()->routeIs('portal.resources.ingredients')" wire:navigate>
+        Ingredients
+      </flux:sidebar.item>
+      <flux:sidebar.item icon="triangle-alert" :href="route('portal.resources.allergens')" :current="request()->routeIs('portal.resources.allergens')" wire:navigate>
+        Allergens
+      </flux:sidebar.item>
+      <flux:sidebar.item icon="tags" :href="route('portal.resources.tags')" :current="request()->routeIs('portal.resources.tags')" wire:navigate>
+        Tags
+      </flux:sidebar.item>
+      <flux:sidebar.item icon="tag" :href="route('portal.resources.labels')" :current="request()->routeIs('portal.resources.labels')" wire:navigate>
+        Labels
+      </flux:sidebar.item>
+      <flux:sidebar.item icon="globe" :href="route('portal.resources.cuisines')" :current="request()->routeIs('portal.resources.cuisines')" wire:navigate>
+        Cuisines
+      </flux:sidebar.item>
+      <flux:sidebar.item icon="cooking-pot" :href="route('portal.resources.utensils')" :current="request()->routeIs('portal.resources.utensils')" wire:navigate>
+        Utensils
+      </flux:sidebar.item>
+    </flux:sidebar.group>
+
+    <flux:sidebar.group expandable heading="Statistics" :expanded="request()->is(['stats', 'stats/*'])">
       <flux:sidebar.item icon="utensils" :href="route('portal.stats.recipes')" :current="request()->routeIs('portal.stats.recipes')" wire:navigate>
         Recipes
       </flux:sidebar.item>
@@ -94,7 +115,7 @@
     </flux:sidebar.group>
 
     @if(auth()->user()?->admin)
-        <flux:sidebar.group expandable :expanded="request()->is('admin/*')" heading="Admin" class="grid">
+        <flux:sidebar.group expandable :expanded="request()->is(['admin', 'admin/*'])" heading="Admin" class="grid">
           <flux:sidebar.item icon="users" :href="route('portal.admin.users')" :current="request()->routeIs('portal.admin.users')" wire:navigate>
             Users
           </flux:sidebar.item>

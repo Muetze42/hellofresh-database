@@ -49,9 +49,3 @@
 [data-flux-modal] > dialog::backdrop {
   @apply bg-black/50;
 }
-
-ui-option[disabled] {
-  [data-slot="avatar"] {
-    @apply opacity-50;
-  }
-}

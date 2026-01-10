@@ -4,6 +4,7 @@
 
 declare(strict_types=1);
 
+use Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
@@ -185,6 +186,8 @@ return RectorConfig::configure()
          * Adds type hints and generic return types to improve Laravel code type safety.
          */
         LaravelSetList::LARAVEL_TYPE_DECLARATIONS,
+
+        SimplifyQuoteEscapeRector::class,
 
         /**
          * Files.

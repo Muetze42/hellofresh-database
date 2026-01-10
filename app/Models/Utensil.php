@@ -42,6 +42,7 @@ class Utensil extends Model
     protected $fillable = [
         'name',
         'type',
+        'cached_recipes_count',
     ];
 
     /**

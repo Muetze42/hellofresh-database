@@ -42,6 +42,7 @@ class Cuisine extends Model
     protected $fillable = [
         'name',
         'icon_path',
+        'cached_recipes_count',
     ];
 
     /**

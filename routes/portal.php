@@ -27,6 +27,13 @@ use App\Livewire\Portal\Legal\TermsOfUse;
 use App\Livewire\Portal\Profile;
 use App\Livewire\Portal\Recipe\RecipeLists;
 use App\Livewire\Portal\Recipe\RecipeListShow;
+use App\Livewire\Portal\Resources\AllergensIndex;
+use App\Livewire\Portal\Resources\CuisinesIndex;
+use App\Livewire\Portal\Resources\IngredientsIndex;
+use App\Livewire\Portal\Resources\LabelsIndex;
+use App\Livewire\Portal\Resources\ResourcesIndex;
+use App\Livewire\Portal\Resources\TagsIndex;
+use App\Livewire\Portal\Resources\UtensilsIndex;
 use App\Livewire\Portal\Stats\ApiStats;
 use App\Livewire\Portal\Stats\RecipeStats;
 use App\Livewire\Portal\Stats\StatsIndex;
@@ -62,6 +69,17 @@ Route::prefix('stats')->name('stats.')->group(function (): void {
     Route::get('users', UserStats::class)->name('users');
     Route::get('recipes', RecipeStats::class)->name('recipes');
     Route::get('api', ApiStats::class)->name('api');
+});
+
+// Resources routes
+Route::prefix('resources')->name('resources.')->group(function (): void {
+    Route::get('/', ResourcesIndex::class)->name('index');
+    Route::get('ingredients', IngredientsIndex::class)->name('ingredients');
+    Route::get('allergens', AllergensIndex::class)->name('allergens');
+    Route::get('tags', TagsIndex::class)->name('tags');
+    Route::get('labels', LabelsIndex::class)->name('labels');
+    Route::get('cuisines', CuisinesIndex::class)->name('cuisines');
+    Route::get('utensils', UtensilsIndex::class)->name('utensils');
 });
 
 // API Documentation (public, no authentication required)

@@ -20,7 +20,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Total Recipes</flux:text>
-          <flux:heading size="xl">{{ number_format($this->globalStats['recipes']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->globalStats['recipes']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -32,7 +32,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Ingredients</flux:text>
-          <flux:heading size="xl">{{ number_format($this->globalStats['ingredients']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->globalStats['ingredients']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -44,7 +44,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Weekly Menus</flux:text>
-          <flux:heading size="xl">{{ number_format($this->globalStats['menus']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->globalStats['menus']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -56,7 +56,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Countries</flux:text>
-          <flux:heading size="xl">{{ number_format($this->globalStats['countries']) }}</flux:heading>
+          <flux:heading size="xl">{{ Number::format($this->globalStats['countries']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -71,7 +71,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Tags</flux:text>
-          <flux:heading size="lg">{{ number_format($this->globalStats['tags']) }}</flux:heading>
+          <flux:heading size="lg">{{ Number::format($this->globalStats['tags']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -83,7 +83,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Allergens</flux:text>
-          <flux:heading size="lg">{{ number_format($this->globalStats['allergens']) }}</flux:heading>
+          <flux:heading size="lg">{{ Number::format($this->globalStats['allergens']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -95,7 +95,7 @@
         </div>
         <div>
           <flux:text class="text-sm text-zinc-500">Cuisines</flux:text>
-          <flux:heading size="lg">{{ number_format($this->globalStats['cuisines']) }}</flux:heading>
+          <flux:heading size="lg">{{ Number::format($this->globalStats['cuisines']) }}</flux:heading>
         </div>
       </div>
     </flux:card>
@@ -111,20 +111,20 @@
           <div class="text-right">
             <flux:heading size="lg" class="tabular-nums inline-flex gap-1 items-baseline">
               <flux:text class="text-sm text-zinc-500">{{ $this->recipeQuality['pdf_percentage'] }}%</flux:text>
-              {{ number_format($this->recipeQuality['with_pdf']) }}
+              {{ Number::format($this->recipeQuality['with_pdf']) }}
             </flux:heading>
           </div>
         </div>
         <div class="flex justify-between items-center">
           <flux:text>Recipes without Image</flux:text>
           <flux:heading size="lg" class="tabular-nums {{ $this->recipeQuality['without_image'] > 0 ? 'text-amber-600 dark:text-amber-400' : '' }}">
-            {{ number_format($this->recipeQuality['without_image']) }}
+            {{ Number::format($this->recipeQuality['without_image']) }}
           </flux:heading>
         </div>
         <div class="flex justify-between items-center">
           <flux:text>Recipes without Nutrition</flux:text>
           <flux:heading size="lg" class="tabular-nums {{ $this->recipeQuality['without_nutrition'] > 0 ? 'text-amber-600 dark:text-amber-400' : '' }}">
-            {{ number_format($this->recipeQuality['without_nutrition']) }}
+            {{ Number::format($this->recipeQuality['without_nutrition']) }}
           </flux:heading>
         </div>
       </div>
@@ -136,17 +136,17 @@
         <div class="flex justify-between items-center">
           <flux:text>Orphan Ingredients</flux:text>
           <flux:heading size="lg" class="tabular-nums {{ $this->dataHealth['orphan_ingredients'] > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400' }}">
-            {{ number_format($this->dataHealth['orphan_ingredients']) }}
+            {{ Number::format($this->dataHealth['orphan_ingredients']) }}
           </flux:heading>
         </div>
         <div class="flex justify-between items-center">
           <flux:text>Inactive Countries</flux:text>
-          <flux:heading size="lg" class="tabular-nums">{{ number_format($this->dataHealth['inactive_countries']) }}</flux:heading>
+          <flux:heading size="lg" class="tabular-nums">{{ Number::format($this->dataHealth['inactive_countries']) }}</flux:heading>
         </div>
         <div class="flex justify-between items-center">
           <flux:text>Recipes without Tags</flux:text>
           <flux:heading size="lg" class="tabular-nums {{ $this->dataHealth['recipes_without_tags'] > 0 ? 'text-amber-600 dark:text-amber-400' : '' }}">
-            {{ number_format($this->dataHealth['recipes_without_tags']) }}
+            {{ Number::format($this->dataHealth['recipes_without_tags']) }}
           </flux:heading>
         </div>
       </div>
@@ -154,9 +154,9 @@
   </div>
 
   {{-- Country Stats --}}
-  <flux:card>
+  <flux:card class="space-y-section">
     <flux:heading size="lg">Statistics by Country</flux:heading>
-    <flux:table class="mt-section">
+    <flux:table>
       <flux:table.columns>
         <flux:table.column sortable :sorted="$sortBy === 'code'" :direction="$sortDirection" wire:click="sort('code')">Code</flux:table.column>
         <flux:table.column class="ui-text-subtle">Name</flux:table.column>
@@ -181,16 +181,16 @@
               </div>
             </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">
-              {{ number_format($country->recipes_count ?? 0) }}
+              {{ Number::format($country->recipes_count ?? 0) }}
             </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">
-              {{ number_format($country->recipes_with_pdf_count ?? 0) }}
+              {{ Number::format($country->recipes_with_pdf_count ?? 0) }}
             </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">
-              {{ number_format($country->ingredients_count ?? 0) }}
+              {{ Number::format($country->ingredients_count ?? 0) }}
             </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">
-              {{ number_format($country->menus_count) }}
+              {{ Number::format($country->menus_count) }}
             </flux:table.cell>
           </flux:table.row>
         @endforeach
@@ -200,63 +200,78 @@
 
   {{-- Top Lists --}}
   <div class="grid gap-section lg:grid-cols-3">
-    <flux:card>
+    <flux:card class="space-y-section">
       <flux:heading size="lg">Top 10 Ingredients</flux:heading>
-      <flux:table class="mt-section">
-        <flux:table.columns>
+      <flux:table container:class="sticky-section-child">
+        <flux:table.columns sticky>
           <flux:table.column class="ui-text-subtle">Ingredient</flux:table.column>
           <flux:table.column class="ui-text-subtle" align="end">Recipes</flux:table.column>
         </flux:table.columns>
         <flux:table.rows>
           @foreach($this->topIngredients as $ingredient)
+            @php
+              $locales = json_decode($ingredient->country_locales ?? '["en"]', true);
+              $names = is_string($ingredient->name) ? json_decode($ingredient->name, true) : $ingredient->name;
+              $ingredientName = $names[$locales[0] ?? 'en'] ?? (is_array($names) ? array_values($names)[0] ?? '' : '');
+            @endphp
             <flux:table.row wire:key="ingredient-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
                 <x-flag :code="$ingredient->country_code" :title="$ingredient->country_code" />
-                {{ json_decode($ingredient->name)->en ?? $ingredient->name }}
+                {{ $ingredientName }}
               </flux:table.cell>
-              <flux:table.cell align="end" class="tabular-nums">{{ number_format($ingredient->recipes_count) }}</flux:table.cell>
+              <flux:table.cell align="end" class="tabular-nums">{{ Number::format($ingredient->recipes_count) }}</flux:table.cell>
             </flux:table.row>
           @endforeach
         </flux:table.rows>
       </flux:table>
     </flux:card>
 
-    <flux:card>
+    <flux:card class="space-y-section">
       <flux:heading size="lg">Top 10 Tags</flux:heading>
-      <flux:table class="mt-section">
+      <flux:table>
         <flux:table.columns>
           <flux:table.column class="ui-text-subtle">Tag</flux:table.column>
           <flux:table.column class="ui-text-subtle" align="end">Recipes</flux:table.column>
         </flux:table.columns>
         <flux:table.rows>
           @foreach($this->topTags as $tag)
+            @php
+              $locales = json_decode($tag->country_locales ?? '["en"]', true);
+              $names = is_string($tag->name) ? json_decode($tag->name, true) : $tag->name;
+              $tagName = $names[$locales[0] ?? 'en'] ?? (is_array($names) ? array_values($names)[0] ?? '' : '');
+            @endphp
             <flux:table.row wire:key="tag-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
                 <x-flag :code="$tag->country_code" :title="$tag->country_code" />
-                {{ json_decode($tag->name)->en ?? $tag->name }}
+                {{ $tagName }}
               </flux:table.cell>
-              <flux:table.cell align="end" class="tabular-nums">{{ number_format($tag->recipes_count) }}</flux:table.cell>
+              <flux:table.cell align="end" class="tabular-nums">{{ Number::format($tag->recipes_count) }}</flux:table.cell>
             </flux:table.row>
           @endforeach
         </flux:table.rows>
       </flux:table>
     </flux:card>
 
-    <flux:card>
+    <flux:card class="space-y-section">
       <flux:heading size="lg">Top 10 Cuisines</flux:heading>
-      <flux:table class="mt-section">
+      <flux:table>
         <flux:table.columns>
           <flux:table.column class="ui-text-subtle">Cuisine</flux:table.column>
           <flux:table.column class="ui-text-subtle" align="end">Recipes</flux:table.column>
         </flux:table.columns>
         <flux:table.rows>
           @foreach($this->topCuisines as $cuisine)
+            @php
+              $locales = json_decode($cuisine->country_locales ?? '["en"]', true);
+              $names = is_string($cuisine->name) ? json_decode($cuisine->name, true) : $cuisine->name;
+              $cuisineName = $names[$locales[0] ?? 'en'] ?? (is_array($names) ? array_values($names)[0] ?? '' : '');
+            @endphp
             <flux:table.row wire:key="cuisine-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
                 <x-flag :code="$cuisine->country_code" :title="$cuisine->country_code" />
-                {{ json_decode($cuisine->name)->en ?? $cuisine->name }}
+                {{ $cuisineName }}
               </flux:table.cell>
-              <flux:table.cell align="end" class="tabular-nums">{{ number_format($cuisine->recipes_count) }}</flux:table.cell>
+              <flux:table.cell align="end" class="tabular-nums">{{ Number::format($cuisine->recipes_count) }}</flux:table.cell>
             </flux:table.row>
           @endforeach
         </flux:table.rows>
@@ -286,8 +301,8 @@
           @endphp
           <flux:table.row wire:key="month-{{ $month->month }}">
             <flux:table.cell class="font-medium">{{ \Carbon\Carbon::parse($month->month . '-01')->format('M Y') }}</flux:table.cell>
-            <flux:table.cell align="end" class="tabular-nums">{{ number_format($month->count) }}</flux:table.cell>
-            <flux:table.cell align="end" class="tabular-nums text-zinc-500">{{ number_format($sharePercent, 1) }}%</flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums">{{ Number::format($month->count) }}</flux:table.cell>
+            <flux:table.cell align="end" class="tabular-nums text-zinc-500">{{ Number::format($sharePercent, 1) }}%</flux:table.cell>
             <flux:table.cell>
               <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
                 <div class="bg-lime-500 dark:bg-lime-600 h-2 rounded-full" style="width: {{ $barWidth }}%"></div>
@@ -341,7 +356,7 @@
               {{ $difficultyLabels[$item['difficulty']] ?? 'Level ' . $item['difficulty'] }}
             </flux:text>
             <flux:text class="text-sm text-zinc-500">
-              {{ number_format($item['count']) }} ({{ number_format($percentage, 1) }}%)
+              {{ Number::format($item['count']) }} ({{ Number::format($percentage, 1) }}%)
             </flux:text>
           </div>
           <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">

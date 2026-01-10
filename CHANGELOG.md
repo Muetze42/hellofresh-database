@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.12.0] - 2026-01-10
+
+### Added
+
+- **Portal Resources** - Browse and search all recipe resources
+    - Dedicated pages for Ingredients, Allergens, Tags, Labels, Cuisines, and Utensils
+    - Cached recipe counts for performance
+
 ## [3.11.0] - 2026-01-07
 
 ### Added
