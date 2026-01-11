@@ -29,7 +29,7 @@
   @fluxAppearance
 </head>
 <body class="min-h-screen bg-zinc-50 dark:bg-zinc-900 antialiased">
-<div class="min-h-screen flex flex-col items-center justify-center p-section">
+<flux:main class="min-h-screen flex flex-col items-center justify-center p-section">
   <flux:heading class="mb-4 inline-flex gap-1 items-center text-xl">
     <flux:icon.earth />
     {{ config('app.name') }} API
@@ -38,7 +38,7 @@
   <flux:card class="w-full max-w-md">
     {{ $slot }}
   </flux:card>
-</div>
+</flux:main>
 
 <flux:toast.group position="bottom end">
   <flux:toast />
