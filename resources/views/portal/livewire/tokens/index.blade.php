@@ -1,9 +1,18 @@
 <flux:main container class="space-y-section">
-    <x-portal::email-not-verified />
+    @if(! auth()->user()->hasVerifiedEmail())
+        <flux:callout icon="triangle-alert" color="amber">
+            <flux:callout.heading>Email Verification Required</flux:callout.heading>
+            <flux:callout.text>
+                You must verify your email address before creating API tokens.
+                <flux:link :href="route('portal.verification.notice')" wire:navigate>Verify now</flux:link>
+            </flux:callout.text>
+        </flux:callout>
+    @endif
+
     <div class="flex items-center justify-between">
         <flux:heading size="xl">API Tokens</flux:heading>
-        <flux:modal.trigger name="create-token">
-            <flux:button variant="primary" icon="plus">
+        <flux:modal.trigger name="create-token" :disabled="! auth()->user()->hasVerifiedEmail()">
+            <flux:button variant="primary" icon="plus" :disabled="! auth()->user()->hasVerifiedEmail()">
                 Create Token
             </flux:button>
         </flux:modal.trigger>
@@ -33,8 +42,8 @@
                     Create your first API token to start making authenticated requests.
                 </flux:text>
                 <div class="mt-section">
-                    <flux:modal.trigger name="create-token">
-                        <flux:button variant="primary" icon="plus">
+                    <flux:modal.trigger name="create-token" :disabled="! auth()->user()->hasVerifiedEmail()">
+                        <flux:button variant="primary" icon="plus" :disabled="! auth()->user()->hasVerifiedEmail()">
                             Create Token
                         </flux:button>
                     </flux:modal.trigger>

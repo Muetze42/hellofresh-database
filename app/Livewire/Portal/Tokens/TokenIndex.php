@@ -37,16 +37,16 @@ class TokenIndex extends AbstractComponent
      */
     public function createToken(): void
     {
+        $user = auth()->user();
+
+        if (! $user || ! $user->hasVerifiedEmail()) {
+            return;
+        }
+
         $this->validate([
             'tokenName' => ['required', 'string', 'min:3', 'max:255'],
             'tokenExpiration' => ['required', 'integer', 'in:7,30,90,180'],
         ]);
-
-        $user = auth()->user();
-
-        if (! $user) {
-            return;
-        }
 
         $expiresAt = now()->addDays($this->tokenExpiration);
         $token = $user->createToken($this->tokenName, ['*'], $expiresAt);

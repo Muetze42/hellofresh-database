@@ -1,4 +1,4 @@
-<flux:main container class="space-y-section">
+<div class="space-y-section">
     <div class="text-center">
         <flux:heading size="lg">Create your account</flux:heading>
         <flux:text class="mt-ui">
@@ -59,4 +59,4 @@
             Create account
         </flux:button>
     </form>
-</flux:main>
+</div>
