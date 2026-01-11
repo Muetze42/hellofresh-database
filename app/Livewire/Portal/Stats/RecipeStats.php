@@ -4,7 +4,10 @@ namespace App\Livewire\Portal\Stats;
 
 use App\Livewire\AbstractComponent;
 use App\Models\Country;
+use App\Models\Cuisine;
+use App\Models\Ingredient;
 use App\Models\Recipe;
+use App\Models\Tag;
 use App\Services\Portal\StatisticsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -101,7 +104,7 @@ class RecipeStats extends AbstractComponent
     /**
      * Get top ingredients by recipe count.
      *
-     * @return Collection<int, stdClass>
+     * @return Collection<int, Ingredient>
      */
     #[Computed]
     public function topIngredients(): Collection
@@ -112,7 +115,7 @@ class RecipeStats extends AbstractComponent
     /**
      * Get top tags by recipe count.
      *
-     * @return Collection<int, stdClass>
+     * @return Collection<int, Tag>
      */
     #[Computed]
     public function topTags(): Collection
@@ -123,7 +126,7 @@ class RecipeStats extends AbstractComponent
     /**
      * Get top cuisines by recipe count.
      *
-     * @return Collection<int, stdClass>
+     * @return Collection<int, Cuisine>
      */
     #[Computed]
     public function topCuisines(): Collection
