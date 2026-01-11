@@ -18,9 +18,4 @@ class TagsIndex extends AbstractResourceIndex
     {
         return 'Tags';
     }
-
-    protected function getViewName(): string
-    {
-        return 'portal::livewire.resources.tags-index';
-    }
 }

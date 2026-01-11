@@ -18,9 +18,4 @@ class UtensilsIndex extends AbstractResourceIndex
     {
         return 'Utensils';
     }
-
-    protected function getViewName(): string
-    {
-        return 'portal::livewire.resources.utensils-index';
-    }
 }

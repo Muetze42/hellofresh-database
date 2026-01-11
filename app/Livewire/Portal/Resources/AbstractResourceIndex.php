@@ -108,21 +108,41 @@ abstract class AbstractResourceIndex extends AbstractComponent
     }
 
     /**
-     * Get the resource title.
+     * Get the resource title (e.g., "Cuisines", "Ingredients").
      */
     abstract protected function getResourceTitle(): string;
 
     /**
-     * Get the view name.
+     * Get the resource title for the view.
      */
-    abstract protected function getViewName(): string;
+    #[Computed]
+    public function resourceTitle(): string
+    {
+        return $this->getResourceTitle();
+    }
+
+    /**
+     * Get the search placeholder text.
+     */
+    #[Computed]
+    public function searchPlaceholder(): string
+    {
+        return sprintf('Search %s...', strtolower($this->getResourceTitle()));
+    }
+
+    /**
+     * Get the empty state message.
+     */
+    #[Computed]
+    public function emptyMessage(): string
+    {
+        return sprintf('No %s found.', strtolower($this->getResourceTitle()));
+    }
 
     public function render(): View
     {
-        /** @var view-string $viewName */
-        $viewName = $this->getViewName();
         /** @var View $view */
-        $view = view($viewName)->title($this->getResourceTitle());
+        $view = view('portal::livewire.resources.resource-index')->title($this->getResourceTitle());
 
         return $view;
     }

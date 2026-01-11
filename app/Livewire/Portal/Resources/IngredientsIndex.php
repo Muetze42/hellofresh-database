@@ -18,9 +18,4 @@ class IngredientsIndex extends AbstractResourceIndex
     {
         return 'Ingredients';
     }
-
-    protected function getViewName(): string
-    {
-        return 'portal::livewire.resources.ingredients-index';
-    }
 }

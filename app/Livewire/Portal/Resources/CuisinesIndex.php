@@ -18,9 +18,4 @@ class CuisinesIndex extends AbstractResourceIndex
     {
         return 'Cuisines';
     }
-
-    protected function getViewName(): string
-    {
-        return 'portal::livewire.resources.cuisines-index';
-    }
 }
