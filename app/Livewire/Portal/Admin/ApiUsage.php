@@ -5,6 +5,7 @@ namespace App\Livewire\Portal\Admin;
 use App\Livewire\AbstractComponent;
 use App\Models\PersonalAccessToken;
 use App\Models\PersonalAccessTokenUsage;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -98,18 +99,19 @@ class ApiUsage extends AbstractComponent
     /**
      * Get the most active users.
      *
-     * @return Collection<int, stdClass>
+     * @return Collection<int, User>
      */
     #[Computed]
     public function topUsers(): Collection
     {
         $startDate = $this->getStartDate();
 
-        return DB::table('personal_access_token_usages')
-            ->join('users', 'personal_access_token_usages.user_id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', DB::raw('COUNT(*) as request_count'))
+        return User::with('media')
+            ->select('users.*')
+            ->selectRaw('COUNT(personal_access_token_usages.id) as request_count')
+            ->join('personal_access_token_usages', 'users.id', '=', 'personal_access_token_usages.user_id')
             ->where('personal_access_token_usages.created_at', '>=', $startDate)
-            ->groupBy('users.id', 'users.name', 'users.email')
+            ->groupBy('users.id')
             ->orderByDesc('request_count')
             ->limit(10)
             ->get();
@@ -143,7 +145,7 @@ class ApiUsage extends AbstractComponent
     {
         $startDate = $this->getStartDate();
 
-        return PersonalAccessTokenUsage::with(['user', 'token'])
+        return PersonalAccessTokenUsage::with(['user.media', 'token'])
             ->where('created_at', '>=', $startDate)
             ->latest('created_at')
             ->when($this->search !== '', function (Builder $query): void {

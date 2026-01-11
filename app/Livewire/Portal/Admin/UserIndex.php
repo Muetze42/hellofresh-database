@@ -81,7 +81,8 @@ class UserIndex extends AbstractComponent
     #[Computed]
     public function users(): LengthAwarePaginator
     {
-        return User::withCount('tokens')
+        return User::with('media')
+            ->withCount('tokens')
             ->when($this->search !== '', function (Builder $query): void {
                 $query->where(function (Builder $query): void {
                     $query->whereLike('name', sprintf('%%%s%%', $this->search))

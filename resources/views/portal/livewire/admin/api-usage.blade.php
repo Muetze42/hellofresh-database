@@ -67,7 +67,7 @@
           @foreach($this->topUsers as $topUser)
             <div wire:key="top-user-{{ $topUser->id }}" class="flex items-center justify-between">
               <div class="flex items-center gap-ui flex-1 min-w-0">
-                <flux:avatar name="{{ $topUser->name }}" size="sm" />
+                <flux:avatar :src="$topUser->getFirstMediaUrl('avatar', 'sm')" name="{{ $topUser->name }}" size="sm" />
                 <div class="min-w-0 flex-1">
                   <div class="font-medium truncate">{{ $topUser->name }}</div>
                   <flux:text variant="subtle" size="sm" class="truncate">{{ $topUser->email }}</flux:text>
@@ -157,7 +157,7 @@
             <flux:table.cell>
               @if($log->user)
                 <div class="flex items-center gap-ui">
-                  <flux:avatar name="{{ $log->user->name }}" size="xs" />
+                  <flux:avatar :src="$log->user->getFirstMediaUrl('avatar', 'sm')" name="{{ $log->user->name }}" size="xs" />
                   <span>{{ $log->user->name }}</span>
                 </div>
               @else
