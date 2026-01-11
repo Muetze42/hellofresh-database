@@ -210,7 +210,7 @@
           @foreach($this->topIngredients as $ingredient)
             <flux:table.row wire:key="ingredient-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
-                <x-flag :code="$ingredient->country_code" :title="$ingredient->country_code" />
+                <x-flag :code="$ingredient->country->code" :title="$ingredient->country->code" />
                 {{ $ingredient->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ Number::format($ingredient->recipes_count) }}</flux:table.cell>
@@ -231,7 +231,7 @@
           @foreach($this->topTags as $tag)
             <flux:table.row wire:key="tag-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
-                <x-flag :code="$tag->country_code" :title="$tag->country_code" />
+                <x-flag :code="$tag->country->code" :title="$tag->country->code" />
                 {{ $tag->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ Number::format($tag->recipes_count) }}</flux:table.cell>
@@ -252,7 +252,7 @@
           @foreach($this->topCuisines as $cuisine)
             <flux:table.row wire:key="cuisine-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
-                <x-flag :code="$cuisine->country_code" :title="$cuisine->country_code" />
+                <x-flag :code="$cuisine->country->code" :title="$cuisine->country->code" />
                 {{ $cuisine->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ Number::format($cuisine->recipes_count) }}</flux:table.cell>
