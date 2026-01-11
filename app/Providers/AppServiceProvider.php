@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Laravel\Sanctum\Sanctum;
+use Spatie\Translatable\Facades\Translatable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
         $this->definingDefaultPasswordRules();
 
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+
+        Translatable::fallback(
+            fallbackAny: true,
+        );
     }
 
     /**

@@ -208,15 +208,10 @@
         </flux:table.columns>
         <flux:table.rows>
           @foreach($this->topIngredients as $ingredient)
-            @php
-              $locales = json_decode($ingredient->country_locales ?? '["en"]', true);
-              $names = is_string($ingredient->name) ? json_decode($ingredient->name, true) : $ingredient->name;
-              $ingredientName = $names[$locales[0] ?? 'en'] ?? (is_array($names) ? array_values($names)[0] ?? '' : '');
-            @endphp
             <flux:table.row wire:key="ingredient-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
                 <x-flag :code="$ingredient->country_code" :title="$ingredient->country_code" />
-                {{ $ingredientName }}
+                {{ $ingredient->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ Number::format($ingredient->recipes_count) }}</flux:table.cell>
             </flux:table.row>
@@ -234,15 +229,10 @@
         </flux:table.columns>
         <flux:table.rows>
           @foreach($this->topTags as $tag)
-            @php
-              $locales = json_decode($tag->country_locales ?? '["en"]', true);
-              $names = is_string($tag->name) ? json_decode($tag->name, true) : $tag->name;
-              $tagName = $names[$locales[0] ?? 'en'] ?? (is_array($names) ? array_values($names)[0] ?? '' : '');
-            @endphp
             <flux:table.row wire:key="tag-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
                 <x-flag :code="$tag->country_code" :title="$tag->country_code" />
-                {{ $tagName }}
+                {{ $tag->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ Number::format($tag->recipes_count) }}</flux:table.cell>
             </flux:table.row>
@@ -260,15 +250,10 @@
         </flux:table.columns>
         <flux:table.rows>
           @foreach($this->topCuisines as $cuisine)
-            @php
-              $locales = json_decode($cuisine->country_locales ?? '["en"]', true);
-              $names = is_string($cuisine->name) ? json_decode($cuisine->name, true) : $cuisine->name;
-              $cuisineName = $names[$locales[0] ?? 'en'] ?? (is_array($names) ? array_values($names)[0] ?? '' : '');
-            @endphp
             <flux:table.row wire:key="cuisine-{{ $loop->index }}">
               <flux:table.cell class="truncate max-w-48">
                 <x-flag :code="$cuisine->country_code" :title="$cuisine->country_code" />
-                {{ $cuisineName }}
+                {{ $cuisine->name }}
               </flux:table.cell>
               <flux:table.cell align="end" class="tabular-nums">{{ Number::format($cuisine->recipes_count) }}</flux:table.cell>
             </flux:table.row>
