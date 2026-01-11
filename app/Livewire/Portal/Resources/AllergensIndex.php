@@ -18,9 +18,4 @@ class AllergensIndex extends AbstractResourceIndex
     {
         return 'Allergens';
     }
-
-    protected function getViewName(): string
-    {
-        return 'portal::livewire.resources.allergens-index';
-    }
 }

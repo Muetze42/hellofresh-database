@@ -18,9 +18,4 @@ class LabelsIndex extends AbstractResourceIndex
     {
         return 'Labels';
     }
-
-    protected function getViewName(): string
-    {
-        return 'portal::livewire.resources.labels-index';
-    }
 }

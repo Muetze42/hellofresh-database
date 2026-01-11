@@ -3,26 +3,18 @@
   <flux:breadcrumbs>
     <flux:breadcrumbs.item :href="route('portal.dashboard')" wire:navigate>Home</flux:breadcrumbs.item>
     <flux:breadcrumbs.item :href="route('portal.resources.index')" wire:navigate>Resources</flux:breadcrumbs.item>
-    <flux:breadcrumbs.item>Utensils</flux:breadcrumbs.item>
+    <flux:breadcrumbs.item>{{ $this->resourceTitle }}</flux:breadcrumbs.item>
   </flux:breadcrumbs>
 
-  <flux:heading size="xl">Utensils</flux:heading>
+  <flux:heading size="xl">{{ $this->resourceTitle }}</flux:heading>
 
   {{-- Filters --}}
   <flux:card>
     <div class="flex flex-col sm:flex-row gap-section">
-      <flux:select wire:model.live="countryId" variant="listbox" placeholder="All Countries" clearable class="sm:w-48">
-        @foreach($this->countries as $country)
-          <flux:select.option :value="$country->id">
-            <div class="flex items-center gap-ui">
-              <x-flag :code="$country->code" /> {{ $country->code }}
-            </div>
-          </flux:select.option>
-        @endforeach
-      </flux:select>
+      <x-portal::country-filter wire:model.live="countryId" :countries="$this->countries" />
       <flux:input
         wire:model.live.debounce.300ms="search"
-        placeholder="Search utensils..."
+        :placeholder="$this->searchPlaceholder"
         icon="search"
         class="flex-1"
       />
@@ -61,7 +53,7 @@
         @empty
           <flux:table.row>
             <flux:table.cell colspan="7" class="text-center py-section">
-              <flux:text variant="subtle">No utensils found.</flux:text>
+              <flux:text variant="subtle">{{ $this->emptyMessage }}</flux:text>
             </flux:table.cell>
           </flux:table.row>
         @endforelse
