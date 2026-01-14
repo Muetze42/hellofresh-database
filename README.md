@@ -19,6 +19,7 @@ Unofficial HelloFresh recipe database for 16 countries with features like filter
 * [Reddit Post](https://www.reddit.com/r/hellofresh/comments/1b37z4x/hellofresh_recipes_database_relaunched/)
 * [Ko-Fi](https://ko-fi.com/post/HelloFresh-Recipes-Database-Relaunched-D1D8V2OF7)
 * [LinkedIn](https://www.linkedin.com/posts/normanhuth_hellofresh-database-activity-7169039554446901248-CrKH)
+* [Stackshare](https://stackshare.io/norman4424/norman-huth-website)
 
 For wishes, suggestions and ideas, simply write a comment on Reddit, Ko-Fi, LinkedIn or create an
 [issue](https://github.com/Muetze42/hellofresh-database/issues) or use the
