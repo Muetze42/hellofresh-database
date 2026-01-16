@@ -8,6 +8,7 @@ use GdImage;
 use GDText\Box;
 use GDText\Color;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class OgImageController extends Controller
@@ -169,11 +170,13 @@ class OgImageController extends Controller
             return false;
         }
 
-        $imageContent = file_get_contents($imageUrl);
+        $response = Http::timeout(10)->get($imageUrl);
 
-        if ($imageContent === false) {
+        if ($response->failed()) {
             return false;
         }
+
+        $imageContent = $response->body();
 
         $sourceImage = imagecreatefromstring($imageContent);
 
