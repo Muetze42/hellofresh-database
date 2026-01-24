@@ -9,7 +9,9 @@ use App\Support\Facades\Flux;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 
+#[Layout('web::components.layouts.localized')]
 class UserShoppingLists extends AbstractComponent
 {
     use WithLocalizedContextTrait;

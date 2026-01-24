@@ -7,7 +7,9 @@ use App\Livewire\Concerns\RendersMarkdownDocumentTrait;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 
+#[Layout('web::components.layouts.localized')]
 class PrivacyPolicyShow extends AbstractComponent
 {
     use RendersMarkdownDocumentTrait;
