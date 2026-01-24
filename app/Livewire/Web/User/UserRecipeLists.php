@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
 
+#[Layout('web::components.layouts.localized')]
 class UserRecipeLists extends AbstractComponent
 {
     use WithLocalizedContextTrait;
