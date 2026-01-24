@@ -102,6 +102,7 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
         $this->syncLabel();
         $this->syncCuisines();
         $this->syncUtensils();
+        $this->syncCanonical();
     }
 
     /**
@@ -362,6 +363,26 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
         }
 
         $this->recipeModel->utensils()->sync(array_unique($utensilIds));
+    }
+
+    /**
+     * Sync the canonical recipe.
+     */
+    protected function syncCanonical(): void
+    {
+        $canonicalHellofreshId = $this->recipe['canonical'];
+
+        if ($canonicalHellofreshId === '' || $canonicalHellofreshId === $this->recipe['id']) {
+            return;
+        }
+
+        $canonicalId = Recipe::where('country_id', $this->country->id)
+            ->where('hellofresh_id', $canonicalHellofreshId)
+            ->value('id');
+
+        if ($canonicalId !== null) {
+            $this->recipeModel->canonical()->associate($canonicalId)->save();
+        }
     }
 
     /**

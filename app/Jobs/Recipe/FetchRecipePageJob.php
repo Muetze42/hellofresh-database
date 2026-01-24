@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Recipe;
 
+use App\Contracts\LauncherJobInterface;
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
 use App\Jobs\Concerns\HandlesApiFailuresTrait;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Context;
 /**
  * @method static void dispatch(Country $country, string $locale, int $skip = 0, bool $paginates = true)
  */
-class FetchRecipePageJob implements ShouldQueue
+class FetchRecipePageJob implements LauncherJobInterface, ShouldQueue
 {
     use Batchable;
     use HandlesApiFailuresTrait;
@@ -37,6 +38,14 @@ class FetchRecipePageJob implements ShouldQueue
         public bool $paginates = true,
     ) {
         $this->onQueue(QueueEnum::HelloFresh->value);
+    }
+
+    /**
+     * The console command description.
+     */
+    public static function description(): string
+    {
+        return 'Fetch a page of recipes from HelloFresh API for a specific country and locale';
     }
 
     /**
