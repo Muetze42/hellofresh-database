@@ -185,7 +185,7 @@ final class ProfileTest extends TestCase
 
         Livewire::actingAs($user)
             ->test(Profile::class)
-            ->set('country_code', null)
+            ->set('country_code')
             ->call('updateProfile')
             ->assertHasNoErrors('country_code');
     }
@@ -390,7 +390,7 @@ final class ProfileTest extends TestCase
 
         Livewire::actingAs($user)
             ->test(Profile::class)
-            ->set('avatar', null)
+            ->set('avatar')
             ->call('updateAvatar')
             ->assertHasErrors(['avatar' => 'required']);
     }

@@ -14,8 +14,6 @@ class MigrationCreator extends Creator
 
     /**
      * Create a new migration creator instance.
-     *
-     * @return void
      */
     public function __construct(Filesystem $files, ?string $customStubPath = null)
     {
