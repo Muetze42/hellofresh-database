@@ -9,14 +9,14 @@
         "dev:portal": "vite --config vite.config.portal.js"
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.1.17",
+        "@tailwindcss/vite": "^4.1.18",
         "axios": "^1.13.2",
         "concurrently": "^9.2.1",
         "flag-icons": "^7.5.0",
-        "laravel-echo": "^2.2.6",
-        "laravel-vite-plugin": "^2.0.1",
+        "laravel-echo": "^2.3.0",
+        "laravel-vite-plugin": "^2.1.0",
         "pusher-js": "^8.4.0",
-        "tailwindcss": "^4.1.17",
-        "vite": "^7.2.2"
+        "tailwindcss": "^4.1.18",
+        "vite": "^7.3.1"
     }
 }
