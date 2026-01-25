@@ -1,5 +1,5 @@
 @if ($viewMode === \App\Enums\ViewModeEnum::Grid)
-  <flux:card class="overflow-hidden group">
+  <flux:card class="flex flex-col gap-ui">
     <div class="block relative">
       @if ($recipe->card_image_url)
         <img
@@ -55,8 +55,8 @@
       @endif
     </div>
 
-    <div class="p-4">
-      <flux:heading size="lg" class="line-clamp-1">
+    <div class="grow">
+      <flux:heading size="">
         <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->name), 'recipe' => $recipe->id])" wire:navigate>
           {{ $recipe->name }}
         </flux:link>
@@ -65,6 +65,9 @@
       @if ($recipe->headline)
         <flux:text class="mt-1 line-clamp-2">{{ $recipe->headline }}</flux:text>
       @endif
+
+    </div>
+    <div>
 
       <div class="mt-3 flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
         @if ($recipe->total_time)

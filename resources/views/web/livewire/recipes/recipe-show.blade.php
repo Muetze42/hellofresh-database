@@ -95,8 +95,8 @@
       <flux:callout.heading>{{ __('Based on Canonical Recipe') }}</flux:callout.heading>
       <flux:callout.text>
         {{ __('This recipe is based on') }}
-        <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->canonical->name ?: $recipe->canonical->getFirstTranslation('name')), 'recipe' => $recipe->canonical->id])" wire:navigate class="font-medium">
-          {{ $recipe->canonical->name ?: $recipe->canonical->getFirstTranslation('name') }}
+        <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->canonical->name), 'recipe' => $recipe->canonical->id])" wire:navigate class="font-medium">
+          {{ $recipe->canonical->name }}
         </flux:link>
         ({{ $recipe->canonical->country->code }}).
       </flux:callout.text>
@@ -105,16 +105,13 @@
 
   {{-- Variant Recipes --}}
   @if ($recipe->variants->isNotEmpty())
-    <div class="mt-section">
-      <flux:text class="text-sm text-zinc-500 mb-ui">{{ __('Variants of this Recipe') }}</flux:text>
+    <div class="mt-ui text-sm">
+      <flux:text class="text-zinc-500 mb-ui">{{ __('Variants of this Recipe') }}</flux:text>
       <div class="flex flex-wrap gap-ui">
         @foreach ($recipe->variants as $variant)
-          <flux:badge size="sm" color="zinc">
-            <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($variant->name ?: $variant->getFirstTranslation('name')), 'recipe' => $variant->id])" wire:navigate>
-              <x-flag :code="$variant->country->code" class="mr-1" />
-              {{ $variant->name ?: $variant->getFirstTranslation('name') }}
-            </flux:link>
-          </flux:badge>
+          <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($variant->name), 'recipe' => $variant->id])" wire:navigate>
+            {{ $variant->name }}
+          </flux:link>
         @endforeach
       </div>
     </div>
