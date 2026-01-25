@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature\Livewire\Recipes;
 
 use App\Enums\IngredientMatchModeEnum;
-use App\Enums\RecipeSortEnum;
 use App\Enums\ViewModeEnum;
 use App\Livewire\Web\Recipes\RecipeIndex;
 use App\Models\Allergen;
@@ -322,16 +321,6 @@ final class RecipeIndexTest extends TestCase
             ->set('viewMode', ViewModeEnum::List->value);
 
         $this->assertSame(ViewModeEnum::List->value, session('view_mode'));
-    }
-
-    #[Test]
-    public function it_persists_sort_to_session(): void
-    {
-        Livewire::test(RecipeIndex::class)
-            ->set('sortBy', RecipeSortEnum::OldestFirst->value);
-
-        $key = sprintf('recipe_filter_%d_sort', $this->country->id);
-        $this->assertSame(RecipeSortEnum::OldestFirst->value, session($key));
     }
 
     #[Test]

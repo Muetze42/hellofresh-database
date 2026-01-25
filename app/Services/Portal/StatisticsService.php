@@ -41,7 +41,7 @@ class StatisticsService
         'portal_recipes_per_month',
         'portal_avg_prep_times',
         'portal_data_health',
-        'portal_canonical_stats',
+        'portal_variant_stats',
     ];
 
     /**
@@ -72,7 +72,7 @@ class StatisticsService
         $this->recipesPerMonth();
         $this->avgPrepTimesByCountry();
         $this->dataHealth();
-        $this->canonicalStats();
+        $this->variantStats();
     }
 
     /**
@@ -104,7 +104,7 @@ class StatisticsService
         /** @var Collection<int, Country> */
         return Cache::remember('portal_country_stats', $this->cacheTtl, static fn (): Collection => Country::where('active', true)
             ->withCount('menus')
-            ->withCount(['recipes as variants_count' => fn (Builder $query) => $query->whereNotNull('canonical_id')])
+            ->withCount(['recipes as variants_count' => fn (Builder $query) => $query->where('variant', true)])
             ->get());
     }
 
@@ -316,25 +316,24 @@ class StatisticsService
     }
 
     /**
-     * Get canonical recipe statistics.
+     * Get variant recipe statistics.
      *
-     * @return array{total_canonical: int, recipes_with_canonical: int, unique_canonical_parents: int, canonical_percentage: float}
+     * @return array{total_variants: int, unique_canonical_parents: int, variant_percentage: float}
      */
-    public function canonicalStats(): array
+    public function variantStats(): array
     {
-        /** @var array{total_canonical: int, recipes_with_canonical: int, unique_canonical_parents: int, canonical_percentage: float} */
-        return Cache::remember('portal_canonical_stats', $this->cacheTtl, static function (): array {
+        /** @var array{total_variants: int, unique_canonical_parents: int, variant_percentage: float} */
+        return Cache::remember('portal_variant_stats', $this->cacheTtl, static function (): array {
             $total = Recipe::count();
-            $recipesWithCanonical = Recipe::whereNotNull('canonical_id')->count();
+            $totalVariants = Recipe::where('variant', true)->count();
             $uniqueCanonicalParents = Recipe::whereNotNull('canonical_id')
                 ->distinct('canonical_id')
                 ->count('canonical_id');
 
             return [
-                'total_canonical' => $recipesWithCanonical,
-                'recipes_with_canonical' => $recipesWithCanonical,
+                'total_variants' => $totalVariants,
                 'unique_canonical_parents' => $uniqueCanonicalParents,
-                'canonical_percentage' => $total > 0 ? round(($recipesWithCanonical / $total) * 100, 1) : 0.0,
+                'variant_percentage' => $total > 0 ? round(($totalVariants / $total) * 100, 1) : 0.0,
             ];
         });
     }

@@ -75,6 +75,7 @@ final class ImportRecipeJobTest extends TestCase
             'cuisines' => [],
             'utensils' => [],
             'label' => null,
+            'canonical' => '',
             'createdAt' => now()->toIso8601String(),
             'updatedAt' => now()->toIso8601String(),
         ];

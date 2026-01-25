@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Layout;
 
+#[Layout('web::components.layouts.localized')]
 class ResetPassword extends AbstractComponent
 {
     use WithLocalizedContextTrait;
