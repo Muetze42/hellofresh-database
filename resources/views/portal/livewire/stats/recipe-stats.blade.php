@@ -107,12 +107,12 @@
         <flux:icon.git-branch class="size-6 text-indigo-600 dark:text-indigo-400" />
       </div>
       <div class="flex-1">
-        <flux:text class="text-sm text-zinc-500">Canonical Recipes</flux:text>
-        <flux:heading size="xl">{{ Number::format($this->canonicalStats['total_canonical']) }}</flux:heading>
+        <flux:text class="text-sm text-zinc-500">Variant Recipes</flux:text>
+        <flux:heading size="xl">{{ Number::format($this->variantStats['total_variants']) }}</flux:heading>
       </div>
       <div class="text-right">
-        <flux:text class="text-sm text-zinc-500">{{ $this->canonicalStats['canonical_percentage'] }}% of all recipes</flux:text>
-        <flux:text class="text-sm text-zinc-500">{{ Number::format($this->canonicalStats['unique_canonical_parents']) }} unique parents</flux:text>
+        <flux:text class="text-sm text-zinc-500">{{ $this->variantStats['variant_percentage'] }}% of all recipes</flux:text>
+        <flux:text class="text-sm text-zinc-500">{{ Number::format($this->variantStats['unique_canonical_parents']) }} unique parents</flux:text>
       </div>
     </div>
   </flux:card>

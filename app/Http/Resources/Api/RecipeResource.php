@@ -34,6 +34,7 @@ class RecipeResource extends JsonResource
         return [
             'id' => $this->id,
             'canonical_id' => $this->canonical_id,
+            'variant' => $this->variant,
             'url' => config('app.url') . '/' . $locale . '-' . resolve('current.country')->code .
                 '/recipes/' . slugify($this->getTranslationWithAnyFallback('name', $locale)) . '-' . $this->id,
             'name' => $this->getTranslationWithAnyFallback('name', $locale),

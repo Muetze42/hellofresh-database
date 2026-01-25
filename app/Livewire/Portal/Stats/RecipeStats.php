@@ -168,14 +168,14 @@ class RecipeStats extends AbstractComponent
     }
 
     /**
-     * Get canonical recipe statistics.
+     * Get variant recipe statistics.
      *
-     * @return array{total_canonical: int, recipes_with_canonical: int, unique_canonical_parents: int, canonical_percentage: float}
+     * @return array{total_variants: int, unique_canonical_parents: int, variant_percentage: float}
      */
     #[Computed]
-    public function canonicalStats(): array
+    public function variantStats(): array
     {
-        return $this->statistics()->canonicalStats();
+        return $this->statistics()->variantStats();
     }
 
     public function render(): View

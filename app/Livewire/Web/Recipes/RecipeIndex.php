@@ -431,7 +431,7 @@ class RecipeIndex extends AbstractComponent
             ->when($menuRecipeIds !== [], fn (Builder $query) => $query->whereIn('id', $menuRecipeIds))
             ->when($this->search !== '', fn (Builder $query): Builder => $this->applySearchFilter($query))
             ->when($this->filterHasPdf, fn (Builder $query) => $query->where('has_pdf', true))
-            ->when(! $this->filterShowCanonical, fn (Builder $query) => $query->whereNull('canonical_id'))
+            ->when(! $this->filterShowCanonical, fn (Builder $query) => $query->where('variant', false))
             ->when($this->excludedAllergenIds !== [], fn (Builder $query) => $query->whereDoesntHave(
                 'allergens',
                 fn (Builder $allergenQuery) => $allergenQuery->whereIn('allergens.id', $this->excludedAllergenIds)
