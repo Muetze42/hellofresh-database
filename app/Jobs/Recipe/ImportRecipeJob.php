@@ -480,4 +480,12 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
     {
         return Str::lower($this->locale);
     }
+
+    /**
+     * Determine numbers of times the job may be attempted.
+     */
+    public function tries(): int
+    {
+        return 1;
+    }
 }

@@ -47,4 +47,12 @@ class SyncMenuRecipesJob implements ShouldQueue
 
         $menu->recipes()->sync($recipeIds);
     }
+
+    /**
+     * Determine numbers of times the job may be attempted.
+     */
+    public function tries(): int
+    {
+        return 1;
+    }
 }
