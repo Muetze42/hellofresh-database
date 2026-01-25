@@ -32,9 +32,14 @@ class ResetPasswordNotification extends ResetPassword
     #[Override]
     protected function resetUrl(mixed $notifiable): string
     {
+        // Check if a custom URL callback was set (e.g., by Portal)
+        if (static::$createUrlCallback) {
+            return call_user_func(static::$createUrlCallback, $notifiable, $this->token);
+        }
+
+        // Default: use localized route for web
         return localized_route('localized.password.reset', [
             'token' => $this->token,
-            'email' => $notifiable->getEmailForPasswordReset(),
         ]);
     }
 }

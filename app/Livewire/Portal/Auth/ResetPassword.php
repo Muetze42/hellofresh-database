@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Livewire\Portal\Auth;
+
+use App\Livewire\AbstractComponent;
+use App\Models\User;
+use App\Support\Facades\Flux;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password as PasswordRule;
+use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Layout;
+
+#[Layout('portal::components.layouts.guest')]
+class ResetPassword extends AbstractComponent
+{
+    public string $token = '';
+
+    public string $email = '';
+
+    public string $password = '';
+
+    public string $password_confirmation = '';
+
+    /**
+     * Initialize the component with the token and email from the URL.
+     */
+    public function mount(string $token, ?string $email = null): void
+    {
+        $this->token = $token;
+        $this->email = $email ?? '';
+    }
+
+    /**
+     * Reset the user's password.
+     *
+     * @throws ValidationException
+     */
+    public function resetPassword(): void
+    {
+        $this->validate([
+            'token' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed', PasswordRule::defaults()],
+        ]);
+
+        $status = Password::reset(
+            [
+                'email' => $this->email,
+                'password' => $this->password,
+                'password_confirmation' => $this->password_confirmation,
+                'token' => $this->token,
+            ],
+            function (User $user, string $password): void {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            Auth::attempt(['email' => $this->email, 'password' => $this->password], true);
+            Session::regenerate();
+
+            Flux::toastSuccess(__($status));
+
+            $this->redirect(route('portal.dashboard'), navigate: true);
+
+            return;
+        }
+
+        throw ValidationException::withMessages([
+            'email' => __($status),
+        ]);
+    }
+
+    public function render(): View
+    {
+        return view('portal::livewire.auth.reset-password')
+            ->title('Reset Password');
+    }
+}
