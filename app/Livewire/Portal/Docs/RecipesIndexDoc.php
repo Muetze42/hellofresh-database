@@ -44,6 +44,7 @@ class RecipesIndexDoc extends AbstractEndpointDoc
     {
         return [
             ['name' => 'id', 'type' => 'integer', 'description' => 'Recipe ID'],
+            ['name' => 'canonical_id', 'type' => 'integer|null', 'description' => 'ID of the original recipe if this is a variant'],
             ['name' => 'url', 'type' => 'string', 'description' => 'URL to recipe on website'],
             ['name' => 'name', 'type' => 'string', 'description' => 'Recipe name (localized)'],
             ['name' => 'headline', 'type' => 'string', 'description' => 'Short description (localized)'],

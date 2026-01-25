@@ -245,10 +245,23 @@ class Recipe extends Model
     }
 
     /**
+     * Check if this recipe is a canonical recipe (has a parent).
+     */
+    public function isCanonical(): bool
+    {
+        return $this->canonical_id !== null;
+    }
+
+    /**
      * Build the HelloFresh URL.
      */
     protected function buildHellofreshUrl(): ?string
     {
+        // Canonical recipes often lead to 404 pages on HelloFresh
+        if ($this->isCanonical()) {
+            return null;
+        }
+
         /** @var string|null $hellofreshId */
         $hellofreshId = $this->hellofresh_id;
 

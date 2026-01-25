@@ -11,6 +11,7 @@ use App\Models\Recipe;
 use App\Models\RecipeList;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +41,7 @@ class StatisticsService
         'portal_recipes_per_month',
         'portal_avg_prep_times',
         'portal_data_health',
+        'portal_canonical_stats',
     ];
 
     /**
@@ -70,6 +72,7 @@ class StatisticsService
         $this->recipesPerMonth();
         $this->avgPrepTimesByCountry();
         $this->dataHealth();
+        $this->canonicalStats();
     }
 
     /**
@@ -101,6 +104,7 @@ class StatisticsService
         /** @var Collection<int, Country> */
         return Cache::remember('portal_country_stats', $this->cacheTtl, static fn (): Collection => Country::where('active', true)
             ->withCount('menus')
+            ->withCount(['recipes as variants_count' => fn (Builder $query) => $query->whereNotNull('canonical_id')])
             ->get());
     }
 
@@ -307,6 +311,30 @@ class StatisticsService
                 'orphan_ingredients' => $orphanIngredients,
                 'inactive_countries' => $inactiveCountries,
                 'recipes_without_tags' => $recipesWithoutTags,
+            ];
+        });
+    }
+
+    /**
+     * Get canonical recipe statistics.
+     *
+     * @return array{total_canonical: int, recipes_with_canonical: int, unique_canonical_parents: int, canonical_percentage: float}
+     */
+    public function canonicalStats(): array
+    {
+        /** @var array{total_canonical: int, recipes_with_canonical: int, unique_canonical_parents: int, canonical_percentage: float} */
+        return Cache::remember('portal_canonical_stats', $this->cacheTtl, static function (): array {
+            $total = Recipe::count();
+            $recipesWithCanonical = Recipe::whereNotNull('canonical_id')->count();
+            $uniqueCanonicalParents = Recipe::whereNotNull('canonical_id')
+                ->distinct('canonical_id')
+                ->count('canonical_id');
+
+            return [
+                'total_canonical' => $recipesWithCanonical,
+                'recipes_with_canonical' => $recipesWithCanonical,
+                'unique_canonical_parents' => $uniqueCanonicalParents,
+                'canonical_percentage' => $total > 0 ? round(($recipesWithCanonical / $total) * 100, 1) : 0.0,
             ];
         });
     }

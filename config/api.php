@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'version' => env('API_VERSION', 'unknown'),
+    'version' => (string) env('API_VERSION', '') !== '' ? env('API_VERSION') : 'unknown',
 
     /*
     |--------------------------------------------------------------------------
