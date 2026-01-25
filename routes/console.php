@@ -15,9 +15,6 @@ Schedule::command('horizon:snapshot')
 Schedule::command('app:stats:clear-cache')
     ->hourly();
 
-Schedule::command('prune-expired-email-verifications')
-    ->daily();
-
 Schedule::job(new SyncRecipesJob(true))
     ->weekly();
 Schedule::job(new SyncRecipesJob())
@@ -44,3 +41,10 @@ Schedule::job(new UpdateCountryStatisticsJob())
 
 Schedule::job(new GenerateSitemapsJob())
     ->dailyAt(12);
+
+Schedule::command('prune-expired-email-verifications')
+    ->daily();
+Schedule::command('queue:prune-batches --hours=48 --unfinished=72')
+    ->daily();
+Schedule::command('queue:prune-failed --hours=48')
+    ->daily();
