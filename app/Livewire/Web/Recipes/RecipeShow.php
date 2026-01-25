@@ -39,6 +39,8 @@ class RecipeShow extends AbstractComponent
             'ingredients',
             'canonical.country',
             'variants.country',
+            'variants.label',
+            'variants.tags',
         ]);
 
         // Set default yield based on available yields
@@ -229,6 +231,7 @@ class RecipeShow extends AbstractComponent
             ))
             ->withCount(['tags' => fn (Builder $query): Builder => $query->whereIn('tags.id', $tagIds)])
             ->orderByDesc('tags_count')
+            ->with(['label', 'tags', 'country'])
             ->limit(4)
             ->get();
     }

@@ -95,34 +95,17 @@
       <flux:callout.heading>{{ __('Based on Canonical Recipe') }}</flux:callout.heading>
       <flux:callout.text>
         {{ __('This recipe is based on') }}
-        <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->canonical->name ?: $recipe->canonical->getFirstTranslation('name')), 'recipe' => $recipe->canonical->id])" wire:navigate class="font-medium">
-          {{ $recipe->canonical->name ?: $recipe->canonical->getFirstTranslation('name') }}
+        <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->canonical->name), 'recipe' => $recipe->canonical->id])" wire:navigate class="font-medium">
+          {{ $recipe->canonical->name }}
         </flux:link>
         ({{ $recipe->canonical->country->code }}).
       </flux:callout.text>
     </flux:callout>
   @endif
 
-  {{-- Variant Recipes --}}
-  @if ($recipe->variants->isNotEmpty())
-    <div class="mt-section">
-      <flux:text class="text-sm text-zinc-500 mb-ui">{{ __('Variants of this Recipe') }}</flux:text>
-      <div class="flex flex-wrap gap-ui">
-        @foreach ($recipe->variants as $variant)
-          <flux:badge size="sm" color="zinc">
-            <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($variant->name ?: $variant->getFirstTranslation('name')), 'recipe' => $variant->id])" wire:navigate>
-              <x-flag :code="$variant->country->code" class="mr-1" />
-              {{ $variant->name ?: $variant->getFirstTranslation('name') }}
-            </flux:link>
-          </flux:badge>
-        @endforeach
-      </div>
-    </div>
-  @endif
-
   {{-- Description --}}
   @if ($recipe->description)
-    <div class="pt-section">
+    <div class="pt-ui">
       <flux:text>{{ $recipe->description }}</flux:text>
     </div>
   @endif
@@ -262,30 +245,24 @@
     </div>
   @endif
 
+  {{-- Variant Recipes --}}
+  @if ($recipe->variants->isNotEmpty())
+    <div x-data="{ open: false }" class="py-section border-t border-zinc-200 dark:border-zinc-700">
+      <button type="button" x-on:click="open = !open" class="flex items-center gap-ui w-full text-left">
+        <flux:heading size="lg">{{ __('Variants of this Recipe') }} ({{ $recipe->variants->count() }})</flux:heading>
+        <flux:icon.chevron-down class="size-5 transition-transform" x-bind:class="open && 'rotate-180'" />
+      </button>
+      <div x-show="open" x-collapse class="mt-4">
+        <x-web::recipes.recipe-grid :recipes="$recipe->variants" />
+      </div>
+    </div>
+  @endif
+
   {{-- Similar Recipes --}}
   @if ($this->similarRecipes->isNotEmpty())
     <div class="py-section border-t border-zinc-200 dark:border-zinc-700">
       <flux:heading size="lg" class="mb-4">{{ __('Similar Recipes') }}</flux:heading>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-section">
-        @foreach ($this->similarRecipes as $similarRecipe)
-          <flux:card class="overflow-hidden">
-            @if ($similarRecipe->card_image_url)
-              <img
-                src="{{ $similarRecipe->card_image_url }}"
-                alt="{{ $similarRecipe->name }}"
-                class="aspect-video w-full object-cover"
-              >
-            @endif
-            <div class="p-4">
-              <flux:heading size="sm" class="line-clamp-2">
-                <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($similarRecipe->name), 'recipe' => $similarRecipe->id])" wire:navigate>
-                  {{ $similarRecipe->name }}
-                </flux:link>
-              </flux:heading>
-            </div>
-          </flux:card>
-        @endforeach
-      </div>
+      <x-recipes.recipe-grid :recipes="$this->similarRecipes" />
     </div>
   @endif
 
