@@ -7,12 +7,13 @@ use App\Http\Clients\HelloFresh\HelloFreshClient;
 use App\Jobs\Concerns\HandlesApiFailuresTrait;
 use App\Models\Country;
 use Illuminate\Bus\Batchable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 
-class FetchRecipeJob implements ShouldQueue
+class FetchRecipeJob implements ShouldBeUnique, ShouldQueue
 {
     use Batchable;
     use HandlesApiFailuresTrait;
@@ -22,6 +23,19 @@ class FetchRecipeJob implements ShouldQueue
      * The number of times the job may be attempted.
      */
     public int $tries = 3;
+
+    /**
+     * The number of seconds after which the job's unique lock will be released.
+     */
+    public int $uniqueFor = 300;
+
+    /**
+     * The unique ID of the job.
+     */
+    public function uniqueId(): string
+    {
+        return $this->country->id . '-' . $this->hellofreshId;
+    }
 
     /**
      * Create a new job instance.

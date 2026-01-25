@@ -5,7 +5,6 @@ namespace App\Jobs\Menu;
 use App\Enums\QueueEnum;
 use App\Http\Clients\HelloFresh\HelloFreshClient;
 use App\Jobs\Concerns\HandlesApiFailuresTrait;
-use App\Jobs\Recipe\FetchRecipeJob;
 use App\Models\Country;
 use App\Models\Menu;
 use App\Models\Recipe;
@@ -14,7 +13,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Context;
 use Throwable;
 
@@ -131,25 +129,36 @@ class FetchMenusJob implements ShouldQueue
             return;
         }
 
+        // TODO: Disabled to reduce API calls. Monitor NZ data quality.
         // Dispatch batch to fetch missing recipes, then sync menu
-        $jobs = [];
-        foreach ($missingHellofreshIds as $missingHellofreshId) {
-            $jobs[] = new FetchRecipeJob(
-                country: $this->country,
-                locale: $this->locale,
-                hellofreshId: $missingHellofreshId,
-            );
+        // $jobs = [];
+        // foreach ($missingHellofreshIds as $missingHellofreshId) {
+        //     $jobs[] = new FetchRecipeJob(
+        //         country: $this->country,
+        //         locale: $this->locale,
+        //         hellofreshId: $missingHellofreshId,
+        //     );
+        // }
+        //
+        // // Extract primitive values for serializable closure
+        // $menuId = $menu->id;
+        // $countryId = $this->country->id;
+        // $recipeIds = $menuData['recipe_ids'];
+        //
+        // Bus::batch($jobs)
+        //     ->name(sprintf('Fetch missing recipes for menu %d', $menu->year_week))
+        //     ->onQueue(QueueEnum::HelloFresh->value)
+        //     ->then(fn () => SyncMenuRecipesJob::dispatch($menuId, $countryId, $recipeIds))
+        //     ->dispatch();
+
+        // Sync menu with existing recipes only
+        $recipeIds = Recipe::where('country_id', $this->country->id)
+            ->whereIn('hellofresh_id', $menuData['recipe_ids'])
+            ->pluck('id')
+            ->toArray();
+
+        if ($recipeIds !== []) {
+            $menu->recipes()->sync($recipeIds);
         }
-
-        // Extract primitive values for serializable closure
-        $menuId = $menu->id;
-        $countryId = $this->country->id;
-        $recipeIds = $menuData['recipe_ids'];
-
-        Bus::batch($jobs)
-            ->name(sprintf('Fetch missing recipes for menu %d', $menu->year_week))
-            ->onQueue(QueueEnum::HelloFresh->value)
-            ->then(fn () => SyncMenuRecipesJob::dispatch($menuId, $countryId, $recipeIds))
-            ->dispatch();
     }
 }
