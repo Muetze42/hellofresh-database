@@ -19,6 +19,8 @@ use Livewire\Attributes\Computed;
  * @property array<int> $excludedIngredientIds
  * @property string $ingredientSearch
  * @property string $excludedIngredientSearch
+ * @property Collection<int, Ingredient> $ingredientOptions
+ * @property Collection<int, Ingredient> $excludedIngredientOptions
  */
 trait WithRecipeFilterOptionsTrait
 {
