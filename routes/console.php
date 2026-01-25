@@ -29,7 +29,7 @@ Schedule::job(new SyncRecipesJob())
     ]);
 
 Schedule::job(new SyncMenusJob())
-    ->twiceDaily();
+    ->twiceDailyAt(6, 18);
 
 Schedule::job(new CountryResourcesOrchestrationJob())
     ->twiceDaily();
