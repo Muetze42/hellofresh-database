@@ -24,7 +24,10 @@
             required
         />
 
-        <flux:checkbox wire:model="remember" label="Remember me" />
+        <div class="flex items-center justify-between">
+            <flux:checkbox wire:model="remember" label="Remember me" />
+            <flux:link :href="route('portal.password.request')" wire:navigate class="text-sm">Forgot password?</flux:link>
+        </div>
 
         <flux:button type="submit" variant="primary" class="w-full">
             Sign in

@@ -6,8 +6,10 @@ use App\Livewire\Actions\Portal\LogoutAction;
 use App\Livewire\Portal\Admin\ApiUsage;
 use App\Livewire\Portal\Admin\UserIndex;
 use App\Livewire\Portal\Admin\UserShow;
+use App\Livewire\Portal\Auth\ForgotPassword;
 use App\Livewire\Portal\Auth\Login;
 use App\Livewire\Portal\Auth\Register;
+use App\Livewire\Portal\Auth\ResetPassword;
 use App\Livewire\Portal\Auth\VerifyEmail;
 use App\Livewire\Portal\Changelog;
 use App\Livewire\Portal\Dashboard;
@@ -55,6 +57,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function (): void {
     Route::get('login', Login::class)->name('login');
     Route::get('register', Register::class)->name('register');
+    Route::get('forgot-password', ForgotPassword::class)->name('password.request');
+    Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
 
 // Public routes (accessible to everyone)
