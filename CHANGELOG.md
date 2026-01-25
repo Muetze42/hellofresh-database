@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.14.0] - 2026-01-25
+
+### Added
+
+- **Filter Share Links** - Share current filter settings via URL
+  - Share button on Recipes and Random Recipes pages
+  - Shareable links preserve all active filters (ingredients, tags, allergens, difficulty, time ranges, etc.)
+
 ## [3.13.0] - 2026-01-25
 
 ### Added

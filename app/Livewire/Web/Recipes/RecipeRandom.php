@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Web\Recipes;
 
+use App\Enums\FilterSharePageEnum;
 use App\Models\Recipe;
 use Illuminate\Contracts\View\View as ViewInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -69,6 +70,15 @@ class RecipeRandom extends RecipeIndex
     {
         parent::toggleTag($id);
         unset($this->randomRecipes);
+    }
+
+    /**
+     * Get the filter share page enum for this component.
+     */
+    #[Override]
+    protected function getFilterSharePage(): FilterSharePageEnum
+    {
+        return FilterSharePageEnum::Random;
     }
 
     /**

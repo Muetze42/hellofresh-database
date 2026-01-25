@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Web\Recipes;
 
+use App\Enums\FilterSharePageEnum;
 use App\Enums\IngredientMatchModeEnum;
 use App\Enums\RecipeSortEnum;
 use App\Enums\ViewModeEnum;
 use App\Livewire\AbstractComponent;
+use App\Livewire\Web\Concerns\WithFilterShareTrait;
 use App\Livewire\Web\Concerns\WithLocalizedContextTrait;
 use App\Livewire\Web\Recipes\Concerns\WithRecipeFilterOptionsTrait;
 use App\Models\Menu;
@@ -22,6 +24,7 @@ use Livewire\WithPagination;
 #[Layout('web::components.layouts.localized')]
 class RecipeIndex extends AbstractComponent
 {
+    use WithFilterShareTrait;
     use WithLocalizedContextTrait;
     use WithPagination;
     use WithRecipeFilterOptionsTrait;
@@ -37,7 +40,8 @@ class RecipeIndex extends AbstractComponent
 
     public string $viewMode = '';
 
-    public string $sortBy = '';
+    #[Url(as: 'sort', except: 'hellofresh_created_at-desc')]
+    public string $sortBy = 'hellofresh_created_at-desc';
 
     public bool $filterHasPdf = false;
 
@@ -87,7 +91,6 @@ class RecipeIndex extends AbstractComponent
         $this->menu = $this->resolveMenu($menu);
         $this->selectedMenuWeek = $this->menu?->year_week;
         $this->viewMode = session('view_mode', ViewModeEnum::Grid->value);
-        $this->sortBy = session($this->filterSessionKey('sort'), RecipeSortEnum::NewestFirst->value);
         $this->filterHasPdf = session($this->filterSessionKey('has_pdf'), false);
         $this->filterShowCanonical = session($this->filterSessionKey('show_canonical'), false);
         $this->excludedAllergenIds = session($this->filterSessionKey('excluded_allergens'), []);
@@ -194,11 +197,37 @@ class RecipeIndex extends AbstractComponent
     }
 
     /**
+     * Get the filter share page enum for this component.
+     */
+    protected function getFilterSharePage(): FilterSharePageEnum
+    {
+        return $this->menu instanceof Menu
+            ? FilterSharePageEnum::Menus
+            : FilterSharePageEnum::Recipes;
+    }
+
+    /**
      * Get the current sort enum.
      */
     protected function getSortEnum(): RecipeSortEnum
     {
         return RecipeSortEnum::tryFrom($this->sortBy) ?? RecipeSortEnum::NewestFirst;
+    }
+
+    /**
+     * Get the default sort value.
+     */
+    protected function getDefaultSort(): string
+    {
+        return RecipeSortEnum::NewestFirst->value;
+    }
+
+    /**
+     * Get the current page number for sharing.
+     */
+    protected function getSharePage(): int
+    {
+        return $this->getPage();
     }
 
     /**
@@ -250,7 +279,6 @@ class RecipeIndex extends AbstractComponent
     protected function getSessionMapping(): array
     {
         return [
-            'sortBy' => 'sort',
             'filterHasPdf' => 'has_pdf',
             'filterShowCanonical' => 'show_canonical',
             'excludedAllergenIds' => 'excluded_allergens',
