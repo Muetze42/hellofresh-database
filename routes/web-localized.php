@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BringExportController;
+use App\Http\Controllers\FilterShareController;
 use App\Http\Controllers\MenuRedirectController;
 use App\Http\Controllers\RecipeRedirectController;
 use App\Livewire\Web\Auth\AccountSetting;
@@ -26,6 +27,8 @@ Route::get('recipes/{slug}-{uuid}', RecipeRedirectController::class)
 Route::get('recipes/{slug}-{recipe}', RecipeShow::class)
     ->where(['slug' => '.*', 'recipe' => '[0-9]+'])
     ->name('recipes.show');
+
+Route::get('s/{id}', [FilterShareController::class, '__invoke'])->name('filter-share');
 
 Route::get('shopping-list', ShoppingListIndex::class)->name('shopping-list.index');
 Route::get('shopping-list/print', ShoppingListIndex::class)->name('shopping-list.print');

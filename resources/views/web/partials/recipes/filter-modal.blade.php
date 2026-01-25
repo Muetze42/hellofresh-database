@@ -75,19 +75,14 @@
       wire:model.live="ingredientIds"
       variant="combobox"
       multiple
+      clearable
       :placeholder="__('Search ingredients...')"
     >
       <x-slot name="input">
-        <flux:pillbox.input wire:model.live.debounce.300ms="ingredientSearch" :placeholder="__('Search...')" />
+        <flux:pillbox.input wire:model.live.debounce.300ms="ingredientSearch" :placeholder="__('Search...')" clearable />
       </x-slot>
 
-      @foreach ($this->selectedIngredients as $ingredient)
-        <flux:pillbox.option wire:key="selected-ingredient-{{ $ingredient->id }}" :value="$ingredient->id" selected>
-          {{ $ingredient->name }}
-        </flux:pillbox.option>
-      @endforeach
-
-      @foreach ($this->ingredientResults as $ingredient)
+      @foreach ($this->ingredientOptions as $ingredient)
         <flux:pillbox.option wire:key="ingredient-{{ $ingredient->id }}" :value="$ingredient->id">
           {{ $ingredient->name }}
         </flux:pillbox.option>
@@ -95,7 +90,7 @@
 
       <x-slot name="empty">
         <flux:pillbox.option.empty>
-          {{ __('No ingredients found.') }}
+          {{ $ingredientSearch !== '' ? __('No ingredients found.') : __('Type to search...') }}
         </flux:pillbox.option.empty>
       </x-slot>
     </flux:pillbox>
@@ -105,20 +100,15 @@
     wire:model.live="excludedIngredientIds"
     variant="combobox"
     multiple
+    clearable
     :label="__('Without Ingredients')"
     :placeholder="__('Search ingredients...')"
   >
     <x-slot name="input">
-      <flux:pillbox.input wire:model.live.debounce.300ms="excludedIngredientSearch" :placeholder="__('Search...')" />
+      <flux:pillbox.input wire:model.live.debounce.300ms="excludedIngredientSearch" :placeholder="__('Search...')" clearable />
     </x-slot>
 
-    @foreach ($this->selectedExcludedIngredients as $ingredient)
-      <flux:pillbox.option wire:key="selected-excluded-ingredient-{{ $ingredient->id }}" :value="$ingredient->id" selected>
-        {{ $ingredient->name }}
-      </flux:pillbox.option>
-    @endforeach
-
-    @foreach ($this->excludedIngredientResults as $ingredient)
+    @foreach ($this->excludedIngredientOptions as $ingredient)
       <flux:pillbox.option wire:key="excluded-ingredient-{{ $ingredient->id }}" :value="$ingredient->id">
         {{ $ingredient->name }}
       </flux:pillbox.option>
@@ -126,7 +116,7 @@
 
     <x-slot name="empty">
       <flux:pillbox.option.empty>
-        {{ __('No ingredients found.') }}
+        {{ __('Type to search...') }}
       </flux:pillbox.option.empty>
     </x-slot>
   </flux:pillbox>
@@ -136,6 +126,7 @@
       wire:model.live="tagIds"
       multiple
       searchable
+      clearable
       :label="__('With Tags')"
       placeholder="{{ __('Select tags...') }}"
     >
@@ -144,12 +135,19 @@
           {{ $tag->name }}
         </flux:pillbox.option>
       @endforeach
+
+        <x-slot name="empty">
+          <flux:pillbox.option.empty>
+            {{ __('Type to search...') }}
+          </flux:pillbox.option.empty>
+        </x-slot>
     </flux:pillbox>
 
     <flux:pillbox
       wire:model.live="excludedTagIds"
       multiple
       searchable
+      clearable
       :label="__('Without Tags')"
       placeholder="{{ __('Select tags...') }}"
     >
@@ -158,6 +156,12 @@
           {{ $tag->name }}
         </flux:pillbox.option>
       @endforeach
+
+        <x-slot name="empty">
+          <flux:pillbox.option.empty>
+            {{ __('Type to search...') }}
+          </flux:pillbox.option.empty>
+        </x-slot>
     </flux:pillbox>
   @endif
 
@@ -166,6 +170,7 @@
       wire:model.live="labelIds"
       multiple
       searchable
+      clearable
       :label="__('With Labels')"
       placeholder="{{ __('Select labels...') }}"
     >
@@ -174,12 +179,19 @@
           {{ $label->name }}
         </flux:pillbox.option>
       @endforeach
+
+        <x-slot name="empty">
+          <flux:pillbox.option.empty>
+            {{ __('Type to search...') }}
+          </flux:pillbox.option.empty>
+        </x-slot>
     </flux:pillbox>
 
     <flux:pillbox
       wire:model.live="excludedLabelIds"
       multiple
       searchable
+      clearable
       :label="__('Without Labels')"
       placeholder="{{ __('Select labels...') }}"
     >
@@ -188,6 +200,12 @@
           {{ $label->name }}
         </flux:pillbox.option>
       @endforeach
+
+        <x-slot name="empty">
+          <flux:pillbox.option.empty>
+            {{ __('Type to search...') }}
+          </flux:pillbox.option.empty>
+        </x-slot>
     </flux:pillbox>
   @endif
 
@@ -196,6 +214,7 @@
       wire:model.live="excludedAllergenIds"
       multiple
       searchable
+      clearable
       :label="__('Exclude Allergens')"
       placeholder="{{ __('Select allergens...') }}"
     >
@@ -204,6 +223,12 @@
           {{ $allergen->name }}
         </flux:pillbox.option>
       @endforeach
+
+        <x-slot name="empty">
+          <flux:pillbox.option.empty>
+            {{ __('Type to search...') }}
+          </flux:pillbox.option.empty>
+        </x-slot>
     </flux:pillbox>
   @endif
 

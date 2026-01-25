@@ -65,74 +65,74 @@ trait WithRecipeFilterOptionsTrait
     }
 
     /**
-     * Search ingredients for the current country.
+     * Get ingredient options (selected + search results).
      *
      * @return Collection<int, Ingredient>
      */
     #[Computed]
-    public function ingredientResults(): Collection
+    public function ingredientOptions(): Collection
     {
+        $selected = $this->ingredientIds !== []
+            ? Ingredient::whereIn('id', $this->ingredientIds)->get()
+            : new Collection();
+
         if ($this->ingredientSearch === '') {
-            return new Collection();
+            return $selected;
         }
 
-        return Ingredient::where('country_id', $this->countryId)
+        $results = Ingredient::where('country_id', $this->countryId)
             ->active()
             ->whereLike('name', sprintf('%%%s%%', $this->ingredientSearch))
             ->whereNotIn('id', $this->ingredientIds)
             ->orderBy('name')
             ->limit(20)
             ->get();
+
+        return $selected->concat($results);
     }
 
     /**
-     * Get selected ingredients.
+     * Get excluded ingredient options (selected + search results).
      *
      * @return Collection<int, Ingredient>
      */
     #[Computed]
-    public function selectedIngredients(): Collection
+    public function excludedIngredientOptions(): Collection
     {
-        if ($this->ingredientIds === []) {
-            return new Collection();
-        }
+        $selected = $this->excludedIngredientIds !== []
+            ? Ingredient::whereIn('id', $this->excludedIngredientIds)->get()
+            : new Collection();
 
-        return Ingredient::whereIn('id', $this->ingredientIds)->get();
-    }
-
-    /**
-     * Search ingredients to exclude for the current country.
-     *
-     * @return Collection<int, Ingredient>
-     */
-    #[Computed]
-    public function excludedIngredientResults(): Collection
-    {
         if ($this->excludedIngredientSearch === '') {
-            return new Collection();
+            return $selected;
         }
 
-        return Ingredient::where('country_id', $this->countryId)
+        $results = Ingredient::where('country_id', $this->countryId)
             ->active()
             ->whereLike('name', sprintf('%%%s%%', $this->excludedIngredientSearch))
             ->whereNotIn('id', $this->excludedIngredientIds)
             ->orderBy('name')
             ->limit(20)
             ->get();
+
+        return $selected->concat($results);
     }
 
     /**
-     * Get selected excluded ingredients.
-     *
-     * @return Collection<int, Ingredient>
+     * Check if there are search results for ingredients (excluding selected).
      */
-    #[Computed]
-    public function selectedExcludedIngredients(): Collection
+    public function hasIngredientSearchResults(): bool
     {
-        if ($this->excludedIngredientIds === []) {
-            return new Collection();
-        }
+        return $this->ingredientSearch !== '' &&
+            $this->ingredientOptions->count() > count($this->ingredientIds);
+    }
 
-        return Ingredient::whereIn('id', $this->excludedIngredientIds)->get();
+    /**
+     * Check if there are search results for excluded ingredients (excluding selected).
+     */
+    public function hasExcludedIngredientSearchResults(): bool
+    {
+        return $this->excludedIngredientSearch !== '' &&
+            $this->excludedIngredientOptions->count() > count($this->excludedIngredientIds);
     }
 }

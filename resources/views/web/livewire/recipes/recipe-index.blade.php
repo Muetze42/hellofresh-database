@@ -134,4 +134,41 @@
 
     <flux:pagination :paginator="$this->recipes" />
   @endif
+
+  @if ($this->activeFilterCount === 0)
+    <div class="flex justify-center">
+      <flux:modal.trigger name="share-url-direct">
+        <flux:button icon="share-2" variant="ghost">
+          {{ __('Share') }}
+        </flux:button>
+      </flux:modal.trigger>
+    </div>
+
+    <flux:modal name="share-url-direct" class="md:w-96">
+      <div class="space-y-ui">
+        <flux:heading size="lg">{{ __('Share Link') }}</flux:heading>
+        <flux:input :value="$this->getDirectShareUrl()" readonly copyable />
+      </div>
+    </flux:modal>
+  @else
+    <form wire:submit="prepareShareUrl" class="flex justify-center">
+      <flux:modal.trigger name="share-url-filter">
+        <flux:button type="submit" icon="share-2" variant="ghost">
+          {{ __('Share') }}
+        </flux:button>
+      </flux:modal.trigger>
+    </form>
+
+    <flux:modal name="share-url-filter" class="md:w-96">
+      <div class="space-y-ui">
+        <flux:heading size="lg">{{ __('Share Link') }}</flux:heading>
+        <div wire:loading wire:target="prepareShareUrl" class="flex justify-center py-4">
+          <flux:icon.loading class="size-6" />
+        </div>
+        <div wire:loading.remove wire:target="prepareShareUrl">
+          <flux:input wire:model="shareUrl" readonly copyable />
+        </div>
+      </div>
+    </flux:modal>
+  @endif
 </flux:main>
