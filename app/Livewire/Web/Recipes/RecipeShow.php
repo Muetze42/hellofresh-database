@@ -37,6 +37,8 @@ class RecipeShow extends AbstractComponent
             'cuisines',
             'utensils',
             'ingredients',
+            'canonical.country',
+            'variants.country',
         ]);
 
         // Set default yield based on available yields

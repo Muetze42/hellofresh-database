@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.13.0] - 2026-01-25
+
+### Added
+
+- **Recipe Variants** - Support for recipe variants
+    - Recipe variants are hidden by default, with a filter option to show them
+    - Recipe pages show relationships: variants link to the original, originals list all variants
+    - Portal statistics now include variant metrics
+    - API now includes the canonical ID for each recipe
+
+### Changed
+
+- **HelloFresh Links** - Links to HelloFresh are hidden for recipe variants as they often lead to 404 pages
+
 ## [3.12.0] - 2026-01-10
 
 ### Added

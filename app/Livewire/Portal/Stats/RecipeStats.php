@@ -167,6 +167,17 @@ class RecipeStats extends AbstractComponent
         return $this->statistics()->dataHealth();
     }
 
+    /**
+     * Get canonical recipe statistics.
+     *
+     * @return array{total_canonical: int, recipes_with_canonical: int, unique_canonical_parents: int, canonical_percentage: float}
+     */
+    #[Computed]
+    public function canonicalStats(): array
+    {
+        return $this->statistics()->canonicalStats();
+    }
+
     public function render(): View
     {
         /** @var View $view */

@@ -5,6 +5,8 @@
 
   <flux:switch wire:model.live="filterHasPdf" :label="__('Only with PDF')" />
 
+  <flux:switch wire:model.live="filterShowCanonical" :label="__('Show Canonical Recipes')" />
+
   <flux:field>
     <flux:label>{{ __('Difficulty') }}</flux:label>
 
