@@ -68,7 +68,7 @@ class Recipe extends Model
         'yields_primary',
         'yields_secondary',
         'variant',
-        'is_published',
+        'published',
         'hellofresh_created_at',
         'hellofresh_updated_at',
     ];
@@ -114,7 +114,7 @@ class Recipe extends Model
             'yields_secondary' => 'array',
             'has_pdf' => 'bool',
             'variant' => 'bool',
-            'is_published' => 'bool',
+            'published' => 'bool',
             'hellofresh_created_at' => 'datetime',
             'hellofresh_updated_at' => 'datetime',
         ];
@@ -147,7 +147,7 @@ class Recipe extends Model
      */
     public function variants(): HasMany
     {
-        return $this->hasMany(self::class, 'canonical_id');
+        return $this->hasMany(self::class, 'canonical_id')->where('published', true);
     }
 
     /**
@@ -255,8 +255,8 @@ class Recipe extends Model
      */
     protected function buildHellofreshUrl(): ?string
     {
-        // Variant recipes often lead to 404 pages on HelloFresh
-        if ($this->variant) {
+        // Unpublished recipes lead to 404 pages on HelloFresh
+        if (! $this->published) {
             return null;
         }
 

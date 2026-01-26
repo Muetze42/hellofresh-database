@@ -133,7 +133,7 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
             'nutrition_' . $suffix => $this->recipe['nutrition'],
             'yields_' . $suffix => $this->recipe['yields'],
             'variant' => $this->recipe['canonical'] !== '' && $this->recipe['canonical'] !== $this->recipe['id'],
-            'is_published' => $this->recipe['isPublished'],
+            'published' => $this->recipe['isPublished'],
             'hellofresh_created_at' => $this->recipe['createdAt'],
             'hellofresh_updated_at' => $this->recipe['updatedAt'],
         ];

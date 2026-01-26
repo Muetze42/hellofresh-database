@@ -134,14 +134,12 @@ final class FilterShareTest extends TestCase
     {
         Livewire::test(RecipeIndex::class)
             ->set('filterHasPdf', true)
-            ->set('filterHideVariants', false)
             ->set('excludedAllergenIds', [])
             ->call('generateFilterShareUrl');
 
         $filterShare = FilterShare::latest('created_at')->first();
 
         $this->assertTrue($filterShare->filters['has_pdf']);
-        $this->assertArrayNotHasKey('hide_variants', $filterShare->filters);
         $this->assertArrayNotHasKey('excluded_allergens', $filterShare->filters);
     }
 

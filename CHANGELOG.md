@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.15.0] - 2026-01-27
+
+### Added
+
+- **Published Status Tracking** - Track which recipes are currently published on HelloFresh
+  - New `published` field in API responses (replaces `variant` field)
+  - Published statistics in portal dashboard showing published vs unpublished recipe counts
+  - Filter "Hide Archived" to show only currently published recipes
+
+- **Unpublished Recipe Notice** - Warning callout on recipe detail pages when recipe is no longer available on HelloFresh
+
+### Changed
+
+- **Variant Display Logic** - Improved variant relationships on recipe detail pages
+  - Variant recipes now show all sibling variants plus the original recipe
+  - Previously only showed direct children for canonical recipes
+
+- **HelloFresh Links** - Links to HelloFresh website now only shown for published recipes (previously hidden for variants)
+
+### Removed
+
+- **Variant Filter** - Removed "Hide Variants" filter as it's replaced by published status tracking
+- **Variant API Field** - Removed `variant` field from API responses (use `canonical_id` to identify variants)
+- **Canonical Recipe Notice** - Removed "Based on Canonical Recipe" callout from recipe detail pages
+
 ## [3.14.1] - 2026-01-26
 
 ### Changed
