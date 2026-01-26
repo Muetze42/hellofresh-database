@@ -66,6 +66,7 @@ class Recipe extends Model
         'yields_primary',
         'yields_secondary',
         'variant',
+        'is_published',
         'hellofresh_created_at',
         'hellofresh_updated_at',
     ];
@@ -111,6 +112,7 @@ class Recipe extends Model
             'yields_secondary' => 'array',
             'has_pdf' => 'bool',
             'variant' => 'bool',
+            'is_published' => 'bool',
             'hellofresh_created_at' => 'datetime',
             'hellofresh_updated_at' => 'datetime',
         ];
