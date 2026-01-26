@@ -94,7 +94,13 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
 
         App::setLocale($this->getLanguage());
 
-        $this->recipeModel = $this->importRecipe();
+        $recipe = $this->importRecipe();
+
+        if (! $recipe instanceof Recipe) {
+            return;
+        }
+
+        $this->recipeModel = $recipe;
 
         $this->syncIngredients();
         $this->syncAllergens();
@@ -110,29 +116,43 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
      *
      * @throws DateMalformedIntervalStringException
      */
-    protected function importRecipe(): Recipe
+    protected function importRecipe(): ?Recipe
     {
         $suffix = $this->isPrimaryLocale() ? 'primary' : 'secondary';
 
+        $data = [
+            'name' => $this->recipe['name'],
+            'headline' => $this->recipe['headline'],
+            'description' => $this->recipe['descriptionMarkdown'],
+            'card_link' => $this->recipe['cardLink'],
+            'difficulty' => $this->recipe['difficulty'],
+            'prep_time' => $this->parseIsoDuration($this->recipe['prepTime']),
+            'total_time' => $this->parseIsoDuration($this->recipe['totalTime']),
+            'image_path' => $this->recipe['imagePath'],
+            'steps_' . $suffix => $this->transformSteps($this->recipe['steps']),
+            'nutrition_' . $suffix => $this->recipe['nutrition'],
+            'yields_' . $suffix => $this->recipe['yields'],
+            'variant' => $this->recipe['canonical'] !== '' && $this->recipe['canonical'] !== $this->recipe['id'],
+            'is_published' => $this->recipe['isPublished'],
+            'hellofresh_created_at' => $this->recipe['createdAt'],
+            'hellofresh_updated_at' => $this->recipe['updatedAt'],
+        ];
+
+        $recipe = $this->country->recipes()->where('hellofresh_id', $this->recipe['id'])->first();
+
+        if ($recipe) {
+            $recipe->update($data);
+
+            return $recipe;
+        }
+
+        if (! $this->recipe['isPublished']) {
+            return null;
+        }
+
         /** @var Recipe $recipe */
-        $recipe = $this->country->recipes()->updateOrCreate(
-            ['hellofresh_id' => $this->recipe['id']],
-            [
-                'name' => $this->recipe['name'],
-                'headline' => $this->recipe['headline'],
-                'description' => $this->recipe['descriptionMarkdown'],
-                'card_link' => $this->recipe['cardLink'],
-                'difficulty' => $this->recipe['difficulty'],
-                'prep_time' => $this->parseIsoDuration($this->recipe['prepTime']),
-                'total_time' => $this->parseIsoDuration($this->recipe['totalTime']),
-                'image_path' => $this->recipe['imagePath'],
-                'steps_' . $suffix => $this->transformSteps($this->recipe['steps']),
-                'nutrition_' . $suffix => $this->recipe['nutrition'],
-                'yields_' . $suffix => $this->recipe['yields'],
-                'variant' => $this->recipe['canonical'] !== '' && $this->recipe['canonical'] !== $this->recipe['id'],
-                'hellofresh_created_at' => $this->recipe['createdAt'],
-                'hellofresh_updated_at' => $this->recipe['updatedAt'],
-            ],
+        $recipe = $this->country->recipes()->create(
+            array_merge(['hellofresh_id' => $this->recipe['id']], $data)
         );
 
         return $recipe;
@@ -396,10 +416,6 @@ class ImportRecipeJob implements ShouldBeUnique, ShouldQueue
         }
 
         if (! in_array((int) $this->recipe['difficulty'], [1, 2, 3])) {
-            return false;
-        }
-
-        if (! $this->recipe['isPublished']) {
             return false;
         }
 
