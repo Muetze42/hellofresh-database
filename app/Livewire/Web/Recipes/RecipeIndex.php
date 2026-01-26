@@ -224,10 +224,11 @@ class RecipeIndex extends AbstractComponent
 
     /**
      * Get the current page number for sharing.
+     * Cast required: getPage() returns string in production (URL params are always strings).
      */
     protected function getSharePage(): int
     {
-        return $this->getPage();
+        return (int) $this->getPage();
     }
 
     /**

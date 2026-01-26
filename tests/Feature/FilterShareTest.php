@@ -151,4 +151,50 @@ final class FilterShareTest extends TestCase
         $this->assertSame('localized.recipes.random', FilterSharePageEnum::Random->routeName());
         $this->assertSame('localized.menus.index', FilterSharePageEnum::Menus->routeName());
     }
+
+    #[Test]
+    public function filter_share_includes_page_number_in_url_params(): void
+    {
+        $this->get(localized_route('localized.recipes.index', ['page' => 2]))
+            ->assertSeeLivewire(RecipeIndex::class);
+
+        Livewire::test(RecipeIndex::class)
+            ->set('filterHasPdf', true)
+            ->call('prepareShareUrl');
+
+        $filterShare = FilterShare::latest('created_at')->first();
+        $this->assertNotNull($filterShare);
+    }
+
+    #[Test]
+    public function get_share_page_returns_integer(): void
+    {
+        $component = Livewire::test(RecipeIndex::class);
+
+        $reflection = new \ReflectionClass($component->instance());
+        $method = $reflection->getMethod('getSharePage');
+
+        $result = $method->invoke($component->instance());
+
+        $this->assertIsInt($result, 'getSharePage() must return an integer, not a string');
+    }
+
+    #[Test]
+    public function get_share_page_handles_string_page_parameter(): void
+    {
+        $mock = $this->getMockBuilder(RecipeIndex::class)
+            ->onlyMethods(['getPage'])
+            ->getMock();
+
+        $mock->method('getPage')
+            ->willReturn('2');
+
+        $reflection = new \ReflectionClass($mock);
+        $method = $reflection->getMethod('getSharePage');
+
+        $result = $method->invoke($mock);
+
+        $this->assertIsInt($result, 'getSharePage() must cast string to integer');
+        $this->assertSame(2, $result);
+    }
 }
