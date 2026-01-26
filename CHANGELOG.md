@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.14.1] - 2026-01-26
+
+### Changed
+
+- **Variant Filter Logic** - Recipe variants are now shown by default with an option to hide them (previously hidden by default)
+  - Renamed filter from "Show Canonical Recipes" to "Hide Variants" for better clarity
+  - Users see all recipes including variants unless they explicitly enable the hide filter
+
 ## [3.14.0] - 2026-01-25
 
 ### Added

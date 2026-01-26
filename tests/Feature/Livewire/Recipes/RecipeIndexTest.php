@@ -445,4 +445,41 @@ final class RecipeIndexTest extends TestCase
 
         $this->assertFalse($component->instance()->isTagActive($tag->id));
     }
+
+    #[Test]
+    public function it_shows_variants_by_default(): void
+    {
+        Recipe::factory()->for($this->country)->create([
+            'name' => ['en' => 'Main Recipe'],
+            'variant' => false,
+        ]);
+
+        Recipe::factory()->for($this->country)->create([
+            'name' => ['en' => 'Variant Recipe'],
+            'variant' => true,
+        ]);
+
+        Livewire::test(RecipeIndex::class)
+            ->assertSee('Main Recipe')
+            ->assertSee('Variant Recipe');
+    }
+
+    #[Test]
+    public function it_can_hide_variants(): void
+    {
+        Recipe::factory()->for($this->country)->create([
+            'name' => ['en' => 'Main Recipe'],
+            'variant' => false,
+        ]);
+
+        Recipe::factory()->for($this->country)->create([
+            'name' => ['en' => 'Variant Recipe'],
+            'variant' => true,
+        ]);
+
+        Livewire::test(RecipeIndex::class)
+            ->set('filterHideVariants', true)
+            ->assertSee('Main Recipe')
+            ->assertDontSee('Variant Recipe');
+    }
 }
