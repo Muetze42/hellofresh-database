@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\ActivatableTrait;
 use App\Models\Concerns\HasHelloFreshIdsTrait;
+use App\Models\Concerns\LogsModificationsTrait;
 use Database\Factories\IngredientFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,7 @@ class Ingredient extends Model
 
     use HasHelloFreshIdsTrait;
     use HasTranslations;
+    use LogsModificationsTrait;
 
     /**
      * The attributes that are translatable.

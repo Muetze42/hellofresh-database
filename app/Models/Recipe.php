@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\ActivatableTrait;
+use App\Models\Concerns\LogsModificationsTrait;
 use App\Observers\RecipeObserver;
 use App\Support\HelloFresh\HelloFreshAsset;
 use Database\Factories\RecipeFactory;
@@ -30,6 +31,7 @@ class Recipe extends Model
     use HasFactory;
 
     use HasTranslations;
+    use LogsModificationsTrait;
     use SoftDeletes;
 
     /**
