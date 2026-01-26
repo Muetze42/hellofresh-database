@@ -86,6 +86,11 @@ class MenusResponse extends AbstractHelloFreshResponse
         $menusByWeek = [];
 
         foreach ($this->items() as $item) {
+            // Skip addon menus - only include classic-box products
+            if (str_contains($item['product'], 'addons')) {
+                continue;
+            }
+
             $week = $item['week'];
 
             $recipeIds = array_map(
