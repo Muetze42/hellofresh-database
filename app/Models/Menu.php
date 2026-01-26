@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\ActivatableTrait;
+use App\Models\Concerns\LogsModificationsTrait;
 use Carbon\Carbon;
 use Database\Factories\MenuFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -24,6 +25,8 @@ class Menu extends Model
 
     /** @use HasFactory<MenuFactory> */
     use HasFactory;
+
+    use LogsModificationsTrait;
 
     /**
      * The attributes that are mass assignable.
