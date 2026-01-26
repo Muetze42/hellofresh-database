@@ -25,7 +25,7 @@ class RecipeRandom extends RecipeIndex
         return Recipe::where('country_id', $this->countryId)
             ->when($this->search !== '', fn (Builder $query): Builder => $this->applySearchFilter($query))
             ->when($this->filterHasPdf, fn (Builder $query) => $query->where('has_pdf', true))
-            ->unless($this->filterShowCanonical, fn (Builder $query) => $query->where('variant', false))
+            ->when($this->filterHideVariants, fn (Builder $query) => $query->where('variant', false))
             ->when($this->excludedAllergenIds !== [], fn (Builder $query) => $query->whereDoesntHave(
                 'allergens',
                 fn (Builder $allergenQuery) => $allergenQuery->whereIn('allergens.id', $this->excludedAllergenIds)

@@ -13,6 +13,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Override;
 use PHPUnit\Framework\Attributes\Test;
+use ReflectionClass;
 use Tests\TestCase;
 
 final class FilterShareTest extends TestCase
@@ -133,14 +134,14 @@ final class FilterShareTest extends TestCase
     {
         Livewire::test(RecipeIndex::class)
             ->set('filterHasPdf', true)
-            ->set('filterShowCanonical', false)
+            ->set('filterHideVariants', false)
             ->set('excludedAllergenIds', [])
             ->call('generateFilterShareUrl');
 
         $filterShare = FilterShare::latest('created_at')->first();
 
         $this->assertTrue($filterShare->filters['has_pdf']);
-        $this->assertArrayNotHasKey('show_canonical', $filterShare->filters);
+        $this->assertArrayNotHasKey('hide_variants', $filterShare->filters);
         $this->assertArrayNotHasKey('excluded_allergens', $filterShare->filters);
     }
 
@@ -171,7 +172,7 @@ final class FilterShareTest extends TestCase
     {
         $component = Livewire::test(RecipeIndex::class);
 
-        $reflection = new \ReflectionClass($component->instance());
+        $reflection = new ReflectionClass($component->instance());
         $method = $reflection->getMethod('getSharePage');
 
         $result = $method->invoke($component->instance());
@@ -189,7 +190,7 @@ final class FilterShareTest extends TestCase
         $mock->method('getPage')
             ->willReturn('2');
 
-        $reflection = new \ReflectionClass($mock);
+        $reflection = new ReflectionClass($mock);
         $method = $reflection->getMethod('getSharePage');
 
         $result = $method->invoke($mock);
