@@ -178,6 +178,17 @@ class RecipeStats extends AbstractComponent
         return $this->statistics()->variantStats();
     }
 
+    /**
+     * Get published recipe statistics.
+     *
+     * @return array{published: int, unpublished: int, unpublished_percentage: float}
+     */
+    #[Computed]
+    public function publishedStats(): array
+    {
+        return $this->statistics()->publishedStats();
+    }
+
     public function render(): View
     {
         /** @var View $view */

@@ -31,6 +31,16 @@
     </div>
   </div>
 
+  {{-- Unpublished notice --}}
+  @if (!$recipe->published)
+    <flux:callout variant="warning" class="mt-4">
+      <flux:callout.heading>{{ __('Recipe No Longer Available on HelloFresh') }}</flux:callout.heading>
+      <flux:callout.text>
+        {{ __('This recipe has been removed from HelloFresh\'s active menu. You can still view and use the recipe here, but it is no longer available on the HelloFresh website.') }}
+      </flux:callout.text>
+    </flux:callout>
+  @endif
+
   {{-- Quick info bar --}}
   <div class="flex flex-wrap items-center gap-4 py-4 border-b border-zinc-200 dark:border-zinc-700">
     @if ($recipe->total_time)
@@ -88,20 +98,6 @@
       </button>
     </div>
   </div>
-
-  {{-- Canonical Recipe Info --}}
-  @if ($recipe->canonical)
-    <flux:callout icon="git-branch" color="amber" class="mt-section">
-      <flux:callout.heading>{{ __('Based on Canonical Recipe') }}</flux:callout.heading>
-      <flux:callout.text>
-        {{ __('This recipe is based on') }}
-        <flux:link :href="localized_route('localized.recipes.show', ['slug' => slugify($recipe->canonical->name), 'recipe' => $recipe->canonical->id])" wire:navigate class="font-medium">
-          {{ $recipe->canonical->name }}
-        </flux:link>
-        ({{ $recipe->canonical->country->code }}).
-      </flux:callout.text>
-    </flux:callout>
-  @endif
 
   {{-- Description --}}
   @if ($recipe->description)
@@ -246,14 +242,14 @@
   @endif
 
   {{-- Variant Recipes --}}
-  @if ($recipe->variants->isNotEmpty())
+  @if ($this->relatedVariants->isNotEmpty())
     <div x-data="{ open: false }" class="py-section border-t border-zinc-200 dark:border-zinc-700">
       <button type="button" x-on:click="open = !open" class="flex items-center gap-ui w-full text-left">
-        <flux:heading size="lg">{{ __('Variants of this Recipe') }} ({{ $recipe->variants->count() }})</flux:heading>
+        <flux:heading size="lg">{{ __('Variants of this Recipe') }} ({{ $this->relatedVariants->count() }})</flux:heading>
         <flux:icon.chevron-down class="size-5 transition-transform" x-bind:class="open && 'rotate-180'" />
       </button>
       <div x-show="open" x-collapse class="mt-4">
-        <x-web::recipes.recipe-grid :recipes="$recipe->variants" />
+        <x-web::recipes.recipe-grid :recipes="$this->relatedVariants" />
       </div>
     </div>
   @endif

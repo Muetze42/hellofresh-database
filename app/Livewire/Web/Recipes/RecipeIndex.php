@@ -45,7 +45,7 @@ class RecipeIndex extends AbstractComponent
 
     public bool $filterHasPdf = false;
 
-    public bool $filterHideVariants = false;
+    public bool $filterOnlyPublished = false;
 
     /** @var array<int> */
     public array $excludedAllergenIds = [];
@@ -92,7 +92,7 @@ class RecipeIndex extends AbstractComponent
         $this->selectedMenuWeek = $this->menu?->year_week;
         $this->viewMode = session('view_mode', ViewModeEnum::Grid->value);
         $this->filterHasPdf = session($this->filterSessionKey('has_pdf'), false);
-        $this->filterHideVariants = session($this->filterSessionKey('hide_variants'), false);
+        $this->filterOnlyPublished = session($this->filterSessionKey('only_published'), false);
         $this->excludedAllergenIds = session($this->filterSessionKey('excluded_allergens'), []);
         $this->ingredientIds = session($this->filterSessionKey('ingredients'), []);
         $this->ingredientMatchMode = session($this->filterSessionKey('ingredient_match'), IngredientMatchModeEnum::Any->value);
@@ -281,7 +281,7 @@ class RecipeIndex extends AbstractComponent
     {
         return [
             'filterHasPdf' => 'has_pdf',
-            'filterHideVariants' => 'hide_variants',
+            'filterOnlyPublished' => 'only_published',
             'excludedAllergenIds' => 'excluded_allergens',
             'ingredientIds' => 'ingredients',
             'ingredientMatchMode' => 'ingredient_match',
@@ -308,7 +308,7 @@ class RecipeIndex extends AbstractComponent
             $count++;
         }
 
-        if ($this->filterHideVariants) {
+        if ($this->filterOnlyPublished) {
             $count++;
         }
 
@@ -387,7 +387,7 @@ class RecipeIndex extends AbstractComponent
     public function clearFilters(): void
     {
         $this->filterHasPdf = false;
-        $this->filterHideVariants = false;
+        $this->filterOnlyPublished = false;
         $this->excludedAllergenIds = [];
         $this->ingredientIds = [];
         $this->ingredientMatchMode = IngredientMatchModeEnum::Any->value;
@@ -402,7 +402,7 @@ class RecipeIndex extends AbstractComponent
 
         session()->forget([
             $this->filterSessionKey('has_pdf'),
-            $this->filterSessionKey('hide_variants'),
+            $this->filterSessionKey('only_published'),
             $this->filterSessionKey('excluded_allergens'),
             $this->filterSessionKey('ingredients'),
             $this->filterSessionKey('ingredient_match'),
@@ -432,7 +432,7 @@ class RecipeIndex extends AbstractComponent
             ->when($menuRecipeIds !== [], fn (Builder $query) => $query->whereIn('id', $menuRecipeIds))
             ->when($this->search !== '', fn (Builder $query): Builder => $this->applySearchFilter($query))
             ->when($this->filterHasPdf, fn (Builder $query) => $query->where('has_pdf', true))
-            ->when($this->filterHideVariants, fn (Builder $query) => $query->where('variant', false))
+            ->when($this->filterOnlyPublished, fn (Builder $query) => $query->where('published', true))
             ->when($this->excludedAllergenIds !== [], fn (Builder $query) => $query->whereDoesntHave(
                 'allergens',
                 fn (Builder $allergenQuery) => $allergenQuery->whereIn('allergens.id', $this->excludedAllergenIds)

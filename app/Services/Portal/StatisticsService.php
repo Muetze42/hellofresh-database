@@ -42,6 +42,7 @@ class StatisticsService
         'portal_avg_prep_times',
         'portal_data_health',
         'portal_variant_stats',
+        'portal_published_stats',
     ];
 
     /**
@@ -334,6 +335,27 @@ class StatisticsService
                 'total_variants' => $totalVariants,
                 'unique_canonical_parents' => $uniqueCanonicalParents,
                 'variant_percentage' => $total > 0 ? round(($totalVariants / $total) * 100, 1) : 0.0,
+            ];
+        });
+    }
+
+    /**
+     * Get published recipe statistics.
+     *
+     * @return array{published: int, unpublished: int, unpublished_percentage: float}
+     */
+    public function publishedStats(): array
+    {
+        /** @var array{published: int, unpublished: int, unpublished_percentage: float} */
+        return Cache::remember('portal_published_stats', $this->cacheTtl, static function (): array {
+            $total = Recipe::count();
+            $published = Recipe::where('published', true)->count();
+            $unpublished = Recipe::where('published', false)->count();
+
+            return [
+                'published' => $published,
+                'unpublished' => $unpublished,
+                'unpublished_percentage' => $total > 0 ? round(($unpublished / $total) * 100, 1) : 0.0,
             ];
         });
     }

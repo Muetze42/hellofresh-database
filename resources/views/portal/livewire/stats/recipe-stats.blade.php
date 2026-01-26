@@ -117,6 +117,22 @@
     </div>
   </flux:card>
 
+  <flux:card>
+    <div class="flex items-center gap-section">
+      <div class="rounded-lg bg-green-100 dark:bg-green-900/30 p-3">
+        <flux:icon.check-circle class="size-6 text-green-600 dark:text-green-400" />
+      </div>
+      <div class="flex-1">
+        <flux:text class="text-sm text-zinc-500">Published Recipes</flux:text>
+        <flux:heading size="xl">{{ Number::format($this->publishedStats['published']) }}</flux:heading>
+      </div>
+      <div class="text-right">
+        <flux:text class="text-sm text-zinc-500">{{ Number::format($this->publishedStats['unpublished']) }} unpublished</flux:text>
+        <flux:text class="text-sm text-zinc-500">{{ $this->publishedStats['unpublished_percentage'] }}% unpublished</flux:text>
+      </div>
+    </div>
+  </flux:card>
+
   {{-- Recipe Quality & Data Health --}}
   <div class="grid gap-section lg:grid-cols-2">
     <flux:card>

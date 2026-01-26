@@ -5,7 +5,7 @@
 
   <flux:switch wire:model.live="filterHasPdf" :label="__('Only with PDF')" />
 
-  <flux:switch wire:model.live="filterHideVariants" :label="__('Hide Variants')" />
+  <flux:switch wire:model.live="filterOnlyPublished" :label="__('Hide Archived')" />
 
   <flux:field>
     <flux:label>{{ __('Difficulty') }}</flux:label>

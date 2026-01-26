@@ -15,7 +15,7 @@ use App\Models\FilterShare;
  * @property string $search
  * @property string $sortBy
  * @property bool $filterHasPdf
- * @property bool $filterHideVariants
+ * @property bool $filterOnlyPublished
  * @property array<int> $excludedAllergenIds
  * @property array<int> $ingredientIds
  * @property string $ingredientMatchMode
@@ -167,8 +167,8 @@ trait WithFilterShareTrait
             $filters['has_pdf'] = true;
         }
 
-        if ($this->filterHideVariants) {
-            $filters['hide_variants'] = true;
+        if ($this->filterOnlyPublished) {
+            $filters['only_published'] = true;
         }
 
         $filters['ingredient_match'] = $this->ingredientMatchMode;

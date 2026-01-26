@@ -38,9 +38,6 @@ class RecipeShow extends AbstractComponent
             'utensils',
             'ingredients',
             'canonical.country',
-            'variants.country',
-            'variants.label',
-            'variants.tags',
         ]);
 
         // Set default yield based on available yields
@@ -204,6 +201,34 @@ class RecipeShow extends AbstractComponent
     }
 
     /**
+     * Get all related variants (siblings if this is a variant, or children if this is a canonical recipe).
+     *
+     * @return Collection<int, Recipe>
+     */
+    #[Computed]
+    public function relatedVariants(): Collection
+    {
+        // If this recipe is a variant, show canonical + sibling variants
+        if ($this->recipe->canonical_id !== null) {
+            $variants = Recipe::where('canonical_id', $this->recipe->canonical_id)
+                ->where('published', true)
+                ->whereNot('id', $this->recipe->id)
+                ->with(['country', 'label', 'tags'])
+                ->get();
+
+            // Add the canonical recipe to the collection
+            if ($this->recipe->canonical?->published) {
+                $variants->prepend($this->recipe->canonical);
+            }
+
+            return $variants;
+        }
+
+        // If this recipe is canonical, show its variants
+        return $this->recipe->variants()->with(['country', 'label', 'tags'])->get();
+    }
+
+    /**
      * Get similar recipes based on shared tags.
      *
      * @return Collection<int, Recipe>
@@ -222,6 +247,7 @@ class RecipeShow extends AbstractComponent
         $excludedAllergenIds = session($sessionKey, []);
 
         return Recipe::where('country_id', $this->recipe->country_id)
+            ->where('published', true)
             ->whereNot('id', $this->recipe->id)
             ->whereNotNull('name->' . app()->getLocale())
             ->whereHas('tags', fn (Builder $query): Builder => $query->whereIn('tags.id', $tagIds))
