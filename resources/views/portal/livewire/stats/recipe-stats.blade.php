@@ -194,7 +194,6 @@
         <flux:table.column class="ui-text-subtle">Name</flux:table.column>
         <flux:table.column class="ui-text-subtle">Locales</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'recipes_count'" :direction="$sortDirection" wire:click="sort('recipes_count')" align="end">Recipes</flux:table.column>
-        <flux:table.column sortable :sorted="$sortBy === 'variants_count'" :direction="$sortDirection" wire:click="sort('variants_count')" align="end">Variants</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'recipes_with_pdf_count'" :direction="$sortDirection" wire:click="sort('recipes_with_pdf_count')" align="end">with PDF</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'ingredients_count'" :direction="$sortDirection" wire:click="sort('ingredients_count')" align="end">Ingredients</flux:table.column>
         <flux:table.column sortable :sorted="$sortBy === 'menus_count'" :direction="$sortDirection" wire:click="sort('menus_count')" align="end">Menus</flux:table.column>
@@ -215,9 +214,6 @@
             </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">
               {{ Number::format($country->recipes_count ?? 0) }}
-            </flux:table.cell>
-            <flux:table.cell align="end" class="tabular-nums">
-              {{ Number::format($country->variants_count ?? 0) }}
             </flux:table.cell>
             <flux:table.cell align="end" class="tabular-nums">
               {{ Number::format($country->recipes_with_pdf_count ?? 0) }}

@@ -105,7 +105,6 @@ class StatisticsService
         /** @var Collection<int, Country> */
         return Cache::remember('portal_country_stats', $this->cacheTtl, static fn (): Collection => Country::where('active', true)
             ->withCount('menus')
-            ->withCount(['recipes as variants_count' => fn (Builder $query) => $query->where('variant', true)])
             ->get());
     }
 
