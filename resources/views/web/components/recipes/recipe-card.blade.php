@@ -70,7 +70,7 @@
     <div>
 
       <div class="mt-3 flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
-        @if ($recipe->total_time)
+        @if ($recipe->display_time)
           <span class="flex items-center gap-1">
             <flux:icon.clock variant="micro" />
             {{ $recipe->total_time }} {{ __('min') }}

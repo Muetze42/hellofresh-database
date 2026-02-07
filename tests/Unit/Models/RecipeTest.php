@@ -352,6 +352,7 @@ final class RecipeTest extends TestCase
         $recipe = Recipe::factory()->for($country)->create([
             'hellofresh_id' => 'abc123',
             'name' => ['en' => 'Test Recipe'],
+            'published' => true,
         ]);
         $recipe->load('country');
 

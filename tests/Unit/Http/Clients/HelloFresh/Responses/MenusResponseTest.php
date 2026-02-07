@@ -55,6 +55,7 @@ final class MenusResponseTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W01',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-1']],
@@ -63,6 +64,7 @@ final class MenusResponseTest extends TestCase
                 ],
                 [
                     'id' => 'menu-2',
+                    'product' => 'classic-box',
                     'week' => '2025-W01',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-3']],
@@ -93,6 +95,7 @@ final class MenusResponseTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W01',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-1']],
@@ -100,6 +103,7 @@ final class MenusResponseTest extends TestCase
                 ],
                 [
                     'id' => 'menu-2',
+                    'product' => 'classic-box',
                     'week' => '2025-W02',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-2']],
@@ -126,6 +130,7 @@ final class MenusResponseTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W52',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-1']],
@@ -150,6 +155,7 @@ final class MenusResponseTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W5',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-1']],
@@ -174,6 +180,7 @@ final class MenusResponseTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W01',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-1']],
@@ -201,6 +208,7 @@ final class MenusResponseTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W10',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-1']],
@@ -228,6 +236,7 @@ final class MenusResponseTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2024-W52',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-1']],

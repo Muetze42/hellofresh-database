@@ -221,6 +221,16 @@ class Recipe extends Model
     }
 
     /**
+     * Get highest prep time or total time.
+     *
+     * @return Attribute<int<0, max>|null, never>
+     */
+    protected function displayTime(): Attribute
+    {
+        return Attribute::get(fn (): ?int => max($this->total_time, $this->prep_time));
+    }
+
+    /**
      * Get the recipe card image URL.
      *
      * @return Attribute<string|null, never>

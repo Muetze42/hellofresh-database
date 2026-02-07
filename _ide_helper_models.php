@@ -13,6 +13,46 @@
 
 namespace App\Models{
 /**
+ * @property int $id
+ * @property string|null $log_name
+ * @property string $description
+ * @property string|null $subject_type
+ * @property int|null $subject_id
+ * @property string|null $event
+ * @property string|null $causer_type
+ * @property int|null $causer_id
+ * @property \Illuminate\Support\Collection<array-key, mixed>|null $properties
+ * @property string|null $batch_uuid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property-read \Illuminate\Database\Eloquent\Model|null $causer
+ * @property-read \Illuminate\Support\Collection $changes
+ * @property-read \Illuminate\Database\Eloquent\Model|null $subject
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity causedBy(\Illuminate\Database\Eloquent\Model $causer)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity forBatch(string $batchUuid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity forEvent(string $event)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity forSubject(\Illuminate\Database\Eloquent\Model $subject)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity hasBatch()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity inLog(...$logNames)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereBatchUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereCauserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereCauserType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereEvent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereLogName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereProperties($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereSubjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Activity whereSubjectType($value)
+ */
+	class Activity extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * @mixin Builder<Allergen>
  * @property int $id
  * @property int $country_id
@@ -23,7 +63,9 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $cached_recipes_count
- * @property-read \App\Models\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
  * @property-read int|null $ingredients_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
@@ -133,7 +175,9 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $cached_recipes_count
- * @property-read \App\Models\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
@@ -166,7 +210,7 @@ namespace App\Models{
  * @property int $user_id
  * @property string $email
  * @property \Illuminate\Support\Carbon $verified_at
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EmailVerification query()
@@ -187,9 +231,9 @@ namespace App\Models{
  * @property int $recipe_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Country $country
- * @property-read \App\Models\Recipe $recipe
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\Country|null $country
+ * @property-read \App\Models\Recipe|null $recipe
+ * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\FavoriteFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Favorite newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Favorite newQuery()
@@ -206,6 +250,26 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * @property array<string, mixed> $filters
+ * @property string $id
+ * @property int $country_id
+ * @property string $page
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property-read \App\Models\Country $country
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare whereFilters($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FilterShare wherePage($value)
+ */
+	class FilterShare extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * @mixin Builder<Ingredient>
  * @property int $id
  * @property int $country_id
@@ -217,9 +281,11 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $cached_recipes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
- * @property-read \App\Models\Country $country
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
@@ -260,7 +326,9 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $cached_recipes_count
- * @property-read \App\Models\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
@@ -297,7 +365,9 @@ namespace App\Models{
  * @property int $country_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu active()
@@ -364,7 +434,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\PersonalAccessToken|null $token
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PersonalAccessTokenUsage onlyTrashed()
@@ -410,13 +480,18 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property bool $variant
+ * @property bool $published
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Allergen> $allergens
  * @property-read int|null $allergens_count
  * @property-read Recipe|null $canonical
  * @property-read string|null $card_image_url
- * @property-read \App\Models\Country $country
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cuisine> $cuisines
  * @property-read int|null $cuisines_count
+ * @property-read int|null $display_time
  * @property-read string|null $header_image_url
  * @property-read string|null $hellofresh_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ingredient> $ingredients
@@ -461,10 +536,12 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereNutritionPrimary($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereNutritionSecondary($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe wherePrepTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe wherePublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereStepsPrimary($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereStepsSecondary($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereTotalTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereVariant($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereYieldsPrimary($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereYieldsSecondary($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withTrashed(bool $withTrashed = true)
@@ -488,7 +565,7 @@ namespace App\Models{
  * @property-read int|null $recipes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $sharedWith
  * @property-read int|null $shared_with_count
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\RecipeListFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeList newQuery()
@@ -512,9 +589,9 @@ namespace App\Models{
  * @property int $recipe_id
  * @property \App\Enums\RecipeListActionEnum $action
  * @property \Illuminate\Support\Carbon $created_at
- * @property-read \App\Models\Recipe $recipe
- * @property-read \App\Models\RecipeList $recipeList
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\Recipe|null $recipe
+ * @property-read \App\Models\RecipeList|null $recipeList
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RecipeListActivity query()
@@ -538,8 +615,8 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Country $country
- * @property-read \App\Models\User $user
+ * @property-read \App\Models\Country|null $country
+ * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\ShoppingListFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShoppingList newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ShoppingList newQuery()
@@ -567,7 +644,9 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $cached_recipes_count
- * @property-read \App\Models\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations
@@ -655,7 +734,9 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $cached_recipes_count
- * @property-read \App\Models\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Country|null $country
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @property-read mixed $translations

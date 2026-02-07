@@ -11,7 +11,6 @@ use App\Models\Recipe;
 use App\Models\RecipeList;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
