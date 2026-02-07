@@ -92,6 +92,7 @@ final class FetchMenusJobTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W10',
                     'courses' => [
                         ['recipe' => ['id' => 'recipe-123']],
@@ -124,7 +125,7 @@ final class FetchMenusJobTest extends TestCase
     }
 
     #[Test]
-    public function handle_creates_menu_and_dispatches_batch_for_missing_recipes(): void
+    public function handle_creates_menu_with_missing_recipes(): void
     {
         Bus::fake();
 
@@ -136,6 +137,7 @@ final class FetchMenusJobTest extends TestCase
             'items' => [
                 [
                     'id' => 'menu-1',
+                    'product' => 'classic-box',
                     'week' => '2025-W10',
                     'courses' => [
                         ['recipe' => ['id' => 'nonexistent-recipe']],
@@ -157,14 +159,16 @@ final class FetchMenusJobTest extends TestCase
         $job = new FetchMenusJob($country);
         $job->handle($client);
 
-        // Menu is created even when recipes don't exist (will be fetched via batch)
+        // Menu is created even when recipes don't exist
         $this->assertDatabaseHas('menus', [
             'country_id' => $country->id,
             'year_week' => 202510,
         ]);
 
-        // A batch was dispatched to fetch missing recipes
-        Bus::assertBatched(fn ($batch): bool => $batch->name === 'Fetch missing recipes for menu 202510');
+        // Menu has no recipes since they don't exist in the database
+        $menu = Menu::where('year_week', 202510)->first();
+        $this->assertInstanceOf(Menu::class, $menu);
+        $this->assertCount(0, $menu->recipes);
     }
 
     #[Test]

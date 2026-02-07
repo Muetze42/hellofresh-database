@@ -100,9 +100,9 @@ class RecipeIndex extends AbstractComponent
         // Remove legacy filter properties that no longer exist
         $legacyKeys = ['filterHideVariants', 'filterShowVariants', 'filterShowCanonical'];
 
-        foreach ($legacyKeys as $key) {
-            if (request()->has($key)) {
-                request()->request->remove($key);
+        foreach ($legacyKeys as $legacyKey) {
+            if (request()->has($legacyKey)) {
+                request()->request->remove($legacyKey);
             }
         }
     }

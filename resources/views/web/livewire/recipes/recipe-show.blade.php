@@ -43,10 +43,13 @@
 
   {{-- Quick info bar --}}
   <div class="flex flex-wrap items-center gap-4 py-4 border-b border-zinc-200 dark:border-zinc-700">
-    @if ($recipe->total_time)
+    @php
+      /** @var \App\Models\Recipe $recipe */
+    @endphp
+    @if ($recipe->display_time)
       <div class="flex items-center gap-2">
         <flux:icon.clock variant="mini" class="text-zinc-500" />
-        <span>{{ $recipe->total_time }} {{ __('min') }}</span>
+        <span>{{ $recipe->display_time }} {{ __('min') }}</span>
       </div>
     @endif
     @if ($recipe->difficulty)
