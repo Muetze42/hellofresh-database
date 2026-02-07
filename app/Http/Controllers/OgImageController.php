@@ -178,6 +178,10 @@ class OgImageController extends Controller
 
         $imageContent = $response->body();
 
+        if ($imageContent === '') {
+            return false;
+        }
+
         $sourceImage = imagecreatefromstring($imageContent);
 
         if ($sourceImage === false) {
