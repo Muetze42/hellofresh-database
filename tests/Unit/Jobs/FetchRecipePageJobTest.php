@@ -11,6 +11,9 @@ use App\Jobs\Recipe\FetchRecipePageJob;
 use App\Models\Country;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Client\Response as HttpResponse;
 use Illuminate\Support\Facades\Bus;
 use Mockery;
 use PHPUnit\Framework\Attributes\Test;
@@ -47,7 +50,7 @@ final class FetchRecipePageJobTest extends TestCase
 
         $job = new FetchRecipePageJob($country, 'en');
 
-        $this->assertSame(3, $job->tries);
+        $this->assertSame(5, $job->tries);
     }
 
     #[Test]
@@ -82,9 +85,29 @@ final class FetchRecipePageJobTest extends TestCase
     }
 
     #[Test]
+    public function it_defaults_take_from_country(): void
+    {
+        $country = Country::factory()->create(['take' => 200]);
+
+        $job = new FetchRecipePageJob($country, 'en');
+
+        $this->assertSame(200, $job->take);
+    }
+
+    #[Test]
+    public function it_accepts_custom_take_value(): void
+    {
+        $country = Country::factory()->create(['take' => 200]);
+
+        $job = new FetchRecipePageJob($country, 'en', take: 150);
+
+        $this->assertSame(150, $job->take);
+    }
+
+    #[Test]
     public function handle_fetches_recipes(): void
     {
-        $country = Country::factory()->create();
+        $country = Country::factory()->create(['take' => 50]);
 
         $response = $this->createRecipesResponse([
             'items' => [
@@ -97,10 +120,9 @@ final class FetchRecipePageJobTest extends TestCase
         ]);
 
         $client = Mockery::mock(HelloFreshClient::class);
-        $client->shouldReceive('withOutThrow')->andReturnSelf();
         $client->shouldReceive('getRecipes')
             ->once()
-            ->with($country, 'en', 0)
+            ->with($country, 'en', 0, 50)
             ->andReturn($response);
 
         Bus::fake();
@@ -114,7 +136,7 @@ final class FetchRecipePageJobTest extends TestCase
     #[Test]
     public function handle_uses_skip_value(): void
     {
-        $country = Country::factory()->create();
+        $country = Country::factory()->create(['take' => 50]);
 
         $response = $this->createRecipesResponse([
             'items' => [],
@@ -125,10 +147,9 @@ final class FetchRecipePageJobTest extends TestCase
         ]);
 
         $client = Mockery::mock(HelloFreshClient::class);
-        $client->shouldReceive('withOutThrow')->andReturnSelf();
         $client->shouldReceive('getRecipes')
             ->once()
-            ->with($country, 'en', 100)
+            ->with($country, 'en', 100, 50)
             ->andReturn($response);
 
         Bus::fake();
@@ -137,6 +158,71 @@ final class FetchRecipePageJobTest extends TestCase
         $job->handle($client);
 
         $this->assertTrue(true);
+    }
+
+    #[Test]
+    public function handle_dispatches_new_job_with_reduced_take_on_server_error(): void
+    {
+        $country = Country::factory()->create(['take' => 200]);
+
+        $httpResponse = new HttpResponse(new Psr7Response(500));
+        $exception = new RequestException($httpResponse);
+
+        $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('getRecipes')
+            ->once()
+            ->andThrow($exception);
+
+        Bus::fake();
+
+        $job = new FetchRecipePageJob($country, 'en');
+        $job->handle($client);
+
+        Bus::assertDispatched(function (FetchRecipePageJob $dispatched) use ($country): bool {
+            return $dispatched->take === 150
+                && $dispatched->country->is($country)
+                && $dispatched->locale === 'en'
+                && $dispatched->skip === 0;
+        });
+    }
+
+    #[Test]
+    public function handle_does_not_dispatch_reduced_take_on_connection_error(): void
+    {
+        $country = Country::factory()->create(['take' => 200]);
+
+        $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('getRecipes')
+            ->once()
+            ->andThrow(new ConnectionException('Connection failed'));
+
+        Bus::fake();
+
+        $job = new FetchRecipePageJob($country, 'en');
+        $job->handle($client);
+
+        Bus::assertNotDispatched(FetchRecipePageJob::class);
+    }
+
+    #[Test]
+    public function handle_does_not_dispatch_reduced_take_when_take_is_fifty_or_less(): void
+    {
+        $country = Country::factory()->create(['take' => 50]);
+
+        $httpResponse = new HttpResponse(new Psr7Response(500));
+        $exception = new RequestException($httpResponse);
+
+        $client = Mockery::mock(HelloFreshClient::class);
+        $client->shouldReceive('getRecipes')
+            ->once()
+            ->andThrow($exception);
+
+        Bus::fake();
+
+        $job = new FetchRecipePageJob($country, 'en');
+        $job->handle($client);
+
+        Bus::assertNotDispatched(FetchRecipePageJob::class);
     }
 
     protected function createRecipesResponse(array $data): RecipesResponse

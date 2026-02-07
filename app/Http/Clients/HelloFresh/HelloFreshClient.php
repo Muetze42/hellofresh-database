@@ -166,9 +166,13 @@ class HelloFreshClient
      * @throws ConnectionException
      * @throws RequestException
      */
-    public function getRecipes(Country $country, string $locale, int $skip = 0): RecipesResponse
+    public function getRecipes(Country $country, string $locale, int $skip = 0, ?int $take = null): RecipesResponse
     {
         $countryCode = Str::upper($country->code);
+
+        if ($take === null) {
+            $take = $country->take;
+        }
 
         $url = sprintf(
             '%s/gw/api/recipes?country=%s&locale=%s-%s&take=%d&skip=%d',
@@ -176,7 +180,7 @@ class HelloFreshClient
             $countryCode,
             Str::lower($locale),
             $countryCode,
-            $country->take,
+            $take,
             $skip,
         );
 
