@@ -88,33 +88,35 @@
       @if ($recipe->tags->where('display_label', true)->isNotEmpty())
         <div class="mt-2 flex flex-wrap gap-1">
           @foreach ($recipe->tags->where('display_label', true) as $tag)
-            @php $isActive = in_array($tag->id, $tagIds ?? []); @endphp
-            {{-- Clickable disabled: zinc --}}
-            <flux:badge
-              x-data
-              x-show="!$store.settings?.clickableTags"
-              x-cloak
-              color="zinc"
-              size="sm"
-            >{{ $tag->name }}</flux:badge>
-            {{-- Clickable enabled: lime if active, zinc with plus icon if not --}}
-            <flux:badge
-              x-data
-              x-show="$store.settings?.clickableTags"
-              x-cloak
-              x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
-              as="button"
-              :color="$isActive ? 'lime' : 'zinc'"
-              icon:variant="micro"
-              size="sm"
-              wire:loading.attr="disabled"
-              wire:target="toggleTag({{ $tag->id }})"
-            >
-              <flux:icon.loader-circle variant="micro" class="animate-spin" wire:loading wire:target="toggleTag({{ $tag->id }})" />
-              <flux:icon.check variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => !$isActive]) />
-              <flux:icon.plus variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => $isActive]) />
-              {{ $tag->name }}
-            </flux:badge>
+            <div wire:key="grid-tag-{{ $recipe->id }}-{{ $tag->id }}">
+              @php $isActive = in_array($tag->id, $tagIds ?? []); @endphp
+              {{-- Clickable disabled: zinc --}}
+              <flux:badge
+                x-data
+                x-show="!$store.settings?.clickableTags"
+                x-cloak
+                color="zinc"
+                size="sm"
+              >{{ $tag->name }}</flux:badge>
+              {{-- Clickable enabled: lime if active, zinc with plus icon if not --}}
+              <flux:badge
+                x-data
+                x-show="$store.settings?.clickableTags"
+                x-cloak
+                x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
+                as="button"
+                :color="$isActive ? 'lime' : 'zinc'"
+                icon:variant="micro"
+                size="sm"
+                wire:loading.attr="disabled"
+                wire:target="toggleTag({{ $tag->id }})"
+              >
+                <flux:icon.loader-circle variant="micro" class="animate-spin" wire:loading wire:target="toggleTag({{ $tag->id }})" />
+                <flux:icon.check variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => !$isActive]) />
+                <flux:icon.plus variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => $isActive]) />
+                {{ $tag->name }}
+              </flux:badge>
+            </div>
           @endforeach
         </div>
       @endif
@@ -173,33 +175,35 @@
       @if ($recipe->tags->where('display_label', true)->isNotEmpty())
         <div class="mt-2 flex flex-wrap gap-1">
           @foreach ($recipe->tags->where('display_label', true) as $tag)
-            @php $isActive = in_array($tag->id, $tagIds ?? []); @endphp
-            {{-- Clickable disabled: zinc --}}
-            <flux:badge
-              x-data
-              x-show="!$store.settings?.clickableTags"
-              x-cloak
-              color="zinc"
-              size="sm"
-            >{{ $tag->name }}</flux:badge>
-            {{-- Clickable enabled: lime if active, zinc with plus icon if not --}}
-            <flux:badge
-              x-data
-              x-show="$store.settings?.clickableTags"
-              x-cloak
-              x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
-              as="button"
-              :color="$isActive ? 'lime' : 'zinc'"
-              icon:variant="micro"
-              size="sm"
-              wire:loading.attr="disabled"
-              wire:target="toggleTag({{ $tag->id }})"
-            >
-              <flux:icon.loader-circle variant="micro" class="animate-spin" wire:loading wire:target="toggleTag({{ $tag->id }})" />
-              <flux:icon.check variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => !$isActive]) />
-              <flux:icon.plus variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => $isActive]) />
-              {{ $tag->name }}
-            </flux:badge>
+            <div wire:key="list-tag-{{ $recipe->id }}-{{ $tag->id }}">
+              @php $isActive = in_array($tag->id, $tagIds ?? []); @endphp
+              {{-- Clickable disabled: zinc --}}
+              <flux:badge
+                x-data
+                x-show="!$store.settings?.clickableTags"
+                x-cloak
+                color="zinc"
+                size="sm"
+              >{{ $tag->name }}</flux:badge>
+              {{-- Clickable enabled: lime if active, zinc with plus icon if not --}}
+              <flux:badge
+                x-data
+                x-show="$store.settings?.clickableTags"
+                x-cloak
+                x-on:click.stop="$wire.toggleTag({{ $tag->id }})"
+                as="button"
+                :color="$isActive ? 'lime' : 'zinc'"
+                icon:variant="micro"
+                size="sm"
+                wire:loading.attr="disabled"
+                wire:target="toggleTag({{ $tag->id }})"
+              >
+                <flux:icon.loader-circle variant="micro" class="animate-spin" wire:loading wire:target="toggleTag({{ $tag->id }})" />
+                <flux:icon.check variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => !$isActive]) />
+                <flux:icon.plus variant="micro" wire:loading.remove wire:target="toggleTag({{ $tag->id }})" @class(['hidden' => $isActive]) />
+                {{ $tag->name }}
+              </flux:badge>
+            </div>
           @endforeach
         </div>
       @endif
