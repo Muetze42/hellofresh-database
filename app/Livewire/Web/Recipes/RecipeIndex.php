@@ -47,6 +47,15 @@ class RecipeIndex extends AbstractComponent
 
     public bool $filterOnlyPublished = false;
 
+    /** @deprecated Legacy property - no longer used */
+    public bool $filterHideVariants = false;
+
+    /** @deprecated Legacy property - no longer used */
+    public bool $filterShowVariants = false;
+
+    /** @deprecated Legacy property - no longer used */
+    public bool $filterShowCanonical = false;
+
     /** @var array<int> */
     public array $excludedAllergenIds = [];
 
@@ -82,6 +91,21 @@ class RecipeIndex extends AbstractComponent
 
     /** @var array{0: int, 1: int}|null */
     public ?array $totalTimeRange = null;
+
+    /**
+     * Boot the component and clean up legacy properties.
+     */
+    public function boot(): void
+    {
+        // Remove legacy filter properties that no longer exist
+        $legacyKeys = ['filterHideVariants', 'filterShowVariants', 'filterShowCanonical'];
+
+        foreach ($legacyKeys as $key) {
+            if (request()->has($key)) {
+                request()->request->remove($key);
+            }
+        }
+    }
 
     /**
      * Initialize the component.
