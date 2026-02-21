@@ -14,11 +14,18 @@
         '@context' => 'https://schema.org',
         '@type' => 'Recipe',
         'name' => __('Shopping List'),
+        'author' => [
+            '@type' => 'Organization',
+            'name' => 'HelloFresh',
+        ],
         'recipeIngredient' => $ingredientStrings,
     ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
 </head>
 <body itemscope itemtype="https://schema.org/Recipe">
     <h1 itemprop="name">{{ __('Shopping List') }}</h1>
+    <span itemprop="author" itemscope itemtype="https://schema.org/Organization">
+        <meta itemprop="name" content="HelloFresh">
+    </span>
     <ul>
         @foreach ($ingredients as $ingredient)
             <li itemprop="recipeIngredient">
