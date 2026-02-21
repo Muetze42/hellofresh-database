@@ -18,6 +18,7 @@ class LivewireServiceProvider extends ServiceProvider
             return Route::post('livewire/update', $handle)
                 ->middleware([
                     'web',
+                    'throttle:120,1',
                     LivewireContextMiddleware::class,
                 ]);
         });
