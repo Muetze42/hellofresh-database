@@ -6,6 +6,7 @@ use App\Livewire\Portal\Docs\AbstractEndpointDoc;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use ReflectionClass;
+use ReflectionException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Finder\Finder;
 
@@ -28,6 +29,8 @@ class ApiSpecsCommand extends Command
 
     /**
      * Execute the console command.
+     *
+     * @throws ReflectionException
      */
     public function handle(): void
     {
@@ -43,6 +46,8 @@ class ApiSpecsCommand extends Command
      * Collect endpoint data from all Doc classes.
      *
      * @return array<int, array<string, mixed>>
+     *
+     * @throws ReflectionException
      */
     protected function collectEndpoints(): array
     {
@@ -99,6 +104,8 @@ class ApiSpecsCommand extends Command
      * Call a protected method on the Doc instance.
      *
      * @param  ReflectionClass<object>  $reflection
+     *
+     * @throws ReflectionException
      */
     protected function callProtectedMethod(object $instance, ReflectionClass $reflection, string $methodName): mixed
     {

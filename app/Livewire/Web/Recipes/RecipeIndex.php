@@ -326,57 +326,18 @@ class RecipeIndex extends AbstractComponent
     #[Computed]
     public function activeFilterCount(): int
     {
-        $count = 0;
-
-        if ($this->filterHasPdf) {
-            $count++;
-        }
-
-        if ($this->filterOnlyPublished) {
-            $count++;
-        }
-
-        if ($this->excludedAllergenIds !== []) {
-            $count++;
-        }
-
-        if ($this->ingredientIds !== []) {
-            $count++;
-        }
-
-        if ($this->excludedIngredientIds !== []) {
-            $count++;
-        }
-
-        if ($this->tagIds !== []) {
-            $count++;
-        }
-
-        if ($this->excludedTagIds !== []) {
-            $count++;
-        }
-
-        if ($this->labelIds !== []) {
-            $count++;
-        }
-
-        if ($this->excludedLabelIds !== []) {
-            $count++;
-        }
-
-        if ($this->difficultyLevels !== []) {
-            $count++;
-        }
-
-        if ($this->isPrepTimeFilterActive()) {
-            $count++;
-        }
-
-        if ($this->isTotalTimeFilterActive()) {
-            $count++;
-        }
-
-        return $count;
+        return (int) $this->filterHasPdf
+            + (int) $this->filterOnlyPublished
+            + (int) ($this->excludedAllergenIds !== [])
+            + (int) ($this->ingredientIds !== [])
+            + (int) ($this->excludedIngredientIds !== [])
+            + (int) ($this->tagIds !== [])
+            + (int) ($this->excludedTagIds !== [])
+            + (int) ($this->labelIds !== [])
+            + (int) ($this->excludedLabelIds !== [])
+            + (int) ($this->difficultyLevels !== [])
+            + (int) $this->isPrepTimeFilterActive()
+            + (int) $this->isTotalTimeFilterActive();
     }
 
     /**

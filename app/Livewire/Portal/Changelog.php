@@ -4,9 +4,11 @@ namespace App\Livewire\Portal;
 
 use App\Livewire\AbstractComponent;
 use App\Support\Markdown\FluxRenderer;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\MarkdownParser;
@@ -18,6 +20,9 @@ class Changelog extends AbstractComponent
 {
     /**
      * Get the rendered changelog content.
+     *
+     * @throws FileNotFoundException
+     * @throws CommonMarkException
      */
     #[Computed]
     public function content(): string
