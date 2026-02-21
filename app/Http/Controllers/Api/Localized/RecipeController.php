@@ -6,6 +6,7 @@ use App\Http\Requests\Api\RecipeIndexRequest;
 use App\Http\Resources\Api\RecipeCollection;
 use App\Http\Resources\Api\RecipeResource;
 use App\Models\Recipe;
+use App\Support\Api\ContentLocale;
 use Illuminate\Database\Eloquent\Builder;
 use Throwable;
 
@@ -23,7 +24,7 @@ class RecipeController extends AbstractLocalizedController
                 ->with(['label', 'tags'])
                 ->when($request->filled('search'), function (Builder $query) use ($request): void {
                     $searchTerm = '%' . $request->string('search') . '%';
-                    $locale = app()->getLocale();
+                    $locale = ContentLocale::get();
 
                     $query->where(function (Builder $query) use ($searchTerm, $locale): void {
                         $query->whereLike('name->' . $locale, $searchTerm)

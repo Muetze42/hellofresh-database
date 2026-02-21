@@ -114,8 +114,6 @@ final class RecipeControllerTest extends TestCase
     #[Test]
     public function it_filters_recipes_by_search_term(): void
     {
-        // Note: Search uses app locale which is set by ApiLocalizationMiddleware
-        // The URL prefix de-DE sets the locale to 'de'
         Recipe::factory()->for($this->country)->create([
             'name' => ['de' => 'Spaghetti Carbonara', 'en' => 'Spaghetti Carbonara'],
         ]);
@@ -129,6 +127,24 @@ final class RecipeControllerTest extends TestCase
         $response->assertOk()
             ->assertJsonCount(1, 'data')
             ->assertJsonPath('data.0.name', 'Spaghetti Carbonara');
+    }
+
+    #[Test]
+    public function it_filters_recipes_by_search_term_using_content_locale(): void
+    {
+        Recipe::factory()->for($this->country)->create([
+            'name' => ['de' => 'Hähnchen Teriyaki', 'en' => 'Chicken Teriyaki'],
+        ]);
+
+        Recipe::factory()->for($this->country)->create([
+            'name' => ['de' => 'Pizza Margherita', 'en' => 'Pizza Margherita'],
+        ]);
+
+        $response = $this->apiGet('/de-DE/recipes?search=Hähnchen');
+
+        $response->assertOk()
+            ->assertJsonCount(1, 'data')
+            ->assertJsonPath('data.0.name', 'Hähnchen Teriyaki');
     }
 
     #[Test]
