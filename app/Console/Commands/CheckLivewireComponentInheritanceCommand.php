@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\ManuallyFailedException;
 use Illuminate\Support\Facades\File;
 use JsonException;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -24,6 +25,7 @@ class CheckLivewireComponentInheritanceCommand extends Command
 
     /**
      * @throws JsonException
+     * @throws ManuallyFailedException
      * @throws Throwable
      */
     public function handle(): void

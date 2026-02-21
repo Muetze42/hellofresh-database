@@ -32,6 +32,8 @@ class ImportLegacyMenusCommand extends Command
 
     /**
      * Execute the console command.
+     *
+     * @throws InvalidFormatException
      */
     public function handle(): int
     {
@@ -113,6 +115,8 @@ class ImportLegacyMenusCommand extends Command
      *
      * @param  int<0, max>  $countryId
      * @return array{menus_imported: int, menus_skipped: int, relations_imported: int}
+     *
+     * @throws InvalidFormatException
      */
     protected function importCountryMenus(int $countryId, string $menuFile, string $pivotFile): array
     {

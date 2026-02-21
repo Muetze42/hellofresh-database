@@ -3,8 +3,10 @@
 namespace App\Livewire\Concerns;
 
 use App\Support\Markdown\FluxRenderer;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Parser\MarkdownParser;
@@ -13,6 +15,9 @@ trait RendersMarkdownDocumentTrait
 {
     /**
      * Render a markdown file to HTML using FluxRenderer.
+     *
+     * @throws FileNotFoundException
+     * @throws CommonMarkException
      */
     protected function renderMarkdownFile(string $path): ?string
     {
@@ -54,6 +59,9 @@ trait RendersMarkdownDocumentTrait
      *
      * @param  string  $basePath  Base path pattern with %s placeholder for locale
      * @param  string  $locale  Current locale
+     *
+     * @throws FileNotFoundException
+     * @throws CommonMarkException
      */
     protected function renderLocalizedDocument(string $basePath, string $locale): ?string
     {
